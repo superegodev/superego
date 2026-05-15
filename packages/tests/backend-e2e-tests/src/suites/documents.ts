@@ -12,6 +12,19 @@ import triggerAndWaitForDownSync from "../utils/triggerAndWaitForDownSync.js";
 
 export default rd<GetDependencies>("Documents", (deps) => {
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete definition.
+      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      const result = await backend.documents.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -602,6 +615,19 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("createMany", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an array containing a structurally-incomplete definition.
+      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      const result = await backend.documents.createMany([{} as any]);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1118,6 +1144,24 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("createNewVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid collection id format.
+      const result = await backend.documents.createNewVersion(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.document(),
+        Id.generate.documentVersion(),
+        {},
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1755,6 +1799,23 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid collection id format.
+      const result = await backend.documents.delete(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.document(),
+        "delete",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2167,6 +2228,21 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("list", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.documents.list(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2247,6 +2323,22 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("listVersions", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid collection id format.
+      const result = await backend.documents.listVersions(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.document(),
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2517,6 +2609,22 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("get", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid collection id format.
+      const result = await backend.documents.get(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.document(),
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: DocumentNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2626,6 +2734,23 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("getVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid collection id format.
+      const result = await backend.documents.getVersion(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.document(),
+        Id.generate.documentVersion(),
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: DocumentVersionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2748,6 +2873,23 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("search", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass options without the required `limit` key.
+      const result = await backend.documents.search(
+        null,
+        "query",
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        {} as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();

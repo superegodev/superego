@@ -6,42 +6,20 @@ import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Collection categories", (deps) => {
-  describe("argument validation", () => {
-    it("error: ArgumentsNotValid when input shape is wrong", async () => {
-      // Setup SUT
-      const { backend } = deps();
-
-      // Exercise: pass a string where a CollectionCategoryDefinition object is
-      // expected — the structural argumentsSchema should reject it.
-      const result = await backend.collectionCategories.create(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        "not-a-definition" as any,
-      );
-
-      // Verify
-      assert(!result.success);
-      expect(result.error.name).toBe("ArgumentsNotValid");
-      assert(result.error.name === "ArgumentsNotValid");
-      expect(result.error.details.issues.length).toBeGreaterThan(0);
-    });
-
-    it("error: ArgumentsNotValid when an id has the wrong format", async () => {
-      // Setup SUT
-      const { backend } = deps();
-
-      // Exercise: pass an invalid id format.
-      const result = await backend.collectionCategories.delete(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        "not-a-valid-id" as any,
-      );
-
-      // Verify
-      assert(!result.success);
-      expect(result.error.name).toBe("ArgumentsNotValid");
-    });
-  });
-
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete definition.
+      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      const result = await backend.collectionCategories.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionCategoryNameNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -203,6 +181,22 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
   });
 
   describe("update", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collectionCategories.update(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        { name: "name" },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -419,6 +413,21 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collectionCategories.delete(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
       const { backend } = deps();

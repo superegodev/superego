@@ -4,7 +4,7 @@ import {
   Theme,
 } from "@superego/backend";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Global Settings", (deps) => {
@@ -61,6 +61,21 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
   });
 
   describe("update", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a non-object for the `appearance` patch field.
+      const result = await backend.globalSettings.update(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        { appearance: 123 } as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: GlobalSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });

@@ -80,6 +80,28 @@ export default rd<GetDependencies>("Inference", (deps) => {
   };
 
   describe("stt", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete AudioContent.
+      const result = await backend.inference.stt(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        {} as any,
+        {
+          completion: null,
+          transcription: {
+            providerModelRef: { providerName: "p", modelId: "m" },
+          },
+          fileInspection: null,
+        },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
@@ -157,6 +179,22 @@ export default rd<GetDependencies>("Inference", (deps) => {
       },
       userRequest: "Implement the module",
     };
+
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete spec (missing required fields).
+      const result = await backend.inference.implementTypescriptModule(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        {} as any,
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
 
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT

@@ -137,6 +137,21 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
   });
 
   describe("get", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.backgroundJobs.get(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("success: returns a background job by id", async () => {
       // Setup mocks
       const mockConnector: Connector.OAuth2PKCE<Schema> = {

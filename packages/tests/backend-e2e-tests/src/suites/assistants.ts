@@ -75,6 +75,23 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   };
 
   describe("startConversation", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an unknown assistant name (rejected by the picklist).
+      const result = await backend.assistants.startConversation(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "NotAnAssistant" as any,
+        [{ type: MessageContentPartType.Text, text: "Hello" }],
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
@@ -165,6 +182,23 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("continueConversation", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.assistants.continueConversation(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        [{ type: MessageContentPartType.Text, text: "Hello" }],
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
@@ -420,6 +454,22 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("retryLastResponse", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.assistants.retryLastResponse(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
@@ -740,6 +790,22 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("recoverConversation", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.assistants.recoverConversation(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
@@ -1006,6 +1072,22 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("deleteConversation", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.assistants.deleteConversation(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        "delete",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CommandConfirmationNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1079,6 +1161,21 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("getConversation", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.assistants.getConversation(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: ConversationNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1128,6 +1225,21 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("getLiveConversation", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.assistants.getLiveConversation(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("success: returns null when conversation is not in live store", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1248,6 +1360,22 @@ export default rd<GetDependencies>("Assistants", (deps) => {
   });
 
   describe("searchConversations", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass options without the required `limit` key.
+      const result = await backend.assistants.searchConversations(
+        "query",
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        {} as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("success: returns empty array when no matches", async () => {
       // Setup SUT
       const { backend } = deps();

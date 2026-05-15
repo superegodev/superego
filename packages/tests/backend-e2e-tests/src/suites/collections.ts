@@ -13,6 +13,19 @@ import triggerAndWaitForDownSync from "../utils/triggerAndWaitForDownSync.js";
 
 export default rd<GetDependencies>("Collections", (deps) => {
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete definition.
+      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      const result = await backend.collections.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -641,6 +654,19 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("createMany", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an array containing a structurally-incomplete definition.
+      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      const result = await backend.collections.createMany([{} as any]);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1469,6 +1495,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("updateSettings", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collections.updateSettings(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        { name: "name" },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1722,6 +1764,27 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("setRemote", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collections.setRemote(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        "MockConnector",
+        { apiKey: "k" },
+        {},
+        {
+          fromRemoteDocument: { source: "", compiled: "" },
+        },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2748,6 +2811,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("getOAuth2PKCEConnectorAuthorizationRequestUrl", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result =
+        await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
+          // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+          "not-a-valid-id" as any,
+        );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -3012,6 +3091,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("authenticateOAuth2PKCEConnector", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collections.authenticateOAuth2PKCEConnector(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        "https://example.com/callback",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -3292,6 +3387,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("triggerDownSync", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collections.triggerDownSync(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -4573,6 +4683,30 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("createNewVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete schema (missing types/rootType).
+      const result = await backend.collections.createNewVersion(
+        Id.generate.collection(),
+        Id.generate.collectionVersion(),
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        {} as any,
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: { source: "", compiled: "" },
+          defaultDocumentViewUiOptions: null,
+        },
+        null,
+        null,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -6351,6 +6485,23 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("updateLatestVersionSettings", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collections.updateLatestVersionSettings(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.collectionVersion(),
+        {},
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -6927,6 +7078,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.collections.delete(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        "delete",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -7427,6 +7594,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("getVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid collection id format.
+      const result = await backend.collections.getVersion(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        Id.generate.collectionVersion(),
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionVersionNotFound (case: collection does not exist)", async () => {
       // Setup SUT
       const { backend } = deps();

@@ -1,9 +1,24 @@
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Database", (deps) => {
   describe("export", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a non-string for the path argument.
+      const result = await backend.database.export(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        123 as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it.skipIf(typeof window !== "undefined")(
       "success: exports database to file",
       async () => {

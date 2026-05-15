@@ -7,6 +7,19 @@ import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Apps", (deps) => {
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a structurally-incomplete definition.
+      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      const result = await backend.apps.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: AppNameNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -137,6 +150,22 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("updateName", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.apps.updateName(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        "name",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: AppNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -231,6 +260,23 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("createNewVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass a files object missing the required "/main.tsx" key.
+      const result = await backend.apps.createNewVersion(
+        Id.generate.app(),
+        [],
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        {} as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: AppNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -372,6 +418,22 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise: pass an invalid id format.
+      const result = await backend.apps.delete(
+        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+        "not-a-valid-id" as any,
+        "delete",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CommandConfirmationNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
