@@ -65,11 +65,10 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a non-object for the `appearance` patch field.
-      const result = await backend.globalSettings.update(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        { appearance: 123 } as any,
-      );
+      // Exercise
+      const result = await backend.globalSettings.update({
+        appearance: 123,
+      } as any);
 
       // Verify
       assert(!result.success);

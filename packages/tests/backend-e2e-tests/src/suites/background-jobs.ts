@@ -141,11 +141,8 @@ export default rd<GetDependencies>("Background Jobs", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
-      const result = await backend.backgroundJobs.get(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        "not-a-valid-id" as any,
-      );
+      // Exercise
+      const result = await backend.backgroundJobs.get("not-a-valid-id" as any);
 
       // Verify
       assert(!result.success);

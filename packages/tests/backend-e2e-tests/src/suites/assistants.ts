@@ -79,9 +79,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an unknown assistant name (rejected by the picklist).
+      // Exercise
       const result = await backend.assistants.startConversation(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "NotAnAssistant" as any,
         [{ type: MessageContentPartType.Text, text: "Hello" }],
         validInferenceOptions,
@@ -186,9 +185,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.assistants.continueConversation(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         [{ type: MessageContentPartType.Text, text: "Hello" }],
         validInferenceOptions,
@@ -458,9 +456,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.assistants.retryLastResponse(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         validInferenceOptions,
       );
@@ -794,9 +791,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.assistants.recoverConversation(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         validInferenceOptions,
       );
@@ -1076,9 +1072,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.assistants.deleteConversation(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         "delete",
       );
@@ -1165,9 +1160,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.assistants.getConversation(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
       );
 
@@ -1229,9 +1223,8 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.assistants.getLiveConversation(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
       );
 
@@ -1364,10 +1357,9 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass options without the required `limit` key.
+      // Exercise
       const result = await backend.assistants.searchConversations(
         "query",
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         {} as any,
       );
 

@@ -10,11 +10,8 @@ export default rd<GetDependencies>("Files", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
-      const result = await backend.files.getContent(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        "not-a-valid-id" as any,
-      );
+      // Exercise
+      const result = await backend.files.getContent("not-a-valid-id" as any);
 
       // Verify
       assert(!result.success);

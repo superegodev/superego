@@ -17,8 +17,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete definition.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.collections.create({} as any);
 
       // Verify
@@ -658,8 +657,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an array containing a structurally-incomplete definition.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.collections.createMany([{} as any]);
 
       // Verify
@@ -1499,9 +1497,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collections.updateSettings(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         { name: "name" },
       );
@@ -1768,9 +1765,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collections.setRemote(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         "MockConnector",
         { apiKey: "k" },
@@ -2815,10 +2811,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result =
         await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
-          // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
           "not-a-valid-id" as any,
         );
 
@@ -3095,9 +3090,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collections.authenticateOAuth2PKCEConnector(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         "https://example.com/callback",
       );
@@ -3391,9 +3385,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collections.triggerDownSync(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
       );
 
@@ -4687,11 +4680,10 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete schema (missing types/rootType).
+      // Exercise
       const result = await backend.collections.createNewVersion(
         Id.generate.collection(),
         Id.generate.collectionVersion(),
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         {} as any,
         {
           contentBlockingKeysGetter: null,
@@ -6489,9 +6481,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collections.updateLatestVersionSettings(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.collectionVersion(),
         {},
@@ -7082,9 +7073,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collections.delete(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         "delete",
       );
@@ -7598,9 +7588,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid collection id format.
+      // Exercise
       const result = await backend.collections.getVersion(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.collectionVersion(),
       );

@@ -11,8 +11,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete pack.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.packs.install({} as any);
 
       // Verify

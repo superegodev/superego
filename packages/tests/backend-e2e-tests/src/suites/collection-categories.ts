@@ -11,8 +11,7 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete definition.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.collectionCategories.create({} as any);
 
       // Verify
@@ -185,9 +184,8 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collectionCategories.update(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         { name: "name" },
       );
@@ -417,9 +415,8 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.collectionCategories.delete(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
       );
 

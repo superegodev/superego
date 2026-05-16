@@ -16,8 +16,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete definition.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.documents.create({} as any);
 
       // Verify
@@ -619,8 +618,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an array containing a structurally-incomplete definition.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.documents.createMany([{} as any]);
 
       // Verify
@@ -1148,9 +1146,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid collection id format.
+      // Exercise
       const result = await backend.documents.createNewVersion(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.document(),
         Id.generate.documentVersion(),
@@ -1803,9 +1800,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid collection id format.
+      // Exercise
       const result = await backend.documents.delete(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.document(),
         "delete",
@@ -2232,11 +2228,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
-      const result = await backend.documents.list(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        "not-a-valid-id" as any,
-      );
+      // Exercise
+      const result = await backend.documents.list("not-a-valid-id" as any);
 
       // Verify
       assert(!result.success);
@@ -2327,9 +2320,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid collection id format.
+      // Exercise
       const result = await backend.documents.listVersions(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.document(),
       );
@@ -2613,9 +2605,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid collection id format.
+      // Exercise
       const result = await backend.documents.get(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.document(),
       );
@@ -2738,9 +2729,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid collection id format.
+      // Exercise
       const result = await backend.documents.getVersion(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         Id.generate.document(),
         Id.generate.documentVersion(),
@@ -2877,13 +2867,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass options without the required `limit` key.
-      const result = await backend.documents.search(
-        null,
-        "query",
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        {} as any,
-      );
+      // Exercise
+      const result = await backend.documents.search(null, "query", {} as any);
 
       // Verify
       assert(!result.success);

@@ -11,8 +11,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete definition.
-      // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
+      // Exercise
       const result = await backend.apps.create({} as any);
 
       // Verify
@@ -154,9 +153,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.apps.updateName(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         "name",
       );
@@ -264,11 +262,10 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a files object missing the required "/main.tsx" key.
+      // Exercise
       const result = await backend.apps.createNewVersion(
         Id.generate.app(),
         [],
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         {} as any,
       );
 
@@ -422,9 +419,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass an invalid id format.
+      // Exercise
       const result = await backend.apps.delete(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         "not-a-valid-id" as any,
         "delete",
       );

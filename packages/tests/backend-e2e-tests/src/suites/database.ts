@@ -8,11 +8,8 @@ export default rd<GetDependencies>("Database", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a non-string for the path argument.
-      const result = await backend.database.export(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        123 as any,
-      );
+      // Exercise
+      const result = await backend.database.export(123 as any);
 
       // Verify
       assert(!result.success);

@@ -84,18 +84,14 @@ export default rd<GetDependencies>("Inference", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete AudioContent.
-      const result = await backend.inference.stt(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
-        {} as any,
-        {
-          completion: null,
-          transcription: {
-            providerModelRef: { providerName: "p", modelId: "m" },
-          },
-          fileInspection: null,
+      // Exercise
+      const result = await backend.inference.stt({} as any, {
+        completion: null,
+        transcription: {
+          providerModelRef: { providerName: "p", modelId: "m" },
         },
-      );
+        fileInspection: null,
+      });
 
       // Verify
       assert(!result.success);
@@ -184,9 +180,8 @@ export default rd<GetDependencies>("Inference", (deps) => {
       // Setup SUT
       const { backend } = deps();
 
-      // Exercise: pass a structurally-incomplete spec (missing required fields).
+      // Exercise
       const result = await backend.inference.implementTypescriptModule(
-        // biome-ignore lint/suspicious/noExplicitAny: deliberately bad input
         {} as any,
         validInferenceOptions,
       );
