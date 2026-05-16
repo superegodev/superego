@@ -8,13 +8,13 @@ import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import * as v from "valibot";
 
 export function connector(): v.GenericSchema<unknown, Connector> {
-  return v.looseObject({
+  return v.strictObject({
     name: v.string(),
     authenticationStrategy: v.picklist(
       Object.values(ConnectorAuthenticationStrategy),
     ),
     settingsSchema: v.nullable(schemaValibotSchemas.schema()),
-    remoteDocumentTypescriptSchema: v.looseObject({
+    remoteDocumentTypescriptSchema: v.strictObject({
       types: v.string(),
       rootType: v.string(),
     }),
@@ -26,8 +26,8 @@ export function connectorAuthenticationSettings(): v.GenericSchema<
   ConnectorAuthenticationSettings
 > {
   return v.union([
-    v.looseObject({ apiKey: v.string() }),
-    v.looseObject({
+    v.strictObject({ apiKey: v.string() }),
+    v.strictObject({
       clientId: v.string(),
       clientSecret: v.nullable(v.string()),
     }),
@@ -40,7 +40,7 @@ export function connectorAuthenticationState(): v.GenericSchema<
 > {
   return v.union([
     v.null(),
-    v.looseObject({
+    v.strictObject({
       accessToken: v.string(),
       refreshToken: v.string(),
       accessTokenExpiresAt: v.date(),

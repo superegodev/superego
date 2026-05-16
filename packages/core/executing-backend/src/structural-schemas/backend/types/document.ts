@@ -21,26 +21,26 @@ import validationIssue from "./issue.js";
 
 const contentSummaryResult = () =>
   v.union([
-    v.looseObject({
+    v.strictObject({
       success: v.literal(true),
       data: contentSummary(),
       error: v.null(),
     }),
-    v.looseObject({
+    v.strictObject({
       success: v.literal(false),
       data: v.null(),
       error: v.union([
-        v.looseObject({
+        v.strictObject({
           name: v.literal("ExecutingJavascriptFunctionFailed"),
-          details: v.looseObject({
+          details: v.strictObject({
             message: v.string(),
             name: v.optional(v.string()),
             stack: v.optional(v.string()),
           }),
         }),
-        v.looseObject({
+        v.strictObject({
           name: v.literal("ContentSummaryNotValid"),
-          details: v.looseObject({
+          details: v.strictObject({
             collectionId: collectionId(),
             collectionVersionId: collectionVersionId(),
             documentId: documentId(),
@@ -63,7 +63,7 @@ const documentVersionBase = () => ({
 });
 
 export function documentVersion(): v.GenericSchema<unknown, DocumentVersion> {
-  return v.looseObject({
+  return v.strictObject({
     ...documentVersionBase(),
     content: v.any(),
     contentSummary: contentSummaryResult(),
@@ -84,39 +84,51 @@ export function minimalDocumentVersion(): v.GenericSchema<
   unknown,
   MinimalDocumentVersion
 > {
-  return v.looseObject(documentVersionBase()) as v.GenericSchema<
+  return v.strictObject(documentVersionBase()) as v.GenericSchema<
     unknown,
     MinimalDocumentVersion
   >;
 }
 
-const documentRemoteDiscriminator = () =>
-  v.union([
-    v.looseObject({ remoteId: v.null(), remoteUrl: v.null() }),
-    v.looseObject({ remoteId: v.string(), remoteUrl: v.nullable(v.string()) }),
-  ]);
-
 export function document(): v.GenericSchema<unknown, Document> {
-  return v.intersect([
-    v.looseObject({
+  return v.union([
+    v.strictObject({
       id: documentId(),
       collectionId: collectionId(),
       latestVersion: documentVersion(),
       createdAt: v.date(),
+      remoteId: v.null(),
+      remoteUrl: v.null(),
     }),
-    documentRemoteDiscriminator(),
+    v.strictObject({
+      id: documentId(),
+      collectionId: collectionId(),
+      latestVersion: documentVersion(),
+      createdAt: v.date(),
+      remoteId: v.string(),
+      remoteUrl: v.nullable(v.string()),
+    }),
   ]) as v.GenericSchema<unknown, Document>;
 }
 
 export function liteDocument(): v.GenericSchema<unknown, LiteDocument> {
-  return v.intersect([
-    v.looseObject({
+  return v.union([
+    v.strictObject({
       id: documentId(),
       collectionId: collectionId(),
       latestVersion: liteDocumentVersion(),
       createdAt: v.date(),
+      remoteId: v.null(),
+      remoteUrl: v.null(),
     }),
-    documentRemoteDiscriminator(),
+    v.strictObject({
+      id: documentId(),
+      collectionId: collectionId(),
+      latestVersion: liteDocumentVersion(),
+      createdAt: v.date(),
+      remoteId: v.string(),
+      remoteUrl: v.nullable(v.string()),
+    }),
   ]) as v.GenericSchema<unknown, LiteDocument>;
 }
 
@@ -124,10 +136,10 @@ export function documentDefinition(): v.GenericSchema<
   unknown,
   DocumentDefinition<false>
 > {
-  return v.looseObject({
+  return v.strictObject({
     collectionId: collectionId(),
     content: v.any(),
-    options: v.optional(v.looseObject({ skipDuplicateCheck: v.boolean() })),
+    options: v.optional(v.strictObject({ skipDuplicateCheck: v.boolean() })),
   });
 }
 
@@ -135,9 +147,9 @@ export function protoDocumentDefinition(): v.GenericSchema<
   unknown,
   DocumentDefinition<true>
 > {
-  return v.looseObject({
+  return v.strictObject({
     collectionId: v.union([protoCollectionId(), collectionId()]),
     content: v.any(),
-    options: v.optional(v.looseObject({ skipDuplicateCheck: v.boolean() })),
+    options: v.optional(v.strictObject({ skipDuplicateCheck: v.boolean() })),
   });
 }

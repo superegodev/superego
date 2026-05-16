@@ -24,7 +24,7 @@ export function collectionSettings(): v.GenericSchema<
   unknown,
   CollectionSettings
 > {
-  return v.looseObject({
+  return v.strictObject({
     name: v.string(),
     icon: v.nullable(v.string()),
     collectionCategoryId: v.nullable(collectionCategoryId()),
@@ -39,7 +39,7 @@ export function collectionVersionSettings(): v.GenericSchema<
   unknown,
   CollectionVersionSettings
 > {
-  return v.looseObject({
+  return v.strictObject({
     contentBlockingKeysGetter: v.nullable(typescriptModule()),
     contentSummaryGetter: typescriptModule(),
     defaultDocumentViewUiOptions: v.nullable(defaultDocumentViewUiOptions()),
@@ -50,7 +50,7 @@ export function collectionVersion(): v.GenericSchema<
   unknown,
   CollectionVersion
 > {
-  return v.looseObject({
+  return v.strictObject({
     id: collectionVersionId(),
     previousVersionId: v.nullable(collectionVersionId()),
     schema: schemaValibotSchemas.schema(),
@@ -62,7 +62,7 @@ export function collectionVersion(): v.GenericSchema<
 }
 
 export function collection(): v.GenericSchema<unknown, Collection> {
-  return v.looseObject({
+  return v.strictObject({
     id: collectionId(),
     latestVersion: collectionVersion(),
     settings: collectionSettings(),
@@ -75,8 +75,8 @@ export function collectionDefinition(): v.GenericSchema<
   unknown,
   CollectionDefinition<false, false>
 > {
-  return v.looseObject({
-    settings: v.looseObject({
+  return v.strictObject({
+    settings: v.strictObject({
       name: v.string(),
       icon: v.nullable(v.string()),
       collectionCategoryId: v.nullable(collectionCategoryId()),
@@ -94,8 +94,8 @@ export function protoCollectionDefinition(): v.GenericSchema<
   unknown,
   CollectionDefinition<true, true>
 > {
-  return v.looseObject({
-    settings: v.looseObject({
+  return v.strictObject({
+    settings: v.strictObject({
       name: v.string(),
       icon: v.nullable(v.string()),
       collectionCategoryId: v.nullable(

@@ -1,8 +1,10 @@
-import type {
-  Backend,
-  GlobalSettings,
-  GlobalSettingsNotValid,
-  UnexpectedError,
+import {
+  AssistantName,
+  Theme,
+  type Backend,
+  type GlobalSettings,
+  type GlobalSettingsNotValid,
+  type UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -24,9 +26,30 @@ export default class GlobalSettingsUpdate extends BackendUsecase<
   // which surfaces `GlobalSettingsNotValid`.
   argumentsSchema = v.tuple([
     v.strictObject({
-      appearance: v.optional(v.looseObject({})),
-      inference: v.optional(v.looseObject({})),
-      assistants: v.optional(v.looseObject({})),
+      appearance: v.optional(
+        v.strictObject({
+          theme: v.picklist(Object.values(Theme)),
+        }),
+      ),
+      inference: v.optional(
+        v.strictObject({
+          providers: v.array(
+            structuralSchemas.backend.types.inferenceProvider(),
+          ),
+          defaultInferenceOptions:
+            structuralSchemas.backend.types.inferenceOptions(),
+        }),
+      ),
+      assistants: v.optional(
+        v.strictObject({
+          userInfo: v.nullable(v.string()),
+          userPreferences: v.nullable(v.string()),
+          developerPrompts: v.strictObject({
+            [AssistantName.CollectionCreator]: v.nullable(v.string()),
+            [AssistantName.Factotum]: v.nullable(v.string()),
+          }),
+        }),
+      ),
     }) as unknown as v.GenericSchema<unknown, Partial<GlobalSettings>>,
   ]);
   resultSchema = structuralSchemas.global.result(

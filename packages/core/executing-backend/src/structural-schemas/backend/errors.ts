@@ -21,6 +21,8 @@ import {
   packId,
   protoCollectionId,
 } from "./ids.js";
+import { message } from "./types/conversation.js";
+import { document } from "./types/document.js";
 import validationIssue from "./types/issue.js";
 
 const issues = () => v.array(validationIssue());
@@ -374,15 +376,11 @@ export const documentVersionNotFound = () =>
   );
 
 export const duplicateDocumentDetected = () =>
-  // The duplicate document is the full Document type. Validating it deeply
-  // here would create a circular import (document schemas pull errors). Use a
-  // loose object instead — the structural correctness is verified by the
-  // makeUsecase result-validation step on the success branch.
   resultError(
     "DuplicateDocumentDetected",
     v.strictObject({
       collectionId: collectionId(),
-      duplicateDocument: v.looseObject({}),
+      duplicateDocument: document(),
     }) as unknown as v.GenericSchema<
       unknown,
       DuplicateDocumentDetected["details"]
@@ -473,9 +471,8 @@ export const unexpectedError = () =>
 export const writeTypescriptModuleToolNotCalled = () =>
   resultError(
     "WriteTypescriptModuleToolNotCalled",
-    // generatedMessage is a Message — see comment on duplicateDocumentDetected.
     v.strictObject({
-      generatedMessage: v.looseObject({}),
+      generatedMessage: message(),
     }) as unknown as v.GenericSchema<unknown, { generatedMessage: Message }>,
   ) as v.GenericSchema<
     unknown,

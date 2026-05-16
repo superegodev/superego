@@ -3,18 +3,18 @@ import * as v from "valibot";
 import { inferenceOptions, inferenceProvider } from "./inference.js";
 
 export function globalSettings(): v.GenericSchema<unknown, GlobalSettings> {
-  return v.looseObject({
-    appearance: v.looseObject({
+  return v.strictObject({
+    appearance: v.strictObject({
       theme: v.picklist(Object.values(Theme)),
     }),
-    inference: v.looseObject({
+    inference: v.strictObject({
       providers: v.array(inferenceProvider()),
       defaultInferenceOptions: inferenceOptions(),
     }),
-    assistants: v.looseObject({
+    assistants: v.strictObject({
       userInfo: v.nullable(v.string()),
       userPreferences: v.nullable(v.string()),
-      developerPrompts: v.looseObject({
+      developerPrompts: v.strictObject({
         [AssistantName.CollectionCreator]: v.nullable(v.string()),
         [AssistantName.Factotum]: v.nullable(v.string()),
       }),

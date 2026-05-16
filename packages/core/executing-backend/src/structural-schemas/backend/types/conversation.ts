@@ -23,7 +23,7 @@ export function messageGenerationStats(): v.GenericSchema<
   unknown,
   MessageGenerationStats
 > {
-  return v.looseObject({
+  return v.strictObject({
     timeTaken: v.number(),
     inputTokens: v.number(),
     outputTokens: v.number(),
@@ -34,12 +34,12 @@ export function messageGenerationStats(): v.GenericSchema<
 
 const fileRefOrProtoFile = () =>
   v.union([
-    v.looseObject({
+    v.strictObject({
       id: v.string(),
       name: v.string(),
       mimeType: v.string(),
     }),
-    v.looseObject({
+    v.strictObject({
       name: v.string(),
       mimeType: v.string(),
       content: v.instance(Uint8Array),
@@ -47,20 +47,20 @@ const fileRefOrProtoFile = () =>
   ]);
 
 const messageContentPartText = () =>
-  v.looseObject({
+  v.strictObject({
     type: v.literal(MessageContentPartType.Text),
     text: v.string(),
     audio: v.optional(audioContent()),
   });
 
 const messageContentPartAudio = () =>
-  v.looseObject({
+  v.strictObject({
     type: v.literal(MessageContentPartType.Audio),
     audio: audioContent(),
   });
 
 const messageContentPartFile = () =>
-  v.looseObject({
+  v.strictObject({
     type: v.literal(MessageContentPartType.File),
     file: fileRefOrProtoFile(),
   });
@@ -92,7 +92,7 @@ export function userMessageContent(): v.GenericSchema<
 // inference pipeline, not arbitrary callers, so structural correctness is
 // already very high. The boundary check still catches gross corruption.
 export function toolCall(): v.GenericSchema<unknown, ToolCall> {
-  return v.looseObject({
+  return v.strictObject({
     id: v.string(),
     tool: v.string(),
     input: v.any(),
@@ -100,15 +100,15 @@ export function toolCall(): v.GenericSchema<unknown, ToolCall> {
 }
 
 export function toolResult(): v.GenericSchema<unknown, ToolResult> {
-  return v.looseObject({
+  return v.strictObject({
     tool: v.string(),
     toolCallId: v.string(),
-    output: v.looseObject({}),
+    output: v.any(),
   }) as unknown as v.GenericSchema<unknown, ToolResult>;
 }
 
 const reasoning = () =>
-  v.looseObject({
+  v.strictObject({
     content: v.optional(v.string()),
     encryptedContent: v.optional(v.string()),
     contentSignature: v.optional(v.string()),
@@ -116,19 +116,19 @@ const reasoning = () =>
   });
 
 const developerMessage = () =>
-  v.looseObject({
+  v.strictObject({
     role: v.literal(MessageRole.Developer),
     content: v.tuple([messageContentPartText()]),
   });
 
 const userContextMessage = () =>
-  v.looseObject({
+  v.strictObject({
     role: v.literal(MessageRole.UserContext),
     content: v.tuple([messageContentPartText()]),
   });
 
 const userMessage = () =>
-  v.looseObject({
+  v.strictObject({
     id: messageId(),
     role: v.literal(MessageRole.User),
     content: userMessageContent(),
@@ -136,7 +136,7 @@ const userMessage = () =>
   });
 
 const toolMessage = () =>
-  v.looseObject({
+  v.strictObject({
     id: messageId(),
     role: v.literal(MessageRole.Tool),
     toolResults: v.array(toolResult()),
@@ -144,7 +144,7 @@ const toolMessage = () =>
   });
 
 const contentAssistantMessage = () =>
-  v.looseObject({
+  v.strictObject({
     id: messageId(),
     role: v.literal(MessageRole.Assistant),
     content: v.pipe(v.array(messageContentPartText()), v.minLength(1)),
@@ -155,7 +155,7 @@ const contentAssistantMessage = () =>
   });
 
 const toolCallAssistantMessage = () =>
-  v.looseObject({
+  v.strictObject({
     id: messageId(),
     role: v.literal(MessageRole.Assistant),
     toolCalls: v.array(toolCall()),
@@ -176,28 +176,9 @@ export function message(): v.GenericSchema<unknown, Message> {
   ]) as v.GenericSchema<unknown, Message>;
 }
 
-const conversationStatusDiscriminator = () =>
-  v.union([
-    v.looseObject({
-      status: v.literal(ConversationStatus.Idle),
-      processingStartedAt: v.null(),
-      error: v.null(),
-    }),
-    v.looseObject({
-      status: v.literal(ConversationStatus.Processing),
-      processingStartedAt: v.date(),
-      error: v.null(),
-    }),
-    v.looseObject({
-      status: v.literal(ConversationStatus.Error),
-      processingStartedAt: v.null(),
-      error: unknownResultError(),
-    }),
-  ]);
-
 export function conversation(): v.GenericSchema<unknown, Conversation> {
-  return v.intersect([
-    v.looseObject({
+  return v.union([
+    v.strictObject({
       id: conversationId(),
       assistant: v.picklist(Object.values(AssistantName)),
       title: v.nullable(v.string()),
@@ -205,27 +186,77 @@ export function conversation(): v.GenericSchema<unknown, Conversation> {
       canRetryLastResponse: v.boolean(),
       messages: v.array(message()),
       createdAt: v.date(),
+      status: v.literal(ConversationStatus.Idle),
+      processingStartedAt: v.null(),
+      error: v.null(),
     }),
-    conversationStatusDiscriminator(),
+    v.strictObject({
+      id: conversationId(),
+      assistant: v.picklist(Object.values(AssistantName)),
+      title: v.nullable(v.string()),
+      hasOutdatedContext: v.boolean(),
+      canRetryLastResponse: v.boolean(),
+      messages: v.array(message()),
+      createdAt: v.date(),
+      status: v.literal(ConversationStatus.Processing),
+      processingStartedAt: v.date(),
+      error: v.null(),
+    }),
+    v.strictObject({
+      id: conversationId(),
+      assistant: v.picklist(Object.values(AssistantName)),
+      title: v.nullable(v.string()),
+      hasOutdatedContext: v.boolean(),
+      canRetryLastResponse: v.boolean(),
+      messages: v.array(message()),
+      createdAt: v.date(),
+      status: v.literal(ConversationStatus.Error),
+      processingStartedAt: v.null(),
+      error: unknownResultError(),
+    }),
   ]) as v.GenericSchema<unknown, Conversation>;
 }
 
 export function liteConversation(): v.GenericSchema<unknown, LiteConversation> {
-  return v.intersect([
-    v.looseObject({
+  return v.union([
+    v.strictObject({
       id: conversationId(),
       assistant: v.picklist(Object.values(AssistantName)),
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
       createdAt: v.date(),
+      status: v.literal(ConversationStatus.Idle),
+      processingStartedAt: v.null(),
+      error: v.null(),
     }),
-    conversationStatusDiscriminator(),
+    v.strictObject({
+      id: conversationId(),
+      assistant: v.picklist(Object.values(AssistantName)),
+      title: v.nullable(v.string()),
+      hasOutdatedContext: v.boolean(),
+      canRetryLastResponse: v.boolean(),
+      createdAt: v.date(),
+      status: v.literal(ConversationStatus.Processing),
+      processingStartedAt: v.date(),
+      error: v.null(),
+    }),
+    v.strictObject({
+      id: conversationId(),
+      assistant: v.picklist(Object.values(AssistantName)),
+      title: v.nullable(v.string()),
+      hasOutdatedContext: v.boolean(),
+      canRetryLastResponse: v.boolean(),
+      createdAt: v.date(),
+      status: v.literal(ConversationStatus.Error),
+      processingStartedAt: v.null(),
+      error: unknownResultError(),
+    }),
   ]) as v.GenericSchema<unknown, LiteConversation>;
 }
 
 export function developerPrompts(): v.GenericSchema<unknown, DeveloperPrompts> {
-  return v.looseObject({
+  return v.strictObject({
     [AssistantName.CollectionCreator]: v.string(),
     [AssistantName.Factotum]: v.string(),
   }) as v.GenericSchema<unknown, DeveloperPrompts>;

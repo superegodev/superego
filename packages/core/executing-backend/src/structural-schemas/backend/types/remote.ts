@@ -9,29 +9,29 @@ import { connectorAuthenticationSettings } from "./connector.js";
 import { typescriptModule } from "./typescript.js";
 
 export function remoteConverters(): v.GenericSchema<unknown, RemoteConverters> {
-  return v.looseObject({
+  return v.strictObject({
     fromRemoteDocument: typescriptModule(),
   });
 }
 
 const downSyncStateSchema = () =>
   v.union([
-    v.looseObject({
+    v.strictObject({
       status: v.literal(DownSyncStatus.NeverSynced),
       error: v.null(),
       lastSucceededAt: v.null(),
     }),
-    v.looseObject({
+    v.strictObject({
       status: v.literal(DownSyncStatus.Syncing),
       error: v.null(),
       lastSucceededAt: v.nullable(v.date()),
     }),
-    v.looseObject({
+    v.strictObject({
       status: v.literal(DownSyncStatus.LastSyncSucceeded),
       error: v.null(),
       lastSucceededAt: v.nullable(v.date()),
     }),
-    v.looseObject({
+    v.strictObject({
       status: v.literal(DownSyncStatus.LastSyncFailed),
       error: unknownResultError(),
       lastSucceededAt: v.nullable(v.date()),
@@ -39,16 +39,16 @@ const downSyncStateSchema = () =>
   ]);
 
 export function remote(): v.GenericSchema<unknown, Remote> {
-  return v.looseObject({
-    connector: v.looseObject({
+  return v.strictObject({
+    connector: v.strictObject({
       name: v.string(),
       authenticationSettings: connectorAuthenticationSettings(),
       settings: v.any(),
     }),
-    connectorAuthenticationState: v.looseObject({
+    connectorAuthenticationState: v.strictObject({
       isAuthenticated: v.boolean(),
     }),
-    syncState: v.looseObject({
+    syncState: v.strictObject({
       down: downSyncStateSchema(),
     }),
   }) as v.GenericSchema<unknown, Remote>;

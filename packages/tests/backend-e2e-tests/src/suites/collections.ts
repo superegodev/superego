@@ -25,6 +25,42 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
+    it("error: ArgumentsNotValid when schema has extra keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+          extra: true,
+        } as any,
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1508,6 +1544,26 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
+    it("error: ArgumentsNotValid when authentication settings have extra keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.setRemote(
+        Id.generate.collection(),
+        "MockConnector",
+        { apiKey: "k", extra: true } as any,
+        {},
+        {
+          fromRemoteDocument: { source: "", compiled: "" },
+        },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2139,7 +2195,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        { clientId: "clientId" } as any,
+        { clientId: "", clientSecret: null },
         { setting: 0 },
         {
           fromRemoteDocument: {
@@ -2161,9 +2217,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
             connectorName: mockConnector.name,
             issues: [
               {
-                message:
-                  'Invalid key: Expected "clientSecret" but received undefined',
-                path: [{ key: "clientSecret" }],
+                message: "Invalid length: Expected >=1 but received 0",
+                path: [{ key: "clientId" }],
               },
             ],
           },
@@ -2234,7 +2289,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        {} as any,
+        { apiKey: "" },
         { setting: 0 },
         {
           fromRemoteDocument: {
@@ -2256,8 +2311,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             connectorName: mockConnector.name,
             issues: [
               {
-                message:
-                  'Invalid key: Expected "apiKey" but received undefined',
+                message: "Invalid length: Expected >=1 but received 0",
                 path: [{ key: "apiKey" }],
               },
             ],

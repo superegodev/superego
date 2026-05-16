@@ -12,17 +12,17 @@ export function inferenceProviderModelRef(): v.GenericSchema<
   unknown,
   InferenceProviderModelRef
 > {
-  return v.looseObject({
+  return v.strictObject({
     providerName: v.string(),
     modelId: v.string(),
   });
 }
 
 export function inferenceModel(): v.GenericSchema<unknown, InferenceModel> {
-  return v.looseObject({
+  return v.strictObject({
     id: v.string(),
     name: v.string(),
-    capabilities: v.looseObject({
+    capabilities: v.strictObject({
       audioUnderstanding: v.boolean(),
       imageUnderstanding: v.boolean(),
       pdfUnderstanding: v.boolean(),
@@ -34,7 +34,7 @@ export function inferenceProvider(): v.GenericSchema<
   unknown,
   InferenceProvider
 > {
-  return v.looseObject({
+  return v.strictObject({
     name: v.string(),
     baseUrl: v.string(),
     apiKey: v.nullable(v.string()),
@@ -44,18 +44,18 @@ export function inferenceProvider(): v.GenericSchema<
 }
 
 const completionOptions = () =>
-  v.looseObject({
+  v.strictObject({
     providerModelRef: inferenceProviderModelRef(),
     reasoningEffort: v.picklist(Object.values(ReasoningEffort)),
   });
 
 const transcriptionOptions = () =>
-  v.looseObject({
+  v.strictObject({
     providerModelRef: inferenceProviderModelRef(),
   });
 
 const fileInspectionOptions = () =>
-  v.looseObject({
+  v.strictObject({
     providerModelRef: inferenceProviderModelRef(),
   });
 
@@ -67,7 +67,7 @@ const fileInspectionOptions = () =>
 export function inferenceOptions<
   Prop extends "completion" | "transcription" | "fileInspection" = never,
 >(nonNullableProp?: Prop): v.GenericSchema<unknown, InferenceOptions<Prop>> {
-  return v.looseObject({
+  return v.strictObject({
     completion:
       nonNullableProp === "completion"
         ? completionOptions()

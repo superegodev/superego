@@ -37,13 +37,7 @@ export default class CollectionsSetRemote extends BackendUsecase<
   argumentsSchema = v.tuple([
     structuralSchemas.backend.ids.collectionId(),
     v.string(),
-    // The connector validates the authentication settings against its own
-    // schema and surfaces `ConnectorAuthenticationSettingsNotValid`, so the
-    // boundary check here is only structural (it's an object).
-    v.looseObject({}) as unknown as v.GenericSchema<
-      unknown,
-      ConnectorAuthenticationSettings
-    >,
+    structuralSchemas.backend.types.connectorAuthenticationSettings(),
     v.any(),
     structuralSchemas.backend.types.remoteConverters(),
   ]);

@@ -13,7 +13,7 @@ import { protoCollectionCategoryDefinition } from "./collectionCategory.js";
 import { protoDocumentDefinition } from "./document.js";
 
 const screenshot = () =>
-  v.looseObject({
+  v.strictObject({
     theme: v.picklist([Theme.Light, Theme.Dark]),
     mimeType: v.pipe(v.string(), v.regex(/^image\/.+$/)) as v.GenericSchema<
       unknown,
@@ -26,7 +26,7 @@ const screenshot = () =>
   });
 
 export function packInfo(): v.GenericSchema<unknown, PackInfo> {
-  return v.looseObject({
+  return v.strictObject({
     name: v.string(),
     shortDescription: v.string(),
     longDescription: v.string(),
@@ -35,7 +35,7 @@ export function packInfo(): v.GenericSchema<unknown, PackInfo> {
 }
 
 export function litePackInfo(): v.GenericSchema<unknown, LitePackInfo> {
-  return v.looseObject({
+  return v.strictObject({
     name: v.string(),
     shortDescription: v.string(),
     screenshots: v.array(screenshot()),
@@ -43,7 +43,7 @@ export function litePackInfo(): v.GenericSchema<unknown, LitePackInfo> {
 }
 
 export function pack(): v.GenericSchema<unknown, Pack> {
-  return v.looseObject({
+  return v.strictObject({
     id: packId(),
     info: packInfo(),
     collectionCategories: v.array(protoCollectionCategoryDefinition()),
@@ -54,7 +54,7 @@ export function pack(): v.GenericSchema<unknown, Pack> {
 }
 
 export function litePack(): v.GenericSchema<unknown, LitePack> {
-  return v.looseObject({
+  return v.strictObject({
     id: packId(),
     info: litePackInfo(),
   });

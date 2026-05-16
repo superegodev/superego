@@ -7,8 +7,11 @@ import * as v from "valibot";
  * instead of a generic `ArgumentsNotValid`.
  */
 export function schemaShape() {
-  return v.looseObject({
-    types: v.record(v.string(), v.looseObject({})),
+  return v.strictObject({
+    // Keep each type definition intentionally open: semantic schema validation
+    // happens inside the usecase so callers get CollectionSchemaNotValid /
+    // PackNotValid instead of ArgumentsNotValid for malformed schemas.
+    types: v.record(v.string(), v.objectWithRest({}, v.any())),
     rootType: v.string(),
   });
 }

@@ -2,6 +2,7 @@ import { type LitePack, type Pack, Theme } from "@superego/backend";
 
 export default function makeLitePack(pack: Pack): LitePack {
   const { id, info } = pack;
+  const { name, shortDescription } = info;
   let light: LitePack["info"]["screenshots"][number] | undefined;
   let dark: LitePack["info"]["screenshots"][number] | undefined;
   for (const screenshot of info.screenshots) {
@@ -20,7 +21,8 @@ export default function makeLitePack(pack: Pack): LitePack {
   return {
     id,
     info: {
-      ...info,
+      name,
+      shortDescription,
       screenshots,
     },
   };

@@ -15,15 +15,15 @@ import {
 import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
-  return v.looseObject({
+  return v.strictObject({
     id: appVersionId(),
     targetCollections: v.array(
-      v.looseObject({
+      v.strictObject({
         id: collectionId(),
         versionId: collectionVersionId(),
       }),
     ),
-    files: v.looseObject({
+    files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
     createdAt: v.date(),
@@ -31,7 +31,7 @@ export function appVersion(): v.GenericSchema<unknown, AppVersion> {
 }
 
 export function app(): v.GenericSchema<unknown, App> {
-  return v.looseObject({
+  return v.strictObject({
     id: appId(),
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
@@ -44,11 +44,11 @@ export function appDefinition(): v.GenericSchema<
   unknown,
   AppDefinition<false>
 > {
-  return v.looseObject({
+  return v.strictObject({
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
-    files: v.looseObject({
+    files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
   });
@@ -58,13 +58,13 @@ export function protoAppDefinition(): v.GenericSchema<
   unknown,
   AppDefinition<true>
 > {
-  return v.looseObject({
+  return v.strictObject({
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
     targetCollectionIds: v.array(
       v.union([protoCollectionId(), collectionId()]),
     ),
-    files: v.looseObject({
+    files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
   });

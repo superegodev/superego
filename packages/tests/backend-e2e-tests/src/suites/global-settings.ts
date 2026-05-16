@@ -75,6 +75,20 @@ export default rd<GetDependencies>("Global Settings", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
+    it("error: ArgumentsNotValid when a nested settings object has extra keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.globalSettings.update({
+        appearance: { theme: Theme.Dark, extra: true } as any,
+      });
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: GlobalSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });

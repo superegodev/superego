@@ -9,119 +9,121 @@ import unknownResultError from "../../global/unknownResultError.js";
 import { backgroundJobId, collectionId, conversationId } from "../ids.js";
 import { inferenceOptions } from "./inference.js";
 
-const enqueuedDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Enqueued),
-    startedProcessingAt: v.null(),
-    finishedProcessingAt: v.null(),
-    error: v.null(),
-  });
+const enqueuedStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Enqueued),
+  startedProcessingAt: v.null(),
+  finishedProcessingAt: v.null(),
+  error: v.null(),
+});
 
-const processingDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Processing),
-    startedProcessingAt: v.date(),
-    finishedProcessingAt: v.null(),
-    error: v.null(),
-  });
+const processingStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Processing),
+  startedProcessingAt: v.date(),
+  finishedProcessingAt: v.null(),
+  error: v.null(),
+});
 
-const succeededDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Succeeded),
-    startedProcessingAt: v.date(),
-    finishedProcessingAt: v.date(),
-    error: v.null(),
-  });
+const succeededStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Succeeded),
+  startedProcessingAt: v.date(),
+  finishedProcessingAt: v.date(),
+  error: v.null(),
+});
 
-const failedDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Failed),
-    startedProcessingAt: v.date(),
-    finishedProcessingAt: v.date(),
-    error: unknownResultError(),
-  });
+const failedStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Failed),
+  startedProcessingAt: v.date(),
+  finishedProcessingAt: v.date(),
+  error: unknownResultError(),
+});
 
-const liteEnqueuedDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Enqueued),
-    startedProcessingAt: v.null(),
-    finishedProcessingAt: v.null(),
-  });
+const liteEnqueuedStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Enqueued),
+  startedProcessingAt: v.null(),
+  finishedProcessingAt: v.null(),
+});
 
-const liteProcessingDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Processing),
-    startedProcessingAt: v.date(),
-    finishedProcessingAt: v.null(),
-  });
+const liteProcessingStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Processing),
+  startedProcessingAt: v.date(),
+  finishedProcessingAt: v.null(),
+});
 
-const liteSucceededDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Succeeded),
-    startedProcessingAt: v.date(),
-    finishedProcessingAt: v.date(),
-  });
+const liteSucceededStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Succeeded),
+  startedProcessingAt: v.date(),
+  finishedProcessingAt: v.date(),
+});
 
-const liteFailedDiscriminator = () =>
-  v.looseObject({
-    status: v.literal(BackgroundJobStatus.Failed),
-    startedProcessingAt: v.date(),
-    finishedProcessingAt: v.date(),
-  });
+const liteFailedStatusEntries = () => ({
+  status: v.literal(BackgroundJobStatus.Failed),
+  startedProcessingAt: v.date(),
+  finishedProcessingAt: v.date(),
+});
 
-const statusDiscriminator = () =>
-  v.union([
-    enqueuedDiscriminator(),
-    processingDiscriminator(),
-    succeededDiscriminator(),
-    failedDiscriminator(),
-  ]);
+const processConversationEntries = () => ({
+  id: backgroundJobId(),
+  name: v.literal(BackgroundJobName.ProcessConversation),
+  input: v.strictObject({
+    id: conversationId(),
+    inferenceOptions: inferenceOptions("completion"),
+  }),
+  enqueuedAt: v.date(),
+});
 
-const liteStatusDiscriminator = () =>
-  v.union([
-    liteEnqueuedDiscriminator(),
-    liteProcessingDiscriminator(),
-    liteSucceededDiscriminator(),
-    liteFailedDiscriminator(),
-  ]);
+const downSyncCollectionEntries = () => ({
+  id: backgroundJobId(),
+  name: v.literal(BackgroundJobName.DownSyncCollection),
+  input: v.strictObject({ id: collectionId() }),
+  enqueuedAt: v.date(),
+});
 
-const processConversationBase = () =>
-  v.looseObject({
-    id: backgroundJobId(),
-    name: v.literal(BackgroundJobName.ProcessConversation),
-    input: v.looseObject({
-      id: conversationId(),
-      inferenceOptions: inferenceOptions("completion"),
-    }),
-    enqueuedAt: v.date(),
-  });
+const liteProcessConversationEntries = () => ({
+  id: backgroundJobId(),
+  name: v.literal(BackgroundJobName.ProcessConversation),
+  enqueuedAt: v.date(),
+});
 
-const downSyncCollectionBase = () =>
-  v.looseObject({
-    id: backgroundJobId(),
-    name: v.literal(BackgroundJobName.DownSyncCollection),
-    input: v.looseObject({ id: collectionId() }),
-    enqueuedAt: v.date(),
-  });
-
-const liteProcessConversationBase = () =>
-  v.looseObject({
-    id: backgroundJobId(),
-    name: v.literal(BackgroundJobName.ProcessConversation),
-    enqueuedAt: v.date(),
-  });
-
-const liteDownSyncCollectionBase = () =>
-  v.looseObject({
-    id: backgroundJobId(),
-    name: v.literal(BackgroundJobName.DownSyncCollection),
-    enqueuedAt: v.date(),
-  });
+const liteDownSyncCollectionEntries = () => ({
+  id: backgroundJobId(),
+  name: v.literal(BackgroundJobName.DownSyncCollection),
+  enqueuedAt: v.date(),
+});
 
 export function backgroundJob(): v.GenericSchema<unknown, BackgroundJob> {
   return v.union([
-    v.intersect([processConversationBase(), statusDiscriminator()]),
-    v.intersect([downSyncCollectionBase(), statusDiscriminator()]),
+    v.strictObject({
+      ...processConversationEntries(),
+      ...enqueuedStatusEntries(),
+    }),
+    v.strictObject({
+      ...processConversationEntries(),
+      ...processingStatusEntries(),
+    }),
+    v.strictObject({
+      ...processConversationEntries(),
+      ...succeededStatusEntries(),
+    }),
+    v.strictObject({
+      ...processConversationEntries(),
+      ...failedStatusEntries(),
+    }),
+    v.strictObject({
+      ...downSyncCollectionEntries(),
+      ...enqueuedStatusEntries(),
+    }),
+    v.strictObject({
+      ...downSyncCollectionEntries(),
+      ...processingStatusEntries(),
+    }),
+    v.strictObject({
+      ...downSyncCollectionEntries(),
+      ...succeededStatusEntries(),
+    }),
+    v.strictObject({
+      ...downSyncCollectionEntries(),
+      ...failedStatusEntries(),
+    }),
   ]) as v.GenericSchema<unknown, BackgroundJob>;
 }
 
@@ -130,7 +132,37 @@ export function liteBackgroundJob(): v.GenericSchema<
   LiteBackgroundJob
 > {
   return v.union([
-    v.intersect([liteProcessConversationBase(), liteStatusDiscriminator()]),
-    v.intersect([liteDownSyncCollectionBase(), liteStatusDiscriminator()]),
+    v.strictObject({
+      ...liteProcessConversationEntries(),
+      ...liteEnqueuedStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteProcessConversationEntries(),
+      ...liteProcessingStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteProcessConversationEntries(),
+      ...liteSucceededStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteProcessConversationEntries(),
+      ...liteFailedStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteDownSyncCollectionEntries(),
+      ...liteEnqueuedStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteDownSyncCollectionEntries(),
+      ...liteProcessingStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteDownSyncCollectionEntries(),
+      ...liteSucceededStatusEntries(),
+    }),
+    v.strictObject({
+      ...liteDownSyncCollectionEntries(),
+      ...liteFailedStatusEntries(),
+    }),
   ]) as v.GenericSchema<unknown, LiteBackgroundJob>;
 }
