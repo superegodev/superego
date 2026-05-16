@@ -112,7 +112,7 @@ export default function EagerExcalidrawInput({
   const handleExcalidrawChange = useCallback(() => {
     hasPendingLocalChangesRef.current = true;
     debouncedFlushScene();
-    // oxlint-disable-next-line react/exhaustive-deps: stable callback with no dependencies to avoid Excalidraw re-render loops.
+    // oxlint-disable-next-line react/exhaustive-deps -- stable callback with no dependencies to avoid Excalidraw re-render loops.
   }, []);
 
   useEffect(() => {

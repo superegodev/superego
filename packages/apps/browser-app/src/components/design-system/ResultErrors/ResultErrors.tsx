@@ -11,7 +11,7 @@ interface Props {
 export default function ResultErrors({ errors }: Props) {
   const intl = useIntl();
   return errors.map((error, index) => (
-    // oxlint-disable-next-line react/no-array-index-key: errors array is stable.
+    // oxlint-disable-next-line react/no-array-index-key -- errors array is stable.
     <Alert key={index} variant="error" title={toTitleCase(error.name)}>
       <Disclosure title={intl.formatMessage({ defaultMessage: "Details" })}>
         <CodeBlock

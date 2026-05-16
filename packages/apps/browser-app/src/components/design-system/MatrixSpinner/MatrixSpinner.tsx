@@ -91,6 +91,7 @@ export default function MatrixSpinner({ size = 20 }: { size?: number }) {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       width={size * 2}
       height={size * 2}
       style={{ width: size, height: size }}

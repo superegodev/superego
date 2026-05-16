@@ -10,7 +10,7 @@ export default function FileParts({ fileParts }: Props) {
   return !isEmpty(fileParts) ? (
     <div className={cs.FileParts.root}>
       {fileParts.map((filePart, index) => (
-        // oxlint-disable-next-line react/no-array-index-key: order is stable.
+        // oxlint-disable-next-line react/no-array-index-key -- order is stable.
         <FilePart key={index} filePart={filePart} />
       ))}
     </div>

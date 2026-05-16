@@ -261,14 +261,14 @@
       "value": "Drop "
     },
     {
+      "type": 8,
+      "value": "packMpk",
       "children": [
         {
           "type": 0,
           "value": "pack.mpk"
         }
-      ],
-      "type": 8,
-      "value": "packMpk"
+      ]
     },
     {
       "type": 0,
@@ -555,14 +555,14 @@
       "value": "Update the "
     },
     {
+      "type": 8,
+      "value": "code",
       "children": [
         {
           "type": 0,
           "value": "getContentBlockingKeys"
         }
-      ],
-      "type": 8,
-      "value": "code"
+      ]
     },
     {
       "type": 0,
@@ -585,14 +585,14 @@
       "value": "Update the "
     },
     {
+      "type": 8,
+      "value": "code",
       "children": [
         {
           "type": 0,
           "value": "getContentSummary"
         }
-      ],
-      "type": 8,
-      "value": "code"
+      ]
     },
     {
       "type": 0,
@@ -879,7 +879,8 @@
       "value": " » "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "documentsCount",
       "options": {
         "one": {
           "value": [
@@ -901,9 +902,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "documentsCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -984,14 +984,14 @@
       "value": "Viewing document version from "
     },
     {
+      "type": 8,
+      "value": "b",
       "children": [
         {
           "type": 1,
           "value": "date"
         }
-      ],
-      "type": 8,
-      "value": "b"
+      ]
     },
     {
       "type": 0,
@@ -1096,28 +1096,28 @@
   ],
   "DeleteAppModalForm.tsx_U+RSUu": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Deleting the app is permanent. If you're sure, write "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "delete"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " in the input below. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "DeleteAppModalForm.tsx_bJAAvK": [
@@ -1148,42 +1148,42 @@
   ],
   "DeleteCollectionModalForm.tsx_J24oFm": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Deleting the collection will permanently delete all of its documents and files. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " If you're sure you want to delete the collection, write "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "delete"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " in the input below. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "DeleteCollectionModalForm.tsx_K3r6DQ": [
@@ -1240,28 +1240,28 @@
   ],
   "DeleteConversationModalForm.tsx_jGLuOH": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Deleting the conversation is permanent. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " If you're sure you want to delete the conversation, write in the input below. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "DeleteConversationModalForm.tsx_lml5ZH": [
@@ -1714,180 +1714,180 @@
   ],
   "Explainer.tsx_Np7GhL": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Your data in Superego is stored in "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "collections"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " of "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "documents"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": ". Each collection has a "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "schema"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " that defines what data each document contains. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Example: an "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "Expenses"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " collection contains many "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "Expense"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " documents. Each document contains the date of the expense, the amount, and a description. (This is the schema.) "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Just tell the "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "Collection Creator"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " what data you want to store, and it will create a collection for you. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "Explainer.tsx_kM11wK": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Here in the Boutique you can find pre-made collections and apps, bundled into thematic "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "packs"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " you can install in one click. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " You can also use the "
         },
         {
+          "type": 8,
+          "value": "cliDocsLink",
           "children": [
             {
               "type": 0,
               "value": "Superego CLI"
             }
-          ],
-          "type": 8,
-          "value": "cliDocsLink"
+          ]
         },
         {
           "type": 0,
           "value": " to create your own packs. (Drop below to install.) "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "FileField.tsx_5q3qC0": [
@@ -2360,28 +2360,28 @@
   ],
   "IncompatibilityWarning.tsx_QL2z4z": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " This app might not work correctly, as it uses collections that were either changed or deleted since the app was made. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Update the app to avoid this warning. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "IncompatibilityWarning.tsx_q9XsfI": [
@@ -2402,14 +2402,14 @@
       "value": "Configure an "
     },
     {
+      "type": 8,
+      "value": "b",
       "children": [
         {
           "type": 0,
           "value": "inference provider"
         }
-      ],
-      "type": 8,
-      "value": "b"
+      ]
     },
     {
       "type": 0,
@@ -2620,42 +2620,42 @@
   ],
   "ModalContent.tsx_qjTjxw": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Deleting the document will permanently delete the document, all its versions, and all its files. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " If you're sure you want to delete the document, write "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "delete"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " in the input below. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "Model.tsx_G/yZLu": [
@@ -2710,7 +2710,8 @@
   ],
   "PackEntityCounts.tsx_GPDaFU": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "appsCount",
       "options": {
         "one": {
           "value": [
@@ -2735,14 +2736,14 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "appsCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "PackEntityCounts.tsx_M51yty": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "documentsCount",
       "options": {
         "one": {
           "value": [
@@ -2767,14 +2768,14 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "documentsCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "PackEntityCounts.tsx_P2D191": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "collectionCategoriesCount",
       "options": {
         "one": {
           "value": [
@@ -2799,14 +2800,14 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "collectionCategoriesCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "PackEntityCounts.tsx_pKXETD": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "collectionsCount",
       "options": {
         "one": {
           "value": [
@@ -2831,9 +2832,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "collectionsCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "PackMainPanel.tsx_HUc4Bb": [
@@ -3038,166 +3038,166 @@
   ],
   "RHFContentBlockingKeysGetterField.tsx_VP/mgq": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Document deduplication helps you avoid creating duplicate records. For example, preventing a second contact from being created with the same email address. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " When enabled, every time you create a new document, Superego checks that another "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "similar document"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " doesn't already exist, and warns you if it does. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " This is done by associating to each document a set of "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "\"blocking keys\""
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": ": small, deterministic fingerprints derived from the document’s content (for example, a normalized email address, or a last-name + postal-code pair) that "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "almost uniquely"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " identify a document. If two documents share a blocking key, they’re likely duplicates. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_fNZ6MZ": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "content blocking keys"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " of a document are a list of "
         },
         {
+          "type": 8,
+          "value": "code",
           "children": [
             {
               "type": 0,
               "value": "strings"
             }
-          ],
-          "type": 8,
-          "value": "code"
+          ]
         },
         {
           "type": 0,
           "value": "—derived from the document's content—that uniquely identify the document based on its data. Documents sharing a blocking key are considered duplicates. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "blocking keys getter"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " is the TypeScript function that derives these keys from the document content. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The keys should be deterministic (same content produces same keys) and sensitive to meaningful changes while ignoring non-meaningful differences like whitespace. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_sGF42J": [
@@ -3214,112 +3214,112 @@
   ],
   "RHFContentSummaryGetterField.tsx_BmNFs6": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "content summary"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " of a document is a"
         },
         {
+          "type": 8,
+          "value": "code",
           "children": [
             {
               "type": 0,
               "value": "Record<name: string, value: string | number | boolean | null> "
             }
-          ],
-          "type": 8,
-          "value": "code"
+          ]
         },
         {
           "type": 0,
           "value": "—derived from the document's content—that contains its most important bits of information. The properties of the record are displayed when showing a \"summary view\" of the document; for example, in tables, where each property becomes a column. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "Content summary getter"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " is the TypeScript function that derives the summary from the document content. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The property names of the summary object can be prefixed by attributes that configure the behavior of the UIs that render the summary. For example, when rendering a table of documents, "
         },
         {
+          "type": 8,
+          "value": "code",
           "children": [
             {
               "type": 0,
               "value": "{position:0,sortable:true,default-sort:asc} First Name"
             }
-          ],
-          "type": 8,
-          "value": "code"
+          ]
         },
         {
           "type": 0,
           "value": " makes "
         },
         {
+          "type": 8,
+          "value": "code",
           "children": [
             {
               "type": 0,
               "value": "First Name"
             }
-          ],
-          "type": 8,
-          "value": "code"
+          ]
         },
         {
           "type": 0,
           "value": " the first column, makes it sortable, and sets the column as the default sort order of the table. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "RHFDefaultDocumentViewUiOptionsField.tsx_9CnsYv": [
@@ -3348,42 +3348,42 @@
   ],
   "RHFDefaultDocumentViewUiOptionsField.tsx_w7P3KC": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Customize how the document form looks when viewing or editing documents in this collection. Options include using the full page width, collapsing the sidebar, and defining a custom field layout. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " For more information, see "
         },
         {
+          "type": 8,
+          "value": "a",
           "children": [
             {
               "type": 0,
               "value": "https://superego.dev/customization/default-document-view-ui-options"
             }
-          ],
-          "type": 8,
-          "value": "a"
+          ]
         },
         {
           "type": 0,
           "value": ". "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "RHFRedirectToCollectionAfterDocumentCreationField.tsx_JL+VrQ": [
@@ -3454,168 +3454,168 @@
   ],
   "Remote.tsx_s8FZNF": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " You can sync a collection with an external data source (a "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "remote"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": "). When a remote is configured, it becomes the "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "source of truth"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " for that collection. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your "
         },
         {
+          "type": 8,
+          "value": "code",
           "children": [
             {
               "type": 0,
               "value": "fromRemoteDocument"
             }
-          ],
-          "type": 8,
-          "value": "code"
+          ]
         },
         {
           "type": 0,
           "value": " mapping, and you can filter which remote documents are synced. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " To set up a remote, configure a "
         },
         {
+          "type": 8,
+          "value": "i",
           "children": [
             {
               "type": 0,
               "value": "connector"
             }
-          ],
-          "type": 8,
-          "value": "i"
+          ]
         },
         {
           "type": 0,
           "value": " to the external data source. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Some connectors support only "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "syncing down from"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " the remote, making the collection read-only. Others also support "
         },
         {
+          "type": 8,
+          "value": "b",
           "children": [
             {
               "type": 0,
               "value": "syncing up to"
             }
-          ],
-          "type": 8,
-          "value": "b"
+          ]
         },
         {
           "type": 0,
           "value": " the remote, so creates, updates, and deletes in the collection are propagated to the remote. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " More info at "
         },
         {
+          "type": 8,
+          "value": "a",
           "children": [
             {
               "type": 0,
               "value": "https://superego.dev/connectors"
             }
-          ],
-          "type": 8,
-          "value": "a"
+          ]
         },
         {
           "type": 0,
           "value": ". "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "RemoteConverters.tsx_3cBs4J": [
@@ -3624,14 +3624,14 @@
       "value": "TypeScript function transforming a remote document into the content of a local document. Return "
     },
     {
+      "type": 8,
+      "value": "code",
       "children": [
         {
           "type": 0,
           "value": "null"
         }
-      ],
-      "type": 8,
-      "value": "code"
+      ]
     },
     {
       "type": 0,
@@ -3656,14 +3656,14 @@
       "value": "TypeScript function transforming a remote document into the content of a local document. Return "
     },
     {
+      "type": 8,
+      "value": "code",
       "children": [
         {
           "type": 0,
           "value": "null"
         }
-      ],
-      "type": 8,
-      "value": "code"
+      ]
     },
     {
       "type": 0,
@@ -3676,14 +3676,14 @@
       "value": "Update the "
     },
     {
+      "type": 8,
+      "value": "code",
       "children": [
         {
           "type": 0,
           "value": "fromRemoteDocument"
         }
-      ],
-      "type": 8,
-      "value": "code"
+      ]
     },
     {
       "type": 0,
@@ -3748,28 +3748,28 @@
   ],
   "ResolveIncompatibilityModal.tsx_5HfPcg": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " The collections used by this app have changed since the app was created. Update the app to ensure that it works correctly. "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": "Collection changes:"
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     }
   ],
   "ResolveIncompatibilityModal.tsx_5daczq": [
@@ -3786,18 +3786,20 @@
   ],
   "ResolveIncompatibilityModal.tsx_Gf4r/F": [
     {
+      "type": 5,
+      "value": "type",
       "options": {
         "WasDeleted": {
           "value": [
             {
+              "type": 8,
+              "value": "code",
               "children": [
                 {
                   "type": 1,
                   "value": "collectionId"
                 }
-              ],
-              "type": 8,
-              "value": "code"
+              ]
             },
             {
               "type": 0,
@@ -3808,14 +3810,14 @@
         "other": {
           "value": [
             {
+              "type": 8,
+              "value": "code",
               "children": [
                 {
                   "type": 1,
                   "value": "collectionId"
                 }
-              ],
-              "type": 8,
-              "value": "code"
+              ]
             },
             {
               "type": 0,
@@ -3823,9 +3825,7 @@
             }
           ]
         }
-      },
-      "type": 5,
-      "value": "type"
+      }
     }
   ],
   "ResolveIncompatibilityModal.tsx_kAEQyV": [
@@ -3898,70 +3898,70 @@
   ],
   "SchemaTab.tsx_/WLKzQ": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "ol",
       "children": [
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "li",
           "children": [
             {
               "type": 0,
               "value": "Implement the schema changes you want to make."
             }
-          ],
-          "type": 8,
-          "value": "li"
+          ]
         },
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "li",
           "children": [
             {
               "type": 0,
               "value": " Update the collection's content summary getter to reflect those changes. "
             }
-          ],
-          "type": 8,
-          "value": "li"
+          ]
         },
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "li",
           "children": [
             {
               "type": 0,
               "value": " Write a migration function to convert documents from the previous schema to the updated schema. "
             }
-          ],
-          "type": 8,
-          "value": "li"
+          ]
         },
         {
           "type": 0,
           "value": " "
         }
-      ],
-      "type": 8,
-      "value": "ol"
+      ]
     }
   ],
   "SchemaTab.tsx_Lktmvk": [
@@ -3972,70 +3972,70 @@
   ],
   "SchemaTab.tsx_Vi4BUn": [
     {
+      "type": 8,
+      "value": "p",
       "children": [
         {
           "type": 0,
           "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
         }
-      ],
-      "type": 8,
-      "value": "p"
+      ]
     },
     {
       "type": 0,
       "value": " "
     },
     {
+      "type": 8,
+      "value": "ol",
       "children": [
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "li",
           "children": [
             {
               "type": 0,
               "value": "Implement the schema changes you want to make."
             }
-          ],
-          "type": 8,
-          "value": "li"
+          ]
         },
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "li",
           "children": [
             {
               "type": 0,
               "value": " Update the collection's content summary getter to reflect those changes. "
             }
-          ],
-          "type": 8,
-          "value": "li"
+          ]
         },
         {
           "type": 0,
           "value": " "
         },
         {
+          "type": 8,
+          "value": "li",
           "children": [
             {
               "type": 0,
               "value": " Since this is a remote collection, update its remote converters as well. "
             }
-          ],
-          "type": 8,
-          "value": "li"
+          ]
         },
         {
           "type": 0,
           "value": " "
         }
-      ],
-      "type": 8,
-      "value": "ol"
+      ]
     }
   ],
   "SearchModal.tsx_xmcVZ0": [
@@ -4398,7 +4398,8 @@
       "value": "Message + "
     },
     {
-      "offset": 0,
+      "type": 6,
+      "value": "toolCallCount",
       "options": {
         "one": {
           "value": [
@@ -4423,9 +4424,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "toolCallCount"
+      "offset": 0,
+      "pluralType": "cardinal"
     }
   ],
   "TokenUsage.tsx_MJ2jZQ": [
@@ -4632,14 +4632,14 @@
   ],
   "Welcome.tsx_NZjpCr": [
     {
+      "type": 8,
+      "value": "settingsLink",
       "children": [
         {
           "type": 0,
           "value": "Configure the AI assistant"
         }
-      ],
-      "type": 8,
-      "value": "settingsLink"
+      ]
     },
     {
       "type": 0,
@@ -4648,28 +4648,28 @@
   ],
   "Welcome.tsx_mD6yYG": [
     {
+      "type": 8,
+      "value": "createCollectionLink",
       "children": [
         {
           "type": 0,
           "value": "Create your first collection"
         }
-      ],
-      "type": 8,
-      "value": "createCollectionLink"
+      ]
     },
     {
       "type": 0,
       "value": ", or "
     },
     {
+      "type": 8,
+      "value": "boutiqueLink",
       "children": [
         {
           "type": 0,
           "value": "install a pre-made one"
         }
-      ],
-      "type": 8,
-      "value": "boutiqueLink"
+      ]
     },
     {
       "type": 0,
@@ -4678,14 +4678,14 @@
   ],
   "Welcome.tsx_mNIlLz": [
     {
+      "type": 8,
+      "value": "createAppLink",
       "children": [
         {
           "type": 0,
           "value": "Create your first app"
         }
-      ],
-      "type": 8,
-      "value": "createAppLink"
+      ]
     },
     {
       "type": 0,
@@ -4700,7 +4700,8 @@
   ],
   "formatDuration.ts_26OSN4": [
     {
-      "offset": 0,
+      "type": 6,
+      "value": "minutes",
       "options": {
         "one": {
           "value": [
@@ -4722,9 +4723,8 @@
           ]
         }
       },
-      "pluralType": "cardinal",
-      "type": 6,
-      "value": "minutes"
+      "offset": 0,
+      "pluralType": "cardinal"
     },
     {
       "type": 0,
@@ -4741,21 +4741,20 @@
   ],
   "formatDuration.ts_lf6GDO": [
     {
+      "type": 2,
+      "value": "seconds",
       "style": {
-        "parsedOptions": {
-          "maximumFractionDigits": 2
-        },
+        "type": 0,
         "tokens": [
           {
-            "options": [
-            ],
-            "stem": ".##"
+            "stem": ".##",
+            "options": []
           }
         ],
-        "type": 0
-      },
-      "type": 2,
-      "value": "seconds"
+        "parsedOptions": {
+          "maximumFractionDigits": 2
+        }
+      }
     },
     {
       "type": 0,
@@ -4768,19 +4767,19 @@
       "value": "Last synced "
     },
     {
+      "type": 3,
+      "value": "lastSucceededAt",
       "style": {
+        "type": 1,
+        "pattern": "MMM d, HH:mm",
         "parsedOptions": {
+          "month": "short",
           "day": "numeric",
           "hour": "2-digit",
           "hourCycle": "h23",
-          "minute": "2-digit",
-          "month": "short"
-        },
-        "pattern": "MMM d, HH:mm",
-        "type": 1
-      },
-      "type": 3,
-      "value": "lastSucceededAt"
+          "minute": "2-digit"
+        }
+      }
     }
   ],
   "getDownSyncAction.tsx_RRA+40": [

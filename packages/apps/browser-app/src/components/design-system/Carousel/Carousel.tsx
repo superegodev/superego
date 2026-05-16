@@ -24,7 +24,7 @@ export default function Carousel({ images, alt, className }: Props) {
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            // oxlint-disable-next-line react/no-array-index-key: list is stable.
+            // oxlint-disable-next-line react/no-array-index-key -- list is stable.
             <div key={index} className={cs.Carousel.slide}>
               <Image
                 image={image}
@@ -50,7 +50,7 @@ export default function Carousel({ images, alt, className }: Props) {
           </IconButton>
           {images.map((_, index) => (
             <IconButton
-              // oxlint-disable-next-line react/no-array-index-key: list is stable.
+              // oxlint-disable-next-line react/no-array-index-key -- list is stable.
               key={index}
               variant="invisible"
               label={intl.formatMessage(

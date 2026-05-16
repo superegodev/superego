@@ -83,7 +83,7 @@ export default function CreateNewDocumentVersionForm({
       );
       latestVersionIdRef.current = document.latestVersion.id;
     }
-    // oxlint-disable-next-line react/exhaustive-deps: see comment above.
+    // oxlint-disable-next-line react/exhaustive-deps -- see comment above.
   }, [document.latestVersion.id]);
 
   const onSubmit = async (contentData: any) => {

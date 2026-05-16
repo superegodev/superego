@@ -1,4 +1,4 @@
-import { getActiveFormats, type OverTypeInstance } from "overtype";
+import { markdownActions, type OverTypeInstance } from "overtype";
 import { type RefObject, useEffect, useState } from "react";
 
 export default function useActiveFormats(
@@ -22,7 +22,7 @@ export default function useActiveFormats(
     }
 
     const update = () => {
-      setActiveFormats(new Set(getActiveFormats(textarea)));
+      setActiveFormats(new Set(markdownActions.getActiveFormats(textarea)));
     };
 
     textarea.addEventListener("selectionchange", update);

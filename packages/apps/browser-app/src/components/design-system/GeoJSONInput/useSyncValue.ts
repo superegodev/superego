@@ -57,7 +57,7 @@ export default function useSyncValue({
       debouncedOnChange.clear();
       geoman.setGlobalEventsListener(null);
     };
-    // oxlint-disable-next-line react/exhaustive-deps: refs are stable, .current is read, not tracked.
+    // oxlint-disable-next-line react/exhaustive-deps -- refs are stable, .current is read, not tracked.
   }, [onChange, isLoaded]);
 
   // Sync value: when the value changes externally, re-import into Geoman.
@@ -94,6 +94,6 @@ export default function useSyncValue({
         >[0],
       );
     }
-    // oxlint-disable-next-line react/exhaustive-deps: refs are stable, .current is read, not tracked.
+    // oxlint-disable-next-line react/exhaustive-deps -- refs are stable, .current is read, not tracked.
   }, [value, isLoaded]);
 }

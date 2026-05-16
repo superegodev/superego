@@ -424,7 +424,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           contentBlockingKeysGetter: {
             source: "",
             compiled:
-              // oxlint-disable-next-line no-template-curly-in-string: intended.
+              // oxlint-disable-next-line no-template-curly-in-string -- intended.
               "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
           },
           contentSummaryGetter: {
@@ -488,7 +488,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           contentBlockingKeysGetter: {
             source: "",
             compiled:
-              // oxlint-disable-next-line no-template-curly-in-string: intended.
+              // oxlint-disable-next-line no-template-curly-in-string -- intended.
               "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
           },
           contentSummaryGetter: {

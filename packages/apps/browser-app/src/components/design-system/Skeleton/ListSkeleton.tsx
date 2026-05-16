@@ -19,7 +19,7 @@ export default function ListSkeleton({
         .fill(null)
         .map((_, index) => (
           <div
-            // oxlint-disable-next-line react/no-array-index-key: items are identical.
+            // oxlint-disable-next-line react/no-array-index-key -- items are identical.
             key={index}
             className={cs.ListSkeleton.item}
             style={{

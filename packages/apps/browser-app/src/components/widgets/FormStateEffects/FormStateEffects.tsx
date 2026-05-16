@@ -51,10 +51,10 @@ export default function FormStateEffects<TFieldValues extends FieldValues>({
   const intl = useIntl();
   const { dirtyFields, isValid } = useFormState({ control });
 
-  // Workaround for https://github.com/react-hook-form/react-hook-form/issues/13141
-  // formState.isDirty can report false positives after a reset with
-  // keepValues, so we derive dirty state from dirtyFields instead.
-  const isDirty = Object.keys(dirtyFields).length !== 0;
+  // react-hook-form's formState.isDirty can include programmatic derived-field
+  // updates. Form side effects should only react to user-authored changes, so
+  // ignore dirty generated compilation outputs when they are the only change.
+  const isDirty = hasDirtyUserAuthoredField(dirtyFields);
 
   // Debounce form state so that the effects below don't propagate state changes
   // (and therefore expensive re-renders) to the parent while the user is
@@ -99,4 +99,31 @@ export default function FormStateEffects<TFieldValues extends FieldValues>({
   );
 
   return null;
+}
+
+function hasDirtyUserAuthoredField(
+  dirtyFields: unknown,
+  path: readonly string[] = [],
+): boolean {
+  if (dirtyFields === true) {
+    return path.at(-1) !== "compiled";
+  }
+  if (
+    dirtyFields === false ||
+    dirtyFields === null ||
+    dirtyFields === undefined
+  ) {
+    return false;
+  }
+  if (Array.isArray(dirtyFields)) {
+    return dirtyFields.some((dirtyField, index) =>
+      hasDirtyUserAuthoredField(dirtyField, [...path, String(index)]),
+    );
+  }
+  if (typeof dirtyFields !== "object") {
+    return false;
+  }
+  return Object.entries(dirtyFields).some(([fieldName, dirtyField]) =>
+    hasDirtyUserAuthoredField(dirtyField, [...path, fieldName]),
+  );
 }

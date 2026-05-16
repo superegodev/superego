@@ -24,12 +24,12 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
-    "es-toolkit": "^1.46.0",
+    "es-toolkit": "^1.46.1",
     "p-retry": "^8.0.0"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.4.0",
+    "@fast-check/vitest": "^0.4.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.6"
   }
 }
