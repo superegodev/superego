@@ -32,13 +32,14 @@ import makeContentSummary from "../../makers/makeContentSummary.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
@@ -52,9 +53,30 @@ type ExecReturnValue = ResultPromise<
   | ReferencedDocumentsNotFound
   | UnexpectedError
 >;
-export default class DocumentsCreateNewVersion extends Usecase<
+export default class DocumentsCreateNewVersion extends BackendUsecase<
   Backend["documents"]["createNewVersion"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.documentId(),
+    structuralSchemas.backend.ids.documentVersionId(),
+    v.any(),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.document(),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+      structuralSchemas.backend.errors.documentContentNotValid(),
+      structuralSchemas.backend.errors.documentNotFound(),
+      structuralSchemas.backend.errors.documentVersionIdNotMatching(),
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.referencedDocumentsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     collectionId: CollectionId,
     id: DocumentId,

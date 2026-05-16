@@ -10,12 +10,24 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class AssistantsDeleteConversation extends Usecase<
+export default class AssistantsDeleteConversation extends BackendUsecase<
   Backend["assistants"]["deleteConversation"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.conversationId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.conversationNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
+  ]);
+
   async exec(
     id: ConversationId,
     commandConfirmation: string,

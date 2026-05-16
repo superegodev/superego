@@ -43,7 +43,7 @@ export default function EagerCodeBlock({
       <div className={cs.EagerCodeBlock.lineNumbers}>
         {formattedCode.split("\n").map((_, index) => (
           <div
-            // oxlint-disable-next-line react/no-array-index-key: the index is the correct identifier for a line number.
+            // oxlint-disable-next-line react/no-array-index-key -- the index is the correct identifier for a line number.
             key={index}
             className={cs.EagerCodeBlock.lineNumber}
             style={mirrorCodeInput ? { paddingInlineEnd: 26 } : undefined}

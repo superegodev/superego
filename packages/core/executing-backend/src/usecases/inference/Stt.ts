@@ -11,11 +11,24 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 
-export default class InferenceStt extends Usecase<Backend["inference"]["stt"]> {
+export default class InferenceStt extends BackendUsecase<
+  Backend["inference"]["stt"]
+> {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.types.audioContent(),
+    structuralSchemas.backend.types.inferenceOptions("transcription"),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.string(), [
+    structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+    structuralSchemas.backend.errors.unexpectedError(),
+  ]);
+
   async exec(
     audio: AudioContent,
     inferenceOptions: InferenceOptions<"transcription">,

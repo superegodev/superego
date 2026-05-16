@@ -1,6 +1,7 @@
 import {
   type Backend,
   type InferenceOptions,
+  type InferenceOptionsNotValid,
   type Message,
   MessageContentPartType,
   MessageRole,
@@ -21,16 +22,40 @@ import {
   validateInferenceOptions,
 } from "@superego/shared-utils";
 import { compact } from "es-toolkit";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 
 const MAX_ATTEMPTS = 5;
 
-export default class InferenceImplementTypescriptModule extends Usecase<
+export default class InferenceImplementTypescriptModule extends BackendUsecase<
   Backend["inference"]["implementTypescriptModule"]
 > {
+  argumentsSchema = v.tuple([
+    v.strictObject({
+      description: v.string(),
+      rules: v.nullable(v.string()),
+      additionalInstructions: v.nullable(v.string()),
+      template: v.string(),
+      libs: v.array(structuralSchemas.backend.types.typescriptFile()),
+      startingPoint: structuralSchemas.backend.types.typescriptFile(),
+      userRequest: v.string(),
+    }),
+    structuralSchemas.backend.types.inferenceOptions("completion"),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.typescriptModule(),
+    [
+      structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+      structuralSchemas.backend.errors.tooManyFailedImplementationAttempts(),
+      structuralSchemas.backend.errors.unexpectedError(),
+      structuralSchemas.backend.errors.writeTypescriptModuleToolNotCalled(),
+    ],
+  );
+
   async exec(
     {
       description,
@@ -42,7 +67,13 @@ export default class InferenceImplementTypescriptModule extends Usecase<
       userRequest,
     }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0],
     inferenceOptions: InferenceOptions<"completion">,
-  ): ReturnType<Backend["inference"]["implementTypescriptModule"]> {
+  ): ResultPromise<
+    TypescriptModule,
+    | InferenceOptionsNotValid
+    | TooManyFailedImplementationAttempts
+    | WriteTypescriptModuleToolNotCalled
+    | UnexpectedError
+  > {
     const globalSettings = await this.repos.globalSettings.get();
 
     const inferenceOptionsIssues = validateInferenceOptions(

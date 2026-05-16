@@ -16,16 +16,30 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class CollectionsTriggerDownSync extends Usecase<
+export default class CollectionsTriggerDownSync extends BackendUsecase<
   Backend["collections"]["triggerDownSync"]
 > {
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.collectionId()]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.collectionHasNoRemote(),
+      structuralSchemas.backend.errors.collectionIsSyncing(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorNotAuthenticated(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: CollectionId,
   ): ResultPromise<

@@ -20,11 +20,34 @@ import type CollectionCategoryEntity from "../../entities/CollectionCategoryEnti
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class CollectionCategoriesUpdate extends Usecase<
+export default class CollectionCategoriesUpdate extends BackendUsecase<
   Backend["collectionCategories"]["update"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionCategoryId(),
+    v.strictObject({
+      name: v.optional(v.string()),
+      icon: v.optional(v.nullable(v.string())),
+      parentId: v.optional(
+        v.nullable(structuralSchemas.backend.ids.collectionCategoryId()),
+      ),
+    }),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collectionCategory(),
+    [
+      structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.parentCollectionCategoryIsDescendant(),
+      structuralSchemas.backend.errors.parentCollectionCategoryNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: CollectionCategoryId,
     patch: Partial<Pick<CollectionCategory, "name" | "icon" | "parentId">>,

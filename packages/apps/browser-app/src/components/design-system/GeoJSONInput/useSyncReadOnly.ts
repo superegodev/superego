@@ -28,6 +28,6 @@ export default function useSyncReadOnly({
     } else {
       geoman.addControls();
     }
-    // oxlint-disable-next-line react/exhaustive-deps: refs are stable, .current is read, not tracked.
+    // oxlint-disable-next-line react/exhaustive-deps -- refs are stable, .current is read, not tracked.
   }, [isReadOnly, isLoaded]);
 }

@@ -1,4 +1,5 @@
 import {
+  AssistantName as AssistantNameEnum,
   type AssistantName,
   type Backend,
   BackgroundJobName,
@@ -20,21 +21,37 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsStartConversation extends Usecase<
+export default class AssistantsStartConversation extends BackendUsecase<
   Backend["assistants"]["startConversation"]
 > {
+  argumentsSchema = v.tuple([
+    v.picklist(Object.values(AssistantNameEnum)),
+    structuralSchemas.backend.types.userMessageContent(),
+    structuralSchemas.backend.types.inferenceOptions("completion"),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.conversation(),
+    [
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     assistant: AssistantName,
     userMessageContent: Message.User["content"],

@@ -11,6 +11,15 @@ import type InferenceServiceFactory from "../requirements/InferenceServiceFactor
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../requirements/TypescriptCompiler.js";
 
+/**
+ * Base class for all usecases. Holds the common constructor and helper methods.
+ * Usecases exposed via the public `Backend` interface should extend
+ * `BackendUsecase` instead, which adds the abstract `argumentsSchema` and
+ * `resultSchema` properties used by `ExecutingBackend` for RPC-boundary
+ * validation. Extend `Usecase` directly only for internal usecases, i.e., the
+ * ones invoked via `sub()` or by the background-job runner, never through the
+ * public `Backend` interface.
+ */
 export default abstract class Usecase<
   Exec extends (...args: any[]) => ResultPromise<any, any> = (
     ...args: any[]

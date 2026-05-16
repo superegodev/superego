@@ -1,6 +1,6 @@
 import { packs } from "@superego/boutique";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Boutique", (deps) => {
@@ -18,6 +18,18 @@ export default rd<GetDependencies>("Boutique", (deps) => {
   });
 
   describe("getPack", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.boutique.getPack("not-a-valid-id" as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: PackNotFound", async () => {
       // Setup SUT
       const { backend } = deps();

@@ -20,16 +20,30 @@ import type CollectionCategoryEntity from "../../entities/CollectionCategoryEnti
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
 interface CollectionCategoriesCreateOptions {
   collectionCategoryId?: CollectionCategoryId;
   skipReferenceCheckForCollectionCategoryIds?: CollectionCategoryId[];
 }
 
-export default class CollectionCategoriesCreate extends Usecase<
+export default class CollectionCategoriesCreate extends BackendUsecase<
   Backend["collectionCategories"]["create"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.types.collectionCategoryDefinition(),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collectionCategory(),
+    [
+      structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
+      structuralSchemas.backend.errors.parentCollectionCategoryNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     definition: CollectionCategoryDefinition,
     options: CollectionCategoriesCreateOptions = {},

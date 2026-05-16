@@ -11,7 +11,7 @@ export default function MatchedText({ matchedText }: Props): ReactNode {
     <span>
       {segments.map((segment, index) =>
         segment.isHighlighted ? (
-          // oxlint-disable-next-line react/no-array-index-key: no other key fits.
+          // oxlint-disable-next-line react/no-array-index-key -- no other key fits.
           <mark key={index} className={cs.MatchedText.mark}>
             {segment.text}
           </mark>

@@ -30,13 +30,14 @@ import makeContentSummary from "../../makers/makeContentSummary.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ContentDocumentRefUtils from "../../utils/ContentDocumentRefUtils.js";
 import ContentFileUtils from "../../utils/ContentFileUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 
 type ExecReturnValue = ResultPromise<
   Document,
@@ -49,9 +50,26 @@ type ExecReturnValue = ResultPromise<
   | DuplicateDocumentDetected
   | UnexpectedError
 >;
-export default class DocumentsCreate extends Usecase<
+export default class DocumentsCreate extends BackendUsecase<
   Backend["documents"]["create"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.types.documentDefinition(),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.document(),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+      structuralSchemas.backend.errors.documentContentNotValid(),
+      structuralSchemas.backend.errors.duplicateDocumentDetected(),
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.referencedDocumentsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     definition: DocumentDefinition,
     options?: {

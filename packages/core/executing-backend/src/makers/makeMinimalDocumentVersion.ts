@@ -4,6 +4,6 @@ import type MinimalDocumentVersionEntity from "../entities/MinimalDocumentVersio
 export default function makeMinimalDocumentVersion(
   entity: MinimalDocumentVersionEntity,
 ): MinimalDocumentVersion {
-  const { documentId, collectionId, ...rest } = entity;
+  const { documentId, collectionId, referencedDocuments, ...rest } = entity;
   return rest;
 }

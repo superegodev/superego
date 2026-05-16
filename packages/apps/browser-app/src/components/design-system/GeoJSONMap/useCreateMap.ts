@@ -155,7 +155,7 @@ export default function useCreateMap(geoJSON: {
       setIsLoaded(false);
       map.remove();
     };
-    // oxlint-disable-next-line react/exhaustive-deps: geoJSON is synced in a separate effect.
+    // oxlint-disable-next-line react/exhaustive-deps -- geoJSON is synced in a separate effect.
   }, [theme]);
 
   useEffect(() => {
@@ -169,7 +169,7 @@ export default function useCreateMap(geoJSON: {
     if (source) {
       source.setData(geoJSON as unknown as GeoJSON.GeoJSON);
     }
-    // oxlint-disable-next-line react/exhaustive-deps: depend on stringified geoJSON for deep comparison.
+    // oxlint-disable-next-line react/exhaustive-deps -- depend on stringified geoJSON for deep comparison.
   }, [isLoaded, JSON.stringify(geoJSON)]);
 
   return { renderingError, mapContainerRef };

@@ -10,13 +10,24 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeBackgroundJob from "../../makers/makeBackgroundJob.js";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class BackgroundJobsGet extends Usecase<
+export default class BackgroundJobsGet extends BackendUsecase<
   Backend["backgroundJobs"]["get"]
 > {
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.backgroundJobId()]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.backgroundJob(),
+    [
+      structuralSchemas.backend.errors.backgroundJobNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: BackgroundJobId,
   ): ResultPromise<BackgroundJob, BackgroundJobNotFound | UnexpectedError> {

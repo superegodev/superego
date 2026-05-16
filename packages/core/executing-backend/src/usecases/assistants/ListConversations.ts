@@ -5,15 +5,23 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
+import * as v from "valibot";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsListConversations extends Usecase<
+export default class AssistantsListConversations extends BackendUsecase<
   Backend["assistants"]["listConversations"]
 > {
+  argumentsSchema = v.tuple([]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.liteConversation()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
+
   async exec(): ResultPromise<LiteConversation[], UnexpectedError> {
     const conversations = await this.repos.conversation.findAll();
 

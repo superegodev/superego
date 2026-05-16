@@ -56,7 +56,6 @@ export default function ConversationMessages({
       ) : null}
       {tailMessages.map((message, index) => (
         <ConversationMessage
-          // oxlint-disable-next-line react/no-array-index-key
           key={"id" in message ? message.id : `tail-${index}`}
           message={message}
           conversation={conversation}
@@ -81,7 +80,6 @@ export default function ConversationMessages({
     <div className={classnames(cs.ConversationMessages.root, className)}>
       {headMessages.map((message, index) => (
         <ConversationMessage
-          // oxlint-disable-next-line react/no-array-index-key
           key={"id" in message ? message.id : `head-${index}`}
           message={message}
           conversation={conversation}

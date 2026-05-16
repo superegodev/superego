@@ -13,16 +13,35 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import pMap from "p-map";
+import * as v from "valibot";
 import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class DocumentsSearch extends Usecase<
+export default class DocumentsSearch extends BackendUsecase<
   Backend["documents"]["search"]
 > {
+  argumentsSchema = v.tuple([
+    v.nullable(structuralSchemas.backend.ids.collectionId()),
+    v.string(),
+    v.strictObject({ limit: v.number() }),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(
+      structuralSchemas.backend.types.textSearchResult(
+        structuralSchemas.backend.types.liteDocument(),
+      ),
+    ),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     collectionId: CollectionId | null,
     query: string,

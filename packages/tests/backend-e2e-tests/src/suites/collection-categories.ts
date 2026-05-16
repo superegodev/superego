@@ -7,6 +7,18 @@ import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Collection categories", (deps) => {
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collectionCategories.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionCategoryNameNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -168,6 +180,21 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
   });
 
   describe("update", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collectionCategories.update(
+        "not-a-valid-id" as any,
+        { name: "name" },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -384,6 +411,20 @@ export default rd<GetDependencies>("Collection categories", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collectionCategories.delete(
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
       const { backend } = deps();

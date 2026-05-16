@@ -20,12 +20,40 @@ import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class CollectionsUpdateSettings extends Usecase<
+export default class CollectionsUpdateSettings extends BackendUsecase<
   Backend["collections"]["updateSettings"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    v.strictObject({
+      name: v.optional(v.string()),
+      icon: v.optional(v.nullable(v.string())),
+      collectionCategoryId: v.optional(
+        v.nullable(structuralSchemas.backend.ids.collectionCategoryId()),
+      ),
+      defaultCollectionViewAppId: v.optional(
+        v.nullable(structuralSchemas.backend.ids.appId()),
+      ),
+      description: v.optional(v.nullable(v.string())),
+      assistantInstructions: v.optional(v.nullable(v.string())),
+      redirectToCollectionAfterDocumentCreation: v.optional(v.boolean()),
+    }),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: CollectionId,
     settingsPatch: Partial<CollectionSettings>,

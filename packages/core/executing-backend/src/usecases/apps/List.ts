@@ -1,12 +1,20 @@
 import type { App, AppId, Backend, UnexpectedError } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
+import * as v from "valibot";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class AppsList extends Usecase<Backend["apps"]["list"]> {
+export default class AppsList extends BackendUsecase<Backend["apps"]["list"]> {
+  argumentsSchema = v.tuple([]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.app()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
+
   async exec(): ResultPromise<App[], UnexpectedError> {
     const apps = await this.repos.app.findAll();
     const latestVersions = await this.repos.appVersion.findAllLatests();

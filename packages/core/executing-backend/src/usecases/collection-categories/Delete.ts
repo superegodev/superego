@@ -10,12 +10,23 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class CollectionCategoriesDelete extends Usecase<
+export default class CollectionCategoriesDelete extends BackendUsecase<
   Backend["collectionCategories"]["delete"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionCategoryId(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.collectionCategoryHasChildren(),
+    structuralSchemas.backend.errors.collectionCategoryNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionCategoryId,
   ): ResultPromise<

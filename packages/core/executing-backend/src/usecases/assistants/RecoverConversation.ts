@@ -16,18 +16,34 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsRecoverConversation extends Usecase<
+export default class AssistantsRecoverConversation extends BackendUsecase<
   Backend["assistants"]["recoverConversation"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.conversationId(),
+    structuralSchemas.backend.types.inferenceOptions("completion"),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.conversation(),
+    [
+      structuralSchemas.backend.errors.cannotRecoverConversation(),
+      structuralSchemas.backend.errors.conversationNotFound(),
+      structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: ConversationId,
     inferenceOptions: InferenceOptions<"completion">,

@@ -20,14 +20,27 @@ import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
 }
 
-export default class AppsCreate extends Usecase<Backend["apps"]["create"]> {
+export default class AppsCreate extends BackendUsecase<
+  Backend["apps"]["create"]
+> {
+  argumentsSchema = v.tuple([structuralSchemas.backend.types.appDefinition()]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.app(),
+    [
+      structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     { type, name, targetCollectionIds, files }: AppDefinition,
     options: AppsCreateOptions = {},

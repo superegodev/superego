@@ -7,6 +7,18 @@ import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Packs", (deps) => {
   describe("install", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.packs.install({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: PackNotValid when proto collection category parent references future index", async () => {
       // Setup SUT
       const { backend } = deps();

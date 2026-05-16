@@ -14,16 +14,30 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 import AppsDelete from "../apps/Delete.js";
 import AppsList from "../apps/List.js";
 import DocumentsDelete from "../documents/Delete.js";
 
-export default class CollectionsDelete extends Usecase<
+export default class CollectionsDelete extends BackendUsecase<
   Backend["collections"]["delete"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.collectionIsReferenced(),
+    structuralSchemas.backend.errors.collectionNotFound(),
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.documentIsReferenced(),
+    structuralSchemas.backend.errors.unexpectedError(),
+  ]);
+
   async exec(
     id: CollectionId,
     commandConfirmation: string,

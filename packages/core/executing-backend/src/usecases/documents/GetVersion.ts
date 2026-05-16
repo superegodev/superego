@@ -12,13 +12,28 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeDocumentVersion from "../../makers/makeDocumentVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class DocumentsGetVersion extends Usecase<
+export default class DocumentsGetVersion extends BackendUsecase<
   Backend["documents"]["getVersion"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.documentId(),
+    structuralSchemas.backend.ids.documentVersionId(),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.documentVersion(),
+    [
+      structuralSchemas.backend.errors.documentVersionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     collectionId: CollectionId,
     documentId: DocumentId,

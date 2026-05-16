@@ -20,14 +20,16 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   extractProtoDocumentIds,
   makeProtoDocumentIdMapping,
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import DocumentsCreate from "./Create.js";
 
 interface DocumentsCreateManyOptions {
@@ -36,9 +38,26 @@ interface DocumentsCreateManyOptions {
   documentIds?: DocumentId[];
 }
 
-export default class DocumentsCreateMany extends Usecase<
+export default class DocumentsCreateMany extends BackendUsecase<
   Backend["documents"]["createMany"]
 > {
+  argumentsSchema = v.tuple([
+    v.array(structuralSchemas.backend.types.documentDefinition()),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.document()),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+      structuralSchemas.backend.errors.documentContentNotValid(),
+      structuralSchemas.backend.errors.duplicateDocumentDetected(),
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.referencedDocumentsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     definitions: DocumentDefinition[],
     options?: DocumentsCreateManyOptions,

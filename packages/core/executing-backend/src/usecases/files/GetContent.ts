@@ -9,12 +9,23 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class FilesGetContent extends Usecase<
+export default class FilesGetContent extends BackendUsecase<
   Backend["files"]["getContent"]
 > {
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.fileId()]);
+  resultSchema = structuralSchemas.global.result(
+    v.instance(Uint8Array) as v.GenericSchema<unknown, Uint8Array<ArrayBuffer>>,
+    [
+      structuralSchemas.backend.errors.fileNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: FileId,
   ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {

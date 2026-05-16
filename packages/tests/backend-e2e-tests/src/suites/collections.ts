@@ -13,6 +13,54 @@ import triggerAndWaitForDownSync from "../utils/triggerAndWaitForDownSync.js";
 
 export default rd<GetDependencies>("Collections", (deps) => {
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("error: ArgumentsNotValid when schema has extra keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+          extra: true,
+        } as any,
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -641,6 +689,18 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("createMany", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([{} as any]);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionSettingsNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1469,6 +1529,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("updateSettings", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.updateSettings(
+        "not-a-valid-id" as any,
+        { name: "name" },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1722,6 +1797,46 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("setRemote", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.setRemote(
+        "not-a-valid-id" as any,
+        "MockConnector",
+        { apiKey: "k" },
+        {},
+        {
+          fromRemoteDocument: { source: "", compiled: "" },
+        },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("error: ArgumentsNotValid when authentication settings have extra keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.setRemote(
+        Id.generate.collection(),
+        "MockConnector",
+        { apiKey: "k", extra: true } as any,
+        {},
+        {
+          fromRemoteDocument: { source: "", compiled: "" },
+        },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -2080,7 +2195,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        { clientId: "clientId" } as any,
+        { clientId: "", clientSecret: null },
         { setting: 0 },
         {
           fromRemoteDocument: {
@@ -2102,9 +2217,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
             connectorName: mockConnector.name,
             issues: [
               {
-                message:
-                  'Invalid key: Expected "clientSecret" but received undefined',
-                path: [{ key: "clientSecret" }],
+                message: "Invalid length: Expected >=1 but received 0",
+                path: [{ key: "clientId" }],
               },
             ],
           },
@@ -2175,7 +2289,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const setRemoteResult = await backend.collections.setRemote(
         createResult.data.id,
         mockConnector.name,
-        {} as any,
+        { apiKey: "" },
         { setting: 0 },
         {
           fromRemoteDocument: {
@@ -2197,8 +2311,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             connectorName: mockConnector.name,
             issues: [
               {
-                message:
-                  'Invalid key: Expected "apiKey" but received undefined',
+                message: "Invalid length: Expected >=1 but received 0",
                 path: [{ key: "apiKey" }],
               },
             ],
@@ -2748,6 +2861,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("getOAuth2PKCEConnectorAuthorizationRequestUrl", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result =
+        await backend.collections.getOAuth2PKCEConnectorAuthorizationRequestUrl(
+          "not-a-valid-id" as any,
+        );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -3012,6 +3140,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("authenticateOAuth2PKCEConnector", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.authenticateOAuth2PKCEConnector(
+        "not-a-valid-id" as any,
+        "https://example.com/callback",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -3292,6 +3435,20 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("triggerDownSync", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.triggerDownSync(
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -4573,6 +4730,29 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("createNewVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createNewVersion(
+        Id.generate.collection(),
+        Id.generate.collectionVersion(),
+        {} as any,
+        {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: { source: "", compiled: "" },
+          defaultDocumentViewUiOptions: null,
+        },
+        null,
+        null,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -6351,6 +6531,22 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("updateLatestVersionSettings", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.updateLatestVersionSettings(
+        "not-a-valid-id" as any,
+        Id.generate.collectionVersion(),
+        {},
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -6831,7 +7027,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
             contentBlockingKeysGetter: {
               source: "",
               compiled:
-                // oxlint-disable-next-line no-template-curly-in-string: intended.
+                // oxlint-disable-next-line no-template-curly-in-string -- intended.
                 "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
             },
           },
@@ -6927,6 +7123,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.delete(
+        "not-a-valid-id" as any,
+        "delete",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -7427,6 +7638,21 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("getVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.getVersion(
+        "not-a-valid-id" as any,
+        Id.generate.collectionVersion(),
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CollectionVersionNotFound (case: collection does not exist)", async () => {
       // Setup SUT
       const { backend } = deps();

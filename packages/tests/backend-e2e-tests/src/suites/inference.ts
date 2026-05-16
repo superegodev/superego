@@ -80,6 +80,24 @@ export default rd<GetDependencies>("Inference", (deps) => {
   };
 
   describe("stt", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.inference.stt({} as any, {
+        completion: null,
+        transcription: {
+          providerModelRef: { providerName: "p", modelId: "m" },
+        },
+        fileInspection: null,
+      });
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT
       const { backend } = deps({ inferenceSettings });
@@ -157,6 +175,21 @@ export default rd<GetDependencies>("Inference", (deps) => {
       },
       userRequest: "Implement the module",
     };
+
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.inference.implementTypescriptModule(
+        {} as any,
+        validInferenceOptions,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
 
     it("error: InferenceOptionsNotValid", async () => {
       // Setup SUT

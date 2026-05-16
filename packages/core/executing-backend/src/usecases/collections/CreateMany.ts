@@ -20,13 +20,15 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   extractProtoCollectionIds,
   makeProtoCollectionIdMapping,
   replaceProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionsCreate from "./Create.js";
 
 interface CollectionsCreateManyOptions {
@@ -35,9 +37,27 @@ interface CollectionsCreateManyOptions {
   skipReferenceCheckForAppIds?: AppId[];
 }
 
-export default class CollectionsCreateMany extends Usecase<
+export default class CollectionsCreateMany extends BackendUsecase<
   Backend["collections"]["createMany"]
 > {
+  argumentsSchema = v.tuple([
+    v.array(structuralSchemas.backend.types.collectionDefinition()),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.collection()),
+    [
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionSchemaNotValid(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.referencedCollectionsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     definitions: CollectionDefinition[],
     options: CollectionsCreateManyOptions = {},

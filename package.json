@@ -27,18 +27,32 @@
     "playwright": "playwright"
   },
   "devDependencies": {
-    "oxfmt": "^0.46.0",
-    "oxlint": "^1.61.0",
-    "playwright": "^1.59.1",
+    "oxfmt": "^0.50.0",
+    "oxlint": "^1.65.0",
+    "playwright": "^1.60.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-sql-cst": "^0.19.3",
+    "prettier-plugin-sql-cst": "^0.22.1",
     "typescript": "^6.0.3",
     "zx": "8.8.5-lite"
+  },
+  "dependenciesMeta": {
+    "electron": {
+      "built": true
+    },
+    "esbuild": {
+      "built": true
+    },
+    "sharp": {
+      "built": true
+    },
+    "workerd": {
+      "built": true
+    }
   },
   "resolutions": {
     "baseline-browser-mapping": "2.9.19",
     "browserslist": "4.28.1"
   },
-  "packageManager": "yarn@4.13.0+sha512.5c20ba010c99815433e5c8453112165e673f1c7948d8d2b267f4b5e52097538658388ebc9f9580656d9b75c5cc996f990f611f99304a2197d4c56d21eea370e7"
+  "packageManager": "yarn@4.14.1+sha512.64df448055b2d37ba269d7db535a469b8da93f8ef1140c25fd7a83c00a8fbaacb214ca0e02553b92a2c54cef78bb67d0b4817fab02001df0e24fac0faccc3b42"
 }

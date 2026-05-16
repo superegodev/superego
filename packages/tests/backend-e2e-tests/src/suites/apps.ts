@@ -7,6 +7,18 @@ import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Apps", (deps) => {
   describe("create", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.apps.create({} as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: AppNameNotValid", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -137,6 +149,21 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("updateName", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.apps.updateName(
+        "not-a-valid-id" as any,
+        "name",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: AppNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -231,6 +258,22 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("createNewVersion", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        Id.generate.app(),
+        [],
+        {} as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: AppNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -372,6 +415,21 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("delete", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.apps.delete(
+        "not-a-valid-id" as any,
+        "delete",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("error: CommandConfirmationNotValid", async () => {
       // Setup SUT
       const { backend } = deps();

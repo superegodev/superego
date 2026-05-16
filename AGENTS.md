@@ -9,7 +9,8 @@
 - Follow existing patterns in the package you are editing; keep changes focused
   and consistent with surrounding code.
 - **Never** use abbreviations for variable names, aside from common
-  abbreviations (e.g., `i` for loop variables) and acronyms (e.g., `url`).
+  abbreviations (e.g., `i` for loop variables), acronyms (e.g., `url`), and
+  idiomatic library namespace aliases (e.g., `v` for Valibot).
 - **Always use braces** for `if`/`else`/`for`/`while` blocks, even single-line
   bodies.
 

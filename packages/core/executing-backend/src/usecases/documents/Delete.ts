@@ -15,12 +15,28 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
-import Usecase from "../../utils/Usecase.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class DocumentsDelete extends Usecase<
+export default class DocumentsDelete extends BackendUsecase<
   Backend["documents"]["delete"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.documentId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.collectionNotFound(),
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+    structuralSchemas.backend.errors.documentIsReferenced(),
+    structuralSchemas.backend.errors.documentNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
+  ]);
+
   async exec(
     collectionId: CollectionId,
     id: DocumentId,

@@ -22,24 +22,42 @@ import {
   makeUnsuccessfulResult,
   validateInferenceOptions,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsContinueConversation extends Usecase<
+export default class AssistantsContinueConversation extends BackendUsecase<
   Backend["assistants"]["continueConversation"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.conversationId(),
+    structuralSchemas.backend.types.userMessageContent(),
+    structuralSchemas.backend.types.inferenceOptions("completion"),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.conversation(),
+    [
+      structuralSchemas.backend.errors.cannotContinueConversation(),
+      structuralSchemas.backend.errors.conversationNotFound(),
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: ConversationId,
-    userMessageContent: NonEmptyArray<MessageContentPart.Text>,
+    userMessageContent: Message.User["content"],
     inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
     Conversation,

@@ -17,12 +17,26 @@ import type AppEntity from "../../entities/AppEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class AppsUpdateName extends Usecase<
+export default class AppsUpdateName extends BackendUsecase<
   Backend["apps"]["updateName"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.appId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.app(),
+    [
+      structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: AppId,
     name: string,

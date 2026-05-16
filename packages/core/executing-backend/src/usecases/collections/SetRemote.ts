@@ -27,12 +27,34 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class CollectionsSetRemote extends Usecase<
+export default class CollectionsSetRemote extends BackendUsecase<
   Backend["collections"]["setRemote"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    v.string(),
+    structuralSchemas.backend.types.connectorAuthenticationSettings(),
+    v.any(),
+    structuralSchemas.backend.types.remoteConverters(),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.cannotChangeCollectionRemoteConnector(),
+      structuralSchemas.backend.errors.collectionHasDocuments(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorAuthenticationSettingsNotValid(),
+      structuralSchemas.backend.errors.connectorNotFound(),
+      structuralSchemas.backend.errors.connectorSettingsNotValid(),
+      structuralSchemas.backend.errors.remoteConvertersNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: CollectionId,
     connectorName: string,

@@ -43,7 +43,10 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
 import {
   extractProtoCollectionIds,
@@ -57,13 +60,49 @@ import {
   replaceProtoCollectionIds,
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import AppsCreate from "../apps/Create.js";
 import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
 import DocumentsCreate from "../documents/Create.js";
 
-export default class PacksInstall extends Usecase<Backend["packs"]["install"]> {
+export default class PacksInstall extends BackendUsecase<
+  Backend["packs"]["install"]
+> {
+  argumentsSchema = v.tuple([structuralSchemas.backend.types.pack()]);
+  resultSchema = structuralSchemas.global.result(
+    v.strictObject({
+      collectionCategories: v.array(
+        structuralSchemas.backend.types.collectionCategory(),
+      ),
+      collections: v.array(structuralSchemas.backend.types.collection()),
+      apps: v.array(structuralSchemas.backend.types.app()),
+      documents: v.array(structuralSchemas.backend.types.document()),
+    }),
+    [
+      structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionSchemaNotValid(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.documentContentNotValid(),
+      structuralSchemas.backend.errors.duplicateDocumentDetected(),
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.packNotValid(),
+      structuralSchemas.backend.errors.parentCollectionCategoryNotFound(),
+      structuralSchemas.backend.errors.referencedCollectionsNotFound(),
+      structuralSchemas.backend.errors.referencedDocumentsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(pack: Pack): ResultPromise<
     {
       collectionCategories: CollectionCategory[];

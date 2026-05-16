@@ -1,16 +1,34 @@
 import type {
+  Backend,
   LiteConversation,
   TextSearchResult,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
+import * as v from "valibot";
 import makeConversation from "../../makers/makeConversation.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import Usecase from "../../utils/Usecase.js";
 import CollectionsList from "../collections/List.js";
 
-export default class AssistantsSearchConversations extends Usecase {
+export default class AssistantsSearchConversations extends BackendUsecase<
+  Backend["assistants"]["searchConversations"]
+> {
+  argumentsSchema = v.tuple([
+    v.string(),
+    v.strictObject({ limit: v.number() }),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(
+      structuralSchemas.backend.types.textSearchResult(
+        structuralSchemas.backend.types.liteConversation(),
+      ),
+    ),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
+
   async exec(
     query: string,
     options: { limit: number },

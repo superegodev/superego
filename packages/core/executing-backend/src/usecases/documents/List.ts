@@ -12,16 +12,37 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import * as v from "valibot";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
-import Usecase from "../../utils/Usecase.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 
-export default class DocumentsList extends Usecase<
+export default class DocumentsList extends BackendUsecase<
   Backend["documents"]["list"]
 > {
+  // The public Backend signature has overloads but `Parameters<>` resolves to
+  // the last (widest) one: `(collectionId, lite?: false)`.
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    v.optional(v.literal(false)),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(
+      v.union([
+        structuralSchemas.backend.types.liteDocument(),
+        structuralSchemas.backend.types.document(),
+      ]),
+    ),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     collectionId: CollectionId,
   ): ResultPromise<LiteDocument[], CollectionNotFound | UnexpectedError>;

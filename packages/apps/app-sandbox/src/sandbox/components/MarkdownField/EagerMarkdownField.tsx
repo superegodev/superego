@@ -54,7 +54,7 @@ export default function EagerMarkdownField({
     };
     // When value, onChange, or placeholder change, the editor's references are
     // updated by other hooks.
-    // oxlint-disable-next-line react/exhaustive-deps: see above.
+    // oxlint-disable-next-line react/exhaustive-deps -- see above.
   }, []);
 
   useEffect(() => {

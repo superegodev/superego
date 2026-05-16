@@ -26,13 +26,44 @@ import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeContentSummaries from "../../makers/makeContentSummaries.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
+import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import Usecase from "../../utils/Usecase.js";
 
-export default class CollectionUpdateLatestVersionSettings extends Usecase<
+export default class CollectionUpdateLatestVersionSettings extends BackendUsecase<
   Backend["collections"]["updateLatestVersionSettings"]
 > {
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.collectionVersionId(),
+    v.strictObject({
+      contentBlockingKeysGetter: v.optional(
+        v.nullable(structuralSchemas.backend.types.typescriptModule()),
+      ),
+      contentSummaryGetter: v.optional(
+        structuralSchemas.backend.types.typescriptModule(),
+      ),
+      defaultDocumentViewUiOptions: v.optional(
+        v.nullable(
+          structuralSchemas.backend.types.defaultDocumentViewUiOptions(),
+        ),
+      ),
+    }),
+  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionVersionIdNotMatching(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
+
   async exec(
     id: CollectionId,
     latestVersionId: CollectionVersionId,
