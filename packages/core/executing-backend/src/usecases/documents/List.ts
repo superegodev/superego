@@ -17,18 +17,9 @@ import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js"
 import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  document as documentDomainSchema,
-  liteDocument,
-} from "../../validation/domain/document.js";
-import {
-  collectionNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class DocumentsList extends BackendUsecase<
   Backend["documents"]["list"]
@@ -36,12 +27,20 @@ export default class DocumentsList extends BackendUsecase<
   // The public Backend signature has overloads but `Parameters<>` resolves to
   // the last (widest) one: `(collectionId, lite?: false)`.
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
+    structuralSchemas.backend.ids.collectionId(),
     v.optional(v.literal(false)),
   ]);
-  resultSchema = makeResultSchema(
-    v.array(v.union([liteDocument(), documentDomainSchema()])),
-    [collectionNotFound(), unexpectedError()],
+  resultSchema = structuralSchemas.global.result(
+    v.array(
+      v.union([
+        structuralSchemas.backend.types.liteDocument(),
+        structuralSchemas.backend.types.document(),
+      ]),
+    ),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
   );
 
   async exec(

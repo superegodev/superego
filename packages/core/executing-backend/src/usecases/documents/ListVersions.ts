@@ -14,23 +14,23 @@ import {
 import * as v from "valibot";
 import makeMinimalDocumentVersion from "../../makers/makeMinimalDocumentVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { minimalDocumentVersion } from "../../validation/domain/document.js";
-import { documentNotFound, unexpectedError } from "../../validation/errors.js";
-import {
-  collectionId as collectionIdSchema,
-  documentId as documentIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class DocumentsListVersions extends BackendUsecase<
   Backend["documents"]["listVersions"]
 > {
-  argumentsSchema = v.tuple([collectionIdSchema(), documentIdSchema()]);
-  resultSchema = makeResultSchema(v.array(minimalDocumentVersion()), [
-    documentNotFound(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.documentId(),
   ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.minimalDocumentVersion()),
+    [
+      structuralSchemas.backend.errors.documentNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     collectionId: CollectionId,

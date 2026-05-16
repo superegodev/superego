@@ -16,17 +16,9 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import {
-  collectionIsReferenced,
-  collectionNotFound,
-  commandConfirmationNotValid,
-  documentIsReferenced,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import AppsDelete from "../apps/Delete.js";
 import AppsList from "../apps/List.js";
 import DocumentsDelete from "../documents/Delete.js";
@@ -34,13 +26,16 @@ import DocumentsDelete from "../documents/Delete.js";
 export default class CollectionsDelete extends BackendUsecase<
   Backend["collections"]["delete"]
 > {
-  argumentsSchema = v.tuple([collectionIdSchema(), v.string()]);
-  resultSchema = makeResultSchema(v.null(), [
-    collectionIsReferenced(),
-    collectionNotFound(),
-    commandConfirmationNotValid(),
-    documentIsReferenced(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.collectionIsReferenced(),
+    structuralSchemas.backend.errors.collectionNotFound(),
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.documentIsReferenced(),
+    structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
   async exec(

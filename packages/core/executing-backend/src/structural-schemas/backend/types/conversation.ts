@@ -14,12 +14,10 @@ import {
   type ToolResult,
 } from "@superego/backend";
 import * as v from "valibot";
-import { conversationId, messageId } from "../helpers/idSchemas.js";
+import unknownResultError from "../../global/unknownResultError.js";
+import { conversationId, messageId } from "../ids.js";
 import { audioContent } from "./audioContent.js";
 import { inferenceOptions } from "./inference.js";
-
-const resultErrorRecord = () =>
-  v.looseObject({ name: v.string(), details: v.any() });
 
 export function messageGenerationStats(): v.GenericSchema<
   unknown,
@@ -78,7 +76,7 @@ export function messageContentPart(): v.GenericSchema<
   ]) as v.GenericSchema<unknown, MessageContentPart>;
 }
 
-export function nonEmptyMessageContentParts(): v.GenericSchema<
+export function userMessageContent(): v.GenericSchema<
   unknown,
   NonEmptyArray<MessageContentPart>
 > {
@@ -133,7 +131,7 @@ const userMessage = () =>
   v.looseObject({
     id: messageId(),
     role: v.literal(MessageRole.User),
-    content: nonEmptyMessageContentParts(),
+    content: userMessageContent(),
     createdAt: v.date(),
   });
 
@@ -193,7 +191,7 @@ const conversationStatusDiscriminator = () =>
     v.looseObject({
       status: v.literal(ConversationStatus.Error),
       processingStartedAt: v.null(),
-      error: resultErrorRecord(),
+      error: unknownResultError(),
     }),
   ]);
 

@@ -45,6 +45,7 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
 import {
@@ -59,35 +60,6 @@ import {
   replaceProtoCollectionIds,
   replaceProtoDocumentIdsAndProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import { app as appSchema } from "../../validation/domain/app.js";
-import { collection as collectionSchema } from "../../validation/domain/collection.js";
-import { collectionCategory } from "../../validation/domain/collectionCategory.js";
-import { document as documentSchema } from "../../validation/domain/document.js";
-import { pack as packSchema } from "../../validation/domain/pack.js";
-import {
-  appNameNotValid,
-  appNotFound,
-  collectionCategoryIconNotValid,
-  collectionCategoryNameNotValid,
-  collectionCategoryNotFound,
-  collectionNotFound,
-  collectionSchemaNotValid,
-  collectionSettingsNotValid,
-  connectorDoesNotSupportUpSyncing,
-  contentBlockingKeysGetterNotValid,
-  contentSummaryGetterNotValid,
-  defaultDocumentViewUiOptionsNotValid,
-  documentContentNotValid,
-  duplicateDocumentDetected,
-  filesNotFound,
-  makingContentBlockingKeysFailed,
-  packNotValid,
-  parentCollectionCategoryNotFound,
-  referencedCollectionsNotFound,
-  referencedDocumentsNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import AppsCreate from "../apps/Create.js";
 import CollectionCategoriesCreate from "../collection-categories/Create.js";
 import CollectionsCreate from "../collections/Create.js";
@@ -96,36 +68,38 @@ import DocumentsCreate from "../documents/Create.js";
 export default class PacksInstall extends BackendUsecase<
   Backend["packs"]["install"]
 > {
-  argumentsSchema = v.tuple([packSchema()]);
-  resultSchema = makeResultSchema(
+  argumentsSchema = v.tuple([structuralSchemas.backend.types.pack()]);
+  resultSchema = structuralSchemas.global.result(
     v.strictObject({
-      collectionCategories: v.array(collectionCategory()),
-      collections: v.array(collectionSchema()),
-      apps: v.array(appSchema()),
-      documents: v.array(documentSchema()),
+      collectionCategories: v.array(
+        structuralSchemas.backend.types.collectionCategory(),
+      ),
+      collections: v.array(structuralSchemas.backend.types.collection()),
+      apps: v.array(structuralSchemas.backend.types.app()),
+      documents: v.array(structuralSchemas.backend.types.document()),
     }),
     [
-      appNameNotValid(),
-      appNotFound(),
-      collectionCategoryIconNotValid(),
-      collectionCategoryNameNotValid(),
-      collectionCategoryNotFound(),
-      collectionNotFound(),
-      collectionSchemaNotValid(),
-      collectionSettingsNotValid(),
-      connectorDoesNotSupportUpSyncing(),
-      contentBlockingKeysGetterNotValid(),
-      contentSummaryGetterNotValid(),
-      defaultDocumentViewUiOptionsNotValid(),
-      documentContentNotValid(),
-      duplicateDocumentDetected(),
-      filesNotFound(),
-      makingContentBlockingKeysFailed(),
-      packNotValid(),
-      parentCollectionCategoryNotFound(),
-      referencedCollectionsNotFound(),
-      referencedDocumentsNotFound(),
-      unexpectedError(),
+      structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionSchemaNotValid(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.documentContentNotValid(),
+      structuralSchemas.backend.errors.duplicateDocumentDetected(),
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.packNotValid(),
+      structuralSchemas.backend.errors.parentCollectionCategoryNotFound(),
+      structuralSchemas.backend.errors.referencedCollectionsNotFound(),
+      structuralSchemas.backend.errors.referencedDocumentsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
 

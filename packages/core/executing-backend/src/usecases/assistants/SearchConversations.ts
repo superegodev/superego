@@ -8,12 +8,9 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeConversation from "../../makers/makeConversation.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import { liteConversation } from "../../validation/domain/conversation.js";
-import { textSearchResult } from "../../validation/domain/textSearchResult.js";
-import { unexpectedError } from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsSearchConversations extends BackendUsecase<
@@ -23,9 +20,13 @@ export default class AssistantsSearchConversations extends BackendUsecase<
     v.string(),
     v.strictObject({ limit: v.number() }),
   ]);
-  resultSchema = makeResultSchema(
-    v.array(textSearchResult(liteConversation())),
-    [unexpectedError()],
+  resultSchema = structuralSchemas.global.result(
+    v.array(
+      structuralSchemas.backend.types.textSearchResult(
+        structuralSchemas.backend.types.liteConversation(),
+      ),
+    ),
+    [structuralSchemas.backend.errors.unexpectedError()],
   );
 
   async exec(

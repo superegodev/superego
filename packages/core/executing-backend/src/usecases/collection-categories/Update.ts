@@ -20,38 +20,33 @@ import type CollectionCategoryEntity from "../../entities/CollectionCategoryEnti
 import makeCollectionCategory from "../../makers/makeCollectionCategory.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collectionCategory } from "../../validation/domain/collectionCategory.js";
-import {
-  collectionCategoryIconNotValid,
-  collectionCategoryNameNotValid,
-  collectionCategoryNotFound,
-  parentCollectionCategoryIsDescendant,
-  parentCollectionCategoryNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionCategoryId } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionCategoriesUpdate extends BackendUsecase<
   Backend["collectionCategories"]["update"]
 > {
   argumentsSchema = v.tuple([
-    collectionCategoryId(),
+    structuralSchemas.backend.ids.collectionCategoryId(),
     v.strictObject({
       name: v.optional(v.string()),
       icon: v.optional(v.nullable(v.string())),
-      parentId: v.optional(v.nullable(collectionCategoryId())),
+      parentId: v.optional(
+        v.nullable(structuralSchemas.backend.ids.collectionCategoryId()),
+      ),
     }),
   ]);
-  resultSchema = makeResultSchema(collectionCategory(), [
-    collectionCategoryIconNotValid(),
-    collectionCategoryNameNotValid(),
-    collectionCategoryNotFound(),
-    parentCollectionCategoryIsDescendant(),
-    parentCollectionCategoryNotFound(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collectionCategory(),
+    [
+      structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.parentCollectionCategoryIsDescendant(),
+      structuralSchemas.backend.errors.parentCollectionCategoryNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: CollectionCategoryId,

@@ -20,45 +20,39 @@ import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
-import {
-  appNotFound,
-  collectionCategoryNotFound,
-  collectionNotFound,
-  collectionSettingsNotValid,
-  unexpectedError,
-} from "../../validation/errors.js";
-import {
-  appId,
-  collectionCategoryId,
-  collectionId as collectionIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsUpdateSettings extends BackendUsecase<
   Backend["collections"]["updateSettings"]
 > {
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
+    structuralSchemas.backend.ids.collectionId(),
     v.strictObject({
       name: v.optional(v.string()),
       icon: v.optional(v.nullable(v.string())),
-      collectionCategoryId: v.optional(v.nullable(collectionCategoryId())),
-      defaultCollectionViewAppId: v.optional(v.nullable(appId())),
+      collectionCategoryId: v.optional(
+        v.nullable(structuralSchemas.backend.ids.collectionCategoryId()),
+      ),
+      defaultCollectionViewAppId: v.optional(
+        v.nullable(structuralSchemas.backend.ids.appId()),
+      ),
       description: v.optional(v.nullable(v.string())),
       assistantInstructions: v.optional(v.nullable(v.string())),
       redirectToCollectionAfterDocumentCreation: v.optional(v.boolean()),
     }),
   ]);
-  resultSchema = makeResultSchema(collectionDomainSchema(), [
-    appNotFound(),
-    collectionCategoryNotFound(),
-    collectionNotFound(),
-    collectionSettingsNotValid(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: CollectionId,

@@ -6,6 +6,8 @@ import type {
 } from "@superego/backend";
 import type { ResultError } from "@superego/global-types";
 import * as v from "valibot";
+import resultError from "../global/resultError.js";
+import unknownResultError from "../global/unknownResultError.js";
 import {
   appId,
   backgroundJobId,
@@ -18,16 +20,13 @@ import {
   fileId,
   packId,
   protoCollectionId,
-} from "./helpers/idSchemas.js";
-import makeErrorSchema from "./helpers/makeErrorSchema.js";
-import validationIssueSchema from "./helpers/validationIssueSchema.js";
+} from "./ids.js";
+import validationIssue from "./types/issue.js";
 
-const issues = () => v.array(validationIssueSchema());
-const resultErrorRecord = () =>
-  v.strictObject({ name: v.string(), details: v.any() });
+const issues = () => v.array(validationIssue());
 
 export const appNameNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "AppNameNotValid",
     v.strictObject({
       appId: v.nullable(appId()),
@@ -36,19 +35,16 @@ export const appNameNotValid = () =>
   );
 
 export const appNotFound = () =>
-  makeErrorSchema("AppNotFound", v.strictObject({ appId: appId() }));
-
-export const argumentsNotValid = () =>
-  makeErrorSchema("ArgumentsNotValid", v.strictObject({ issues: issues() }));
+  resultError("AppNotFound", v.strictObject({ appId: appId() }));
 
 export const backgroundJobNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "BackgroundJobNotFound",
     v.strictObject({ backgroundJobId: backgroundJobId() }),
   );
 
 export const cannotChangeCollectionRemoteConnector = () =>
-  makeErrorSchema(
+  resultError(
     "CannotChangeCollectionRemoteConnector",
     v.strictObject({
       collectionId: collectionId(),
@@ -58,7 +54,7 @@ export const cannotChangeCollectionRemoteConnector = () =>
   );
 
 export const cannotContinueConversation = () =>
-  makeErrorSchema(
+  resultError(
     "CannotContinueConversation",
     v.strictObject({
       conversationId: conversationId(),
@@ -71,7 +67,7 @@ export const cannotContinueConversation = () =>
   );
 
 export const cannotRecoverConversation = () =>
-  makeErrorSchema(
+  resultError(
     "CannotRecoverConversation",
     v.strictObject({
       conversationId: conversationId(),
@@ -84,7 +80,7 @@ export const cannotRecoverConversation = () =>
   );
 
 export const cannotRetryLastResponse = () =>
-  makeErrorSchema(
+  resultError(
     "CannotRetryLastResponse",
     v.strictObject({
       conversationId: conversationId(),
@@ -97,20 +93,14 @@ export const cannotRetryLastResponse = () =>
     }),
   );
 
-export const cannotTranscribeAudioMessage = () =>
-  makeErrorSchema(
-    "CannotTranscribeAudioMessage",
-    v.strictObject({ conversationId: conversationId() }),
-  );
-
 export const collectionCategoryHasChildren = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionCategoryHasChildren",
     v.strictObject({ collectionCategoryId: collectionCategoryId() }),
   );
 
 export const collectionCategoryIconNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionCategoryIconNotValid",
     v.strictObject({
       collectionCategoryId: v.nullable(collectionCategoryId()),
@@ -119,7 +109,7 @@ export const collectionCategoryIconNotValid = () =>
   );
 
 export const collectionCategoryNameNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionCategoryNameNotValid",
     v.strictObject({
       collectionCategoryId: v.nullable(collectionCategoryId()),
@@ -128,25 +118,25 @@ export const collectionCategoryNameNotValid = () =>
   );
 
 export const collectionCategoryNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionCategoryNotFound",
     v.strictObject({ collectionCategoryId: collectionCategoryId() }),
   );
 
 export const collectionHasDocuments = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionHasDocuments",
     v.strictObject({ collectionId: collectionId() }),
   );
 
 export const collectionHasNoRemote = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionHasNoRemote",
     v.strictObject({ collectionId: collectionId() }),
   );
 
 export const collectionIsReferenced = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionIsReferenced",
     v.strictObject({
       collectionId: collectionId(),
@@ -155,23 +145,23 @@ export const collectionIsReferenced = () =>
   );
 
 export const collectionIsSyncing = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionIsSyncing",
     v.strictObject({ collectionId: collectionId() }),
   );
 
 export const collectionMigrationFailed = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionMigrationFailed",
     v.strictObject({
       collectionId: collectionId(),
       failedDocumentMigrations: v.array(
         v.strictObject({
           documentId: documentId(),
-          // The cause is a discriminated union of error types — validate it
-          // loosely (a name + details object) since the precise shape isn't
+          // The cause is a discriminated union of error types. Validate the
+          // ResultError envelope here; the precise details shape is not
           // load-bearing at the boundary.
-          cause: resultErrorRecord(),
+          cause: unknownResultError(),
         }),
       ),
     }) as unknown as v.GenericSchema<
@@ -181,7 +171,7 @@ export const collectionMigrationFailed = () =>
   ) as v.GenericSchema<unknown, CollectionMigrationFailed>;
 
 export const collectionMigrationNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionMigrationNotValid",
     v.strictObject({
       collectionId: collectionId(),
@@ -190,13 +180,13 @@ export const collectionMigrationNotValid = () =>
   );
 
 export const collectionNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionNotFound",
     v.strictObject({ collectionId: collectionId() }),
   );
 
 export const collectionSchemaNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionSchemaNotValid",
     v.strictObject({
       collectionId: v.nullable(v.union([collectionId(), protoCollectionId()])),
@@ -205,7 +195,7 @@ export const collectionSchemaNotValid = () =>
   );
 
 export const collectionSettingsNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionSettingsNotValid",
     v.strictObject({
       collectionId: v.nullable(collectionId()),
@@ -214,7 +204,7 @@ export const collectionSettingsNotValid = () =>
   );
 
 export const collectionVersionIdNotMatching = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionVersionIdNotMatching",
     v.strictObject({
       collectionId: collectionId(),
@@ -224,7 +214,7 @@ export const collectionVersionIdNotMatching = () =>
   );
 
 export const collectionVersionNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "CollectionVersionNotFound",
     v.strictObject({
       collectionId: collectionId(),
@@ -233,7 +223,7 @@ export const collectionVersionNotFound = () =>
   );
 
 export const commandConfirmationNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "CommandConfirmationNotValid",
     v.strictObject({
       suppliedCommandConfirmation: v.string(),
@@ -241,14 +231,8 @@ export const commandConfirmationNotValid = () =>
     }),
   );
 
-export const connectorAuthenticationFailed = () =>
-  makeErrorSchema(
-    "ConnectorAuthenticationFailed",
-    v.strictObject({ cause: v.any() }),
-  );
-
 export const connectorAuthenticationSettingsNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "ConnectorAuthenticationSettingsNotValid",
     v.strictObject({
       collectionId: collectionId(),
@@ -258,7 +242,7 @@ export const connectorAuthenticationSettingsNotValid = () =>
   );
 
 export const connectorDoesNotSupportUpSyncing = () =>
-  makeErrorSchema(
+  resultError(
     "ConnectorDoesNotSupportUpSyncing",
     v.strictObject({
       collectionId: collectionId(),
@@ -268,7 +252,7 @@ export const connectorDoesNotSupportUpSyncing = () =>
   );
 
 export const connectorDoesNotUseOAuth2PKCEAuthenticationStrategy = () =>
-  makeErrorSchema(
+  resultError(
     "ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy",
     v.strictObject({
       collectionId: collectionId(),
@@ -277,7 +261,7 @@ export const connectorDoesNotUseOAuth2PKCEAuthenticationStrategy = () =>
   );
 
 export const connectorNotAuthenticated = () =>
-  makeErrorSchema(
+  resultError(
     "ConnectorNotAuthenticated",
     v.strictObject({
       collectionId: collectionId(),
@@ -286,7 +270,7 @@ export const connectorNotAuthenticated = () =>
   );
 
 export const connectorNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "ConnectorNotFound",
     v.strictObject({
       collectionId: collectionId(),
@@ -295,7 +279,7 @@ export const connectorNotFound = () =>
   );
 
 export const connectorSettingsNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "ConnectorSettingsNotValid",
     v.strictObject({
       connectorName: v.string(),
@@ -304,7 +288,7 @@ export const connectorSettingsNotValid = () =>
   );
 
 export const contentBlockingKeysGetterNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "ContentBlockingKeysGetterNotValid",
     v.strictObject({
       collectionId: v.nullable(collectionId()),
@@ -314,7 +298,7 @@ export const contentBlockingKeysGetterNotValid = () =>
   );
 
 export const contentSummaryGetterNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "ContentSummaryGetterNotValid",
     v.strictObject({
       collectionId: v.nullable(collectionId()),
@@ -323,32 +307,14 @@ export const contentSummaryGetterNotValid = () =>
     }),
   );
 
-export const contentSummaryNotValid = () =>
-  makeErrorSchema(
-    "ContentSummaryNotValid",
-    v.strictObject({
-      collectionId: collectionId(),
-      collectionVersionId: collectionVersionId(),
-      documentId: documentId(),
-      documentVersionId: documentVersionId(),
-      issues: issues(),
-    }),
-  );
-
 export const conversationNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "ConversationNotFound",
     v.strictObject({ conversationId: conversationId() }),
   );
 
-export const conversationStatusNotProcessing = () =>
-  makeErrorSchema(
-    "ConversationStatusNotProcessing",
-    v.strictObject({ conversationId: conversationId() }),
-  );
-
 export const defaultDocumentViewUiOptionsNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "DefaultDocumentViewUiOptionsNotValid",
     v.strictObject({
       collectionId: v.nullable(collectionId()),
@@ -358,7 +324,7 @@ export const defaultDocumentViewUiOptionsNotValid = () =>
   );
 
 export const documentContentNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "DocumentContentNotValid",
     v.strictObject({
       collectionId: collectionId(),
@@ -375,7 +341,7 @@ const documentRefSchema = () =>
   });
 
 export const documentIsReferenced = () =>
-  makeErrorSchema(
+  resultError(
     "DocumentIsReferenced",
     v.strictObject({
       documentId: documentId(),
@@ -385,13 +351,10 @@ export const documentIsReferenced = () =>
   );
 
 export const documentNotFound = () =>
-  makeErrorSchema(
-    "DocumentNotFound",
-    v.strictObject({ documentId: documentId() }),
-  );
+  resultError("DocumentNotFound", v.strictObject({ documentId: documentId() }));
 
 export const documentVersionIdNotMatching = () =>
-  makeErrorSchema(
+  resultError(
     "DocumentVersionIdNotMatching",
     v.strictObject({
       documentId: documentId(),
@@ -401,7 +364,7 @@ export const documentVersionIdNotMatching = () =>
   );
 
 export const documentVersionNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "DocumentVersionNotFound",
     v.strictObject({
       collectionId: collectionId(),
@@ -415,7 +378,7 @@ export const duplicateDocumentDetected = () =>
   // here would create a circular import (document schemas pull errors). Use a
   // loose object instead — the structural correctness is verified by the
   // makeUsecase result-validation step on the success branch.
-  makeErrorSchema(
+  resultError(
     "DuplicateDocumentDetected",
     v.strictObject({
       collectionId: collectionId(),
@@ -426,45 +389,26 @@ export const duplicateDocumentDetected = () =>
     >,
   ) as v.GenericSchema<unknown, DuplicateDocumentDetected>;
 
-export const executingJavascriptFunctionFailed = () =>
-  makeErrorSchema(
-    "ExecutingJavascriptFunctionFailed",
-    v.strictObject({
-      message: v.string(),
-      name: v.optional(v.string()),
-      stack: v.optional(v.string()),
-    }),
-  );
-
 export const fileNotFound = () =>
-  makeErrorSchema("FileNotFound", v.strictObject({ fileId: fileId() }));
+  resultError("FileNotFound", v.strictObject({ fileId: fileId() }));
 
 export const filesNotFound = () =>
-  makeErrorSchema(
-    "FilesNotFound",
-    v.strictObject({ fileIds: v.array(fileId()) }),
-  );
+  resultError("FilesNotFound", v.strictObject({ fileIds: v.array(fileId()) }));
 
 export const globalSettingsNotValid = () =>
-  makeErrorSchema(
-    "GlobalSettingsNotValid",
-    v.strictObject({ issues: issues() }),
-  );
+  resultError("GlobalSettingsNotValid", v.strictObject({ issues: issues() }));
 
 export const inferenceOptionsNotValid = () =>
-  makeErrorSchema(
-    "InferenceOptionsNotValid",
-    v.strictObject({ issues: issues() }),
-  );
+  resultError("InferenceOptionsNotValid", v.strictObject({ issues: issues() }));
 
 export const makingContentBlockingKeysFailed = () =>
-  makeErrorSchema(
+  resultError(
     "MakingContentBlockingKeysFailed",
     v.strictObject({
       collectionId: collectionId(),
       collectionVersionId: collectionVersionId(),
       documentId: v.nullable(documentId()),
-      cause: resultErrorRecord(),
+      cause: unknownResultError(),
     }) as unknown as v.GenericSchema<
       unknown,
       MakingContentBlockingKeysFailed["details"]
@@ -472,25 +416,25 @@ export const makingContentBlockingKeysFailed = () =>
   ) as v.GenericSchema<unknown, MakingContentBlockingKeysFailed>;
 
 export const packNotFound = () =>
-  makeErrorSchema("PackNotFound", v.strictObject({ packId: packId() }));
+  resultError("PackNotFound", v.strictObject({ packId: packId() }));
 
 export const packNotValid = () =>
-  makeErrorSchema("PackNotValid", v.strictObject({ issues: issues() }));
+  resultError("PackNotValid", v.strictObject({ issues: issues() }));
 
 export const parentCollectionCategoryIsDescendant = () =>
-  makeErrorSchema(
+  resultError(
     "ParentCollectionCategoryIsDescendant",
     v.strictObject({ parentId: collectionCategoryId() }),
   );
 
 export const parentCollectionCategoryNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "ParentCollectionCategoryNotFound",
     v.strictObject({ parentId: collectionCategoryId() }),
   );
 
 export const referencedCollectionsNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "ReferencedCollectionsNotFound",
     v.strictObject({
       collectionId: v.nullable(collectionId()),
@@ -499,7 +443,7 @@ export const referencedCollectionsNotFound = () =>
   );
 
 export const referencedDocumentsNotFound = () =>
-  makeErrorSchema(
+  resultError(
     "ReferencedDocumentsNotFound",
     v.strictObject({
       collectionId: collectionId(),
@@ -509,7 +453,7 @@ export const referencedDocumentsNotFound = () =>
   );
 
 export const remoteConvertersNotValid = () =>
-  makeErrorSchema(
+  resultError(
     "RemoteConvertersNotValid",
     v.strictObject({
       collectionId: collectionId(),
@@ -517,40 +461,17 @@ export const remoteConvertersNotValid = () =>
     }),
   );
 
-export const syncingChangesFailed = () =>
-  makeErrorSchema(
-    "SyncingChangesFailed",
-    v.strictObject({
-      collectionId: collectionId(),
-      errors: v.array(resultErrorRecord()),
-    }),
-  );
-
 export const tooManyFailedImplementationAttempts = () =>
-  makeErrorSchema(
+  resultError(
     "TooManyFailedImplementationAttempts",
     v.strictObject({ failedAttemptsCount: v.number() }),
   );
 
-export const typescriptCompilationFailed = () =>
-  makeErrorSchema(
-    "TypescriptCompilationFailed",
-    v.union([
-      v.strictObject({
-        reason: v.literal("TypeErrors"),
-        errors: v.string(),
-      }),
-      v.strictObject({
-        reason: v.literal("MissingOutput"),
-      }),
-    ]),
-  );
-
 export const unexpectedError = () =>
-  makeErrorSchema("UnexpectedError", v.strictObject({ cause: v.any() }));
+  resultError("UnexpectedError", v.strictObject({ cause: v.any() }));
 
 export const writeTypescriptModuleToolNotCalled = () =>
-  makeErrorSchema(
+  resultError(
     "WriteTypescriptModuleToolNotCalled",
     // generatedMessage is a Message — see comment on duplicateDocumentDetected.
     v.strictObject({

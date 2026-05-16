@@ -14,29 +14,23 @@ import {
 import * as v from "valibot";
 import makeCollectionVersion from "../../makers/makeCollectionVersion.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collectionVersion as collectionVersionSchema } from "../../validation/domain/collection.js";
-import {
-  collectionVersionNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import {
-  collectionId as collectionIdSchema,
-  collectionVersionId as collectionVersionIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsGetVersion extends BackendUsecase<
   Backend["collections"]["getVersion"]
 > {
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
-    collectionVersionIdSchema(),
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.collectionVersionId(),
   ]);
-  resultSchema = makeResultSchema(collectionVersionSchema(), [
-    collectionVersionNotFound(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collectionVersion(),
+    [
+      structuralSchemas.backend.errors.collectionVersionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     collectionId: CollectionId,

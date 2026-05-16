@@ -17,35 +17,29 @@ import * as v from "valibot";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { app } from "../../validation/domain/app.js";
-import { typescriptModule } from "../../validation/domain/typescript.js";
-import {
-  appNotFound,
-  collectionNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import {
-  appId,
-  collectionId as collectionIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AppsCreateNewVersion extends BackendUsecase<
   Backend["apps"]["createNewVersion"]
 > {
   argumentsSchema = v.tuple([
-    appId(),
-    v.array(collectionIdSchema()),
-    v.strictObject({ "/main.tsx": typescriptModule() }),
+    structuralSchemas.backend.ids.appId(),
+    v.array(structuralSchemas.backend.ids.collectionId()),
+    v.strictObject({
+      "/main.tsx": structuralSchemas.backend.types.typescriptModule(),
+    }),
   ]);
-  resultSchema = makeResultSchema(app(), [
-    appNotFound(),
-    collectionNotFound(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.app(),
+    [
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: AppId,

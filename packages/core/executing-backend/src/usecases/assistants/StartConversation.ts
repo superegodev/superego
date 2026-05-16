@@ -27,22 +27,12 @@ import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
 import difference from "../../utils/difference.js";
 import isEmpty from "../../utils/isEmpty.js";
 import MessageContentFileUtils from "../../utils/MessageContentFileUtils.js";
-import {
-  conversation as conversationSchema,
-  nonEmptyMessageContentParts,
-} from "../../validation/domain/conversation.js";
-import { inferenceOptions as inferenceOptionsSchema } from "../../validation/domain/inference.js";
-import {
-  filesNotFound,
-  inferenceOptionsNotValid,
-  unexpectedError,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsStartConversation extends BackendUsecase<
@@ -50,14 +40,17 @@ export default class AssistantsStartConversation extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     v.picklist(Object.values(AssistantNameEnum)),
-    nonEmptyMessageContentParts(),
-    inferenceOptionsSchema("completion"),
+    structuralSchemas.backend.types.userMessageContent(),
+    structuralSchemas.backend.types.inferenceOptions("completion"),
   ]);
-  resultSchema = makeResultSchema(conversationSchema(), [
-    filesNotFound(),
-    inferenceOptionsNotValid(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.conversation(),
+    [
+      structuralSchemas.backend.errors.filesNotFound(),
+      structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     assistant: AssistantName,

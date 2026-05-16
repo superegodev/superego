@@ -27,28 +27,15 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
-import { remoteConverters } from "../../validation/domain/remote.js";
-import {
-  cannotChangeCollectionRemoteConnector,
-  collectionHasDocuments,
-  collectionNotFound,
-  connectorAuthenticationSettingsNotValid,
-  connectorNotFound,
-  connectorSettingsNotValid,
-  remoteConvertersNotValid,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsSetRemote extends BackendUsecase<
   Backend["collections"]["setRemote"]
 > {
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
+    structuralSchemas.backend.ids.collectionId(),
     v.string(),
     // The connector validates the authentication settings against its own
     // schema and surfaces `ConnectorAuthenticationSettingsNotValid`, so the
@@ -58,18 +45,21 @@ export default class CollectionsSetRemote extends BackendUsecase<
       ConnectorAuthenticationSettings
     >,
     v.any(),
-    remoteConverters(),
+    structuralSchemas.backend.types.remoteConverters(),
   ]);
-  resultSchema = makeResultSchema(collectionDomainSchema(), [
-    cannotChangeCollectionRemoteConnector(),
-    collectionHasDocuments(),
-    collectionNotFound(),
-    connectorAuthenticationSettingsNotValid(),
-    connectorNotFound(),
-    connectorSettingsNotValid(),
-    remoteConvertersNotValid(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.cannotChangeCollectionRemoteConnector(),
+      structuralSchemas.backend.errors.collectionHasDocuments(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorAuthenticationSettingsNotValid(),
+      structuralSchemas.backend.errors.connectorNotFound(),
+      structuralSchemas.backend.errors.connectorSettingsNotValid(),
+      structuralSchemas.backend.errors.remoteConvertersNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: CollectionId,

@@ -31,24 +31,9 @@ import type CollectionVersionEntity from "../../entities/CollectionVersionEntity
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import {
-  collection as collectionDomainSchema,
-  collectionDefinition,
-} from "../../validation/domain/collection.js";
-import {
-  appNotFound,
-  collectionCategoryNotFound,
-  collectionSchemaNotValid,
-  collectionSettingsNotValid,
-  contentBlockingKeysGetterNotValid,
-  contentSummaryGetterNotValid,
-  defaultDocumentViewUiOptionsNotValid,
-  referencedCollectionsNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface CollectionsCreateOptions {
   dryRun?: boolean;
@@ -60,18 +45,23 @@ interface CollectionsCreateOptions {
 export default class CollectionsCreate extends BackendUsecase<
   Backend["collections"]["create"]
 > {
-  argumentsSchema = v.tuple([collectionDefinition()]);
-  resultSchema = makeResultSchema(collectionDomainSchema(), [
-    appNotFound(),
-    collectionCategoryNotFound(),
-    collectionSchemaNotValid(),
-    collectionSettingsNotValid(),
-    contentBlockingKeysGetterNotValid(),
-    contentSummaryGetterNotValid(),
-    defaultDocumentViewUiOptionsNotValid(),
-    referencedCollectionsNotFound(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.types.collectionDefinition(),
   ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionSchemaNotValid(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.referencedCollectionsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     { settings, schema, versionSettings }: CollectionDefinition,

@@ -3,10 +3,7 @@ import type {
   CollectionCategoryDefinition,
 } from "@superego/backend";
 import * as v from "valibot";
-import {
-  collectionCategoryId,
-  protoCollectionCategoryId,
-} from "../helpers/idSchemas.js";
+import { collectionCategoryId, protoCollectionCategoryId } from "../ids.js";
 
 export function collectionCategory(): v.GenericSchema<
   unknown,

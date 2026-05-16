@@ -13,13 +13,8 @@ import {
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { globalSettings as globalSettingsSchema } from "../../validation/domain/globalSettings.js";
-import {
-  globalSettingsNotValid,
-  unexpectedError,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class GlobalSettingsUpdate extends BackendUsecase<
   Backend["globalSettings"]["update"]
@@ -34,10 +29,13 @@ export default class GlobalSettingsUpdate extends BackendUsecase<
       assistants: v.optional(v.looseObject({})),
     }) as unknown as v.GenericSchema<unknown, Partial<GlobalSettings>>,
   ]);
-  resultSchema = makeResultSchema(globalSettingsSchema(), [
-    globalSettingsNotValid(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.globalSettings(),
+    [
+      structuralSchemas.backend.errors.globalSettingsNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     globalSettingsPatch: Partial<GlobalSettings>,

@@ -1,21 +1,15 @@
 import * as v from "valibot";
 import { expect, it } from "vitest";
-import makeErrorSchema from "./makeErrorSchema.js";
-import makeResultSchema from "./makeResultSchema.js";
+import resultEnvelope from "./result.js";
+import resultError from "./resultError.js";
 
 const dataSchema = v.strictObject({ value: v.string() });
-const errorASchema = makeErrorSchema(
-  "ErrorA",
-  v.strictObject({ a: v.string() }),
-);
-const errorBSchema = makeErrorSchema(
-  "ErrorB",
-  v.strictObject({ b: v.number() }),
-);
+const errorASchema = resultError("ErrorA", v.strictObject({ a: v.string() }));
+const errorBSchema = resultError("ErrorB", v.strictObject({ b: v.number() }));
 
 it("accepts a successful result envelope", () => {
   // Setup SUT
-  const schema = makeResultSchema(dataSchema, [errorASchema, errorBSchema]);
+  const schema = resultEnvelope(dataSchema, [errorASchema, errorBSchema]);
 
   // Exercise
   const result = v.safeParse(schema, {
@@ -30,7 +24,7 @@ it("accepts a successful result envelope", () => {
 
 it("accepts an unsuccessful result envelope with a known error", () => {
   // Setup SUT
-  const schema = makeResultSchema(dataSchema, [errorASchema, errorBSchema]);
+  const schema = resultEnvelope(dataSchema, [errorASchema, errorBSchema]);
 
   // Exercise
   const result = v.safeParse(schema, {
@@ -45,7 +39,7 @@ it("accepts an unsuccessful result envelope with a known error", () => {
 
 it("rejects an unsuccessful result with an unknown error name", () => {
   // Setup SUT
-  const schema = makeResultSchema(dataSchema, [errorASchema, errorBSchema]);
+  const schema = resultEnvelope(dataSchema, [errorASchema, errorBSchema]);
 
   // Exercise
   const result = v.safeParse(schema, {
@@ -60,7 +54,7 @@ it("rejects an unsuccessful result with an unknown error name", () => {
 
 it("rejects a successful result whose data does not match the dataSchema", () => {
   // Setup SUT
-  const schema = makeResultSchema(dataSchema, [errorASchema]);
+  const schema = resultEnvelope(dataSchema, [errorASchema]);
 
   // Exercise
   const result = v.safeParse(schema, {
@@ -75,7 +69,7 @@ it("rejects a successful result whose data does not match the dataSchema", () =>
 
 it("works with a single-error variant", () => {
   // Setup SUT
-  const schema = makeResultSchema(dataSchema, [errorASchema]);
+  const schema = resultEnvelope(dataSchema, [errorASchema]);
 
   // Exercise
   const successResult = v.safeParse(schema, {

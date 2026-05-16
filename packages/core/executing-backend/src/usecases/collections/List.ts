@@ -9,17 +9,18 @@ import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collection } from "../../validation/domain/collection.js";
-import { unexpectedError } from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsList extends BackendUsecase<
   Backend["collections"]["list"]
 > {
   argumentsSchema = v.tuple([]);
-  resultSchema = makeResultSchema(v.array(collection()), [unexpectedError()]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.collection()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
 
   async exec(): ResultPromise<Collection[], UnexpectedError> {
     const collections = await this.repos.collection.findAll();

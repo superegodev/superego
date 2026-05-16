@@ -8,20 +8,19 @@ import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import ConversationUtils from "../../utils/ConversationUtils.js";
-import { liteConversation } from "../../validation/domain/conversation.js";
-import { unexpectedError } from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsList from "../collections/List.js";
 
 export default class AssistantsListConversations extends BackendUsecase<
   Backend["assistants"]["listConversations"]
 > {
   argumentsSchema = v.tuple([]);
-  resultSchema = makeResultSchema(v.array(liteConversation()), [
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.liteConversation()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
 
   async exec(): ResultPromise<LiteConversation[], UnexpectedError> {
     const conversations = await this.repos.conversation.findAll();

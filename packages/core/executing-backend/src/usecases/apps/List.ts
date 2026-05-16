@@ -4,15 +4,16 @@ import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { app } from "../../validation/domain/app.js";
-import { unexpectedError } from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AppsList extends BackendUsecase<Backend["apps"]["list"]> {
   argumentsSchema = v.tuple([]);
-  resultSchema = makeResultSchema(v.array(app()), [unexpectedError()]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.app()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
 
   async exec(): ResultPromise<App[], UnexpectedError> {
     const apps = await this.repos.app.findAll();

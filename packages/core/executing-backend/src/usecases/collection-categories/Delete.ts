@@ -12,23 +12,19 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  collectionCategoryHasChildren,
-  collectionCategoryNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionCategoryId } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionCategoriesDelete extends BackendUsecase<
   Backend["collectionCategories"]["delete"]
 > {
-  argumentsSchema = v.tuple([collectionCategoryId()]);
-  resultSchema = makeResultSchema(v.null(), [
-    collectionCategoryHasChildren(),
-    collectionCategoryNotFound(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.collectionCategoryId(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.collectionCategoryHasChildren(),
+    structuralSchemas.backend.errors.collectionCategoryNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
   async exec(

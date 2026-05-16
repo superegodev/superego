@@ -25,20 +25,9 @@ import { compact } from "es-toolkit";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import InferenceService from "../../requirements/InferenceService.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import { inferenceOptions as inferenceOptionsSchema } from "../../validation/domain/inference.js";
-import {
-  typescriptFile,
-  typescriptModule as typescriptModuleSchema,
-} from "../../validation/domain/typescript.js";
-import {
-  inferenceOptionsNotValid,
-  tooManyFailedImplementationAttempts,
-  unexpectedError,
-  writeTypescriptModuleToolNotCalled,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 const MAX_ATTEMPTS = 5;
 
@@ -51,18 +40,21 @@ export default class InferenceImplementTypescriptModule extends BackendUsecase<
       rules: v.nullable(v.string()),
       additionalInstructions: v.nullable(v.string()),
       template: v.string(),
-      libs: v.array(typescriptFile()),
-      startingPoint: typescriptFile(),
+      libs: v.array(structuralSchemas.backend.types.typescriptFile()),
+      startingPoint: structuralSchemas.backend.types.typescriptFile(),
       userRequest: v.string(),
     }),
-    inferenceOptionsSchema("completion"),
+    structuralSchemas.backend.types.inferenceOptions("completion"),
   ]);
-  resultSchema = makeResultSchema(typescriptModuleSchema(), [
-    inferenceOptionsNotValid(),
-    tooManyFailedImplementationAttempts(),
-    unexpectedError(),
-    writeTypescriptModuleToolNotCalled(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.typescriptModule(),
+    [
+      structuralSchemas.backend.errors.inferenceOptionsNotValid(),
+      structuralSchemas.backend.errors.tooManyFailedImplementationAttempts(),
+      structuralSchemas.backend.errors.unexpectedError(),
+      structuralSchemas.backend.errors.writeTypescriptModuleToolNotCalled(),
+    ],
+  );
 
   async exec(
     {

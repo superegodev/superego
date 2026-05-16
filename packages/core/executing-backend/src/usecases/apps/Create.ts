@@ -20,15 +20,9 @@ import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { app, appDefinition } from "../../validation/domain/app.js";
-import {
-  appNameNotValid,
-  collectionNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
@@ -37,12 +31,15 @@ interface AppsCreateOptions {
 export default class AppsCreate extends BackendUsecase<
   Backend["apps"]["create"]
 > {
-  argumentsSchema = v.tuple([appDefinition()]);
-  resultSchema = makeResultSchema(app(), [
-    appNameNotValid(),
-    collectionNotFound(),
-    unexpectedError(),
-  ]);
+  argumentsSchema = v.tuple([structuralSchemas.backend.types.appDefinition()]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.app(),
+    [
+      structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     { type, name, targetCollectionIds, files }: AppDefinition,

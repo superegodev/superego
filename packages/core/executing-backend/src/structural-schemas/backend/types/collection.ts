@@ -7,14 +7,15 @@ import type {
 } from "@superego/backend";
 import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import * as v from "valibot";
+import { schemaShape } from "../../schema/index.js";
 import {
   appId,
   collectionCategoryId,
+  collectionId,
   collectionVersionId,
   protoAppId,
   protoCollectionCategoryId,
-} from "../helpers/idSchemas.js";
-import { collectionId } from "../helpers/idSchemas.js";
+} from "../ids.js";
 import { defaultDocumentViewUiOptions } from "./defaultDocumentViewUiOptions.js";
 import { remote, remoteConverters } from "./remote.js";
 import { typescriptModule } from "./typescript.js";
@@ -67,20 +68,6 @@ export function collection(): v.GenericSchema<unknown, Collection> {
     settings: collectionSettings(),
     remote: v.nullable(remote()),
     createdAt: v.date(),
-  });
-}
-
-/**
- * Structural-only shape check for a `Schema`. Used in argument schemas, where
- * the full semantic validation (`schemaValibotSchemas.schema()`, which also
- * enforces rules like "root type must be a Struct") is left to the usecase so
- * it can surface a `CollectionSchemaNotValid` error instead of a generic
- * `ArgumentsNotValid`.
- */
-export function schemaShape() {
-  return v.looseObject({
-    types: v.record(v.string(), v.looseObject({})),
-    rootType: v.string(),
   });
 }
 

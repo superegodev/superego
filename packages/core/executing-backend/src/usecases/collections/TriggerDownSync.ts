@@ -20,31 +20,25 @@ import * as v from "valibot";
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
-import {
-  collectionHasNoRemote,
-  collectionIsSyncing,
-  collectionNotFound,
-  connectorNotAuthenticated,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsTriggerDownSync extends BackendUsecase<
   Backend["collections"]["triggerDownSync"]
 > {
-  argumentsSchema = v.tuple([collectionIdSchema()]);
-  resultSchema = makeResultSchema(collectionDomainSchema(), [
-    collectionHasNoRemote(),
-    collectionIsSyncing(),
-    collectionNotFound(),
-    connectorNotAuthenticated(),
-    unexpectedError(),
-  ]);
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.collectionId()]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.collectionHasNoRemote(),
+      structuralSchemas.backend.errors.collectionIsSyncing(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.connectorNotAuthenticated(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: CollectionId,

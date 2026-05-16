@@ -15,26 +15,19 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  collectionHasNoRemote,
-  collectionNotFound,
-  connectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl extends BackendUsecase<
   Backend["collections"]["getOAuth2PKCEConnectorAuthorizationRequestUrl"]
 > {
-  argumentsSchema = v.tuple([collectionIdSchema()]);
-  resultSchema = makeResultSchema(v.string(), [
-    collectionHasNoRemote(),
-    collectionNotFound(),
-    connectorDoesNotUseOAuth2PKCEAuthenticationStrategy(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.collectionId()]);
+  resultSchema = structuralSchemas.global.result(v.string(), [
+    structuralSchemas.backend.errors.collectionHasNoRemote(),
+    structuralSchemas.backend.errors.collectionNotFound(),
+    structuralSchemas.backend.errors.connectorDoesNotUseOAuth2PKCEAuthenticationStrategy(),
+    structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
   async exec(

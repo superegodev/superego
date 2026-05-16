@@ -1,7 +1,7 @@
 import type { ResultError } from "@superego/global-types";
 import * as v from "valibot";
 
-export default function makeErrorSchema<Name extends string, Details>(
+export default function resultError<Name extends string, Details>(
   name: Name,
   detailsSchema: v.GenericSchema<unknown, Details>,
 ): v.GenericSchema<unknown, ResultError<Name, Details>> {

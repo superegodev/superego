@@ -5,15 +5,9 @@ import {
   type LiteBackgroundJob,
 } from "@superego/backend";
 import * as v from "valibot";
-import {
-  backgroundJobId,
-  collectionId,
-  conversationId,
-} from "../helpers/idSchemas.js";
+import unknownResultError from "../../global/unknownResultError.js";
+import { backgroundJobId, collectionId, conversationId } from "../ids.js";
 import { inferenceOptions } from "./inference.js";
-
-const resultErrorRecord = () =>
-  v.looseObject({ name: v.string(), details: v.any() });
 
 const enqueuedDiscriminator = () =>
   v.looseObject({
@@ -44,7 +38,7 @@ const failedDiscriminator = () =>
     status: v.literal(BackgroundJobStatus.Failed),
     startedProcessingAt: v.date(),
     finishedProcessingAt: v.date(),
-    error: resultErrorRecord(),
+    error: unknownResultError(),
   });
 
 const liteEnqueuedDiscriminator = () =>

@@ -17,36 +17,24 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  collectionNotFound,
-  commandConfirmationNotValid,
-  connectorDoesNotSupportUpSyncing,
-  documentIsReferenced,
-  documentNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import {
-  collectionId as collectionIdSchema,
-  documentId as documentIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class DocumentsDelete extends BackendUsecase<
   Backend["documents"]["delete"]
 > {
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
-    documentIdSchema(),
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.documentId(),
     v.string(),
   ]);
-  resultSchema = makeResultSchema(v.null(), [
-    collectionNotFound(),
-    commandConfirmationNotValid(),
-    connectorDoesNotSupportUpSyncing(),
-    documentIsReferenced(),
-    documentNotFound(),
-    unexpectedError(),
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.collectionNotFound(),
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
+    structuralSchemas.backend.errors.documentIsReferenced(),
+    structuralSchemas.backend.errors.documentNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
   async exec(

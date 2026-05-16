@@ -12,23 +12,20 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  appNotFound,
-  commandConfirmationNotValid,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { appId } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AppsDelete extends BackendUsecase<
   Backend["apps"]["delete"]
 > {
-  argumentsSchema = v.tuple([appId(), v.string()]);
-  resultSchema = makeResultSchema(v.null(), [
-    appNotFound(),
-    commandConfirmationNotValid(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.appId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.appNotFound(),
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
   async exec(

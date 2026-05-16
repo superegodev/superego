@@ -12,23 +12,20 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  commandConfirmationNotValid,
-  conversationNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { conversationId } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AssistantsDeleteConversation extends BackendUsecase<
   Backend["assistants"]["deleteConversation"]
 > {
-  argumentsSchema = v.tuple([conversationId(), v.string()]);
-  resultSchema = makeResultSchema(v.null(), [
-    commandConfirmationNotValid(),
-    conversationNotFound(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    structuralSchemas.backend.ids.conversationId(),
+    v.string(),
+  ]);
+  resultSchema = structuralSchemas.global.result(v.null(), [
+    structuralSchemas.backend.errors.commandConfirmationNotValid(),
+    structuralSchemas.backend.errors.conversationNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
   async exec(

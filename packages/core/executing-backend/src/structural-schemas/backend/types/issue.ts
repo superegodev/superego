@@ -1,7 +1,7 @@
 import type { ValidationIssue } from "@superego/backend";
 import * as v from "valibot";
 
-export default function validationIssueSchema(): v.GenericSchema<
+export default function validationIssue(): v.GenericSchema<
   unknown,
   ValidationIssue
 > {

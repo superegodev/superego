@@ -13,23 +13,20 @@ import {
 import * as v from "valibot";
 import makeBackgroundJob from "../../makers/makeBackgroundJob.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { backgroundJob } from "../../validation/domain/backgroundJob.js";
-import {
-  backgroundJobNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { backgroundJobId } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class BackgroundJobsGet extends BackendUsecase<
   Backend["backgroundJobs"]["get"]
 > {
-  argumentsSchema = v.tuple([backgroundJobId()]);
-  resultSchema = makeResultSchema(backgroundJob(), [
-    backgroundJobNotFound(),
-    unexpectedError(),
-  ]);
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.backgroundJobId()]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.backgroundJob(),
+    [
+      structuralSchemas.backend.errors.backgroundJobNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: BackgroundJobId,

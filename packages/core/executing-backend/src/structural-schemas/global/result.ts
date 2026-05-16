@@ -5,7 +5,7 @@ import * as v from "valibot";
  * Composes a valibot schema for a `Result<Data, Error>` envelope, given a
  * schema for the success `data` and one schema per possible error.
  */
-export default function makeResultSchema<
+export default function result<
   Data,
   ErrorSchemas extends readonly v.GenericSchema<
     unknown,

@@ -6,7 +6,7 @@ import {
   Theme,
 } from "@superego/backend";
 import * as v from "valibot";
-import { packId } from "../helpers/idSchemas.js";
+import { packId } from "../ids.js";
 import { protoAppDefinition } from "./app.js";
 import { protoCollectionDefinition } from "./collection.js";
 import { protoCollectionCategoryDefinition } from "./collectionCategory.js";

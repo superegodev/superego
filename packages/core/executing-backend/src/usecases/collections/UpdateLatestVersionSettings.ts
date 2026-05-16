@@ -26,50 +26,43 @@ import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
 import makeContentSummaries from "../../makers/makeContentSummaries.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import { collection as collectionDomainSchema } from "../../validation/domain/collection.js";
-import { defaultDocumentViewUiOptions } from "../../validation/domain/defaultDocumentViewUiOptions.js";
-import { typescriptModule } from "../../validation/domain/typescript.js";
-import {
-  collectionNotFound,
-  collectionVersionIdNotMatching,
-  contentBlockingKeysGetterNotValid,
-  contentSummaryGetterNotValid,
-  defaultDocumentViewUiOptionsNotValid,
-  makingContentBlockingKeysFailed,
-  unexpectedError,
-} from "../../validation/errors.js";
-import {
-  collectionId as collectionIdSchema,
-  collectionVersionId as collectionVersionIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class CollectionUpdateLatestVersionSettings extends BackendUsecase<
   Backend["collections"]["updateLatestVersionSettings"]
 > {
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
-    collectionVersionIdSchema(),
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.collectionVersionId(),
     v.strictObject({
-      contentBlockingKeysGetter: v.optional(v.nullable(typescriptModule())),
-      contentSummaryGetter: v.optional(typescriptModule()),
+      contentBlockingKeysGetter: v.optional(
+        v.nullable(structuralSchemas.backend.types.typescriptModule()),
+      ),
+      contentSummaryGetter: v.optional(
+        structuralSchemas.backend.types.typescriptModule(),
+      ),
       defaultDocumentViewUiOptions: v.optional(
-        v.nullable(defaultDocumentViewUiOptions()),
+        v.nullable(
+          structuralSchemas.backend.types.defaultDocumentViewUiOptions(),
+        ),
       ),
     }),
   ]);
-  resultSchema = makeResultSchema(collectionDomainSchema(), [
-    collectionNotFound(),
-    collectionVersionIdNotMatching(),
-    contentBlockingKeysGetterNotValid(),
-    contentSummaryGetterNotValid(),
-    defaultDocumentViewUiOptionsNotValid(),
-    makingContentBlockingKeysFailed(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionVersionIdNotMatching(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.makingContentBlockingKeysFailed(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: CollectionId,

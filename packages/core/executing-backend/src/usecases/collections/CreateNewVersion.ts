@@ -39,62 +39,44 @@ import type DocumentEntity from "../../entities/DocumentEntity.js";
 import makeCollection from "../../makers/makeCollection.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import type ArrayElement from "../../utils/ArrayElement.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
-import {
-  collection as collectionDomainSchema,
-  collectionVersionSettings,
-  schemaShape,
-} from "../../validation/domain/collection.js";
-import { remoteConverters } from "../../validation/domain/remote.js";
-import { typescriptModule } from "../../validation/domain/typescript.js";
-import {
-  collectionMigrationFailed,
-  collectionMigrationNotValid,
-  collectionNotFound,
-  collectionSchemaNotValid,
-  collectionVersionIdNotMatching,
-  contentBlockingKeysGetterNotValid,
-  contentSummaryGetterNotValid,
-  defaultDocumentViewUiOptionsNotValid,
-  referencedCollectionsNotFound,
-  remoteConvertersNotValid,
-  unexpectedError,
-} from "../../validation/errors.js";
-import {
-  collectionId as collectionIdSchema,
-  collectionVersionId as collectionVersionIdSchema,
-} from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends BackendUsecase<
   Backend["collections"]["createNewVersion"]
 > {
   argumentsSchema = v.tuple([
-    collectionIdSchema(),
-    collectionVersionIdSchema(),
-    schemaShape() as unknown as v.GenericSchema<unknown, Schema>,
-    collectionVersionSettings(),
-    v.nullable(typescriptModule()),
-    v.nullable(remoteConverters()),
+    structuralSchemas.backend.ids.collectionId(),
+    structuralSchemas.backend.ids.collectionVersionId(),
+    structuralSchemas.schema.schemaShape() as unknown as v.GenericSchema<
+      unknown,
+      Schema
+    >,
+    structuralSchemas.backend.types.collectionVersionSettings(),
+    v.nullable(structuralSchemas.backend.types.typescriptModule()),
+    v.nullable(structuralSchemas.backend.types.remoteConverters()),
   ]);
-  resultSchema = makeResultSchema(collectionDomainSchema(), [
-    collectionMigrationFailed(),
-    collectionMigrationNotValid(),
-    collectionNotFound(),
-    collectionSchemaNotValid(),
-    collectionVersionIdNotMatching(),
-    contentBlockingKeysGetterNotValid(),
-    contentSummaryGetterNotValid(),
-    defaultDocumentViewUiOptionsNotValid(),
-    referencedCollectionsNotFound(),
-    remoteConvertersNotValid(),
-    unexpectedError(),
-  ]);
+  resultSchema = structuralSchemas.global.result(
+    structuralSchemas.backend.types.collection(),
+    [
+      structuralSchemas.backend.errors.collectionMigrationFailed(),
+      structuralSchemas.backend.errors.collectionMigrationNotValid(),
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.collectionSchemaNotValid(),
+      structuralSchemas.backend.errors.collectionVersionIdNotMatching(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.referencedCollectionsNotFound(),
+      structuralSchemas.backend.errors.remoteConvertersNotValid(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     id: CollectionId,

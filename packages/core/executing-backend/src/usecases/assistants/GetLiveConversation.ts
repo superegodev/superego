@@ -7,19 +7,17 @@ import type {
 import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { conversation as conversationSchema } from "../../validation/domain/conversation.js";
-import { unexpectedError } from "../../validation/errors.js";
-import { conversationId } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class AssistantsGetLiveConversation extends BackendUsecase<
   Backend["assistants"]["getLiveConversation"]
 > {
-  argumentsSchema = v.tuple([conversationId()]);
-  resultSchema = makeResultSchema(v.nullable(conversationSchema()), [
-    unexpectedError(),
-  ]);
+  argumentsSchema = v.tuple([structuralSchemas.backend.ids.conversationId()]);
+  resultSchema = structuralSchemas.global.result(
+    v.nullable(structuralSchemas.backend.types.conversation()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
 
   async exec(
     id: ConversationId,

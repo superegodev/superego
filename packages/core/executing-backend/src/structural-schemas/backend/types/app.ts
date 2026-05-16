@@ -11,7 +11,7 @@ import {
   collectionId,
   collectionVersionId,
   protoCollectionId,
-} from "../helpers/idSchemas.js";
+} from "../ids.js";
 import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {

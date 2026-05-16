@@ -4,6 +4,7 @@ import {
   DownSyncStatus,
 } from "@superego/backend";
 import * as v from "valibot";
+import unknownResultError from "../../global/unknownResultError.js";
 import { connectorAuthenticationSettings } from "./connector.js";
 import { typescriptModule } from "./typescript.js";
 
@@ -12,9 +13,6 @@ export function remoteConverters(): v.GenericSchema<unknown, RemoteConverters> {
     fromRemoteDocument: typescriptModule(),
   });
 }
-
-const resultErrorRecord = () =>
-  v.looseObject({ name: v.string(), details: v.any() });
 
 const downSyncStateSchema = () =>
   v.union([
@@ -35,7 +33,7 @@ const downSyncStateSchema = () =>
     }),
     v.looseObject({
       status: v.literal(DownSyncStatus.LastSyncFailed),
-      error: resultErrorRecord(),
+      error: unknownResultError(),
       lastSucceededAt: v.nullable(v.date()),
     }),
   ]);

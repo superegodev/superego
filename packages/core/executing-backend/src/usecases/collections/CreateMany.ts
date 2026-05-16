@@ -22,28 +22,13 @@ import {
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import {
   extractProtoCollectionIds,
   makeProtoCollectionIdMapping,
   replaceProtoCollectionIds,
 } from "../../utils/ProtoIdUtils.js";
-import {
-  collection as collectionDomainSchema,
-  collectionDefinition,
-} from "../../validation/domain/collection.js";
-import {
-  appNotFound,
-  collectionCategoryNotFound,
-  collectionSchemaNotValid,
-  collectionSettingsNotValid,
-  contentBlockingKeysGetterNotValid,
-  contentSummaryGetterNotValid,
-  defaultDocumentViewUiOptionsNotValid,
-  referencedCollectionsNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 import CollectionsCreate from "./Create.js";
 
 interface CollectionsCreateManyOptions {
@@ -55,18 +40,23 @@ interface CollectionsCreateManyOptions {
 export default class CollectionsCreateMany extends BackendUsecase<
   Backend["collections"]["createMany"]
 > {
-  argumentsSchema = v.tuple([v.array(collectionDefinition())]);
-  resultSchema = makeResultSchema(v.array(collectionDomainSchema()), [
-    appNotFound(),
-    collectionCategoryNotFound(),
-    collectionSchemaNotValid(),
-    collectionSettingsNotValid(),
-    contentBlockingKeysGetterNotValid(),
-    contentSummaryGetterNotValid(),
-    defaultDocumentViewUiOptionsNotValid(),
-    referencedCollectionsNotFound(),
-    unexpectedError(),
+  argumentsSchema = v.tuple([
+    v.array(structuralSchemas.backend.types.collectionDefinition()),
   ]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.collection()),
+    [
+      structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.collectionCategoryNotFound(),
+      structuralSchemas.backend.errors.collectionSchemaNotValid(),
+      structuralSchemas.backend.errors.collectionSettingsNotValid(),
+      structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
+      structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
+      structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
+      structuralSchemas.backend.errors.referencedCollectionsNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
+  );
 
   async exec(
     definitions: CollectionDefinition[],

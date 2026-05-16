@@ -15,9 +15,9 @@ import {
   documentId,
   documentVersionId,
   protoCollectionId,
-} from "../helpers/idSchemas.js";
-import validationIssueSchema from "../helpers/validationIssueSchema.js";
+} from "../ids.js";
 import { contentSummary } from "./contentSummary.js";
+import validationIssue from "./issue.js";
 
 const contentSummaryResult = () =>
   v.union([
@@ -45,7 +45,7 @@ const contentSummaryResult = () =>
             collectionVersionId: collectionVersionId(),
             documentId: documentId(),
             documentVersionId: documentVersionId(),
-            issues: v.array(validationIssueSchema()),
+            issues: v.array(validationIssue()),
           }),
         }),
       ]),
@@ -74,7 +74,7 @@ export function liteDocumentVersion(): v.GenericSchema<
   unknown,
   LiteDocumentVersion
 > {
-  return v.looseObject({
+  return v.strictObject({
     ...documentVersionBase(),
     contentSummary: contentSummaryResult(),
   }) as v.GenericSchema<unknown, LiteDocumentVersion>;

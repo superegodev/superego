@@ -17,34 +17,29 @@ import * as v from "valibot";
 import makeDocument from "../../makers/makeDocument.js";
 import makeLiteDocument from "../../makers/makeLiteDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertDocumentExists from "../../utils/assertDocumentExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import {
-  document as documentDomainSchema,
-  liteDocument,
-} from "../../validation/domain/document.js";
-import { textSearchResult } from "../../validation/domain/textSearchResult.js";
-import {
-  collectionNotFound,
-  unexpectedError,
-} from "../../validation/errors.js";
-import { collectionId as collectionIdSchema } from "../../validation/helpers/idSchemas.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class DocumentsSearch extends BackendUsecase<
   Backend["documents"]["search"]
 > {
   argumentsSchema = v.tuple([
-    v.nullable(collectionIdSchema()),
+    v.nullable(structuralSchemas.backend.ids.collectionId()),
     v.string(),
     v.strictObject({ limit: v.number() }),
   ]);
-  resultSchema = makeResultSchema(
+  resultSchema = structuralSchemas.global.result(
     v.array(
-      textSearchResult(v.union([liteDocument(), documentDomainSchema()])),
+      structuralSchemas.backend.types.textSearchResult(
+        structuralSchemas.backend.types.liteDocument(),
+      ),
     ),
-    [collectionNotFound(), unexpectedError()],
+    [
+      structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.unexpectedError(),
+    ],
   );
 
   async exec(

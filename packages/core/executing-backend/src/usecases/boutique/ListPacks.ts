@@ -4,16 +4,17 @@ import type { ResultPromise } from "@superego/global-types";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeLitePack from "../../makers/makeLitePack.js";
+import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import { litePack } from "../../validation/domain/pack.js";
-import { unexpectedError } from "../../validation/errors.js";
-import makeResultSchema from "../../validation/helpers/makeResultSchema.js";
 
 export default class BoutiqueListPacks extends BackendUsecase<
   Backend["boutique"]["listPacks"]
 > {
   argumentsSchema = v.tuple([]);
-  resultSchema = makeResultSchema(v.array(litePack()), [unexpectedError()]);
+  resultSchema = structuralSchemas.global.result(
+    v.array(structuralSchemas.backend.types.litePack()),
+    [structuralSchemas.backend.errors.unexpectedError()],
+  );
 
   async exec(): ResultPromise<LitePack[], UnexpectedError> {
     return makeSuccessfulResult(packs.map(makeLitePack));
