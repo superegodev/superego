@@ -103,10 +103,10 @@ export default function FormStateEffects<TFieldValues extends FieldValues>({
 
 function hasDirtyUserAuthoredField(
   dirtyFields: unknown,
-  path: readonly string[] = [],
+  isInsideCompiledField = false,
 ): boolean {
   if (dirtyFields === true) {
-    return path.at(-1) !== "compiled";
+    return !isInsideCompiledField;
   }
   if (
     dirtyFields === false ||
@@ -116,14 +116,17 @@ function hasDirtyUserAuthoredField(
     return false;
   }
   if (Array.isArray(dirtyFields)) {
-    return dirtyFields.some((dirtyField, index) =>
-      hasDirtyUserAuthoredField(dirtyField, [...path, String(index)]),
+    return dirtyFields.some((dirtyField) =>
+      hasDirtyUserAuthoredField(dirtyField, isInsideCompiledField),
     );
   }
   if (typeof dirtyFields !== "object") {
     return false;
   }
   return Object.entries(dirtyFields).some(([fieldName, dirtyField]) =>
-    hasDirtyUserAuthoredField(dirtyField, [...path, fieldName]),
+    hasDirtyUserAuthoredField(
+      dirtyField,
+      isInsideCompiledField || fieldName === "compiled",
+    ),
   );
 }
