@@ -1544,26 +1544,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
-    it("error: ArgumentsNotValid when authentication settings have extra keys", async () => {
-      // Setup SUT
-      const { backend } = deps();
-
-      // Exercise
-      const result = await backend.collections.setRemote(
-        Id.generate.collection(),
-        "MockConnector",
-        { apiKey: "k", extra: true } as any,
-        {},
-        {
-          fromRemoteDocument: { source: "", compiled: "" },
-        },
-      );
-
-      // Verify
-      assert(!result.success);
-      expect(result.error.name).toBe("ArgumentsNotValid");
-    });
-
     it("error: CollectionNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1826,6 +1806,26 @@ export default rd<GetDependencies>("Collections", (deps) => {
         "not-a-valid-id" as any,
         "MockConnector",
         { apiKey: "k" },
+        {},
+        {
+          fromRemoteDocument: { source: "", compiled: "" },
+        },
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("error: ArgumentsNotValid when authentication settings have extra keys", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.setRemote(
+        Id.generate.collection(),
+        "MockConnector",
+        { apiKey: "k", extra: true } as any,
         {},
         {
           fromRemoteDocument: { source: "", compiled: "" },

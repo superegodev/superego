@@ -37,10 +37,14 @@ export default class CollectionsList extends BackendUsecase<
     });
 
     return makeSuccessfulResult(
-      collections.map((coll) => {
-        const latestVersion = latestVersionsByCollectionId.get(coll.id);
-        assertCollectionVersionExists(coll.id, latestVersion);
-        return makeCollection(coll, latestVersion, this.getConnector(coll));
+      collections.map((collection) => {
+        const latestVersion = latestVersionsByCollectionId.get(collection.id);
+        assertCollectionVersionExists(collection.id, latestVersion);
+        return makeCollection(
+          collection,
+          latestVersion,
+          this.getConnector(collection),
+        );
       }),
     );
   }
