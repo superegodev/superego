@@ -47,7 +47,6 @@ export default class OpenFileWithNativeAppIPCProxyServer {
     );
   }
 
-  /** Used in devenv mode. */
   replaceBackend(backend: Backend) {
     this.backend = backend;
   }

@@ -5,6 +5,7 @@ export default interface AppVersionEntity {
   previousVersionId: AppVersionId | null;
   appId: AppId;
   targetCollections: AppVersion["targetCollections"];
+  entrypoint: AppVersion["entrypoint"];
   files: AppVersion["files"];
   createdAt: Date;
 }

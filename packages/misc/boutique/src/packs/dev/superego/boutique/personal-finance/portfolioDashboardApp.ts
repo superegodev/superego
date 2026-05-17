@@ -1,19 +1,19 @@
 import { type AppDefinition, AppType } from "@superego/backend";
+import makeAppFiles from "../makeAppFiles.js";
 import portfolioDashboardAppCompiled from "./portfolioDashboard.appCompiled.js?raw";
 import portfolioDashboardAppSource from "./portfolioDashboard.appSource.tsx?raw";
 
 export default {
   type: AppType.CollectionView,
   name: "Portfolio Dashboard",
-  targetCollectionIds: [
-    "ProtoCollection_1",
-    "ProtoCollection_2",
-    "ProtoCollection_3",
+  targetCollections: [
+    { id: "ProtoCollection_1", versionId: null },
+    { id: "ProtoCollection_2", versionId: null },
+    { id: "ProtoCollection_3", versionId: null },
   ],
-  files: {
-    "/main.tsx": {
-      source: portfolioDashboardAppSource,
-      compiled: portfolioDashboardAppCompiled,
-    },
-  },
+  entrypoint: "/dist/index.html",
+  files: makeAppFiles(
+    portfolioDashboardAppSource,
+    portfolioDashboardAppCompiled,
+  ),
 } as const satisfies AppDefinition<true>;

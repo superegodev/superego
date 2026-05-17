@@ -16,6 +16,7 @@ import {
 } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./CreateApp.css.js";
@@ -73,7 +74,14 @@ export default function CreateAppForm({
     const { success, data } = await mutate({
       type: AppType.CollectionView,
       name,
-      targetCollectionIds: appVersion.targetCollectionIds,
+      targetCollections: CollectionUtils.findAllCollections(
+        collections,
+        appVersion.targetCollectionIds,
+      ).map((collection) => ({
+        id: collection.id,
+        versionId: collection.latestVersion.id,
+      })),
+      entrypoint: "/dist/index.html",
       files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     });
     if (success) {

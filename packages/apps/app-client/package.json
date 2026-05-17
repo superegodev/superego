@@ -1,0 +1,22 @@
+{
+  "name": "@superego/app-client",
+  "version": "2026.3.8",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@superego/app-sandbox": "workspace:*",
+    "@superego/backend": "workspace:*",
+    "@superego/global-types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

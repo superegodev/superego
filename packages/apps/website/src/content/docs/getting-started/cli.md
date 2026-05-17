@@ -2,8 +2,8 @@
 title: CLI
 ---
 
-The Superego CLI helps you create and develop packs. A **pack** is a bundle of
-collections and apps that you can distribute and install into Superego.
+The Superego CLI helps you create and update apps from your editor or coding
+agent.
 
 ## Getting started
 
@@ -11,28 +11,21 @@ To install the CLI, just click the **Install CLI** button in the **Developer**
 menu of the app. You can then create a new development environment with:
 
 ```sh
-superego devenv create my-pack
+superego apps create my-app --name "My App"
 ```
 
-This scaffolds a project with a sample collection, a sample app, and everything
-you need to start developing.
-
-The project also contains instructions for a coding agent, so you can just tell
-your coding agent what collections / apps you want to create, and it will take
-it from there.
+This scaffolds a folder with source files, generated Superego files, and a
+runnable static app in `dist/`.
 
 ## Commands
 
-- `superego devenv create <path>`: scaffolds a new development environment at
-  the given path.
-- `superego devenv generate-types`: reads each collection's `schema.json` and
-  generates TypeScript type definitions in the `generated/` directory. Run this
-  after changing any schema.
-- `superego devenv check`: validates the entire development environment:
-  schemas, settings, TypeScript compilation, and demo documents. Exits with an
-  error if anything is invalid.
-- `superego devenv preview [--watch]`: compiles the pack and opens it in a dev
-  instance of Superego. With `--watch`, the preview reloads automatically when
-  you change any file.
-- `superego devenv pack`: compiles the development environment into a `pack.mpk`
-  file, which you can install from the Boutique.
+- `superego apps create <folder> --name <name>`: scaffolds a local app folder.
+- `superego apps checkout <app>`: checks out an installed app into a folder.
+- `superego apps status`: compares the current folder with the latest app
+  version.
+- `superego apps check`: validates the current app folder.
+- `superego apps commit`: creates the app or commits a new app version.
+- `superego apps install-deps`: installs bundled Superego helper packages.
+- `superego apps add-collection <collection>` /
+  `remove-collection <collection>`: updates target collections and generated
+  local types.

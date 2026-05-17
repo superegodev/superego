@@ -5,6 +5,16 @@ import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
+const entrypoint = "/dist/index.html" as const;
+const appVersionFiles = {
+  "/dist/index.html": {
+    role: "build",
+    mimeType: "text/html",
+    hash: "",
+    content: "<!doctype html>",
+  },
+} as const;
+
 export default rd<GetDependencies>("Apps", (deps) => {
   describe("create", () => {
     it("error: ArgumentsNotValid", async () => {
@@ -27,8 +37,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const result = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name".repeat(100),
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
 
       // Verify
@@ -59,8 +70,11 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const result = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [collectionId],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [
+          { id: collectionId, versionId: Id.generate.collectionVersion() },
+        ],
+        entrypoint,
+        files: appVersionFiles,
       });
 
       // Verify
@@ -109,11 +123,17 @@ export default rd<GetDependencies>("Apps", (deps) => {
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
-      const files = { "/main.tsx": { source: "", compiled: "" } };
+      const files = appVersionFiles;
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [createCollectionResult.data.id],
+        targetCollections: [
+          {
+            id: createCollectionResult.data.id,
+            versionId: createCollectionResult.data.latestVersion.id,
+          },
+        ],
+        entrypoint,
         files: files,
       });
 
@@ -132,6 +152,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
                 versionId: createCollectionResult.data.latestVersion.id,
               },
             ],
+            entrypoint,
             files,
             createdAt: expect.dateCloseToNow(),
           },
@@ -189,8 +210,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createAppResult.success);
 
@@ -225,8 +247,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createResult.success);
 
@@ -266,7 +289,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const result = await backend.apps.createNewVersion(
         Id.generate.app(),
         [],
-        {} as any,
+        "/index.html" as any,
+        appVersionFiles,
       );
 
       // Verify
@@ -280,9 +304,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const appId = Id.generate.app();
-      const result = await backend.apps.createNewVersion(appId, [], {
-        "/main.tsx": { source: "", compiled: "" },
-      });
+      const result = await backend.apps.createNewVersion(
+        appId,
+        [],
+        entrypoint,
+        appVersionFiles,
+      );
 
       // Verify
       expect(result).toEqual({
@@ -301,8 +328,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createResult.success);
 
@@ -310,8 +338,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const collectionId = Id.generate.collection();
       const createNewVersionResult = await backend.apps.createNewVersion(
         createResult.data.id,
-        [collectionId],
-        { "/main.tsx": { source: "", compiled: "" } },
+        [{ id: collectionId, versionId: Id.generate.collectionVersion() }],
+        entrypoint,
+        appVersionFiles,
       );
 
       // Verify
@@ -359,23 +388,40 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createCollectionResult.success);
       const initialFiles = {
-        "/main.tsx": { source: "initial", compiled: "initial" },
-      };
+        "/dist/index.html": {
+          role: "build",
+          mimeType: "text/html",
+          hash: "",
+          content: "initial",
+        },
+      } as const;
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [],
+        targetCollections: [],
+        entrypoint,
         files: initialFiles,
       });
       assert.isTrue(createAppResult.success);
 
       // Exercise
       const updatedFiles = {
-        "/main.tsx": { source: "updated", compiled: "updated" },
-      };
+        "/dist/index.html": {
+          role: "build",
+          mimeType: "text/html",
+          hash: "",
+          content: "updated",
+        },
+      } as const;
       const createNewAppVersionResult = await backend.apps.createNewVersion(
         createAppResult.data.id,
-        [createCollectionResult.data.id],
+        [
+          {
+            id: createCollectionResult.data.id,
+            versionId: createCollectionResult.data.latestVersion.id,
+          },
+        ],
+        entrypoint,
         updatedFiles,
       );
 
@@ -394,6 +440,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
                 versionId: createCollectionResult.data.latestVersion.id,
               },
             ],
+            entrypoint,
             files: updatedFiles,
             createdAt: expect.dateCloseToNow(),
           },
@@ -476,8 +523,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createResult.success);
 
@@ -537,8 +585,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "default-app",
-        targetCollectionIds: [createCollectionResult.data.id],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [
+          {
+            id: createCollectionResult.data.id,
+            versionId: createCollectionResult.data.latestVersion.id,
+          },
+        ],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createAppResult.success);
       const updateCollectionSettingsResult =
@@ -595,15 +649,17 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createResultZeta = await backend.apps.create({
         type: AppType.CollectionView,
         name: "zeta",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createResultZeta.success);
       const createResultAlpha = await backend.apps.create({
         type: AppType.CollectionView,
         name: "alpha",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint,
+        files: appVersionFiles,
       });
       assert.isTrue(createResultAlpha.success);
 

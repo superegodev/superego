@@ -13,6 +13,9 @@
     "./types": {
       "import": "./src/types/index.ts"
     },
+    "./components": {
+      "import": "./src/sandbox/components/index.ts"
+    },
     "./typescript-libs": {
       "import": "./src/typescript-libs/index.ts"
     }

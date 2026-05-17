@@ -5,9 +5,17 @@ import { describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 const appVersionFiles: AppVersionEntity["files"] = {
-  "/main.tsx": {
-    source: "export default function App() { return null; }",
-    compiled: "export default function App() { return null; }",
+  "/dist/index.html": {
+    role: "build",
+    mimeType: "text/html",
+    hash: "hash",
+    content: "<!doctype html>",
+  },
+  "/dist/image.png": {
+    role: "build",
+    mimeType: "image/png",
+    hash: "imageHash",
+    content: new Uint8Array([1, 2, 3]),
   },
 };
 
@@ -29,6 +37,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: null,
       appId: Id.generate.app(),
       targetCollections: targetCollections,
+      entrypoint: "/dist/index.html",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -61,6 +70,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: null,
         appId,
         targetCollections: targetCollections,
+        entrypoint: "/dist/index.html",
         files: appVersionFiles,
         createdAt: new Date(),
       };
@@ -69,6 +79,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: appVersion1.id,
         appId,
         targetCollections: targetCollections,
+        entrypoint: "/dist/index.html",
         files: appVersionFiles,
         createdAt: new Date(appVersion1.createdAt.getTime() + 1),
       };
@@ -121,6 +132,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: null,
       appId: app1Id,
       targetCollections: targetCollections,
+      entrypoint: "/dist/index.html",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -129,6 +141,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: appVersion1.id,
       appId: app1Id,
       targetCollections: targetCollections,
+      entrypoint: "/dist/index.html",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -137,6 +150,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: null,
       appId: app2Id,
       targetCollections: targetCollections,
+      entrypoint: "/dist/index.html",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -196,6 +210,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: null,
         appId: app1Id,
         targetCollections: targetCollections,
+        entrypoint: "/dist/index.html",
         files: appVersionFiles,
         createdAt: new Date(),
       };
@@ -204,6 +219,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: appVersion1.id,
         appId: app1Id,
         targetCollections: targetCollections,
+        entrypoint: "/dist/index.html",
         files: appVersionFiles,
         createdAt: new Date(),
       };
@@ -212,6 +228,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: null,
         appId: app2Id,
         targetCollections: targetCollections,
+        entrypoint: "/dist/index.html",
         files: appVersionFiles,
         createdAt: new Date(),
       };

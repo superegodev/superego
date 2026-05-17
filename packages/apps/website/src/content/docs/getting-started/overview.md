@@ -31,6 +31,7 @@ Each app targets one or more collections and has full access to their documents.
 Once created, an app shows up as an alternative view of its target collections,
 replacing the default table of documents with your custom interface.
 
-Under the hood, apps are single-file TypeScript React components. You can create
-apps by vibe-coding directly in Superego, or by using the
-[CLI](/getting-started/cli/) with your editor and coding agent of choice.
+Under the hood, apps are static HTML projects with source files, generated
+Superego typings, and a built `dist/` folder. You can create apps by vibe-coding
+directly in Superego, or by using the [CLI](/getting-started/cli/) with your
+editor and coding agent of choice.

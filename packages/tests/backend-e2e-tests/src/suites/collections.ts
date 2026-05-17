@@ -11,6 +11,16 @@ import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 import triggerAndWaitForDownSync from "../utils/triggerAndWaitForDownSync.js";
 
+const appEntrypoint = "/dist/index.html" as const;
+const appFiles = {
+  "/dist/index.html": {
+    role: "build",
+    mimeType: "text/html",
+    hash: "",
+    content: "<!doctype html>",
+  },
+} as const;
+
 export default rd<GetDependencies>("Collections", (deps) => {
   describe("create", () => {
     it("error: ArgumentsNotValid", async () => {
@@ -1726,8 +1736,9 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "app",
-        targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [],
+        entrypoint: appEntrypoint,
+        files: appFiles,
       });
       assert.isTrue(createAppResult.success);
       const createResult = await backend.collections.create({
@@ -7494,8 +7505,14 @@ export default rd<GetDependencies>("Collections", (deps) => {
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "collection view",
-        targetCollectionIds: [createCollectionResult.data.id],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        targetCollections: [
+          {
+            id: createCollectionResult.data.id,
+            versionId: createCollectionResult.data.latestVersion.id,
+          },
+        ],
+        entrypoint: appEntrypoint,
+        files: appFiles,
       });
       assert.isTrue(createAppResult.success);
 

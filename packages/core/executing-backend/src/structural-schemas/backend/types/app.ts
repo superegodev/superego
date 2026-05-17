@@ -1,6 +1,7 @@
 import {
   type App,
   type AppDefinition,
+  type AppVersionFile,
   AppType,
   type AppVersion,
 } from "@superego/backend";
@@ -12,7 +13,38 @@ import {
   collectionVersionId,
   protoCollectionId,
 } from "../ids.js";
-import { typescriptModule } from "./typescript.js";
+
+export function appVersionEntrypoint(): v.GenericSchema<
+  unknown,
+  AppVersion["entrypoint"]
+> {
+  return v.literal("/dist/index.html");
+}
+
+export function appVersionFile(): v.GenericSchema<unknown, AppVersionFile> {
+  return v.strictObject({
+    role: v.picklist(["source", "build", "generated", "config"]),
+    mimeType: v.string(),
+    hash: v.string(),
+    content: v.union([
+      v.string(),
+      v.instance(Uint8Array) as v.GenericSchema<
+        unknown,
+        Uint8Array<ArrayBuffer>
+      >,
+    ]),
+  });
+}
+
+export function appVersionFiles(): v.GenericSchema<
+  unknown,
+  AppVersion["files"]
+> {
+  return v.record(
+    v.pipe(v.string(), v.regex(/^\/[^/].*$/)) as any,
+    appVersionFile(),
+  );
+}
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
@@ -23,9 +55,8 @@ export function appVersion(): v.GenericSchema<unknown, AppVersion> {
         versionId: collectionVersionId(),
       }),
     ),
-    files: v.strictObject({
-      "/main.tsx": typescriptModule(),
-    }),
+    entrypoint: appVersionEntrypoint(),
+    files: appVersionFiles(),
     createdAt: v.date(),
   });
 }
@@ -47,10 +78,14 @@ export function appDefinition(): v.GenericSchema<
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
-    targetCollectionIds: v.array(collectionId()),
-    files: v.strictObject({
-      "/main.tsx": typescriptModule(),
-    }),
+    targetCollections: v.array(
+      v.strictObject({
+        id: collectionId(),
+        versionId: collectionVersionId(),
+      }),
+    ),
+    entrypoint: appVersionEntrypoint(),
+    files: appVersionFiles(),
   });
 }
 
@@ -61,11 +96,13 @@ export function protoAppDefinition(): v.GenericSchema<
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
-    targetCollectionIds: v.array(
-      v.union([protoCollectionId(), collectionId()]),
+    targetCollections: v.array(
+      v.strictObject({
+        id: v.union([protoCollectionId(), collectionId()]),
+        versionId: v.nullable(collectionVersionId()),
+      }),
     ),
-    files: v.strictObject({
-      "/main.tsx": typescriptModule(),
-    }),
+    entrypoint: appVersionEntrypoint(),
+    files: appVersionFiles(),
   });
 }

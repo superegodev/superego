@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import devenv from "./commands/devenv/index.js";
+import apps from "./commands/apps/index.js";
 
 export default function cli(options: {
   version: string;
@@ -9,6 +9,6 @@ export default function cli(options: {
     .name("superego")
     .version(options.version)
     .description(options.description)
-    .addCommand(devenv)
+    .addCommand(apps)
     .parse();
 }

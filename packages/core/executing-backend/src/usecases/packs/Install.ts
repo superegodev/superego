@@ -226,9 +226,23 @@ export default class PacksInstall extends BackendUsecase<
         {
           type: definition.type,
           name: definition.name,
-          targetCollectionIds: definition.targetCollectionIds.map((id) =>
-            Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
+          targetCollections: definition.targetCollections.map(
+            (targetCollection) => ({
+              id: Id.is.protoCollection(targetCollection.id)
+                ? collectionIdMapping.get(targetCollection.id)!
+                : targetCollection.id,
+              versionId:
+                targetCollection.versionId ??
+                createdCollections.find(
+                  ({ id }) =>
+                    id ===
+                    (Id.is.protoCollection(targetCollection.id)
+                      ? collectionIdMapping.get(targetCollection.id)!
+                      : targetCollection.id),
+                )!.latestVersion.id,
+            }),
           ),
+          entrypoint: definition.entrypoint,
           files: PacksInstall.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,
@@ -308,8 +322,11 @@ export default class PacksInstall extends BackendUsecase<
       Object.entries(files).map(([filePath, fileContent]) => [
         filePath,
         {
-          source: replaceProtoCollectionIds(fileContent.source),
-          compiled: replaceProtoCollectionIds(fileContent.compiled),
+          ...fileContent,
+          content:
+            typeof fileContent.content === "string"
+              ? replaceProtoCollectionIds(fileContent.content)
+              : fileContent.content,
         },
       ]),
     ) as AppVersion["files"];
@@ -407,19 +424,20 @@ export default class PacksInstall extends BackendUsecase<
     for (const [index, definition] of pack.apps.entries()) {
       for (const [
         targetIndex,
-        collectionId,
-      ] of definition.targetCollectionIds.entries()) {
+        targetCollection,
+      ] of definition.targetCollections.entries()) {
         if (
-          Id.is.protoCollection(collectionId) &&
-          !collectionIdMapping.has(collectionId)
+          Id.is.protoCollection(targetCollection.id) &&
+          !collectionIdMapping.has(targetCollection.id)
         ) {
           issues.push({
-            message: `App at index ${index} references unknown proto collection: ${collectionId}`,
+            message: `App at index ${index} references unknown proto collection: ${targetCollection.id}`,
             path: [
               { key: "apps" },
               { key: index },
-              { key: "targetCollectionIds" },
+              { key: "targetCollections" },
               { key: targetIndex },
+              { key: "id" },
             ],
           });
         }

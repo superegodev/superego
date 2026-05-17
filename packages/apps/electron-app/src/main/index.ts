@@ -1,29 +1,20 @@
 import { app, BrowserWindow } from "electron";
 import createWindow from "./createWindow.js";
-import onReadyDevenv from "./onReadyDevenv.js";
 import onReadyProd from "./onReadyProd.js";
 import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
 
 registerAppSandboxProtocol();
 
-const isDevenv = process.argv.includes("--devenv");
-
 app
-  .on("ready", () => {
-    if (isDevenv) {
-      onReadyDevenv();
-    } else {
-      onReadyProd();
-    }
-  })
+  .on("ready", onReadyProd)
   .on("window-all-closed", () => {
-    if (isDevenv || process.platform !== "darwin") {
+    if (process.platform !== "darwin") {
       app.quit();
     }
   })
   .on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow(isDevenv);
+      createWindow();
     }
   })
   .on("web-contents-created", (_event, contents) => {

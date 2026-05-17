@@ -1,9 +1,9 @@
 import type {
   App,
   AppId,
+  AppVersion,
   AppNotFound,
   Backend,
-  CollectionId,
   CollectionNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -27,10 +27,14 @@ export default class AppsCreateNewVersion extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     structuralSchemas.backend.ids.appId(),
-    v.array(structuralSchemas.backend.ids.collectionId()),
-    v.strictObject({
-      "/main.tsx": structuralSchemas.backend.types.typescriptModule(),
-    }),
+    v.array(
+      v.strictObject({
+        id: structuralSchemas.backend.ids.collectionId(),
+        versionId: structuralSchemas.backend.ids.collectionVersionId(),
+      }),
+    ),
+    structuralSchemas.backend.types.appVersionEntrypoint(),
+    structuralSchemas.backend.types.appVersionFiles(),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.app(),
@@ -43,7 +47,8 @@ export default class AppsCreateNewVersion extends BackendUsecase<
 
   async exec(
     id: AppId,
-    targetCollectionIds: CollectionId[],
+    targetCollections: AppVersion["targetCollections"],
+    entrypoint: AppVersionEntity["entrypoint"],
     files: AppVersionEntity["files"],
   ): ResultPromise<App, AppNotFound | CollectionNotFound | UnexpectedError> {
     const app = await this.repos.app.find(id);
@@ -58,8 +63,9 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     );
     assertAppVersionExists(app.id, previousVersion);
 
-    const targetCollections: AppVersionEntity["targetCollections"] = [];
-    for (const collectionId of targetCollectionIds) {
+    const resolvedTargetCollections: AppVersionEntity["targetCollections"] = [];
+    for (const targetCollection of targetCollections) {
+      const collectionId = targetCollection.id;
       const collection = await this.repos.collection.find(collectionId);
       if (!collection) {
         return makeUnsuccessfulResult(
@@ -67,14 +73,18 @@ export default class AppsCreateNewVersion extends BackendUsecase<
         );
       }
 
-      const latestCollectionVersion =
-        await this.repos.collectionVersion.findLatestWhereCollectionIdEq(
-          collectionId,
+      const collectionVersion = await this.repos.collectionVersion.find(
+        targetCollection.versionId,
+      );
+      assertCollectionVersionExists(collectionId, collectionVersion);
+      if (collectionVersion.collectionId !== collectionId) {
+        return makeUnsuccessfulResult(
+          makeResultError("CollectionNotFound", { collectionId }),
         );
-      assertCollectionVersionExists(collectionId, latestCollectionVersion);
-      targetCollections.push({
+      }
+      resolvedTargetCollections.push({
         id: collectionId,
-        versionId: latestCollectionVersion.id,
+        versionId: collectionVersion.id,
       });
     }
 
@@ -82,7 +92,8 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       id: Id.generate.appVersion(),
       previousVersionId: previousVersion.id,
       appId: app.id,
-      targetCollections,
+      targetCollections: resolvedTargetCollections,
+      entrypoint,
       files: files,
       createdAt: new Date(),
     };

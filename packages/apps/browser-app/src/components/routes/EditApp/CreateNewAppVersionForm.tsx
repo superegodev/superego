@@ -13,6 +13,7 @@ import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHF
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
+import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./EditApp.css.js";
@@ -74,7 +75,14 @@ export default function CreateNewAppVersionForm({
   const onSubmit = async ({ appVersion }: FormValues) => {
     const { success, data, error } = await mutate(
       app.id,
-      appVersion.targetCollectionIds,
+      CollectionUtils.findAllCollections(
+        collections,
+        appVersion.targetCollectionIds,
+      ).map((collection) => ({
+        id: collection.id,
+        versionId: collection.latestVersion.id,
+      })),
+      "/dist/index.html",
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     );
     if (success) {

@@ -1,7 +1,7 @@
 import type AppVersionId from "../ids/AppVersionId.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type CollectionVersionId from "../ids/CollectionVersionId.js";
-import type TypescriptModule from "./TypescriptModule.js";
+import type AppVersionFile from "./AppVersionFile.js";
 
 export default interface AppVersion {
   id: AppVersionId;
@@ -9,8 +9,7 @@ export default interface AppVersion {
     id: CollectionId;
     versionId: CollectionVersionId;
   }[];
-  files: {
-    "/main.tsx": TypescriptModule;
-  };
+  entrypoint: "/dist/index.html";
+  files: Record<`/${string}`, AppVersionFile>;
   createdAt: Date;
 }

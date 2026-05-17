@@ -5,6 +5,16 @@ import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
+const appEntrypoint = "/dist/index.html" as const;
+const appFiles = {
+  "/dist/index.html": {
+    role: "build",
+    mimeType: "text/html",
+    hash: "",
+    content: "<!doctype html>",
+  },
+} as const;
+
 export default rd<GetDependencies>("Packs", (deps) => {
   describe("install", () => {
     it("error: ArgumentsNotValid", async () => {
@@ -279,8 +289,11 @@ export default rd<GetDependencies>("Packs", (deps) => {
           {
             type: AppType.CollectionView,
             name: "Test App",
-            targetCollectionIds: [Id.generate.protoCollection(99)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
+            targetCollections: [
+              { id: Id.generate.protoCollection(99), versionId: null },
+            ],
+            entrypoint: appEntrypoint,
+            files: appFiles,
           },
         ],
         documents: [],
@@ -299,8 +312,9 @@ export default rd<GetDependencies>("Packs", (deps) => {
               path: [
                 { key: "apps" },
                 { key: 0 },
-                { key: "targetCollectionIds" },
+                { key: "targetCollections" },
                 { key: 0 },
+                { key: "id" },
               ],
             },
           ],
@@ -654,8 +668,11 @@ export default rd<GetDependencies>("Packs", (deps) => {
           {
             type: AppType.CollectionView,
             name: "My App",
-            targetCollectionIds: [Id.generate.protoCollection(0)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
+            targetCollections: [
+              { id: Id.generate.protoCollection(0), versionId: null },
+            ],
+            entrypoint: appEntrypoint,
+            files: appFiles,
           },
         ],
         documents: [],
@@ -799,8 +816,11 @@ export default rd<GetDependencies>("Packs", (deps) => {
           {
             type: AppType.CollectionView,
             name: "App",
-            targetCollectionIds: [Id.generate.protoCollection(0)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
+            targetCollections: [
+              { id: Id.generate.protoCollection(0), versionId: null },
+            ],
+            entrypoint: appEntrypoint,
+            files: appFiles,
           },
         ],
         documents: [

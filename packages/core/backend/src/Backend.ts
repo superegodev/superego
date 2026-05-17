@@ -601,7 +601,8 @@ export default interface Backend {
 
     createNewVersion(
       id: AppId,
-      targetCollectionIds: CollectionId[],
+      targetCollections: AppVersion["targetCollections"],
+      entrypoint: AppVersion["entrypoint"],
       files: AppVersion["files"],
     ): ResultPromise<
       App,

@@ -1,38 +1,63 @@
-import type { AppVersion } from "@superego/backend";
-
-const dotReplacement = "__DOT__" as const;
-
-type DotsToUnderscores<S extends string> =
-  S extends `${infer Head}.${infer Tail}`
-    ? `${Head}${typeof dotReplacement}${DotsToUnderscores<Tail>}`
-    : S;
+import type { AppVersion, TypescriptModule } from "@superego/backend";
 
 export type RHFAppVersionFiles = {
-  [K in keyof AppVersion["files"] as K extends string
-    ? DotsToUnderscores<K>
-    : K]: AppVersion["files"][K];
+  "/main__DOT__tsx": TypescriptModule;
 };
 
 export default {
   fromRhfAppVersionFiles(
     rhfAppVersionFiles: RHFAppVersionFiles,
   ): AppVersion["files"] {
-    return Object.fromEntries(
-      Object.entries(rhfAppVersionFiles).map(([key, value]) => [
-        key.replaceAll(dotReplacement, "."),
-        value,
-      ]),
-    ) as AppVersion["files"];
+    return makeAppVersionFiles(rhfAppVersionFiles["/main__DOT__tsx"]);
   },
 
   toRhfAppVersionFiles(
     appVersionFiles: AppVersion["files"],
   ): RHFAppVersionFiles {
-    return Object.fromEntries(
-      Object.entries(appVersionFiles).map(([key, value]) => [
-        key.replaceAll(".", dotReplacement),
-        value,
-      ]),
-    ) as RHFAppVersionFiles;
+    const sourceFile = appVersionFiles["/src/main.tsx"];
+    const compiledFile = appVersionFiles["/dist/main.js"];
+    return {
+      "/main__DOT__tsx": {
+        source:
+          typeof sourceFile?.content === "string" ? sourceFile.content : "",
+        compiled:
+          typeof compiledFile?.content === "string" ? compiledFile.content : "",
+      },
+    };
   },
 };
+
+function makeAppVersionFiles(mainTsx: TypescriptModule): AppVersion["files"] {
+  return {
+    "/src/main.tsx": {
+      role: "source",
+      mimeType: "text/plain",
+      hash: "",
+      content: mainTsx.source,
+    },
+    "/dist/index.html": {
+      role: "build",
+      mimeType: "text/html",
+      hash: "",
+      content: `
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
+      `.trim(),
+    },
+    "/dist/main.js": {
+      role: "build",
+      mimeType: "text/javascript",
+      hash: "",
+      content: mainTsx.compiled,
+    },
+  };
+}

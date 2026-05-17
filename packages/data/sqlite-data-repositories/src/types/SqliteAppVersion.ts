@@ -8,6 +8,7 @@ type SqliteAppVersion = {
   app_id: AppId;
   /** MessagePack */
   target_collections: Buffer;
+  entrypoint: AppVersionEntity["entrypoint"];
   /** MessagePack */
   files: Buffer;
   /** ISO 8601 */
@@ -24,6 +25,7 @@ export function toEntity(appVersion: SqliteAppVersion): AppVersionEntity {
     targetCollections: decode(
       appVersion.target_collections,
     ) as AppVersionEntity["targetCollections"],
+    entrypoint: appVersion.entrypoint,
     files: decode(appVersion.files) as AppVersionEntity["files"],
     createdAt: new Date(appVersion.created_at),
   };

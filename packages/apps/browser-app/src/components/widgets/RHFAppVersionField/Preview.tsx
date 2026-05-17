@@ -7,6 +7,7 @@ import {
 import { Id } from "@superego/shared-utils";
 import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
+import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import classnames from "../../../utils/classnames.js";
 import AppRenderer from "../AppRenderer/AppRenderer.js";
 import * as cs from "./RHFAppVersionField.css.js";
@@ -65,9 +66,10 @@ function getApp(
             id: collection.id,
             versionId: collection.latestVersion.id,
           })),
-          files: {
-            "/main.tsx": mainTsx,
-          },
+          entrypoint: "/dist/index.html",
+          files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles({
+            "/main__DOT__tsx": mainTsx,
+          }),
           createdAt: new Date(),
         },
         createdAt: new Date(),

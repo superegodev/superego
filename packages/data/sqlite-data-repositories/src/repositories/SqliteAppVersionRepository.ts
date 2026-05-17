@@ -29,18 +29,20 @@ export default class SqliteAppVersionRepository implements AppVersionRepository 
             "previous_version_id",
             "app_id",
             "target_collections",
+            "entrypoint",
             "files",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         appVersion.id,
         appVersion.previousVersionId,
         appVersion.appId,
         encode(appVersion.targetCollections),
+        appVersion.entrypoint,
         encode(appVersion.files),
         appVersion.createdAt.toISOString(),
         1,

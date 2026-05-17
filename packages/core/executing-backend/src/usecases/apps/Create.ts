@@ -42,7 +42,13 @@ export default class AppsCreate extends BackendUsecase<
   );
 
   async exec(
-    { type, name, targetCollectionIds, files }: AppDefinition,
+    {
+      type,
+      name,
+      targetCollections: targetCollectionDefinitions,
+      entrypoint,
+      files,
+    }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
@@ -59,7 +65,8 @@ export default class AppsCreate extends BackendUsecase<
     }
 
     const targetCollections: AppVersionEntity["targetCollections"] = [];
-    for (const collectionId of targetCollectionIds) {
+    for (const targetCollection of targetCollectionDefinitions) {
+      const collectionId = targetCollection.id;
       const collection = await this.repos.collection.find(collectionId);
       if (!collection) {
         return makeUnsuccessfulResult(
@@ -67,11 +74,17 @@ export default class AppsCreate extends BackendUsecase<
         );
       }
 
-      const latestCollectionVersion =
-        await this.repos.collectionVersion.findLatestWhereCollectionIdEq(
-          collectionId,
-        );
+      const latestCollectionVersion = targetCollection.versionId
+        ? await this.repos.collectionVersion.find(targetCollection.versionId)
+        : await this.repos.collectionVersion.findLatestWhereCollectionIdEq(
+            collectionId,
+          );
       assertCollectionVersionExists(collectionId, latestCollectionVersion);
+      if (latestCollectionVersion.collectionId !== collectionId) {
+        return makeUnsuccessfulResult(
+          makeResultError("CollectionNotFound", { collectionId }),
+        );
+      }
       targetCollections.push({
         id: collectionId,
         versionId: latestCollectionVersion.id,
@@ -90,6 +103,7 @@ export default class AppsCreate extends BackendUsecase<
       previousVersionId: null,
       appId: app.id,
       targetCollections: targetCollections,
+      entrypoint: entrypoint,
       files: files,
       createdAt: now,
     };
