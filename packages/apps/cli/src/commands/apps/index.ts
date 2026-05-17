@@ -1,4 +1,3 @@
-import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   existsSync,
@@ -18,6 +17,7 @@ import {
   type AppId,
   type AppVersion,
   type AppVersionFile,
+  AppVersionFileUtils,
   type Collection,
   type CollectionVersion,
   Theme,
@@ -29,14 +29,35 @@ import { codegen } from "@superego/schema";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { Command } from "commander";
+import ignore from "ignore";
 
 const MANIFEST_FILE_NAME = "superego.app.json";
-const ENTRYPOINT = "/dist/index.html";
-const IGNORED_DIR_NAMES = new Set([".git", "node_modules"]);
-const ROOT_CONFIG_FILE_PATHS = new Set<`/${string}`>([
-  "/package.json",
-  "/package-lock.json",
-]);
+const IGNORE_FILE_NAME = ".superegoignore";
+const ENTRYPOINT = AppVersionFileUtils.APP_VERSION_ENTRYPOINT;
+
+const DEFAULT_SUPEREGOIGNORE = `
+/superego/
+node_modules/
+.git/
+.env*
+*.pem
+*.key
+*.crt
+*.log
+coverage/
+.cache/
+.vite/
+.turbo/
+.next/
+.DS_Store
+`.trimStart();
+
+const RISKY_SNAPSHOT_PATH_PATTERNS = [
+  /^\/\.env/,
+  /^\/\.git(?:\/|$)/,
+  /^\/node_modules(?:\/|$)/,
+  /(?:^|\/)[^/]+\.(?:pem|key|crt)$/i,
+];
 
 interface Manifest {
   formatVersion: 1;
@@ -96,7 +117,7 @@ apps
     const backend = makeBackend(apps.opts());
     const app = await resolveAppRef(backend, appRef);
     const destination = resolve(folder ?? app.name.replaceAll(sep, "-"));
-    writeProjectFromVersion(destination, app);
+    await writeProjectFromVersion(destination, app, backend);
     console.log(`Checked out ${app.name} to ${destination}`);
   });
 
@@ -157,6 +178,14 @@ apps
     }
 
     if (app) {
+      const metadataChanged =
+        manifest.name !== app.name ||
+        JSON.stringify(manifest.targetCollections) !==
+          JSON.stringify(app.latestVersion.targetCollections);
+      console.log(`Metadata changes: ${metadataChanged ? "yes" : "none"}`);
+      if (manifest.name !== app.name) {
+        console.log(`  name: ${app.name} -> ${manifest.name}`);
+      }
       console.log(
         `Base version: ${
           manifest.baseAppVersionId === app.latestVersion.id
@@ -198,12 +227,15 @@ apps
   .description("Validate an app folder")
   .argument("[folder]", "App folder", ".")
   .action(async (folder: string) => {
-    const errors = await checkProject(resolve(folder), {
+    const result = await checkProject(resolve(folder), {
       backend: makeBackend(apps.opts()),
       requireTargetCollections: false,
     });
-    if (errors.length > 0) {
-      for (const error of errors) {
+    for (const warning of result.warnings) {
+      console.warn(warning);
+    }
+    if (result.errors.length > 0) {
+      for (const error of result.errors) {
         console.error(error);
       }
       process.exitCode = 1;
@@ -220,12 +252,15 @@ apps
   .action(async (folder: string, options: { force?: boolean }) => {
     const projectPath = resolve(folder);
     const backend = makeBackend(apps.opts());
-    const errors = await checkProject(projectPath, {
+    const checkResult = await checkProject(projectPath, {
       backend,
       requireTargetCollections: true,
     });
-    if (errors.length > 0) {
-      for (const error of errors) {
+    for (const warning of checkResult.warnings) {
+      console.warn(warning);
+    }
+    if (checkResult.errors.length > 0) {
+      for (const error of checkResult.errors) {
         console.error(error);
       }
       process.exit(1);
@@ -257,6 +292,23 @@ apps
           `Folder is based on ${manifest.baseAppVersionId}, but latest is ${app.latestVersion.id}. Use --force to commit anyway.`,
         );
       }
+      if (manifest.name !== app.name) {
+        const updateNameResult = await backend.apps.updateName(
+          manifest.appId,
+          manifest.name,
+        );
+        if (!updateNameResult.success) {
+          throw new Error(JSON.stringify(updateNameResult.error, null, 2));
+        }
+      }
+      if (
+        app.latestVersion.id !== manifest.baseAppVersionId &&
+        options.force === true
+      ) {
+        console.warn(
+          `Force committing from stale base ${manifest.baseAppVersionId}; this creates a new version from local files and does not merge database changes.`,
+        );
+      }
       const result = await backend.apps.createNewVersion(
         manifest.appId,
         manifest.targetCollections,
@@ -284,31 +336,12 @@ apps
   .command("install-deps")
   .description("Install bundled Superego helper packages")
   .argument("[folder]", "App folder", ".")
-  .action((folder: string) => {
-    const projectPath = resolve(folder);
-    writeBundledDependencyPackages(projectPath);
-    const packageJsonPath = join(projectPath, "package.json");
-    const packageJson = existsSync(packageJsonPath)
-      ? JSON.parse(readFileSync(packageJsonPath, "utf-8"))
-      : {};
-    packageJson.dependencies = {
-      ...packageJson.dependencies,
-      "@superego/app-client": "file:./superego/packages/app-client",
-      "@superego/app-react": "file:./superego/packages/app-react",
-      react: "^19.2.6",
-      "react-dom": "^19.2.6",
-    };
-    packageJson.devDependencies = {
-      ...packageJson.devDependencies,
-      "@types/react": "^19.2.14",
-      "@types/react-dom": "^19.2.3",
-    };
-    writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
-    const result = spawnSync("npm", ["install"], {
-      cwd: projectPath,
-      stdio: "inherit",
-    });
-    process.exitCode = result.status ?? 1;
+  .option("--react", "Also add the React app helper package")
+  .action((folder: string, options: { react?: boolean }) => {
+    installBundledDependencies(resolve(folder), options);
+    console.log(
+      "Materialized Superego helper packages. Run your package manager install command when ready.",
+    );
   });
 
 apps
@@ -435,11 +468,16 @@ async function writeProject(
   );
   writeFileSync(join(projectPath, "dist", "main.js"), distMainJs());
   writeFileSync(join(projectPath, "package.json"), packageJson(manifest.name));
+  writeFileSync(join(projectPath, IGNORE_FILE_NAME), DEFAULT_SUPEREGOIGNORE);
   await writeGeneratedFiles(projectPath, backend, manifest);
   writeManifest(projectPath, manifest);
 }
 
-function writeProjectFromVersion(projectPath: string, app: App): void {
+async function writeProjectFromVersion(
+  projectPath: string,
+  app: App,
+  backend: ReturnType<typeof makeBackend>,
+): Promise<void> {
   if (existsSync(projectPath) && readdirSync(projectPath).length > 0) {
     throw new Error(`Folder is not empty: ${projectPath}`);
   }
@@ -455,6 +493,17 @@ function writeProjectFromVersion(projectPath: string, app: App): void {
     type: app.type,
     targetCollections: app.latestVersion.targetCollections,
   });
+  await writeGeneratedFiles(projectPath, backend, {
+    formatVersion: 1,
+    appId: app.id,
+    baseAppVersionId: app.latestVersion.id,
+    name: app.name,
+    type: app.type,
+    targetCollections: app.latestVersion.targetCollections,
+  });
+  if (projectUsesBundledDependencies(projectPath)) {
+    writeBundledDependencyPackages(projectPath);
+  }
 }
 
 function readManifest(projectPath: string): Manifest {
@@ -476,26 +525,30 @@ async function checkProject(
     backend: ReturnType<typeof makeBackend>;
     requireTargetCollections: boolean;
   },
-): Promise<string[]> {
+): Promise<{ errors: string[]; warnings: string[] }> {
   const errors: string[] = [];
+  const warnings: string[] = [];
   if (!existsSync(projectPath) || !statSync(projectPath).isDirectory()) {
-    return [`Folder does not exist: ${projectPath}`];
+    return { errors: [`Folder does not exist: ${projectPath}`], warnings };
   }
   const manifestPath = join(projectPath, MANIFEST_FILE_NAME);
   if (!existsSync(manifestPath)) {
-    return [`Missing ${MANIFEST_FILE_NAME}`];
+    return { errors: [`Missing ${MANIFEST_FILE_NAME}`], warnings };
   }
 
   let manifest: Manifest;
   try {
     manifest = readManifest(projectPath);
   } catch (error) {
-    return [`Invalid ${MANIFEST_FILE_NAME}: ${(error as Error).message}`];
+    return {
+      errors: [`Invalid ${MANIFEST_FILE_NAME}: ${(error as Error).message}`],
+      warnings,
+    };
   }
 
   errors.push(...validateManifest(manifest));
   if (errors.length > 0) {
-    return errors;
+    return { errors, warnings };
   }
 
   if (
@@ -505,7 +558,7 @@ async function checkProject(
     errors.push("At least one target collection is required before commit.");
   }
 
-  for (const root of ["src", "dist", "superego"]) {
+  for (const root of ["src", "dist"]) {
     const rootPath = join(projectPath, root);
     if (!existsSync(rootPath) || !statSync(rootPath).isDirectory()) {
       errors.push(`Missing /${root} directory.`);
@@ -514,9 +567,6 @@ async function checkProject(
   if (!existsSync(join(projectPath, "dist", "index.html"))) {
     errors.push("Missing /dist/index.html.");
   }
-  if (!existsSync(join(projectPath, "superego", "app.ts"))) {
-    errors.push("Missing /superego/app.ts.");
-  }
 
   const seenCollectionIds = new Set<string>();
   for (const targetCollection of manifest.targetCollections) {
@@ -524,17 +574,6 @@ async function checkProject(
       errors.push(`Duplicate target collection: ${targetCollection.id}.`);
     }
     seenCollectionIds.add(targetCollection.id);
-    const expectedTypesPath = join(
-      projectPath,
-      "superego",
-      "collections",
-      `${safeIdentifier(targetCollection.versionId)}.ts`,
-    );
-    if (!existsSync(expectedTypesPath)) {
-      errors.push(
-        `Missing generated types for collection version ${targetCollection.versionId}.`,
-      );
-    }
     const collectionVersionResult =
       await options.backend.collections.getVersion(
         targetCollection.id,
@@ -547,17 +586,20 @@ async function checkProject(
     }
   }
 
-  for (const path of Object.keys(hashProjectFiles(projectPath))) {
-    if (
-      !path.startsWith("/src/") &&
-      !path.startsWith("/dist/") &&
-      !path.startsWith("/superego/") &&
-      !ROOT_CONFIG_FILE_PATHS.has(path as `/${string}`)
-    ) {
-      errors.push(`Unexpected project file: ${path}`);
-    }
+  if (errors.length === 0) {
+    await writeGeneratedFiles(projectPath, options.backend, manifest);
   }
-  return errors;
+
+  const scanResult = scanProjectFiles(projectPath);
+  errors.push(...scanResult.errors);
+  warnings.push(...scanResult.warnings);
+  const staticAssetResult = validateStaticAssets(projectPath, scanResult.paths);
+  errors.push(...staticAssetResult.errors);
+  warnings.push(...staticAssetResult.warnings);
+  warnings.push(
+    ...(await warnForSourceBuildDrift(projectPath, options.backend)),
+  );
+  return { errors, warnings };
 }
 
 function validateManifest(manifest: Manifest): string[] {
@@ -601,7 +643,7 @@ function validateManifest(manifest: Manifest): string[] {
 
 function hashProjectFiles(projectPath: string): Record<`/${string}`, string> {
   return Object.fromEntries(
-    listProjectFilePaths(projectPath).map((path) => [
+    scanProjectFiles(projectPath).paths.map((path) => [
       path,
       hashBytes(readFileSync(join(projectPath, path.slice(1)))),
     ]),
@@ -625,7 +667,7 @@ function hashAppVersionFiles(
 
 function readProjectFiles(projectPath: string): AppVersion["files"] {
   return Object.fromEntries(
-    listProjectFilePaths(projectPath).map((filePath) => {
+    scanProjectFiles(projectPath).paths.map((filePath) => {
       const absolutePath = join(projectPath, filePath.slice(1));
       const bytes = readFileSync(absolutePath);
       const mimeType = inferMimeType(filePath);
@@ -640,39 +682,265 @@ function readProjectFiles(projectPath: string): AppVersion["files"] {
   ) as AppVersion["files"];
 }
 
-function listProjectFilePaths(projectPath: string): `/${string}`[] {
+function scanProjectFiles(projectPath: string): {
+  paths: `/${string}`[];
+  errors: string[];
+  warnings: string[];
+} {
   const paths: `/${string}`[] = [];
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  const ignoreMatcher = makeSuperegoIgnore(projectPath);
   const visit = (dir: string) => {
     for (const entry of readdirSync(dir)) {
-      if (IGNORED_DIR_NAMES.has(entry) || entry === MANIFEST_FILE_NAME) {
+      const absolutePath = join(dir, entry);
+      const appPath =
+        `/${relative(projectPath, absolutePath).split(sep).join("/")}` as `/${string}`;
+      if (entry === MANIFEST_FILE_NAME || appPath.startsWith("/superego/")) {
         continue;
       }
-      const absolutePath = join(dir, entry);
       const stat = statSync(absolutePath);
       if (stat.isDirectory()) {
         visit(absolutePath);
       } else if (stat.isFile()) {
-        paths.push(
-          `/${relative(projectPath, absolutePath).split(sep).join("/")}`,
-        );
+        const normalizedPath =
+          AppVersionFileUtils.normalizeAppVersionPath(appPath);
+        if (!normalizedPath) {
+          errors.push(`Invalid project file path: ${appPath}`);
+          continue;
+        }
+        if (ignoreMatcher.ignores(appPath)) {
+          continue;
+        }
+        const role = AppVersionFileUtils.classifyAppProjectPath(normalizedPath);
+        if (!role) {
+          errors.push(`Reserved project file cannot be committed: ${appPath}`);
+          continue;
+        }
+        if (stat.size > AppVersionFileUtils.APP_VERSION_FILE_SIZE_LIMIT_BYTES) {
+          errors.push(
+            `Project file exceeds ${AppVersionFileUtils.APP_VERSION_FILE_SIZE_LIMIT_BYTES} bytes: ${appPath}`,
+          );
+          continue;
+        }
+        if (
+          RISKY_SNAPSHOT_PATH_PATTERNS.some((pattern) => pattern.test(appPath))
+        ) {
+          warnings.push(
+            `Including risky project file in the app snapshot: ${appPath}`,
+          );
+        }
+        paths.push(normalizedPath);
       }
     }
   };
   visit(projectPath);
-  return paths.sort();
+  return { paths: paths.sort(), errors, warnings };
+}
+
+function makeSuperegoIgnore(projectPath: string): {
+  ignores: (appPath: `/${string}`) => boolean;
+} {
+  const matcher = ignore();
+  const explicitIncludeMatcher = ignore();
+  const ignorePath = join(projectPath, IGNORE_FILE_NAME);
+  if (existsSync(ignorePath)) {
+    const ignoreFileContent = readFileSync(ignorePath, "utf-8");
+    matcher.add(ignoreFileContent);
+    explicitIncludeMatcher.add(
+      ignoreFileContent
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter((line) => line.startsWith("!") && line !== "!")
+        .map((line) => line.slice(1).trim()),
+    );
+  }
+  return {
+    ignores(appPath) {
+      const relativePath = appPath.slice(1);
+      return (
+        matcher.ignores(relativePath) &&
+        !explicitIncludeMatcher.ignores(relativePath)
+      );
+    },
+  };
+}
+
+function validateStaticAssets(
+  projectPath: string,
+  paths: `/${string}`[],
+): { errors: string[]; warnings: string[] } {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  const pathSet = new Set(paths);
+  const indexHtmlPath = join(projectPath, "dist", "index.html");
+  if (!existsSync(indexHtmlPath)) {
+    return { errors, warnings };
+  }
+
+  const validateReference = (ownerPath: `/${string}`, reference: string) => {
+    const cleanReference = reference.trim();
+    if (
+      cleanReference === "" ||
+      cleanReference.startsWith("#") ||
+      cleanReference.startsWith("data:") ||
+      cleanReference.startsWith("blob:") ||
+      cleanReference.startsWith("mailto:") ||
+      cleanReference.startsWith("javascript:")
+    ) {
+      return;
+    }
+    if (/^https?:\/\//i.test(cleanReference)) {
+      warnings.push(
+        `External asset reference may be blocked by the runtime CSP: ${cleanReference}`,
+      );
+      return;
+    }
+    if (cleanReference.startsWith("/")) {
+      errors.push(
+        `Root-absolute asset references are not supported: ${cleanReference}`,
+      );
+      return;
+    }
+
+    const [referenceWithoutQuery] = cleanReference.split(/[?#]/);
+    const resolvedPath = resolveRelativeAppPath(
+      ownerPath,
+      referenceWithoutQuery!,
+    );
+    if (!resolvedPath || !resolvedPath.startsWith("/dist/")) {
+      errors.push(`Asset reference escapes /dist: ${cleanReference}`);
+      return;
+    }
+    if (!pathSet.has(resolvedPath)) {
+      errors.push(`Missing referenced asset ${resolvedPath} from ${ownerPath}`);
+    }
+  };
+
+  const indexHtml = readFileSync(indexHtmlPath, "utf-8");
+  for (const reference of extractHtmlAssetReferences(indexHtml)) {
+    validateReference("/dist/index.html", reference);
+  }
+  for (const path of paths) {
+    if (!path.startsWith("/dist/") || !path.endsWith(".css")) {
+      continue;
+    }
+    const content = readFileSync(join(projectPath, path.slice(1)), "utf-8");
+    for (const reference of extractCssAssetReferences(content)) {
+      validateReference(path, reference);
+    }
+  }
+
+  for (const path of paths) {
+    if (path.startsWith("/dist/") && path.endsWith(".map")) {
+      warnings.push(
+        `Source map will be stored and served with the app snapshot: ${path}`,
+      );
+    }
+  }
+
+  return { errors, warnings };
+}
+
+function resolveRelativeAppPath(
+  ownerPath: `/${string}`,
+  reference: string,
+): `/${string}` | null {
+  const segments = ownerPath
+    .slice(1, ownerPath.lastIndexOf("/"))
+    .split("/")
+    .filter(Boolean);
+  for (const segment of reference.split("/")) {
+    if (segment === "" || segment === ".") {
+      continue;
+    }
+    if (segment === "..") {
+      if (segments.length === 0) {
+        return null;
+      }
+      segments.pop();
+      continue;
+    }
+    segments.push(segment);
+  }
+  return AppVersionFileUtils.normalizeAppVersionPath(`/${segments.join("/")}`);
+}
+
+function extractHtmlAssetReferences(html: string): string[] {
+  const references: string[] = [];
+  const tagRegex =
+    /<(script|link|img|source)\b[^>]*(?:src|href)\s*=\s*["']([^"']+)["'][^>]*>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = tagRegex.exec(html)) !== null) {
+    references.push(match[2]!);
+  }
+  return references;
+}
+
+function extractCssAssetReferences(css: string): string[] {
+  const references: string[] = [];
+  const urlRegex = /url\(\s*["']?([^"')]+)["']?\s*\)/gi;
+  let match: RegExpExecArray | null;
+  while ((match = urlRegex.exec(css)) !== null) {
+    references.push(match[1]!);
+  }
+  return references;
+}
+
+async function warnForSourceBuildDrift(
+  projectPath: string,
+  backend: ReturnType<typeof makeBackend>,
+): Promise<string[]> {
+  const warnings: string[] = [];
+  let manifest: Manifest;
+  try {
+    manifest = readManifest(projectPath);
+  } catch {
+    return warnings;
+  }
+  if (!manifest.appId) {
+    return warnings;
+  }
+  const appResult = await backend.apps.list();
+  if (!appResult.success) {
+    return warnings;
+  }
+  const app = appResult.data.find(({ id }) => id === manifest.appId);
+  if (!app) {
+    return warnings;
+  }
+  const localHashes = hashProjectFiles(projectPath);
+  const databaseHashes = hashAppVersionFiles(app.latestVersion.files);
+  const changedPaths = new Set([
+    ...Object.keys(localHashes).filter(
+      (path) =>
+        databaseHashes[path as `/${string}`] !==
+        localHashes[path as `/${string}`],
+    ),
+    ...Object.keys(databaseHashes).filter(
+      (path) => localHashes[path as `/${string}`] === undefined,
+    ),
+  ] as `/${string}`[]);
+  const hasEditableChanges = [...changedPaths].some(
+    (path) => !path.startsWith("/dist/"),
+  );
+  const hasBuildChanges = [...changedPaths].some((path) =>
+    path.startsWith("/dist/"),
+  );
+  if (hasEditableChanges && !hasBuildChanges) {
+    warnings.push(
+      "Source or project files changed, but /dist did not. Build output may be stale.",
+    );
+  }
+  return warnings;
 }
 
 function roleForPath(path: string): AppVersionFile["role"] {
-  if (path.startsWith("/dist/")) {
-    return "build";
+  const role = AppVersionFileUtils.classifyAppProjectPath(path);
+  if (!role) {
+    throw new Error(`Reserved app path cannot be persisted: ${path}`);
   }
-  if (path.startsWith("/superego/")) {
-    return "generated";
-  }
-  if (ROOT_CONFIG_FILE_PATHS.has(path as `/${string}`)) {
-    return "config";
-  }
-  return "source";
+  return role;
 }
 
 async function resolveAppRef(
@@ -788,6 +1056,13 @@ function writeAppVersionFile(
 }
 
 function inferMimeType(path: string): string {
+  if (
+    path === "/.superegoignore" ||
+    path.endsWith(".yaml") ||
+    path.endsWith(".yml")
+  ) {
+    return "text/plain";
+  }
   switch (extname(path).toLowerCase()) {
     case ".html":
       return "text/html";
@@ -844,6 +1119,51 @@ function writeBundledDependencyPackages(projectPath: string): void {
     appReactPackageJson(),
     APP_REACT_INDEX_JS,
     APP_REACT_INDEX_D_TS,
+  );
+}
+
+function installBundledDependencies(
+  projectPath: string,
+  options: { react?: boolean },
+): void {
+  writeBundledDependencyPackages(projectPath);
+  const packageJsonPath = join(projectPath, "package.json");
+  const packageJson = existsSync(packageJsonPath)
+    ? JSON.parse(readFileSync(packageJsonPath, "utf-8"))
+    : {};
+  packageJson.dependencies = {
+    ...packageJson.dependencies,
+    "@superego/app-client": "file:./superego/packages/app-client",
+  };
+  if (options.react === true) {
+    packageJson.dependencies = {
+      ...packageJson.dependencies,
+      "@superego/app-react": "file:./superego/packages/app-react",
+      react: "^19.2.6",
+      "react-dom": "^19.2.6",
+    };
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      "@types/react": "^19.2.14",
+      "@types/react-dom": "^19.2.3",
+    };
+  }
+  writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
+}
+
+function projectUsesBundledDependencies(projectPath: string): boolean {
+  const packageJsonPath = join(projectPath, "package.json");
+  if (!existsSync(packageJsonPath)) {
+    return false;
+  }
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+  const dependencyValues = [
+    ...Object.values(packageJson.dependencies ?? {}),
+    ...Object.values(packageJson.devDependencies ?? {}),
+  ];
+  return dependencyValues.some(
+    (value) =>
+      typeof value === "string" && value.startsWith("file:./superego/"),
   );
 }
 
@@ -1145,3 +1465,12 @@ export function createSuperegoReactApp(
   options: CreateSuperegoReactAppOptions,
 ): Promise<void>;
 `.trimStart();
+
+export {
+  DEFAULT_SUPEREGOIGNORE,
+  installBundledDependencies,
+  readProjectFiles,
+  scanProjectFiles,
+  validateStaticAssets,
+  writeBundledDependencyPackages,
+};

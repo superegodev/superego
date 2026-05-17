@@ -10,6 +10,7 @@ import resultError from "../global/resultError.js";
 import unknownResultError from "../global/unknownResultError.js";
 import {
   appId,
+  appVersionId,
   backgroundJobId,
   collectionCategoryId,
   collectionId,
@@ -38,6 +39,35 @@ export const appNameNotValid = () =>
 
 export const appNotFound = () =>
   resultError("AppNotFound", v.strictObject({ appId: appId() }));
+
+export const appVersionFileNotFound = () =>
+  resultError(
+    "AppVersionFileNotFound",
+    v.strictObject({
+      appId: appId(),
+      appVersionId: appVersionId(),
+      path: v.string(),
+    }),
+  );
+
+export const appVersionNotFound = () =>
+  resultError(
+    "AppVersionNotFound",
+    v.strictObject({
+      appId: appId(),
+      appVersionId: appVersionId(),
+    }),
+  );
+
+export const appVersionNotValid = () =>
+  resultError(
+    "AppVersionNotValid",
+    v.strictObject({
+      appId: v.nullable(appId()),
+      appVersionId: v.nullable(appVersionId()),
+      issues: issues(),
+    }),
+  );
 
 export const backgroundJobNotFound = () =>
   resultError(

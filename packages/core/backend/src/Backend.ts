@@ -3,6 +3,9 @@ import type { Schema } from "@superego/schema";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
+import type AppVersionFileNotFound from "./errors/AppVersionFileNotFound.js";
+import type AppVersionNotFound from "./errors/AppVersionNotFound.js";
+import type AppVersionNotValid from "./errors/AppVersionNotValid.js";
 import type ArgumentsNotValid from "./errors/ArgumentsNotValid.js";
 import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
 import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
@@ -69,6 +72,7 @@ import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
 import type AppDefinition from "./types/AppDefinition.js";
 import type AppVersion from "./types/AppVersion.js";
+import type AppVersionFile from "./types/AppVersionFile.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
@@ -588,7 +592,11 @@ export default interface Backend {
       definition: AppDefinition,
     ): ResultPromise<
       App,
-      AppNameNotValid | CollectionNotFound | ArgumentsNotValid | UnexpectedError
+      | AppNameNotValid
+      | AppVersionNotValid
+      | CollectionNotFound
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
 
     updateName(
@@ -606,7 +614,24 @@ export default interface Backend {
       files: AppVersion["files"],
     ): ResultPromise<
       App,
-      AppNotFound | CollectionNotFound | ArgumentsNotValid | UnexpectedError
+      | AppNotFound
+      | AppVersionNotValid
+      | CollectionNotFound
+      | ArgumentsNotValid
+      | UnexpectedError
+    >;
+
+    getVersionBuildFile(
+      appId: AppId,
+      appVersionId: AppVersion["id"],
+      path: `/${string}`,
+    ): ResultPromise<
+      AppVersionFile,
+      | AppNotFound
+      | AppVersionNotFound
+      | AppVersionFileNotFound
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
 
     delete(
@@ -644,6 +669,7 @@ export default interface Backend {
       | ContentSummaryGetterNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | AppNameNotValid
+      | AppVersionNotValid
       | CollectionNotFound
       | DocumentContentNotValid
       | FilesNotFound

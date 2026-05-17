@@ -68,4 +68,43 @@ export default rd<GetDependencies>("Boutique", (deps) => {
       );
     });
   });
+
+  describe("static app files", () => {
+    it("success: every boutique app has source and static runtime files", () => {
+      // Setup SUT
+
+      // Exercise
+      const appFiles = packs.flatMap((pack) =>
+        pack.apps.map((app) => app.files),
+      );
+
+      // Verify
+      expect(appFiles.length).toBeGreaterThan(0);
+      for (const files of appFiles) {
+        expect(files["/src/main.tsx"]).toMatchObject({
+          role: "source",
+          mimeType: "text/plain",
+        });
+        expect(files["/dist/index.html"]).toMatchObject({
+          role: "build",
+          mimeType: "text/html",
+        });
+        expect(files["/dist/main.js"]).toMatchObject({
+          role: "build",
+          mimeType: "text/javascript",
+        });
+      }
+    });
+
+    it("success: installs every boutique pack", async () => {
+      // Setup SUT
+
+      // Exercise / Verify
+      for (const pack of packs) {
+        const { backend } = deps();
+        const installResult = await backend.packs.install(pack);
+        assert.isTrue(installResult.success);
+      }
+    });
+  });
 });

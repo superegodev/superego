@@ -3,6 +3,7 @@ import type {
   AppDefinition,
   AppId,
   AppNameNotValid,
+  AppVersionNotValid,
   Backend,
   CollectionNotFound,
   UnexpectedError,
@@ -21,8 +22,8 @@ import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
-import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
+import validateAppVersionDefinition from "./validateAppVersionDefinition.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
@@ -36,6 +37,7 @@ export default class AppsCreate extends BackendUsecase<
     structuralSchemas.backend.types.app(),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appVersionNotValid(),
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
@@ -52,7 +54,7 @@ export default class AppsCreate extends BackendUsecase<
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
-    AppNameNotValid | CollectionNotFound | UnexpectedError
+    AppNameNotValid | AppVersionNotValid | CollectionNotFound | UnexpectedError
   > {
     const nameValidationResult = v.safeParse(valibotSchemas.appName(), name);
     if (!nameValidationResult.success) {
@@ -65,7 +67,15 @@ export default class AppsCreate extends BackendUsecase<
     }
 
     const targetCollections: AppVersionEntity["targetCollections"] = [];
-    for (const targetCollection of targetCollectionDefinitions) {
+    const appVersionValidationIssues = validateAppVersionDefinition(
+      entrypoint,
+      files,
+      targetCollectionDefinitions,
+    );
+    for (const [
+      targetCollectionIndex,
+      targetCollection,
+    ] of targetCollectionDefinitions.entries()) {
       const collectionId = targetCollection.id;
       const collection = await this.repos.collection.find(collectionId);
       if (!collection) {
@@ -79,16 +89,42 @@ export default class AppsCreate extends BackendUsecase<
         : await this.repos.collectionVersion.findLatestWhereCollectionIdEq(
             collectionId,
           );
-      assertCollectionVersionExists(collectionId, latestCollectionVersion);
+      if (!latestCollectionVersion) {
+        appVersionValidationIssues.push({
+          message: `Collection version not found for collection ${collectionId}.`,
+          path: [
+            { key: "targetCollections" },
+            { key: targetCollectionIndex },
+            { key: "versionId" },
+          ],
+        });
+        continue;
+      }
       if (latestCollectionVersion.collectionId !== collectionId) {
-        return makeUnsuccessfulResult(
-          makeResultError("CollectionNotFound", { collectionId }),
-        );
+        appVersionValidationIssues.push({
+          message: `Collection version ${latestCollectionVersion.id} does not belong to collection ${collectionId}.`,
+          path: [
+            { key: "targetCollections" },
+            { key: targetCollectionIndex },
+            { key: "versionId" },
+          ],
+        });
+        continue;
       }
       targetCollections.push({
         id: collectionId,
         versionId: latestCollectionVersion.id,
       });
+    }
+
+    if (appVersionValidationIssues.length > 0) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppVersionNotValid", {
+          appId: null,
+          appVersionId: null,
+          issues: appVersionValidationIssues,
+        }),
+      );
     }
 
     const now = new Date();

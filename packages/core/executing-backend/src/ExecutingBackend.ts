@@ -18,6 +18,7 @@ import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
 import AppsCreate from "./usecases/apps/Create.js";
 import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
 import AppsDelete from "./usecases/apps/Delete.js";
+import AppsGetVersionBuildFile from "./usecases/apps/GetVersionBuildFile.js";
 import AppsList from "./usecases/apps/List.js";
 import AppsUpdateName from "./usecases/apps/UpdateName.js";
 import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
@@ -189,6 +190,7 @@ export default class ExecutingBackend implements Backend {
       create: this.makeUsecase(AppsCreate, true),
       updateName: this.makeUsecase(AppsUpdateName, true),
       createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
+      getVersionBuildFile: this.makeUsecase(AppsGetVersionBuildFile, false),
       delete: this.makeUsecase(AppsDelete, true),
       list: this.makeUsecase(AppsList, false),
     };

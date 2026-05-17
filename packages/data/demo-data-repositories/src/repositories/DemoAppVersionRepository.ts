@@ -37,6 +37,11 @@ export default class DemoAppVersionRepository
     return deletedIds;
   }
 
+  async find(id: AppVersionId): Promise<AppVersionEntity | null> {
+    this.ensureNotDisposed();
+    return clone(this.appVersions[id] ?? null);
+  }
+
   async findLatestWhereAppIdEq(appId: AppId): Promise<AppVersionEntity | null> {
     this.ensureNotDisposed();
     const [latestAppVersion] = Object.values(this.appVersions)

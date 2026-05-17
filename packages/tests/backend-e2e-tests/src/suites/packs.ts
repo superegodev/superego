@@ -7,6 +7,11 @@ import type GetDependencies from "../GetDependencies.js";
 
 const appEntrypoint = "/dist/index.html" as const;
 const appFiles = {
+  "/src/main.js": {
+    role: "source",
+    mimeType: "text/javascript",
+    content: "console.log('hello');",
+  },
   "/dist/index.html": {
     role: "build",
     mimeType: "text/html",

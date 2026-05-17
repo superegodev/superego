@@ -56,6 +56,13 @@ export default class SqliteAppVersionRepository implements AppVersionRepository 
     return result.map(({ id }) => id);
   }
 
+  async find(id: AppVersionId): Promise<AppVersionEntity | null> {
+    const appVersion = this.db
+      .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
+      .get(id) as SqliteAppVersion | undefined;
+    return appVersion ? toEntity(appVersion) : null;
+  }
+
   async findLatestWhereAppIdEq(appId: AppId): Promise<AppVersionEntity | null> {
     const appVersion = this.db
       .prepare(

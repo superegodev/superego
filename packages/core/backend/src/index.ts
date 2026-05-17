@@ -3,6 +3,7 @@
 
 // Backend
 export type { default as Backend } from "./Backend.js";
+export * as AppVersionFileUtils from "./AppVersionFileUtils.js";
 
 // Enums
 export { default as AppType } from "./enums/AppType.js";
@@ -24,6 +25,9 @@ export { default as TranscriptionModel } from "./enums/TranscriptionModel.js";
 // Errors
 export type { default as AppNameNotValid } from "./errors/AppNameNotValid.js";
 export type { default as AppNotFound } from "./errors/AppNotFound.js";
+export type { default as AppVersionFileNotFound } from "./errors/AppVersionFileNotFound.js";
+export type { default as AppVersionNotFound } from "./errors/AppVersionNotFound.js";
+export type { default as AppVersionNotValid } from "./errors/AppVersionNotValid.js";
 export type { default as ArgumentsNotValid } from "./errors/ArgumentsNotValid.js";
 export type { default as BackgroundJobNotFound } from "./errors/BackgroundJobNotFound.js";
 export type { default as CannotChangeCollectionRemoteConnector } from "./errors/CannotChangeCollectionRemoteConnector.js";

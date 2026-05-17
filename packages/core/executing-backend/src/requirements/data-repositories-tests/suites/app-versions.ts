@@ -5,6 +5,11 @@ import { describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 const appVersionFiles: AppVersionEntity["files"] = {
+  "/src/main.js": {
+    role: "source",
+    mimeType: "text/javascript",
+    content: "console.log('hello');",
+  },
   "/dist/index.html": {
     role: "build",
     mimeType: "text/html",
@@ -112,6 +117,55 @@ export default rd<GetDependencies>("App versions", (deps) => {
           returnValue: await repos.appVersion.findLatestWhereAppIdEq(
             Id.generate.app(),
           ),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(null);
+    });
+  });
+
+  describe("finding one", () => {
+    it("case: exists => returns it", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const appVersion: AppVersionEntity = {
+        id: Id.generate.appVersion(),
+        previousVersionId: null,
+        appId: Id.generate.app(),
+        targetCollections: targetCollections,
+        entrypoint: "/dist/index.html",
+        files: appVersionFiles,
+        createdAt: new Date(),
+      };
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.appVersion.insert(appVersion);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.appVersion.find(appVersion.id),
+        }),
+      );
+
+      // Verify
+      expect(found).toEqual(appVersion);
+    });
+
+    it("case: doesn't exist => returns null", async () => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => ({
+          action: "commit",
+          returnValue: await repos.appVersion.find(Id.generate.appVersion()),
         }),
       );
 

@@ -65,6 +65,9 @@ function toExports(category: CategoryValue, fileNames: string[]): string[] {
       .map((fileName) => {
         const name = fileName.replace(".ts", "");
         const dir = toDirectory(category);
+        if (name === "AppVersionFile") {
+          return `export type { default as AppVersionFile, AppVersionFileRole } from "./${dir}/AppVersionFile.js";`;
+        }
         const isType = category !== Category.Enum ? "type " : "";
         return `export ${isType}{ default as ${name} } from "./${dir}/${name}.js";`;
       }),
@@ -78,6 +81,7 @@ function generateIndex(): string {
     "",
     "// Backend",
     'export type { default as Backend } from "./Backend.js";',
+    'export * as AppVersionFileUtils from "./AppVersionFileUtils.js";',
     "",
     ...toExports(Category.Enum, getFileNames(Category.Enum)),
     "",

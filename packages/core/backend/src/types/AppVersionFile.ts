@@ -1,4 +1,4 @@
-export type AppVersionFileRole = "source" | "build" | "generated" | "config";
+export type AppVersionFileRole = "source" | "build" | "projectConfig";
 
 export default interface AppVersionFile {
   role: AppVersionFileRole;

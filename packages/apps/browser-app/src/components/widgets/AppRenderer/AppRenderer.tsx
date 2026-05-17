@@ -1,3 +1,4 @@
+import { Sandbox } from "@superego/app-sandbox/host";
 import type {
   AppComponentProps,
   IntlMessages,
@@ -31,6 +32,12 @@ import useTheme from "../../../business-logic/theme/useTheme.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import DeleteDocumentModalForm from "../DeleteDocumentModalForm/DeleteDocumentModalForm.js";
 import * as cs from "./AppRenderer.css.js";
+import {
+  invokeAllowedBackendMethod,
+  isValidNavigationHref,
+  makeIframeSrc,
+  type StaticAppBridgeBackend,
+} from "./AppRendererUtils.js";
 import getIntlMessages from "./getIntlMessages.js";
 import IncompatibilityWarning from "./IncompatibilityWarning.js";
 
@@ -64,12 +71,6 @@ export default function AppRenderer({ app }: Props) {
     },
   };
 
-  const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
-    useState(false);
-  useEffect(() => {
-    setIncompatibilityWarningDismissed(false);
-  }, [app.id]);
-
   const settings: Settings = useMemo(() => ({ theme }), [theme]);
   const intlMessages: IntlMessages = useMemo(
     () => getIntlMessages(intl),
@@ -88,13 +89,8 @@ export default function AppRenderer({ app }: Props) {
       collectionsById[targetCollection.id]?.latestVersion.id ===
       targetCollection.versionId,
   );
-  if (!isCompatible && !incompatibilityWarningDismissed) {
-    return (
-      <IncompatibilityWarning
-        app={app}
-        onDismiss={() => setIncompatibilityWarningDismissed(true)}
-      />
-    );
+  if (!isCompatible) {
+    return <IncompatibilityWarning app={app} />;
   }
 
   const targetCollections = app.latestVersion.targetCollections
@@ -130,7 +126,24 @@ export default function AppRenderer({ app }: Props) {
               ]),
             ),
           } satisfies AppComponentProps;
-          return (
+          // Boutique/editor apps can still contain legacy app-sandbox imports
+          // until their static bundling pipeline replaces those artifacts.
+          return isLegacySandboxBuild(app) ? (
+            <Sandbox
+              backend={backend}
+              navigateTo={sandboxNavigateTo}
+              iframeSrc={
+                import.meta.env["VITE_SANDBOX_URL"] ??
+                "http://app-sandbox.localhost:5173/app-sandbox.html"
+              }
+              appName={app.name}
+              appCode={getLegacySandboxAppCode(app)}
+              appProps={appProps}
+              settings={settings}
+              intlMessages={intlMessages}
+              className={cs.AppRenderer.sandbox}
+            />
+          ) : (
             <StaticAppIframe
               app={app}
               backend={backend}
@@ -156,16 +169,7 @@ export default function AppRenderer({ app }: Props) {
 
 interface StaticAppIframeProps {
   app: App;
-  backend: {
-    documents: {
-      create: (...args: any[]) => any;
-      createNewVersion: (...args: any[]) => any;
-      delete: (...args: any[]) => any;
-    };
-    files: {
-      getContent: (...args: any[]) => any;
-    };
-  };
+  backend: StaticAppBridgeBackend;
   navigateTo: (href: string) => void;
   appProps: AppComponentProps;
   settings: Settings;
@@ -182,7 +186,10 @@ function StaticAppIframe({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [sandboxReady, setSandboxReady] = useState(false);
 
-  const iframeSrc = useMemo(() => makeIframeSrc(app), [app]);
+  const iframeSrc = useMemo(
+    () => makeIframeSrc(app, { isElectron: electronMainWorld.isElectron }),
+    [app],
+  );
 
   useEffect(() => {
     setSandboxReady(false);
@@ -203,20 +210,27 @@ function StaticAppIframe({
       }
 
       if (message.type === "NavigateHostTo") {
-        navigateTo(message.payload.href);
+        if (isValidNavigationHref(message.payload?.href)) {
+          navigateTo(message.payload.href);
+        }
         return;
       }
 
       if (message.type === "InvokeBackendMethod") {
-        const result = await (backend as any)[message.payload.entity][
-          message.payload.method
-        ](...message.payload.args);
+        const result = await invokeAllowedBackendMethod(
+          backend,
+          message.payload,
+        );
+        const invocationId =
+          typeof message.payload?.invocationId === "string"
+            ? message.payload.invocationId
+            : "";
         iframeRef.current?.contentWindow?.postMessage(
           {
             sender: "Host",
             type: "RespondToBackendMethodInvocation",
             payload: {
-              invocationId: message.payload.invocationId,
+              invocationId,
               result,
             },
           },
@@ -274,15 +288,15 @@ function isSandboxMessage(message: unknown): message is {
   );
 }
 
-function makeIframeSrc(app: App): string {
-  if (electronMainWorld.isElectron) {
-    return `dev.superego.app://${app.id}/${app.latestVersion.id}${app.latestVersion.entrypoint}`;
-  }
+function isLegacySandboxBuild(app: App): boolean {
+  const mainJs = app.latestVersion.files["/dist/main.js"];
+  return (
+    typeof mainJs?.content === "string" &&
+    mainJs.content.includes("@superego/app-sandbox")
+  );
+}
 
-  const entrypoint = app.latestVersion.files[app.latestVersion.entrypoint];
-  const content =
-    typeof entrypoint?.content === "string"
-      ? entrypoint.content
-      : "<!doctype html><html><body>App entrypoint is not text.</body></html>";
-  return URL.createObjectURL(new Blob([content], { type: "text/html" }));
+function getLegacySandboxAppCode(app: App): string {
+  const mainJs = app.latestVersion.files["/dist/main.js"];
+  return typeof mainJs?.content === "string" ? mainJs.content : "";
 }

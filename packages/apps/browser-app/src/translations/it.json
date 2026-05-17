@@ -956,9 +956,6 @@
   "IncompatibilityWarning.tsx_QL2z4z": {
     "defaultMessage": "<p> Questa app potrebbe non funzionare correttamente, perché utilizza collezioni che sono state modificate o eliminate da quando è stata creata. </p> <p> Aggiorna l'app per evitare questo avviso. </p>"
   },
-  "IncompatibilityWarning.tsx_q9XsfI": {
-    "defaultMessage": "Mostra comunque"
-  },
   "IncompatibilityWarning.tsx_s36xxK": {
     "defaultMessage": "Avviso di incompatibilità"
   },

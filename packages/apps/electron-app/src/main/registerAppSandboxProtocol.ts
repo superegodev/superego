@@ -1,6 +1,7 @@
 import path from "node:path";
 import url from "node:url";
-import type { Backend } from "@superego/backend";
+import { AppVersionFileUtils } from "@superego/backend";
+import type { AppId, AppVersionId, Backend } from "@superego/backend";
 import { app, net, protocol } from "electron";
 
 let backendForAppProtocol: Backend | null = null;
@@ -55,40 +56,42 @@ export default function registerAppSandboxProtocol() {
       }
 
       const requestUrl = new URL(request.url);
-      const appId = requestUrl.hostname;
-      const [appVersionId, ...pathParts] = requestUrl.pathname
-        .split("/")
-        .filter(Boolean);
-      const requestedPath = `/${pathParts.join("/")}`;
-      if (!appVersionId || !requestedPath.startsWith("/dist/")) {
+      if (requestUrl.hostname !== "app") {
         return textResponse("Not found", 404);
       }
-
-      const result = await backendForAppProtocol.apps.list();
-      if (!result.success) {
-        return textResponse("Failed to load apps", 500);
-      }
-
-      const appToServe = result.data.find(
-        (candidate) => candidate.id === appId,
-      );
+      const rawPathParts = requestUrl.pathname.split("/").filter(Boolean);
       if (
-        !appToServe ||
-        appToServe.latestVersion.id !== appVersionId ||
-        appToServe.latestVersion.entrypoint !== "/dist/index.html"
+        rawPathParts.some((part) => /%2f|%5c|\\/i.test(part)) ||
+        requestUrl.pathname.includes("//")
       ) {
         return textResponse("Not found", 404);
       }
-
-      const file =
-        appToServe.latestVersion.files[requestedPath as `/${string}`];
-      if (!file || file.role !== "build") {
+      const [encodedAppId, encodedAppVersionId, ...encodedPathParts] =
+        rawPathParts;
+      if (!encodedAppId || !encodedAppVersionId) {
+        return textResponse("Not found", 404);
+      }
+      const appId = decodeURIComponent(encodedAppId);
+      const appVersionId = decodeURIComponent(encodedAppVersionId);
+      const requestedPath = AppVersionFileUtils.normalizeAppVersionPath(
+        `/${encodedPathParts.map((part) => decodeURIComponent(part)).join("/")}`,
+      );
+      if (!requestedPath || !requestedPath.startsWith("/dist/")) {
         return textResponse("Not found", 404);
       }
 
-      return new Response(file.content, {
+      const result = await backendForAppProtocol.apps.getVersionBuildFile(
+        appId as AppId,
+        appVersionId as AppVersionId,
+        requestedPath,
+      );
+      if (!result.success) {
+        return textResponse("Not found", 404);
+      }
+
+      return new Response(result.data.content, {
         headers: {
-          "content-type": file.mimeType,
+          "content-type": result.data.mimeType,
           "content-security-policy": [
             "default-src 'self' 'unsafe-inline' data: blob:",
             "connect-src 'self' https://tiles.openfreemap.org",

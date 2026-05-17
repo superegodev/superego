@@ -3,6 +3,7 @@ import type {
   AppId,
   AppNameNotValid,
   AppNotFound,
+  AppVersionNotValid,
   AppVersion,
   Backend,
   Collection,
@@ -80,6 +81,7 @@ export default class PacksInstall extends BackendUsecase<
     }),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appVersionNotValid(),
       structuralSchemas.backend.errors.appNotFound(),
       structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
       structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
@@ -123,6 +125,7 @@ export default class PacksInstall extends BackendUsecase<
     | ContentSummaryGetterNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | AppNameNotValid
+    | AppVersionNotValid
     | CollectionNotFound
     | DocumentContentNotValid
     | FilesNotFound

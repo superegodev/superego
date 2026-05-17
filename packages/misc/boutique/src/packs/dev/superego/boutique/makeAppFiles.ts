@@ -1,4 +1,4 @@
-import type { AppVersion } from "@superego/backend";
+import { AppVersionFileUtils, type AppVersion } from "@superego/backend";
 
 export default function makeAppFiles(
   source: string,
@@ -10,7 +10,7 @@ export default function makeAppFiles(
       mimeType: "text/plain",
       content: source,
     },
-    "/dist/index.html": {
+    [AppVersionFileUtils.APP_VERSION_ENTRYPOINT]: {
       role: "build",
       mimeType: "text/html",
       content: `

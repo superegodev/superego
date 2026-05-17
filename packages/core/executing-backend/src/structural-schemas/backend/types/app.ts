@@ -23,7 +23,7 @@ export function appVersionEntrypoint(): v.GenericSchema<
 
 export function appVersionFile(): v.GenericSchema<unknown, AppVersionFile> {
   return v.strictObject({
-    role: v.picklist(["source", "build", "generated", "config"]),
+    role: v.picklist(["source", "build", "projectConfig"]),
     mimeType: v.string(),
     content: v.union([
       v.string(),

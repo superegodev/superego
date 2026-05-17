@@ -100,6 +100,7 @@ export default class BackendIPCProxyClient implements Backend {
       create: this.makeMainIpcCall("apps.create"),
       updateName: this.makeMainIpcCall("apps.updateName"),
       createNewVersion: this.makeMainIpcCall("apps.createNewVersion"),
+      getVersionBuildFile: this.makeMainIpcCall("apps.getVersionBuildFile"),
       delete: this.makeMainIpcCall("apps.delete"),
       list: this.makeMainIpcCall("apps.list"),
     };

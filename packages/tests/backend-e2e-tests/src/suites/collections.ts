@@ -13,6 +13,11 @@ import triggerAndWaitForDownSync from "../utils/triggerAndWaitForDownSync.js";
 
 const appEntrypoint = "/dist/index.html" as const;
 const appFiles = {
+  "/src/main.js": {
+    role: "source",
+    mimeType: "text/javascript",
+    content: "console.log('hello');",
+  },
   "/dist/index.html": {
     role: "build",
     mimeType: "text/html",

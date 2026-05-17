@@ -9,9 +9,8 @@ import * as cs from "./AppRenderer.css.js";
 
 interface Props {
   app: App;
-  onDismiss: () => void;
 }
-export default function IncompatibilityWarning({ app, onDismiss }: Props) {
+export default function IncompatibilityWarning({ app }: Props) {
   const intl = useIntl();
   return (
     <Alert
@@ -42,9 +41,6 @@ export default function IncompatibilityWarning({ app, onDismiss }: Props) {
             <FormattedMessage defaultMessage="Update the app" />
           </Button>
         </Link>
-        <Button onPress={onDismiss}>
-          <FormattedMessage defaultMessage="Display anyway" />
-        </Button>
       </div>
     </Alert>
   );

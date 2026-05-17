@@ -4,6 +4,7 @@ import type AppVersionEntity from "../entities/AppVersionEntity.js";
 export default interface AppVersionRepository {
   insert(appVersion: AppVersionEntity): Promise<void>;
   deleteAllWhereAppIdEq(appId: AppId): Promise<AppVersionId[]>;
+  find(id: AppVersionId): Promise<AppVersionEntity | null>;
   findLatestWhereAppIdEq(appId: AppId): Promise<AppVersionEntity | null>;
   findAllLatests(): Promise<AppVersionEntity[]>;
 }
