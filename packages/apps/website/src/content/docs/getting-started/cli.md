@@ -25,7 +25,8 @@ runnable static app in `dist/`.
   version.
 - `superego apps check`: validates the current app folder.
 - `superego apps commit`: creates the app or commits a new app version.
-- `superego apps install-deps`: installs bundled Superego helper packages.
+- `superego apps install-deps`: writes bundled Superego helper packages into the
+  app folder and installs them as local `file:` dependencies.
 - `superego apps add-collection <collection>` /
   `remove-collection <collection>`: updates target collections and generated
   local types.

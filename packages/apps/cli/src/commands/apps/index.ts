@@ -9,7 +9,6 @@ import {
   statSync,
   writeFileSync,
 } from "node:fs";
-import { createRequire } from "node:module";
 import { homedir } from "node:os";
 import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import {
@@ -38,7 +37,6 @@ const ROOT_CONFIG_FILE_PATHS = new Set<`/${string}`>([
   "/package.json",
   "/package-lock.json",
 ]);
-const require = createRequire(import.meta.url);
 
 interface Manifest {
   formatVersion: 1;
@@ -288,17 +286,22 @@ apps
   .argument("[folder]", "App folder", ".")
   .action((folder: string) => {
     const projectPath = resolve(folder);
+    writeBundledDependencyPackages(projectPath);
     const packageJsonPath = join(projectPath, "package.json");
     const packageJson = existsSync(packageJsonPath)
       ? JSON.parse(readFileSync(packageJsonPath, "utf-8"))
       : {};
     packageJson.dependencies = {
       ...packageJson.dependencies,
-      "@superego/app-client": `file:${packageDir("@superego/app-client")}`,
-      "@superego/app-components": `file:${packageDir("@superego/app-components")}`,
-      "@superego/app-react": `file:${packageDir("@superego/app-react")}`,
+      "@superego/app-client": "file:./superego/packages/app-client",
+      "@superego/app-react": "file:./superego/packages/app-react",
       react: "^19.2.6",
       "react-dom": "^19.2.6",
+    };
+    packageJson.devDependencies = {
+      ...packageJson.devDependencies,
+      "@types/react": "^19.2.14",
+      "@types/react-dom": "^19.2.3",
     };
     writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
     const result = spawnSync("npm", ["install"], {
@@ -344,7 +347,6 @@ apps
     manifest.targetCollections = manifest.targetCollections.filter(
       ({ id }) => id !== targetCollection!.id,
     );
-    rmSync(join(projectPath, "superego"), { recursive: true, force: true });
     await writeGeneratedFiles(projectPath, backend, manifest);
     writeManifest(projectPath, manifest);
   });
@@ -735,7 +737,9 @@ async function writeGeneratedFiles(
   backend: ReturnType<typeof makeBackend> | null,
   manifest: Manifest,
 ): Promise<void> {
-  mkdirSync(join(projectPath, "superego", "collections"), { recursive: true });
+  const collectionsPath = join(projectPath, "superego", "collections");
+  rmSync(collectionsPath, { recursive: true, force: true });
+  mkdirSync(collectionsPath, { recursive: true });
   const collectionExports: string[] = [];
   if (backend) {
     for (const targetCollection of manifest.targetCollections) {
@@ -745,10 +749,7 @@ async function writeGeneratedFiles(
       );
       const name = safeIdentifier(collectionVersion.id);
       const source = codegen(collectionVersion.schema);
-      writeFileSync(
-        join(projectPath, "superego", "collections", `${name}.ts`),
-        source,
-      );
+      writeFileSync(join(collectionsPath, `${name}.ts`), source);
       collectionExports.push(
         `export type * as ${name} from "./collections/${name}.js";`,
       );
@@ -830,16 +831,75 @@ function safeIdentifier(value: string): string {
   return value.replaceAll(/[^A-Za-z0-9_$]/g, "_");
 }
 
-function packageDir(name: string): string {
-  let current = dirname(require.resolve(name));
-  while (!existsSync(join(current, "package.json"))) {
-    const parent = dirname(current);
-    if (parent === current) {
-      throw new Error(`Could not find package directory for ${name}.`);
-    }
-    current = parent;
-  }
-  return current;
+function writeBundledDependencyPackages(projectPath: string): void {
+  const packagesPath = join(projectPath, "superego", "packages");
+  writePackage(
+    join(packagesPath, "app-client"),
+    appClientPackageJson(),
+    APP_CLIENT_INDEX_JS,
+    APP_CLIENT_INDEX_D_TS,
+  );
+  writePackage(
+    join(packagesPath, "app-react"),
+    appReactPackageJson(),
+    APP_REACT_INDEX_JS,
+    APP_REACT_INDEX_D_TS,
+  );
+}
+
+function writePackage(
+  packagePath: string,
+  packageJsonContent: string,
+  indexJs: string,
+  indexDts: string,
+): void {
+  mkdirSync(packagePath, { recursive: true });
+  writeFileSync(join(packagePath, "package.json"), packageJsonContent);
+  writeFileSync(join(packagePath, "index.js"), indexJs);
+  writeFileSync(join(packagePath, "index.d.ts"), indexDts);
+}
+
+function appClientPackageJson(): string {
+  return `${JSON.stringify(
+    {
+      name: "@superego/app-client",
+      version: "0.0.0",
+      private: true,
+      type: "module",
+      exports: {
+        ".": {
+          types: "./index.d.ts",
+          import: "./index.js",
+        },
+      },
+    },
+    null,
+    2,
+  )}\n`;
+}
+
+function appReactPackageJson(): string {
+  return `${JSON.stringify(
+    {
+      name: "@superego/app-react",
+      version: "0.0.0",
+      private: true,
+      type: "module",
+      exports: {
+        ".": {
+          types: "./index.d.ts",
+          import: "./index.js",
+        },
+      },
+      peerDependencies: {
+        "@superego/app-client": "*",
+        react: ">=19",
+        "react-dom": ">=19",
+      },
+    },
+    null,
+    2,
+  )}\n`;
 }
 
 function packageJson(name: string): string {
@@ -918,3 +978,170 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
 }
+
+const APP_CLIENT_INDEX_JS = `
+const invocations = new Map();
+let responseListenerRegistered = false;
+
+export async function connectSuperego() {
+  ensureResponseListener();
+  const renderPayload = await waitForRenderPayload();
+  return {
+    appProps: renderPayload.appProps,
+    collections: renderPayload.appProps.collections,
+    settings: renderPayload.settings,
+    intlMessages: renderPayload.intlMessages,
+    documents: {
+      create(definition) {
+        return invokeBackendMethod("documents", "create", [definition]);
+      },
+      createNewVersion(collectionId, documentId, latestVersionId, content) {
+        return invokeBackendMethod("documents", "createNewVersion", [
+          collectionId,
+          documentId,
+          latestVersionId,
+          content,
+        ]);
+      },
+      delete(collectionId, documentId) {
+        return invokeBackendMethod("documents", "delete", [
+          collectionId,
+          documentId,
+        ]);
+      },
+    },
+    files: {
+      getContent(id) {
+        return invokeBackendMethod("files", "getContent", [id]);
+      },
+    },
+    navigateTo(href) {
+      window.parent.postMessage(
+        {
+          sender: "Sandbox",
+          type: "NavigateHostTo",
+          payload: { href },
+        },
+        "*",
+      );
+    },
+  };
+}
+
+async function waitForRenderPayload() {
+  return new Promise((resolve) => {
+    const handleMessage = ({ data: message }) => {
+      if (!isHostMessage(message)) {
+        return;
+      }
+
+      if (message.type === "RenderApp") {
+        window.removeEventListener("message", handleMessage);
+        resolve(message.payload);
+      }
+    };
+    window.addEventListener("message", handleMessage);
+    window.parent.postMessage(
+      { sender: "Sandbox", type: "SandboxReady", payload: null },
+      "*",
+    );
+  });
+}
+
+function ensureResponseListener() {
+  if (responseListenerRegistered) {
+    return;
+  }
+  responseListenerRegistered = true;
+  window.addEventListener("message", ({ data: message }) => {
+    if (
+      isHostMessage(message) &&
+      message.type === "RespondToBackendMethodInvocation"
+    ) {
+      const resolveInvocation = invocations.get(message.payload.invocationId);
+      if (resolveInvocation) {
+        invocations.delete(message.payload.invocationId);
+        resolveInvocation(message.payload.result);
+      }
+    }
+  });
+}
+
+function invokeBackendMethod(entity, method, args) {
+  const invocationId =
+    crypto.randomUUID?.() ??
+    String(Date.now()) + "-" + String(Math.random()).slice(2);
+  return new Promise((resolve) => {
+    invocations.set(invocationId, resolve);
+    window.parent.postMessage(
+      {
+        sender: "Sandbox",
+        type: "InvokeBackendMethod",
+        payload: { invocationId, entity, method, args },
+      },
+      "*",
+    );
+  });
+}
+
+function isHostMessage(message) {
+  return (
+    typeof message === "object" &&
+    message !== null &&
+    message.sender === "Host" &&
+    typeof message.type === "string"
+  );
+}
+`.trimStart();
+
+const APP_CLIENT_INDEX_D_TS = `
+export interface SuperegoClient {
+  appProps: any;
+  collections: Record<string, any>;
+  settings: any;
+  intlMessages: any;
+  documents: {
+    create(definition: any): Promise<any>;
+    createNewVersion(
+      collectionId: string,
+      documentId: string,
+      latestVersionId: string,
+      content: any,
+    ): Promise<any>;
+    delete(collectionId: string, documentId: string): Promise<any>;
+  };
+  files: {
+    getContent(id: string): Promise<any>;
+  };
+  navigateTo(href: string): void;
+}
+
+export function connectSuperego(): Promise<SuperegoClient>;
+`.trimStart();
+
+const APP_REACT_INDEX_JS = `
+import { connectSuperego } from "@superego/app-client";
+import React, { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+
+export async function createSuperegoReactApp({ root, render }) {
+  const client = await connectSuperego();
+  createRoot(root).render(
+    React.createElement(StrictMode, null, render(client.appProps, client)),
+  );
+}
+`.trimStart();
+
+const APP_REACT_INDEX_D_TS = `
+import type { SuperegoClient } from "@superego/app-client";
+import type { ReactElement } from "react";
+
+export interface CreateSuperegoReactAppOptions {
+  root: HTMLElement;
+  render: (appProps: any, client: SuperegoClient) => ReactElement | null;
+}
+
+export function createSuperegoReactApp(
+  options: CreateSuperegoReactAppOptions,
+): Promise<void>;
+`.trimStart();

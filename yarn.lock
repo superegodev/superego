@@ -6472,40 +6472,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@superego/app-client@workspace:*, @superego/app-client@workspace:packages/apps/app-client":
-  version: 0.0.0-use.local
-  resolution: "@superego/app-client@workspace:packages/apps/app-client"
-  dependencies:
-    "@superego/app-sandbox": "workspace:*"
-    "@superego/backend": "workspace:*"
-    "@superego/global-types": "workspace:*"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@superego/app-components@workspace:packages/apps/app-components":
-  version: 0.0.0-use.local
-  resolution: "@superego/app-components@workspace:packages/apps/app-components"
-  dependencies:
-    "@superego/app-sandbox": "workspace:*"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@superego/app-react@workspace:packages/apps/app-react":
-  version: 0.0.0-use.local
-  resolution: "@superego/app-react@workspace:packages/apps/app-react"
-  dependencies:
-    "@superego/app-client": "workspace:*"
-    "@superego/app-sandbox": "workspace:*"
-    "@types/react": "npm:^19.2.14"
-    "@types/react-dom": "npm:^19.2.3"
-    react: "npm:^19.2.6"
-    react-dom: "npm:^19.2.6"
-    typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
 "@superego/app-sandbox@workspace:*, @superego/app-sandbox@workspace:packages/apps/app-sandbox":
   version: 0.0.0-use.local
   resolution: "@superego/app-sandbox@workspace:packages/apps/app-sandbox"
@@ -6725,7 +6691,6 @@ __metadata:
   resolution: "@superego/cli@workspace:packages/apps/cli"
   dependencies:
     "@msgpack/msgpack": "npm:^3.1.3"
-    "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
