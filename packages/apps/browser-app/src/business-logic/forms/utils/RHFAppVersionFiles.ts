@@ -32,13 +32,11 @@ function makeAppVersionFiles(mainTsx: TypescriptModule): AppVersion["files"] {
     "/src/main.tsx": {
       role: "source",
       mimeType: "text/plain",
-      hash: "",
       content: mainTsx.source,
     },
     "/dist/index.html": {
       role: "build",
       mimeType: "text/html",
-      hash: "",
       content: `
 <!doctype html>
 <html>
@@ -56,7 +54,6 @@ function makeAppVersionFiles(mainTsx: TypescriptModule): AppVersion["files"] {
     "/dist/main.js": {
       role: "build",
       mimeType: "text/javascript",
-      hash: "",
       content: mainTsx.compiled,
     },
   };

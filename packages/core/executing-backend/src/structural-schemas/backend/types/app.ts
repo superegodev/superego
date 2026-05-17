@@ -25,7 +25,6 @@ export function appVersionFile(): v.GenericSchema<unknown, AppVersionFile> {
   return v.strictObject({
     role: v.picklist(["source", "build", "generated", "config"]),
     mimeType: v.string(),
-    hash: v.string(),
     content: v.union([
       v.string(),
       v.instance(Uint8Array) as v.GenericSchema<

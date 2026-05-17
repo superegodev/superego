@@ -8,13 +8,11 @@ export default function makeAppFiles(
     "/src/main.tsx": {
       role: "source",
       mimeType: "text/plain",
-      hash: "",
       content: source,
     },
     "/dist/index.html": {
       role: "build",
       mimeType: "text/html",
-      hash: "",
       content: `
 <!doctype html>
 <html>
@@ -32,7 +30,6 @@ export default function makeAppFiles(
     "/dist/main.js": {
       role: "build",
       mimeType: "text/javascript",
-      hash: "",
       content: compiled,
     },
   };

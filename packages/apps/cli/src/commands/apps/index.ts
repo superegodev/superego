@@ -47,7 +47,6 @@ interface Manifest {
   name: string;
   type: AppType.CollectionView;
   targetCollections: AppVersion["targetCollections"];
-  baselineFileHashes: Record<`/${string}`, string>;
 }
 
 interface AppsCommandOptions {
@@ -83,7 +82,6 @@ apps
           name: options.name,
           type: AppType.CollectionView,
           targetCollections,
-          baselineFileHashes: {},
         },
         backend,
       );
@@ -113,31 +111,54 @@ apps
     const projectPath = resolve(folder);
     const manifest = readManifest(projectPath);
     const localHashes = hashProjectFiles(projectPath);
-    const changedPaths = Object.entries(localHashes)
-      .filter(
-        ([path, hash]) =>
-          manifest.baselineFileHashes[path as `/${string}`] !== hash,
-      )
-      .map(([path]) => path)
-      .sort();
-    const deletedPaths = Object.keys(manifest.baselineFileHashes)
-      .filter((path) => localHashes[path as `/${string}`] === undefined)
-      .sort();
+    let app: App | null = null;
+    let addedPaths: string[];
+    let modifiedPaths: string[];
+    let deletedPaths: string[];
+
+    if (manifest.appId) {
+      app = await resolveAppRef(backend, manifest.appId);
+      const databaseHashes = hashAppVersionFiles(app.latestVersion.files);
+      addedPaths = Object.keys(localHashes)
+        .filter((path) => databaseHashes[path as `/${string}`] === undefined)
+        .sort();
+      modifiedPaths = Object.entries(localHashes)
+        .filter(
+          ([path, hash]) =>
+            databaseHashes[path as `/${string}`] !== undefined &&
+            databaseHashes[path as `/${string}`] !== hash,
+        )
+        .map(([path]) => path)
+        .sort();
+      deletedPaths = Object.keys(databaseHashes)
+        .filter((path) => localHashes[path as `/${string}`] === undefined)
+        .sort();
+    } else {
+      addedPaths = Object.keys(localHashes).sort();
+      modifiedPaths = [];
+      deletedPaths = [];
+    }
 
     console.log(`App: ${manifest.name}`);
     console.log(`Folder: ${projectPath}`);
     console.log(
-      `Local changes: ${changedPaths.length + deletedPaths.length === 0 ? "none" : "yes"}`,
+      `Local changes: ${
+        addedPaths.length + modifiedPaths.length + deletedPaths.length === 0
+          ? "none"
+          : "yes"
+      }`,
     );
-    for (const path of changedPaths) {
+    for (const path of addedPaths) {
+      console.log(`  added: ${path}`);
+    }
+    for (const path of modifiedPaths) {
       console.log(`  modified: ${path}`);
     }
     for (const path of deletedPaths) {
       console.log(`  deleted: ${path}`);
     }
 
-    if (manifest.appId) {
-      const app = await resolveAppRef(backend, manifest.appId);
+    if (app) {
       console.log(
         `Base version: ${
           manifest.baseAppVersionId === app.latestVersion.id
@@ -255,7 +276,6 @@ apps
       appId: committedApp.id,
       baseAppVersionId: committedApp.latestVersion.id,
       targetCollections: committedApp.latestVersion.targetCollections,
-      baselineFileHashes: hashProjectFiles(projectPath),
     });
     console.log(
       `Committed ${committedApp.name} (${committedApp.latestVersion.id}).`,
@@ -414,10 +434,7 @@ async function writeProject(
   writeFileSync(join(projectPath, "dist", "main.js"), distMainJs());
   writeFileSync(join(projectPath, "package.json"), packageJson(manifest.name));
   await writeGeneratedFiles(projectPath, backend, manifest);
-  writeManifest(projectPath, {
-    ...manifest,
-    baselineFileHashes: hashProjectFiles(projectPath),
-  });
+  writeManifest(projectPath, manifest);
 }
 
 function writeProjectFromVersion(projectPath: string, app: App): void {
@@ -435,7 +452,6 @@ function writeProjectFromVersion(projectPath: string, app: App): void {
     name: app.name,
     type: app.type,
     targetCollections: app.latestVersion.targetCollections,
-    baselineFileHashes: hashProjectFiles(projectPath),
   });
 }
 
@@ -578,13 +594,6 @@ function validateManifest(manifest: Manifest): string[] {
       }
     }
   }
-  if (
-    typeof manifest.baselineFileHashes !== "object" ||
-    manifest.baselineFileHashes === null ||
-    Array.isArray(manifest.baselineFileHashes)
-  ) {
-    errors.push("Manifest baselineFileHashes must be an object.");
-  }
   return errors;
 }
 
@@ -593,6 +602,21 @@ function hashProjectFiles(projectPath: string): Record<`/${string}`, string> {
     listProjectFilePaths(projectPath).map((path) => [
       path,
       hashBytes(readFileSync(join(projectPath, path.slice(1)))),
+    ]),
+  ) as Record<`/${string}`, string>;
+}
+
+function hashAppVersionFiles(
+  files: AppVersion["files"],
+): Record<`/${string}`, string> {
+  return Object.fromEntries(
+    Object.entries(files).map(([path, file]) => [
+      path,
+      hashBytes(
+        typeof file.content === "string"
+          ? Buffer.from(file.content, "utf-8")
+          : file.content,
+      ),
     ]),
   ) as Record<`/${string}`, string>;
 }
@@ -607,7 +631,6 @@ function readProjectFiles(projectPath: string): AppVersion["files"] {
       const file: AppVersionFile = {
         role: roleForPath(filePath),
         mimeType,
-        hash: hashBytes(bytes),
         content: isText ? bytes.toString("utf-8") : new Uint8Array(bytes),
       };
       return [filePath, file];

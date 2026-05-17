@@ -8,13 +8,11 @@ const appVersionFiles: AppVersionEntity["files"] = {
   "/dist/index.html": {
     role: "build",
     mimeType: "text/html",
-    hash: "hash",
     content: "<!doctype html>",
   },
   "/dist/image.png": {
     role: "build",
     mimeType: "image/png",
-    hash: "imageHash",
     content: new Uint8Array([1, 2, 3]),
   },
 };

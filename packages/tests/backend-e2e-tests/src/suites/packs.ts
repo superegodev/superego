@@ -10,7 +10,6 @@ const appFiles = {
   "/dist/index.html": {
     role: "build",
     mimeType: "text/html",
-    hash: "",
     content: "<!doctype html>",
   },
 } as const;

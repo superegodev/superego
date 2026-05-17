@@ -10,7 +10,6 @@ const appVersionFiles = {
   "/dist/index.html": {
     role: "build",
     mimeType: "text/html",
-    hash: "",
     content: "<!doctype html>",
   },
 } as const;
@@ -391,7 +390,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
         "/dist/index.html": {
           role: "build",
           mimeType: "text/html",
-          hash: "",
           content: "initial",
         },
       } as const;
@@ -409,7 +407,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
         "/dist/index.html": {
           role: "build",
           mimeType: "text/html",
-          hash: "",
           content: "updated",
         },
       } as const;
