@@ -73,7 +73,7 @@ export default class OpenResponsesInferenceService implements InferenceService {
           content: [
             {
               type: MessageContentPartType.Text,
-              text: "Transcribe the following audio. Output only the transcription, without any additional commentary.",
+              text: "Transcribe the following audio. Identify the language being spoken and transcribe in that language. Output only the transcription, without any additional commentary.",
             },
             { type: MessageContentPartType.Audio, audio },
           ],
