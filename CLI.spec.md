@@ -78,8 +78,8 @@ workflow commands should use the same basic shape:
 Commands should exit with code `0` for successful results and non-zero for
 unsuccessful results.
 
-Every command must support `--help`. Help mode does not execute the command.
-It prints Markdown to stdout, without a JSON wrapper.
+Every command must support `--help`. Help mode does not execute the command. It
+prints Markdown to stdout, without a JSON wrapper.
 
 Help output is LLM-first:
 
