@@ -17,7 +17,7 @@ import {
   type AppId,
   type AppVersion,
   type AppVersionFile,
-  AppVersionFileUtils,
+  AppVersionFiles,
   type Collection,
   type CollectionVersion,
   Theme,
@@ -33,7 +33,7 @@ import ignore from "ignore";
 
 const MANIFEST_FILE_NAME = "superego.app.json";
 const IGNORE_FILE_NAME = ".superegoignore";
-const ENTRYPOINT = AppVersionFileUtils.APP_VERSION_ENTRYPOINT;
+const ENTRYPOINT = AppVersionFiles.APP_VERSION_ENTRYPOINT;
 
 const DEFAULT_SUPEREGOIGNORE = `
 /superego/
@@ -703,8 +703,7 @@ function scanProjectFiles(projectPath: string): {
       if (stat.isDirectory()) {
         visit(absolutePath);
       } else if (stat.isFile()) {
-        const normalizedPath =
-          AppVersionFileUtils.normalizeAppVersionPath(appPath);
+        const normalizedPath = AppVersionFiles.normalizeAppVersionPath(appPath);
         if (!normalizedPath) {
           errors.push(`Invalid project file path: ${appPath}`);
           continue;
@@ -712,14 +711,14 @@ function scanProjectFiles(projectPath: string): {
         if (ignoreMatcher.ignores(appPath)) {
           continue;
         }
-        const role = AppVersionFileUtils.classifyAppProjectPath(normalizedPath);
+        const role = AppVersionFiles.classifyAppProjectPath(normalizedPath);
         if (!role) {
           errors.push(`Reserved project file cannot be committed: ${appPath}`);
           continue;
         }
-        if (stat.size > AppVersionFileUtils.APP_VERSION_FILE_SIZE_LIMIT_BYTES) {
+        if (stat.size > AppVersionFiles.APP_VERSION_FILE_SIZE_LIMIT_BYTES) {
           errors.push(
-            `Project file exceeds ${AppVersionFileUtils.APP_VERSION_FILE_SIZE_LIMIT_BYTES} bytes: ${appPath}`,
+            `Project file exceeds ${AppVersionFiles.APP_VERSION_FILE_SIZE_LIMIT_BYTES} bytes: ${appPath}`,
           );
           continue;
         }
@@ -863,7 +862,7 @@ function resolveRelativeAppPath(
     }
     segments.push(segment);
   }
-  return AppVersionFileUtils.normalizeAppVersionPath(`/${segments.join("/")}`);
+  return AppVersionFiles.normalizeAppVersionPath(`/${segments.join("/")}`);
 }
 
 function extractHtmlAssetReferences(html: string): string[] {
@@ -936,7 +935,7 @@ async function warnForSourceBuildDrift(
 }
 
 function roleForPath(path: string): AppVersionFile["role"] {
-  const role = AppVersionFileUtils.classifyAppProjectPath(path);
+  const role = AppVersionFiles.classifyAppProjectPath(path);
   if (!role) {
     throw new Error(`Reserved app path cannot be persisted: ${path}`);
   }

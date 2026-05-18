@@ -1,5 +1,5 @@
 import {
-  AppVersionFileUtils,
+  AppVersionFiles,
   type AppVersion,
   type ValidationIssue,
 } from "@superego/backend";
@@ -9,7 +9,7 @@ export default function validateAppVersionDefinition(
   files: AppVersion["files"],
   targetCollections: AppVersion["targetCollections"],
 ): ValidationIssue[] {
-  const issues = AppVersionFileUtils.validateAppVersionFiles(entrypoint, files);
+  const issues = AppVersionFiles.validateAppVersionFiles(entrypoint, files);
   const seenCollectionIds = new Set<string>();
   targetCollections.forEach((targetCollection, index) => {
     if (seenCollectionIds.has(targetCollection.id)) {

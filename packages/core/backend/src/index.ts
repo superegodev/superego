@@ -3,7 +3,6 @@
 
 // Backend
 export type { default as Backend } from "./Backend.js";
-export * as AppVersionFileUtils from "./AppVersionFileUtils.js";
 
 // Enums
 export { default as AppType } from "./enums/AppType.js";
@@ -116,6 +115,7 @@ export type {
   default as AppVersionFile,
   AppVersionFileRole,
 } from "./types/AppVersionFile.js";
+export * as AppVersionFiles from "./types/AppVersionFiles.js";
 export type { default as AssistantsSettings } from "./types/AssistantsSettings.js";
 export type { default as AudioContent } from "./types/AudioContent.js";
 export type { default as BackgroundJob } from "./types/BackgroundJob.js";

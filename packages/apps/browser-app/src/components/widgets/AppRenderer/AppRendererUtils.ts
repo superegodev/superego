@@ -1,5 +1,5 @@
 import type { App, AppVersionFile } from "@superego/backend";
-import { AppVersionFileUtils } from "@superego/backend";
+import { AppVersionFiles } from "@superego/backend";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import {
   fromHref,
@@ -101,7 +101,7 @@ export function makeIframeSrc(
 export function hasExternalBuildAssetReferences(
   files: Record<string, AppVersionFile>,
 ): boolean {
-  const entrypoint = files[AppVersionFileUtils.APP_VERSION_ENTRYPOINT];
+  const entrypoint = files[AppVersionFiles.APP_VERSION_ENTRYPOINT];
   if (typeof entrypoint?.content !== "string") {
     return false;
   }

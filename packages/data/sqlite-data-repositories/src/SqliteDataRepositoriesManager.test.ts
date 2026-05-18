@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { decode, encode } from "@msgpack/msgpack";
-import { AppVersionFileUtils, AssistantName, Theme } from "@superego/backend";
+import { AppVersionFiles, AssistantName, Theme } from "@superego/backend";
 import { registerDataRepositoriesTests } from "@superego/executing-backend/tests";
 import { Id } from "@superego/shared-utils";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
@@ -96,7 +96,7 @@ describe("migrations", () => {
     const row = db.prepare(`SELECT * FROM "app_versions"`).get() as any;
     const targetCollections = decode(row.target_collections);
     const files = decode(row.files) as Record<string, any>;
-    expect(row.entrypoint).toBe(AppVersionFileUtils.APP_VERSION_ENTRYPOINT);
+    expect(row.entrypoint).toBe(AppVersionFiles.APP_VERSION_ENTRYPOINT);
     expect(targetCollections).toEqual([
       { id: collectionId, versionId: collectionVersionId },
     ]);
@@ -114,8 +114,8 @@ describe("migrations", () => {
       content: "export default function App() { return null; }",
     });
     expect(
-      AppVersionFileUtils.validateAppVersionFiles(
-        AppVersionFileUtils.APP_VERSION_ENTRYPOINT,
+      AppVersionFiles.validateAppVersionFiles(
+        AppVersionFiles.APP_VERSION_ENTRYPOINT,
         files,
       ),
     ).toEqual([]);
@@ -188,8 +188,8 @@ describe("migrations", () => {
     });
     expect(files["/superego/app.ts"]).toBeUndefined();
     expect(
-      AppVersionFileUtils.validateAppVersionFiles(
-        AppVersionFileUtils.APP_VERSION_ENTRYPOINT,
+      AppVersionFiles.validateAppVersionFiles(
+        AppVersionFiles.APP_VERSION_ENTRYPOINT,
         files,
       ),
     ).toEqual([]);

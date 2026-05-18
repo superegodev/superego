@@ -8,7 +8,7 @@ import type {
   Backend,
   UnexpectedError,
 } from "@superego/backend";
-import { AppVersionFileUtils } from "@superego/backend";
+import { AppVersionFiles } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
@@ -60,10 +60,7 @@ export default class AppsGetVersionBuildFile extends BackendUsecase<
       );
     }
 
-    const file = AppVersionFileUtils.getVersionBuildFile(
-      appVersion.files,
-      path,
-    );
+    const file = AppVersionFiles.getVersionBuildFile(appVersion.files, path);
     if (!file) {
       return makeUnsuccessfulResult(
         makeResultError("AppVersionFileNotFound", {

@@ -1,6 +1,6 @@
 import type { DatabaseSync } from "node:sqlite";
 import { decode, encode } from "@msgpack/msgpack";
-import { AppVersionFileUtils } from "@superego/backend";
+import { AppVersionFiles } from "@superego/backend";
 import type { AppVersion } from "@superego/backend";
 import m0000 from "./0000.sql?raw";
 import m0001 from "./0001.sql?raw";
@@ -110,8 +110,8 @@ function migrate0011StaticApps(db: DatabaseSync): void {
     const normalizedFiles = normalizeAlreadyStaticFiles(decodedFiles);
     const files =
       normalizedFiles &&
-      AppVersionFileUtils.validateAppVersionFiles(
-        AppVersionFileUtils.APP_VERSION_ENTRYPOINT,
+      AppVersionFiles.validateAppVersionFiles(
+        AppVersionFiles.APP_VERSION_ENTRYPOINT,
         normalizedFiles,
       ).length === 0
         ? normalizedFiles
@@ -119,7 +119,7 @@ function migrate0011StaticApps(db: DatabaseSync): void {
 
     updateAppVersion.run(
       encode(targetCollections),
-      AppVersionFileUtils.APP_VERSION_ENTRYPOINT,
+      AppVersionFiles.APP_VERSION_ENTRYPOINT,
       encode(files),
       appVersion.id,
     );
@@ -183,10 +183,10 @@ function normalizeAlreadyStaticFiles(
     if (!isRecord(file)) {
       return null;
     }
-    const normalizedPath = AppVersionFileUtils.normalizeAppVersionPath(path);
+    const normalizedPath = AppVersionFiles.normalizeAppVersionPath(path);
     if (
       !normalizedPath ||
-      AppVersionFileUtils.isReservedCheckoutPath(normalizedPath)
+      AppVersionFiles.isReservedCheckoutPath(normalizedPath)
     ) {
       continue;
     }

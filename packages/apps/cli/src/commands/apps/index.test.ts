@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { AppVersionFileUtils } from "@superego/backend";
+import { AppVersionFiles } from "@superego/backend";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import {
   DEFAULT_SUPEREGOIGNORE,
@@ -141,7 +141,7 @@ node_modules/
     writeProjectFile("dist/index.html", "<!doctype html>");
     writeProjectFile(
       "src/huge.bin",
-      Buffer.alloc(AppVersionFileUtils.APP_VERSION_FILE_SIZE_LIMIT_BYTES + 1),
+      Buffer.alloc(AppVersionFiles.APP_VERSION_FILE_SIZE_LIMIT_BYTES + 1),
     );
 
     // Exercise
@@ -149,7 +149,7 @@ node_modules/
 
     // Verify
     expect(result.errors).toEqual([
-      `Project file exceeds ${AppVersionFileUtils.APP_VERSION_FILE_SIZE_LIMIT_BYTES} bytes: /src/huge.bin`,
+      `Project file exceeds ${AppVersionFiles.APP_VERSION_FILE_SIZE_LIMIT_BYTES} bytes: /src/huge.bin`,
     ]);
   });
 });

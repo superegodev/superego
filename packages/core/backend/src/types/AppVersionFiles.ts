@@ -1,6 +1,6 @@
-import type AppVersion from "./types/AppVersion.js";
-import type AppVersionFile from "./types/AppVersionFile.js";
-import type ValidationIssue from "./types/ValidationIssue.js";
+import type AppVersion from "./AppVersion.js";
+import type AppVersionFile from "./AppVersionFile.js";
+import type ValidationIssue from "./ValidationIssue.js";
 
 export const APP_VERSION_ENTRYPOINT = "/dist/index.html" as const;
 

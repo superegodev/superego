@@ -1,6 +1,6 @@
 import path from "node:path";
 import url from "node:url";
-import { AppVersionFileUtils } from "@superego/backend";
+import { AppVersionFiles } from "@superego/backend";
 import type { AppId, AppVersionId, Backend } from "@superego/backend";
 import { app, net, protocol } from "electron";
 
@@ -73,7 +73,7 @@ export default function registerAppSandboxProtocol() {
       }
       const appId = decodeURIComponent(encodedAppId);
       const appVersionId = decodeURIComponent(encodedAppVersionId);
-      const requestedPath = AppVersionFileUtils.normalizeAppVersionPath(
+      const requestedPath = AppVersionFiles.normalizeAppVersionPath(
         `/${encodedPathParts.map((part) => decodeURIComponent(part)).join("/")}`,
       );
       if (!requestedPath || !requestedPath.startsWith("/dist/")) {
