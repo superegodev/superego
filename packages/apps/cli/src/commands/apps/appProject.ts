@@ -6,7 +6,7 @@ import {
   statSync,
 } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import typescriptLibs from "@superego/app-sandbox/typescript-libs";
 import {
   AppType,
@@ -275,9 +275,7 @@ function removeGeneratedCollectionFiles(path: string): void {
 async function writeTypescriptLibs(path: string): Promise<void> {
   for (const lib of typescriptLibs) {
     const filePath = join(path, lib.path.slice(1));
-    await mkdir(filePath.split("/").slice(0, -1).join("/"), {
-      recursive: true,
-    });
+    await mkdir(dirname(filePath), { recursive: true });
     await writeFile(filePath, lib.source, "utf-8");
   }
 }

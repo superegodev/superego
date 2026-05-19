@@ -1,5 +1,10 @@
 import { readFile } from "node:fs/promises";
-import { type CollectionId } from "@superego/backend";
+import {
+  type CollectionId,
+  type CollectionVersionId,
+  type CollectionVersionSettings,
+  type TypescriptModule,
+} from "@superego/backend";
 import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import {
   DataType,
@@ -72,8 +77,8 @@ function createProxyCommand(definition: ProxyCommandDefinition): Command {
         definition.argumentCount === 0
           ? "Takes no JSON input."
           : definition.argumentCount === 1
-            ? "JSON input is the single backend argument value."
-            : `JSON input is an array of ${definition.argumentCount} backend arguments.`,
+            ? "JSON input is the single command argument value."
+            : `JSON input is an array of ${definition.argumentCount} command arguments.`,
       ],
     },
   );
@@ -163,7 +168,7 @@ export const collections = createProxyDomainCommand(
       name: "create-new-version",
       description: "Create a new collection version",
       argumentCount: 5,
-      getCall: (backend) => backend.collections.createNewVersion,
+      getCall: (backend) => createLocalCollectionVersion(backend),
     },
     {
       name: "update-latest-version-settings",
@@ -424,6 +429,24 @@ export const files = createProxyDomainCommand("files", "Manage files", [
     getCall: (backend) => backend.files.getContent,
   },
 ]);
+
+function createLocalCollectionVersion(backend: CliBackend) {
+  return (
+    id: CollectionId,
+    latestVersionId: CollectionVersionId,
+    schema: Schema,
+    settings: CollectionVersionSettings,
+    migration: TypescriptModule | null,
+  ) =>
+    backend.collections.createNewVersion(
+      id,
+      latestVersionId,
+      schema,
+      settings,
+      migration,
+      null,
+    );
+}
 
 function collectString(value: string, previous: string[]): string[] {
   return [...previous, value];

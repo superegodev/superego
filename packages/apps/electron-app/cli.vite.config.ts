@@ -13,7 +13,7 @@ export default defineConfig({
     },
     rollupOptions: {
       output: {
-        banner: "#!/usr/bin/env node",
+        banner: "#!/usr/bin/env -S node --disable-warning=ExperimentalWarning",
         codeSplitting: false,
         entryFileNames: "superego.js",
       },
