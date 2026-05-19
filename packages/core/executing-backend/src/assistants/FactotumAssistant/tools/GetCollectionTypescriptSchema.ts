@@ -1,16 +1,7 @@
-import {
-  type Collection,
-  type ToolCall,
-  ToolName,
-  type ToolResult,
-} from "@superego/backend";
-import { codegen } from "@superego/schema";
-import {
-  makeSuccessfulResult,
-  makeUnsuccessfulResult,
-} from "@superego/shared-utils";
-import makeResultError from "../../../makers/makeResultError.js";
+import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
+import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
+import type CollectionsGetTypescriptSchema from "../../../usecases/collections/GetTypescriptSchema.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.GetCollectionTypescriptSchema {
@@ -19,28 +10,37 @@ export default {
 
   async exec(
     toolCall: ToolCall.GetCollectionTypescriptSchema,
-    collections: Collection[],
+    collectionsGetTypescriptSchema: CollectionsGetTypescriptSchema,
   ): Promise<ToolResult.GetCollectionTypescriptSchema> {
-    const { collectionId } = toolCall.input;
-    const collection = collections.find(({ id }) => id === collectionId);
-
-    if (!collection) {
+    const output = await collectionsGetTypescriptSchema.exec(
+      toolCall.input.collectionId,
+    );
+    if (output.success) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(
-          makeResultError("CollectionNotFound", { collectionId }),
-        ),
+        output,
       };
     }
-
-    return {
-      tool: toolCall.tool,
-      toolCallId: toolCall.id,
-      output: makeSuccessfulResult({
-        typescriptSchema: codegen(collection.latestVersion.schema),
-      }),
-    };
+    if (output.error.name === "CollectionNotFound") {
+      return {
+        tool: toolCall.tool,
+        toolCallId: toolCall.id,
+        output: {
+          success: false,
+          data: null,
+          error: output.error,
+        },
+      };
+    }
+    if (output.error.name === "UnexpectedError") {
+      throw new UnexpectedAssistantError(
+        `Getting collection TypeScript schema failed with ${output.error.name}. Cause: ${output.error.details.cause}`,
+      );
+    }
+    throw new UnexpectedAssistantError(
+      "Getting collection TypeScript schema failed.",
+    );
   },
 
   get(): InferenceService.Tool {

@@ -13,7 +13,7 @@ export function useMarkdownHelp(
   details?: HelpDetails,
 ): Command {
   command.configureHelp({
-    formatHelp: (cmd) => formatMarkdownHelp(cmd, details),
+    formatHelp: (command) => formatMarkdownHelp(command, details),
   });
   return command;
 }

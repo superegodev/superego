@@ -18,10 +18,10 @@ export function unsuccessfulResult(
 }
 
 export async function runCommand(
-  fn: () => Promise<{ success: boolean } | LocalResult>,
+  run: () => Promise<{ success: boolean } | LocalResult>,
 ): Promise<void> {
   try {
-    const result = await fn();
+    const result = await run();
     printJson(result);
     if (!result.success) {
       process.exitCode = 1;

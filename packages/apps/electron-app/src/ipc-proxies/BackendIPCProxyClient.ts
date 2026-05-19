@@ -48,6 +48,9 @@ export default class BackendIPCProxyClient implements Backend {
       list: this.makeMainIpcCall("collections.list"),
       listConnectors: this.makeMainIpcCall("collections.listConnectors"),
       getVersion: this.makeMainIpcCall("collections.getVersion"),
+      getTypescriptSchema: this.makeMainIpcCall(
+        "collections.getTypescriptSchema",
+      ),
     };
 
     this.documents = {
@@ -59,6 +62,9 @@ export default class BackendIPCProxyClient implements Backend {
       listVersions: this.makeMainIpcCall("documents.listVersions"),
       get: this.makeMainIpcCall("documents.get"),
       getVersion: this.makeMainIpcCall("documents.getVersion"),
+      executeTypescriptFunction: this.makeMainIpcCall(
+        "documents.executeTypescriptFunction",
+      ),
       search: this.makeMainIpcCall("documents.search"),
     };
 

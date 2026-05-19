@@ -7855,4 +7855,71 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
   });
+
+  describe("getTypescriptSchema", () => {
+    it("success", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const result = await backend.collections.getTypescriptSchema(
+        createResult.data.id,
+      );
+
+      // Verify
+      assert.isTrue(result.success);
+      expect(result.data.typescriptSchema).toContain("export type Root");
+      expect(result.data.typescriptSchema).toContain("title: string");
+    });
+
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const collectionId = Id.generate.collection();
+
+      // Exercise
+      const result =
+        await backend.collections.getTypescriptSchema(collectionId);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+  });
 });
