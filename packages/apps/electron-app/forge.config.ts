@@ -42,7 +42,10 @@ export default {
       "forge.config.ts",
       "tsconfig.json",
     ],
-    extraResource: ["./dist/cli/superego.js"],
+    extraResource: [
+      "./dist/cli/superego.js",
+      "./dist/cli/emscripten-module.wasm",
+    ],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
     extendInfo: {

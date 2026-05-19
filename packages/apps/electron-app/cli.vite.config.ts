@@ -14,6 +14,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         banner: "#!/usr/bin/env node",
+        codeSplitting: false,
         entryFileNames: "superego.js",
       },
     },
