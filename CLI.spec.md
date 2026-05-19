@@ -109,6 +109,22 @@ assistant that do the same two things. These commands should **not** share code
 with those tools, but they should implement the same functionality (copy/paste
 the code, basically).
 
+### `collections create-new-version`
+
+This is a local-only wrapper around `backend.collections.createNewVersion`.
+
+Arguments are the first five backend arguments:
+
+- collection id
+- latest collection version id
+- schema
+- version settings
+- migration module
+
+The CLI always passes `remoteConverters: null`. This command is intended for
+collections without remote connectors. Remote collection version updates are not
+supported by this CLI command.
+
 ### `agents install-skill`
 
 Installs a Superego CLI skill for a coding agent.

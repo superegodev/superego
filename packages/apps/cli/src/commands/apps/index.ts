@@ -244,14 +244,14 @@ apps.addCommand(
           const manifest = readManifest(path);
           const lock = readLock(path);
           const backend = await createCliBackend();
-          const targetCollections = await resolveLatestTargetCollections(
-            backend,
-            manifest.targetCollectionIds,
-          );
-          const mainModule = await compileApp(path, targetCollections);
           const operations: string[] = [];
 
           if (!lock) {
+            const targetCollections = await resolveLatestTargetCollections(
+              backend,
+              manifest.targetCollectionIds,
+            );
+            const mainModule = await compileApp(path, targetCollections);
             const result = await backend.apps.create({
               type: manifest.type,
               name: manifest.name,
@@ -284,10 +284,19 @@ apps.addCommand(
           const targetCollectionIds = app.latestVersion.targetCollections.map(
             (targetCollection) => targetCollection.id,
           );
-          if (
-            mainModule.source !== app.latestVersion.files["/main.tsx"].source ||
-            !sameArray(manifest.targetCollectionIds, targetCollectionIds)
-          ) {
+          const source = readMainSource(path);
+          const sourceChanged =
+            source !== app.latestVersion.files["/main.tsx"].source;
+          const targetCollectionsChanged = !sameArray(
+            manifest.targetCollectionIds,
+            targetCollectionIds,
+          );
+          if (sourceChanged || targetCollectionsChanged) {
+            const targetCollections = await resolveLatestTargetCollections(
+              backend,
+              manifest.targetCollectionIds,
+            );
+            const mainModule = await compileApp(path, targetCollections);
             const result = await backend.apps.createNewVersion(
               app.id,
               manifest.targetCollectionIds,

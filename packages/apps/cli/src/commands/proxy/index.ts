@@ -166,7 +166,7 @@ export const collections = createProxyDomainCommand(
     },
     {
       name: "create-new-version",
-      description: "Create a new collection version",
+      description: "Create a new local collection version",
       argumentCount: 5,
       getCall: (backend) => createLocalCollectionVersion(backend),
     },
