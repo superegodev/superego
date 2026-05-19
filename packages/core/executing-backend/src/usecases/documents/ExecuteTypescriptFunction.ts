@@ -18,6 +18,7 @@ import {
   utils as schemaUtils,
 } from "@superego/schema";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
+import { uniq } from "es-toolkit";
 import { DateTime } from "luxon";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
@@ -50,7 +51,7 @@ export default class DocumentsExecuteTypescriptFunction extends BackendUsecase<
     | ExecutingJavascriptFunctionFailed
     | UnexpectedError
   > {
-    const uniqueCollectionIds = [...new Set(collectionIds)];
+    const uniqueCollectionIds = uniq(collectionIds);
     const collectionsById = new Map<CollectionId, { schema: Schema }>();
 
     for (const collectionId of uniqueCollectionIds) {
