@@ -46,8 +46,7 @@ export function assertEmptyTarget(path: string): void {
   if (!statSync(path).isDirectory()) {
     throw new Error(`${path} exists and is not a directory.`);
   }
-  const entries = readdirSync(path).filter((entry) => !entry.startsWith("."));
-  if (entries.length > 0) {
+  if (readdirSync(path).length > 0) {
     throw new Error(`${path} already exists and is not empty.`);
   }
 }

@@ -272,15 +272,6 @@ apps.addCommand(
               "Checkout is stale. Run apps status and checkout again.",
             );
           }
-          if (manifest.name !== app.name) {
-            const result = await backend.apps.updateName(app.id, manifest.name);
-            if (!result.success) {
-              throw new Error(JSON.stringify(result.error));
-            }
-            app = result.data;
-            operations.push("updated name");
-          }
-
           const targetCollectionIds = app.latestVersion.targetCollections.map(
             (targetCollection) => targetCollection.id,
           );
@@ -291,16 +282,31 @@ apps.addCommand(
             manifest.targetCollectionIds,
             targetCollectionIds,
           );
+          const mainModule =
+            sourceChanged || targetCollectionsChanged
+              ? await compileApp(
+                  path,
+                  await resolveLatestTargetCollections(
+                    backend,
+                    manifest.targetCollectionIds,
+                  ),
+                )
+              : null;
+
+          if (manifest.name !== app.name) {
+            const result = await backend.apps.updateName(app.id, manifest.name);
+            if (!result.success) {
+              throw new Error(JSON.stringify(result.error));
+            }
+            app = result.data;
+            operations.push("updated name");
+          }
+
           if (sourceChanged || targetCollectionsChanged) {
-            const targetCollections = await resolveLatestTargetCollections(
-              backend,
-              manifest.targetCollectionIds,
-            );
-            const mainModule = await compileApp(path, targetCollections);
             const result = await backend.apps.createNewVersion(
               app.id,
               manifest.targetCollectionIds,
-              { "/main.tsx": mainModule },
+              { "/main.tsx": mainModule! },
             );
             if (!result.success) {
               throw new Error(JSON.stringify(result.error));

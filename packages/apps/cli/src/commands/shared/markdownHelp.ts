@@ -20,7 +20,7 @@ export function useMarkdownHelp(
 
 function formatMarkdownHelp(command: Command, details?: HelpDetails): string {
   const lines: string[] = [];
-  const syntax = `${command.name()} ${command.usage()}`.trim();
+  const syntax = `${getCommandPath(command)} ${command.usage()}`.trim();
   lines.push(`# ${command.name()}`, "");
   lines.push("## Syntax", "", "```sh", syntax, "```", "");
 
@@ -60,6 +60,18 @@ function formatMarkdownHelp(command: Command, details?: HelpDetails): string {
   addList(lines, "Notes", details?.notes);
 
   return `${lines.join("\n").trimEnd()}\n`;
+}
+
+function getCommandPath(command: Command): string {
+  const names: string[] = [];
+  for (
+    let currentCommand: Command | null = command;
+    currentCommand;
+    currentCommand = currentCommand.parent
+  ) {
+    names.unshift(currentCommand.name());
+  }
+  return names.join(" ");
 }
 
 function addList(lines: string[], title: string, items?: string[]): void {
