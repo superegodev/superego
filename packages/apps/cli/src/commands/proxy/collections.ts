@@ -74,8 +74,7 @@ collections.addCommand(
         );
       }),
     {
-      outputShape:
-        '{ "success": true, "data": { "typescriptSchema": "..." }, "error": null }',
+      outputShape: '{ "success": true, "data": "...", "error": null }',
       sideEffects: ["None."],
       failureCases: ["Collection id does not exist."],
       relatedCommands: ["superego collections list"],

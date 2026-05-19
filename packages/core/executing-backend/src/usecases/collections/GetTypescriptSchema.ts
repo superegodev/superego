@@ -19,20 +19,14 @@ export default class CollectionsGetTypescriptSchema extends BackendUsecase<
   Backend["collections"]["getTypescriptSchema"]
 > {
   argumentsSchema = v.tuple([structuralSchemas.backend.ids.collectionId()]);
-  resultSchema = structuralSchemas.global.result(
-    v.strictObject({ typescriptSchema: v.string() }),
-    [
-      structuralSchemas.backend.errors.collectionNotFound(),
-      structuralSchemas.backend.errors.unexpectedError(),
-    ],
-  );
+  resultSchema = structuralSchemas.global.result(v.string(), [
+    structuralSchemas.backend.errors.collectionNotFound(),
+    structuralSchemas.backend.errors.unexpectedError(),
+  ]);
 
   async exec(
     collectionId: Parameters<Backend["collections"]["getTypescriptSchema"]>[0],
-  ): ResultPromise<
-    { typescriptSchema: string },
-    CollectionNotFound | UnexpectedError
-  > {
+  ): ResultPromise<string, CollectionNotFound | UnexpectedError> {
     const collection = await this.repos.collection.find(collectionId);
     if (!collection) {
       return makeUnsuccessfulResult(
@@ -46,8 +40,6 @@ export default class CollectionsGetTypescriptSchema extends BackendUsecase<
       );
     assertCollectionVersionExists(collectionId, latestVersion);
 
-    return makeSuccessfulResult({
-      typescriptSchema: codegen(latestVersion.schema),
-    });
+    return makeSuccessfulResult(codegen(latestVersion.schema));
   }
 }

@@ -11,7 +11,7 @@ export default function ToolResultOutput({ toolResult }: Props) {
   ) ? (
     <CodeBlock
       language="typescript"
-      code={toolResult.output.data.typescriptSchema}
+      code={toolResult.output.data}
       showCopyButton={true}
     />
   ) : (

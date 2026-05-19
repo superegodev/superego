@@ -55,12 +55,7 @@ namespace ToolResult {
   // Factotum
   export type GetCollectionTypescriptSchema = BaseToolResult<
     ToolName.GetCollectionTypescriptSchema,
-    Result<
-      {
-        typescriptSchema: string;
-      },
-      CollectionNotFound
-    >
+    Result<string, CollectionNotFound>
   >;
   export type CreateDocuments = BaseToolResult<
     ToolName.CreateDocuments,

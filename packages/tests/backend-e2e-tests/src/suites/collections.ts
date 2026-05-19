@@ -7898,8 +7898,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
 
       // Verify
       assert.isTrue(result.success);
-      expect(result.data.typescriptSchema).toContain("export type Root");
-      expect(result.data.typescriptSchema).toContain("title: string");
+      expect(result.data).toContain("export type Root");
+      expect(result.data).toContain("title: string");
     });
 
     it("error: CollectionNotFound", async () => {

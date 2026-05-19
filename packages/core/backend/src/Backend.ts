@@ -324,7 +324,7 @@ export default interface Backend {
     getTypescriptSchema(
       collectionId: CollectionId,
     ): ResultPromise<
-      { typescriptSchema: string },
+      string,
       CollectionNotFound | ArgumentsNotValid | UnexpectedError
     >;
   };
