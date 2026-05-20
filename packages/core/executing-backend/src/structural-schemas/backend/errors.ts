@@ -387,9 +387,9 @@ export const duplicateDocumentDetected = () =>
     >,
   ) as v.GenericSchema<unknown, DuplicateDocumentDetected>;
 
-export const executingJavascriptFunctionFailed = () =>
+export const executingTypescriptFunctionFailed = () =>
   resultError(
-    "ExecutingJavascriptFunctionFailed",
+    "ExecutingTypescriptFunctionFailed",
     v.strictObject({
       message: v.string(),
       name: v.optional(v.string()),

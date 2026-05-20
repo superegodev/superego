@@ -3,7 +3,7 @@ import type {
   CollectionId,
   CollectionNotFound,
   Document,
-  ExecutingJavascriptFunctionFailed,
+  ExecutingTypescriptFunctionFailed,
   TypescriptCompilationFailed,
   UnexpectedError,
 } from "@superego/backend";
@@ -21,6 +21,7 @@ import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import { uniq } from "es-toolkit";
 import { DateTime } from "luxon";
 import * as v from "valibot";
+import makeExecutingTypescriptFunctionFailed from "../../makers/makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "../../makers/makeResultError.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
@@ -37,7 +38,7 @@ export default class DocumentsExecuteTypescriptFunction extends BackendUsecase<
   resultSchema = structuralSchemas.global.result(v.any(), [
     structuralSchemas.backend.errors.collectionNotFound(),
     structuralSchemas.backend.errors.typescriptCompilationFailed(),
-    structuralSchemas.backend.errors.executingJavascriptFunctionFailed(),
+    structuralSchemas.backend.errors.executingTypescriptFunctionFailed(),
     structuralSchemas.backend.errors.unexpectedError(),
   ]);
 
@@ -48,7 +49,7 @@ export default class DocumentsExecuteTypescriptFunction extends BackendUsecase<
     any,
     | CollectionNotFound
     | TypescriptCompilationFailed
-    | ExecutingJavascriptFunctionFailed
+    | ExecutingTypescriptFunctionFailed
     | UnexpectedError
   > {
     const uniqueCollectionIds = uniq(collectionIds);
@@ -107,10 +108,15 @@ export default class DocumentsExecuteTypescriptFunction extends BackendUsecase<
       );
     }
 
-    return this.javascriptSandbox.executeSyncFunction(
+    const executionResult = await this.javascriptSandbox.executeSyncFunction(
       { source: "", compiled: compileResult.data },
       [documentsByCollection],
     );
+    return executionResult.success
+      ? executionResult
+      : makeUnsuccessfulResult(
+          makeExecutingTypescriptFunctionFailed(executionResult.error),
+        );
   }
 }
 

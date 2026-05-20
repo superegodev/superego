@@ -9,6 +9,7 @@ import {
 } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import makeExecutingTypescriptFunctionFailed from "./makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "./makeResultError.js";
 
 export default async function makeContentBlockingKeys(
@@ -31,7 +32,7 @@ export default async function makeContentBlockingKeys(
         collectionId: collectionVersion.collectionId,
         collectionVersionId: collectionVersion.id,
         documentId: documentId,
-        cause: error,
+        cause: makeExecutingTypescriptFunctionFailed(error),
       }),
     );
   }

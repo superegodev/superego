@@ -1,19 +1,31 @@
-import type { ExecutingJavascriptFunctionFailed } from "@superego/backend";
+import type { ExecutingTypescriptFunctionFailed } from "@superego/backend";
 import type { Result } from "@superego/global-types";
 import { Id } from "@superego/shared-utils";
 import { expect, it, vi } from "vitest";
+import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import makeContentSummaries from "./makeContentSummaries.js";
 
-it("ExecutingJavascriptFunctionFailed result for all document versions on getter execution failed", async () => {
+it("ExecutingTypescriptFunctionFailed result for all document versions on getter execution failed", async () => {
   // Setup mocks
   const mockFailedExecutionResult: Result<
     null,
-    ExecutingJavascriptFunctionFailed
+    JavascriptSandbox.ExecutingFunctionFailed
   > = {
     success: false,
     data: null,
     error: {
-      name: "ExecutingJavascriptFunctionFailed",
+      name: "ExecutingFunctionFailed",
+      details: { message: "message" },
+    },
+  };
+  const expectedFailedExecutionResult: Result<
+    null,
+    ExecutingTypescriptFunctionFailed
+  > = {
+    success: false,
+    data: null,
+    error: {
+      name: "ExecutingTypescriptFunctionFailed",
       details: { message: "message" },
     },
   };
@@ -51,8 +63,8 @@ it("ExecutingJavascriptFunctionFailed result for all document versions on getter
 
   // Verify
   expect(result).toEqual([
-    mockFailedExecutionResult,
-    mockFailedExecutionResult,
+    expectedFailedExecutionResult,
+    expectedFailedExecutionResult,
   ]);
 });
 

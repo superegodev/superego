@@ -4055,7 +4055,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                     remoteDocumentId: "remoteId",
                     remoteDocumentVersionId: "remoteVersionId",
                     cause: expect.objectContaining({
-                      name: "ExecutingJavascriptFunctionFailed",
+                      name: "ExecutingTypescriptFunctionFailed",
                     }),
                   }),
                 }),

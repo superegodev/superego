@@ -27,7 +27,7 @@ export default {
     if (
       output.error.name === "CollectionNotFound" ||
       output.error.name === "TypescriptCompilationFailed" ||
-      output.error.name === "ExecutingJavascriptFunctionFailed"
+      output.error.name === "ExecutingTypescriptFunctionFailed"
     ) {
       return {
         tool: toolCall.tool,

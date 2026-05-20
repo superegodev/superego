@@ -3,12 +3,14 @@ import type {
   ContentSummaryNotValid,
   DocumentId,
   DocumentVersionId,
-  ExecutingJavascriptFunctionFailed,
+  ExecutingTypescriptFunctionFailed,
 } from "@superego/backend";
 import type { Result } from "@superego/global-types";
+import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import makeContentSummaryResult from "./makeContentSummaryResult.js";
+import makeExecutingTypescriptFunctionFailed from "./makeExecutingTypescriptFunctionFailed.js";
 
 export default async function makeContentSummaries(
   javascriptSandbox: JavascriptSandbox,
@@ -21,7 +23,7 @@ export default async function makeContentSummaries(
 ): Promise<
   Result<
     ContentSummary,
-    ExecutingJavascriptFunctionFailed | ContentSummaryNotValid
+    ExecutingTypescriptFunctionFailed | ContentSummaryNotValid
   >[]
 > {
   const contentSummariesGetter = {
@@ -42,7 +44,11 @@ export default async function makeContentSummaries(
     [documentVersionInfos.map((documentVersion) => documentVersion.content)],
   );
   if (!result.success) {
-    return documentVersionInfos.map(() => result);
+    return documentVersionInfos.map(() =>
+      makeUnsuccessfulResult(
+        makeExecutingTypescriptFunctionFailed(result.error),
+      ),
+    );
   }
 
   const contentSummaries = result.data as any[];

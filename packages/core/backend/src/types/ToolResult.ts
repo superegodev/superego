@@ -9,7 +9,7 @@ import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "../errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMatching.js";
 import type DuplicateDocumentDetected from "../errors/DuplicateDocumentDetected.js";
-import type ExecutingJavascriptFunctionFailed from "../errors/ExecutingJavascriptFunctionFailed.js";
+import type ExecutingTypescriptFunctionFailed from "../errors/ExecutingTypescriptFunctionFailed.js";
 import type FileNotFound from "../errors/FileNotFound.js";
 import type FilesNotFound from "../errors/FilesNotFound.js";
 import type MakingContentBlockingKeysFailed from "../errors/MakingContentBlockingKeysFailed.js";
@@ -102,7 +102,7 @@ namespace ToolResult {
       any,
       | CollectionNotFound
       | TypescriptCompilationFailed
-      | ExecutingJavascriptFunctionFailed
+      | ExecutingTypescriptFunctionFailed
     >
   >;
   export type CreateChart = BaseToolResult<
@@ -116,7 +116,7 @@ namespace ToolResult {
       },
       | CollectionNotFound
       | TypescriptCompilationFailed
-      | ExecutingJavascriptFunctionFailed
+      | ExecutingTypescriptFunctionFailed
       | ResultError<"EChartsOptionNotValid", { issues: ValidationIssue[] }>
     >,
     {
@@ -134,7 +134,7 @@ namespace ToolResult {
       },
       | CollectionNotFound
       | TypescriptCompilationFailed
-      | ExecutingJavascriptFunctionFailed
+      | ExecutingTypescriptFunctionFailed
       | ResultError<"GeoJSONNotValid", { issues: ValidationIssue[] }>
     >,
     {
@@ -157,7 +157,7 @@ namespace ToolResult {
       >,
       | CollectionNotFound
       | TypescriptCompilationFailed
-      | ExecutingJavascriptFunctionFailed
+      | ExecutingTypescriptFunctionFailed
       | ResultError<"ReturnValueNotValid", { issues: ValidationIssue[] }>
     >,
     {

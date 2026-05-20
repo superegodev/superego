@@ -1,11 +1,11 @@
 import type { ResultError } from "@superego/global-types";
 
-type ExecutingJavascriptFunctionFailed = ResultError<
-  "ExecutingJavascriptFunctionFailed",
+type ExecutingTypescriptFunctionFailed = ResultError<
+  "ExecutingTypescriptFunctionFailed",
   {
     message: string;
     name?: string | undefined;
     stack?: string | undefined;
   }
 >;
-export default ExecutingJavascriptFunctionFailed;
+export default ExecutingTypescriptFunctionFailed;

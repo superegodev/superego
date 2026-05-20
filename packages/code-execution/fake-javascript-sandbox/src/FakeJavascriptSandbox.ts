@@ -1,7 +1,4 @@
-import type {
-  ExecutingJavascriptFunctionFailed,
-  TypescriptModule,
-} from "@superego/backend";
+import type { TypescriptModule } from "@superego/backend";
 import type { JavascriptSandbox } from "@superego/executing-backend";
 import type { ResultPromise } from "@superego/global-types";
 import { LocalInstant } from "@superego/javascript-sandbox-global-utils";
@@ -27,7 +24,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
   async executeSyncFunction(
     typescriptModule: TypescriptModule,
     args: any[],
-  ): ResultPromise<any, ExecutingJavascriptFunctionFailed> {
+  ): ResultPromise<any, JavascriptSandbox.ExecutingFunctionFailed> {
     let importedModule: unknown;
     try {
       importedModule = await this.importModule(typescriptModule);
@@ -36,7 +33,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
         success: false,
         data: null,
         error: {
-          name: "ExecutingJavascriptFunctionFailed",
+          name: "ExecutingFunctionFailed",
           details: FakeJavascriptSandbox.extractErrorDetails(
             error,
             "Unknown error importing module",
@@ -54,7 +51,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
         success: false,
         data: null,
         error: {
-          name: "ExecutingJavascriptFunctionFailed",
+          name: "ExecutingFunctionFailed",
           details: {
             message: "The default export of the module is not a function",
           },
@@ -71,7 +68,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
         success: false,
         data: null,
         error: {
-          name: "ExecutingJavascriptFunctionFailed",
+          name: "ExecutingFunctionFailed",
           details: FakeJavascriptSandbox.extractErrorDetails(
             error,
             "Unknown error executing function",
@@ -87,7 +84,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
         success: false,
         data: null,
         error: {
-          name: "ExecutingJavascriptFunctionFailed",
+          name: "ExecutingFunctionFailed",
           details: {
             message:
               "The value returned by the function is not serializable to JSON",
@@ -134,7 +131,7 @@ export default class FakeJavascriptSandbox implements JavascriptSandbox {
   private static extractErrorDetails(
     error: unknown,
     fallbackMessage: string,
-  ): ExecutingJavascriptFunctionFailed["details"] {
+  ): JavascriptSandbox.ExecutingFunctionFailed["details"] {
     return typeof error === "object" && error !== null
       ? {
           message:

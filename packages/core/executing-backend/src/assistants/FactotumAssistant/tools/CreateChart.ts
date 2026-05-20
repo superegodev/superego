@@ -13,6 +13,7 @@ import {
 } from "@superego/shared-utils";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeExecutingTypescriptFunctionFailed from "../../../makers/makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
@@ -132,7 +133,9 @@ export default {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: result,
+        output: makeUnsuccessfulResult(
+          makeExecutingTypescriptFunctionFailed(result.error),
+        ),
       };
     }
 

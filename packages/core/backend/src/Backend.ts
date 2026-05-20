@@ -41,7 +41,7 @@ import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
-import type ExecutingJavascriptFunctionFailed from "./errors/ExecutingJavascriptFunctionFailed.js";
+import type ExecutingTypescriptFunctionFailed from "./errors/ExecutingTypescriptFunctionFailed.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type GlobalSettingsNotValid from "./errors/GlobalSettingsNotValid.js";
@@ -454,7 +454,7 @@ export default interface Backend {
       any,
       | CollectionNotFound
       | TypescriptCompilationFailed
-      | ExecutingJavascriptFunctionFailed
+      | ExecutingTypescriptFunctionFailed
       | ArgumentsNotValid
       | UnexpectedError
     >;

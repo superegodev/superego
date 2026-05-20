@@ -31,7 +31,7 @@ const contentSummaryResult = () =>
       data: v.null(),
       error: v.union([
         v.strictObject({
-          name: v.literal("ExecutingJavascriptFunctionFailed"),
+          name: v.literal("ExecutingTypescriptFunctionFailed"),
           details: v.strictObject({
             message: v.string(),
             name: v.optional(v.string()),

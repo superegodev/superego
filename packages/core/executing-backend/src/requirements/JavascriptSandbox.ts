@@ -1,10 +1,18 @@
-import type {
-  ExecutingJavascriptFunctionFailed,
-  TypescriptModule,
-} from "@superego/backend";
-import type { ResultPromise } from "@superego/global-types";
+import type { TypescriptModule } from "@superego/backend";
+import type { ResultError, ResultPromise } from "@superego/global-types";
 
-export default interface JavascriptSandbox {
+namespace JavascriptSandbox {
+  export type ExecutingFunctionFailed = ResultError<
+    "ExecutingFunctionFailed",
+    {
+      message: string;
+      name?: string | undefined;
+      stack?: string | undefined;
+    }
+  >;
+}
+
+interface JavascriptSandbox {
   /**
    * Returns whether the default export of the supplied TypescriptModule is a
    * function.
@@ -28,5 +36,7 @@ export default interface JavascriptSandbox {
      * JSON-invariant.
      */
     args: any[],
-  ): ResultPromise<any, ExecutingJavascriptFunctionFailed>;
+  ): ResultPromise<any, JavascriptSandbox.ExecutingFunctionFailed>;
 }
+
+export default JavascriptSandbox;

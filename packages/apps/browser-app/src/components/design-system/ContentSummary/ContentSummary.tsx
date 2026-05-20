@@ -16,7 +16,7 @@ export default function ContentSummary({ contentSummary }: Props) {
           defaultMessage="Error deriving content summary: {error}"
           values={{ error: error.name }}
         />
-        {error.name === "ExecutingJavascriptFunctionFailed" ? (
+        {error.name === "ExecutingTypescriptFunctionFailed" ? (
           <pre>{error.details.message}</pre>
         ) : null}
       </div>

@@ -66,7 +66,7 @@ export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
 export type { default as DocumentVersionNotFound } from "./errors/DocumentVersionNotFound.js";
 export type { default as DuplicateDocumentDetected } from "./errors/DuplicateDocumentDetected.js";
-export type { default as ExecutingJavascriptFunctionFailed } from "./errors/ExecutingJavascriptFunctionFailed.js";
+export type { default as ExecutingTypescriptFunctionFailed } from "./errors/ExecutingTypescriptFunctionFailed.js";
 export type { default as FileNotFound } from "./errors/FileNotFound.js";
 export type { default as FilesNotFound } from "./errors/FilesNotFound.js";
 export type { default as GlobalSettingsNotValid } from "./errors/GlobalSettingsNotValid.js";
