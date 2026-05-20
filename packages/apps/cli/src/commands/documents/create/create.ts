@@ -1,0 +1,12 @@
+import { DocumentsCreate } from "@superego/executing-backend";
+import createBackendCommand from "../../../utils/backendCommand.js";
+import help from "./help.md?raw";
+
+export default createBackendCommand({
+  name: "create",
+  description: "Create a document.",
+  UsecaseClass: DocumentsCreate,
+  getCall: (backend) => backend.documents.create,
+  arguments: [{ name: "definition", description: "Document definition" }],
+  help,
+});

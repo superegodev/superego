@@ -3,7 +3,7 @@ import { join } from "node:path";
 import type { Schema } from "@superego/schema";
 import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import * as v from "valibot";
-import readJsonFile from "../utils/readJsonFile.js";
+import readJsonFile from "../common/readJsonFile.js";
 import type CheckResult from "./CheckResult.js";
 
 export default function checkDemoDocuments(

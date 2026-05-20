@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
 import * as v from "valibot";
-import readJsonFile from "../utils/readJsonFile.js";
+import readJsonFile from "../common/readJsonFile.js";
 import type CheckResult from "./CheckResult.js";
 
 export default function checkJsonValidation(

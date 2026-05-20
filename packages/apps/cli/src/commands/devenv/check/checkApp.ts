@@ -4,7 +4,7 @@ import typescriptLibs from "@superego/app-sandbox/typescript-libs";
 import type { TypescriptFile } from "@superego/backend";
 import type { Schema } from "@superego/schema";
 import { codegen } from "@superego/schema";
-import appSettingsSchema from "../utils/appSettingsSchema.js";
+import appSettingsSchema from "../common/appSettingsSchema.js";
 import checkJsonValidation from "./checkJsonValidation.js";
 import type CheckResult from "./CheckResult.js";
 import checkTypescriptCompilation from "./checkTypescriptCompilation.js";

@@ -1,14 +1,9 @@
 import { Command } from "commander";
-import { useMarkdownHelp } from "../shared/markdownHelp.js";
-import installSkill from "./installSkill/index.js";
+import { useMarkdownHelp } from "../../utils/markdownHelp.js";
+import installSkill from "./install-skill/install-skill.js";
 
-const agents = useMarkdownHelp(
-  new Command("agents").description("Install coding-agent integrations"),
-  {
-    relatedCommands: ["superego agents install-skill --help"],
-  },
+export default useMarkdownHelp(
+  new Command("agents")
+    .description("Install coding-agent integrations")
+    .addCommand(installSkill),
 );
-
-agents.addCommand(installSkill);
-
-export default agents;

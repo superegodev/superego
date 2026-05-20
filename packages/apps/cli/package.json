@@ -25,6 +25,7 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@typescript/vfs": "^1.6.4",
+    "@valibot/to-json-schema": "^1.7.0",
     "chalk": "^5.6.2",
     "chokidar": "^5.0.0",
     "commander": "^14.0.3",

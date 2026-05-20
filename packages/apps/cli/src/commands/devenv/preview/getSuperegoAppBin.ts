@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import Log from "../utils/Log.js";
+import Log from "../common/Log.js";
 
 export default function getSuperegoAppBin(): string {
   const binName = "superego-app";
