@@ -35,12 +35,9 @@ export default {
         output,
       } as ToolResult.ExecuteTypescriptFunction;
     }
-    if (output.error.name === "UnexpectedError") {
-      throw new UnexpectedAssistantError(
-        `Executing TypeScript function failed with ${output.error.name}. Cause: ${output.error.details.cause}`,
-      );
-    }
-    throw new UnexpectedAssistantError("Executing TypeScript function failed.");
+    throw new UnexpectedAssistantError(
+      `Executing TypeScript function failed with ${output.error.name}. Cause: ${output.error.details.cause}`,
+    );
   },
 
   get(): InferenceService.Tool {

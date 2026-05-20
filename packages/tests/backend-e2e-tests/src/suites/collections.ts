@@ -7857,6 +7857,20 @@ export default rd<GetDependencies>("Collections", (deps) => {
   });
 
   describe("getTypescriptSchema", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.getTypescriptSchema(
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("success", async () => {
       // Setup SUT
       const { backend } = deps();

@@ -3189,6 +3189,21 @@ export default rd<GetDependencies>("Documents", (deps) => {
   });
 
   describe("executeTypescriptFunction", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.documents.executeTypescriptFunction(
+        ["not-a-valid-id"] as any,
+        "export default function main() { return null; }",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
     it("success", async () => {
       // Setup SUT
       const { backend } = deps();

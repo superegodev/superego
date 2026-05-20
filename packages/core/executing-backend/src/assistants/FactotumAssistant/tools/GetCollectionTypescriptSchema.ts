@@ -33,13 +33,8 @@ export default {
         },
       };
     }
-    if (output.error.name === "UnexpectedError") {
-      throw new UnexpectedAssistantError(
-        `Getting collection TypeScript schema failed with ${output.error.name}. Cause: ${output.error.details.cause}`,
-      );
-    }
     throw new UnexpectedAssistantError(
-      "Getting collection TypeScript schema failed.",
+      `Getting collection TypeScript schema failed with ${output.error.name}. Cause: ${output.error.details.cause}`,
     );
   },
 
