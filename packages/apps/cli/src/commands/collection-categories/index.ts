@@ -7,7 +7,7 @@ import update from "./update/update.js";
 
 export default useMarkdownHelp(
   new Command("collection-categories")
-    .description("Manage collection categories")
+    .description("Group collections for navigation")
     .addCommand(create)
     .addCommand(update)
     .addCommand(deleteCommand)

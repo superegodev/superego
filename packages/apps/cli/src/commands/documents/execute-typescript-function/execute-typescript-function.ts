@@ -1,5 +1,6 @@
 import { DocumentsExecuteTypescriptFunction } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/backendCommand.js";
+import help from "./help.md?raw";
 
 export default createBackendCommand({
   name: "execute-typescript-function",
@@ -11,4 +12,5 @@ export default createBackendCommand({
     { name: "collection-ids", description: "Collection ids array" },
     { name: "typescript-function", description: "TypeScript function source" },
   ],
+  help,
 });

@@ -12,7 +12,7 @@ import status from "./status/status.js";
 
 export default useMarkdownHelp(
   new Command("apps")
-    .description("Manage apps")
+    .description("Develop and publish collection-view apps")
     .addCommand(init)
     .addCommand(checkout)
     .addCommand(check)

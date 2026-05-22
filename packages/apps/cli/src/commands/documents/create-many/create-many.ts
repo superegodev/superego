@@ -4,7 +4,7 @@ import help from "./help.md?raw";
 
 export default createBackendCommand({
   name: "create-many",
-  description: "Create multiple documents.",
+  description: "Create multiple schema-valid documents.",
   UsecaseClass: DocumentsCreateMany,
   getCall: (backend) => backend.documents.createMany,
   arguments: [

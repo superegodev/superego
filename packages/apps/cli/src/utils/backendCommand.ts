@@ -44,21 +44,31 @@ export default function createBackendCommand({
   help,
 }: BackendCommandOptions): Command {
   let command = new Command(name).description(description);
+  const argumentSchemas = getArgumentSchemas(UsecaseClass);
 
-  for (const argument of commandArguments) {
+  for (const [index, argument] of commandArguments.entries()) {
     if ("fixedValue" in argument) {
       continue;
     }
-    const flags = `--${argument.name} <json>`;
+    const acceptsPlainString = isStringLikeArgumentSchema(
+      argumentSchemas[index],
+    );
+    const flags = `--${argument.name} <${
+      acceptsPlainString ? "value" : "json"
+    }>`;
     const optionDescription = `${
       argument.required === false ? "Optional" : "Required"
-    }. ${argument.description} JSON.`;
+    }. ${argument.description}${acceptsPlainString ? "." : " JSON."}`;
     command = command.option(flags, optionDescription);
   }
 
   command.action(async (options: Record<string, string | undefined>) => {
     await runCommand(async () => {
-      const parsedArguments = readArguments(commandArguments, options);
+      const parsedArguments = readArguments(
+        commandArguments,
+        argumentSchemas,
+        options,
+      );
       if (!parsedArguments.success) {
         return parsedArguments;
       }
@@ -89,10 +99,11 @@ export default function createBackendCommand({
 
 function readArguments(
   commandArguments: BackendCommandArgument[],
+  argumentSchemas: (v.GenericSchema<unknown, unknown> | undefined)[],
   options: Record<string, string | undefined>,
 ) {
   const parsed: unknown[] = [];
-  for (const argument of commandArguments) {
+  for (const [index, argument] of commandArguments.entries()) {
     if ("fixedValue" in argument) {
       parsed.push(argument.fixedValue);
       continue;
@@ -107,21 +118,117 @@ function readArguments(
       parsed.push(undefined);
       continue;
     }
-    try {
-      parsed.push(JSON.parse(raw));
-    } catch (error) {
-      return unsuccessfulResult("ArgumentsNotValid", {
-        issues: [
-          {
-            message: `--${argument.name} must be valid JSON: ${
-              error instanceof Error ? error.message : String(error)
-            }`,
-          },
-        ],
-      });
+    const parsedArgument = parseArgument(
+      raw,
+      argumentSchemas[index],
+      argument.name,
+    );
+    if (!parsedArgument.success) {
+      return parsedArgument;
     }
+    parsed.push(parsedArgument.data);
   }
   return { success: true as const, data: parsed, error: null };
+}
+
+function parseArgument(
+  raw: string,
+  schema: v.GenericSchema<unknown, unknown> | undefined,
+  name: string,
+) {
+  if (schema && isStringLikeArgumentSchema(schema)) {
+    if (raw === "null" && isNullableArgumentSchema(schema)) {
+      return { success: true as const, data: null, error: null };
+    }
+    if (raw.startsWith('"')) {
+      try {
+        return {
+          success: true as const,
+          data: JSON.parse(raw) as unknown,
+          error: null,
+        };
+      } catch (error) {
+        return unsuccessfulResult("ArgumentsNotValid", {
+          issues: [
+            {
+              message: `--${name} must be a plain string or valid JSON string: ${
+                error instanceof Error ? error.message : String(error)
+              }`,
+            },
+          ],
+        });
+      }
+    }
+    return { success: true as const, data: raw, error: null };
+  }
+
+  try {
+    return {
+      success: true as const,
+      data: JSON.parse(raw) as unknown,
+      error: null,
+    };
+  } catch (error) {
+    return unsuccessfulResult("ArgumentsNotValid", {
+      issues: [
+        {
+          message: `--${name} must be valid JSON: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        },
+      ],
+    });
+  }
+}
+
+function isStringLikeArgumentSchema(
+  schema: v.GenericSchema<unknown, unknown> | undefined,
+): boolean {
+  if (!schema) {
+    return false;
+  }
+  const schemaInternals = schema as any;
+  switch (schemaInternals.type) {
+    case "string":
+    case "custom":
+      return true;
+    case "optional":
+    case "nullable":
+      return isStringLikeArgumentSchema(schemaInternals.wrapped);
+    case "union":
+      return schemaInternals.options.every(isStringLikeArgumentSchema);
+    default:
+      return false;
+  }
+}
+
+function isNullableArgumentSchema(
+  schema: v.GenericSchema<unknown, unknown>,
+): boolean {
+  const schemaInternals = schema as any;
+  switch (schemaInternals.type) {
+    case "nullable":
+      return true;
+    case "optional":
+      return isNullableArgumentSchema(schemaInternals.wrapped);
+    case "union":
+      return schemaInternals.options.some(
+        (option: v.GenericSchema<unknown, unknown>) =>
+          isNullArgumentSchema(option) || isNullableArgumentSchema(option),
+      );
+    default:
+      return false;
+  }
+}
+
+function isNullArgumentSchema(
+  schema: v.GenericSchema<unknown, unknown>,
+): boolean {
+  return (schema as any).type === "null";
+}
+
+function getArgumentSchemas(UsecaseClass: BackendUsecaseClass) {
+  return (getArgumentsSchema(UsecaseClass) as TupleSchemaWithItems).items ?? [];
 }
 
 function toOptionPropertyName(name: string): string {
@@ -147,8 +254,7 @@ function getJsonOptionsHelp(
   UsecaseClass: BackendUsecaseClass,
   commandArguments: BackendCommandArgument[],
 ) {
-  const argumentSchemas =
-    (getArgumentsSchema(UsecaseClass) as TupleSchemaWithItems).items ?? [];
+  const argumentSchemas = getArgumentSchemas(UsecaseClass);
   return commandArguments.flatMap((argument, index) => {
     if ("fixedValue" in argument) {
       return [];

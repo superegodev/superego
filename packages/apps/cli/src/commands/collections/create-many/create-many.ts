@@ -4,7 +4,7 @@ import help from "./help.md?raw";
 
 export default createBackendCommand({
   name: "create-many",
-  description: "Create multiple collections.",
+  description: "Create multiple collections and their initial schema versions.",
   UsecaseClass: CollectionsCreateMany,
   getCall: (backend) => backend.collections.createMany,
   arguments: [

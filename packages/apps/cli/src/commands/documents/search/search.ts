@@ -3,7 +3,7 @@ import createBackendCommand from "../../../utils/backendCommand.js";
 
 export default createBackendCommand({
   name: "search",
-  description: "Search documents.",
+  description: "Full-text search documents by content summary.",
   UsecaseClass: DocumentsSearch,
   getCall: (backend) => backend.documents.search,
   arguments: [

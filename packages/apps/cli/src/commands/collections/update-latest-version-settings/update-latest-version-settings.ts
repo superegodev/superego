@@ -4,7 +4,7 @@ import help from "./help.md?raw";
 
 export default createBackendCommand({
   name: "update-latest-version-settings",
-  description: "Update latest collection version settings.",
+  description: "Patch settings for the latest collection version.",
   UsecaseClass: CollectionsUpdateLatestVersionSettings,
   getCall: (backend) => backend.collections.updateLatestVersionSettings,
   arguments: [

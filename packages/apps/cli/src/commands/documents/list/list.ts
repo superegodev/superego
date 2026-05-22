@@ -10,7 +10,7 @@ export default createBackendCommand({
     { name: "collection-id", description: "Collection id" },
     {
       name: "lite",
-      description: "Pass false for full documents",
+      description: "Pass false to include full document content",
       required: false,
     },
   ],

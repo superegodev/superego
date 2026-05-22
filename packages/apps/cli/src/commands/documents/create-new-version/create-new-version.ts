@@ -4,7 +4,7 @@ import help from "./help.md?raw";
 
 export default createBackendCommand({
   name: "create-new-version",
-  description: "Create a new document version.",
+  description: "Replace document content by creating a new document version.",
   UsecaseClass: DocumentsCreateNewVersion,
   getCall: (backend) => backend.documents.createNewVersion,
   arguments: [

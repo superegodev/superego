@@ -13,7 +13,7 @@ import search from "./search/search.js";
 
 export default useMarkdownHelp(
   new Command("documents")
-    .description("Manage documents")
+    .description("Manage schema-valid documents inside collections")
     .addCommand(create)
     .addCommand(createMany)
     .addCommand(createNewVersion)

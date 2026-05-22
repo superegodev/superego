@@ -1,12 +1,21 @@
-## Concepts
+## Overview
+
+Superego is a local-first personal database. Data is stored as documents inside
+typed collections; apps extend how the data is viewed and edited.
+
+### Concepts
 
 - A collection stores documents with the same shape.
+- A collection category groups collections for navigation.
 - A document stores `content`; that content must match the latest schema of its
   collection.
 - A collection version has a `schema` and `versionSettings`. New collection
-  versions can change document shape and behavior over time.
+  versions can change document shape over time. See `Superego Schema` below for
+  the schema format.
+- An app is a collection-specific UI extension. It targets one or more
+  collections and can read/render their schema-valid documents.
 
-## Superego Schema
+### Superego Schema
 
 A Superego Schema defines the JSON shape of documents in a collection. It is
 Superego's own schema format, not JSON Schema.
@@ -25,45 +34,104 @@ Schema shape:
   Struct type in `types`.
 - Struct properties are all required. Use `nullableProperties` to allow `null`;
   missing properties and `undefined` are not valid content.
-- Use named types and refs to reuse structures.
+- Use named types and refs to reuse structures. Refs use
+  `{ "dataType": null, "ref": "TypeName" }`.
 
-Common type definitions:
-
-```json
-{ "dataType": "Struct", "properties": {}, "nullableProperties": [] }
-```
+Example schema:
 
 ```json
-{ "dataType": "List", "items": { "dataType": null, "ref": "TypeName" } }
+{
+  "types": {
+    "Task": {
+      "dataType": "Struct",
+      "properties": {
+        "title": { "dataType": "String" },
+        "status": {
+          "dataType": "Enum",
+          "members": {
+            "Todo": { "value": "Todo" },
+            "Done": { "value": "Done" }
+          }
+        },
+        "dueDate": {
+          "dataType": "String",
+          "format": "dev.superego:String.PlainDate"
+        },
+        "priority": {
+          "dataType": "Number",
+          "format": "dev.superego:Number.Integer"
+        },
+        "tags": { "dataType": "List", "items": { "dataType": "String" } },
+        "relatedTask": { "dataType": null, "ref": "Task" },
+        "sourceDocument": {
+          "dataType": "DocumentRef",
+          "collectionId": "Collection_..."
+        },
+        "attachment": {
+          "dataType": "File",
+          "accept": { "image/*": [".png", ".jpg"] }
+        },
+        "notes": {
+          "dataType": "String",
+          "format": "dev.superego:String.Markdown"
+        },
+        "drawing": {
+          "dataType": "JsonObject",
+          "format": "dev.superego:JsonObject.ExcalidrawDrawing"
+        }
+      },
+      "nullableProperties": [
+        "dueDate",
+        "relatedTask",
+        "sourceDocument",
+        "attachment",
+        "notes",
+        "drawing"
+      ]
+    }
+  },
+  "rootType": "Task"
+}
 ```
 
-```json
-{ "dataType": "String" }
-```
+Schema authoring rules:
 
-```json
-{ "dataType": "Number" }
-```
+- Use the simplest schema that fully represents the data.
+- Define and reuse common types instead of duplicating nested structures.
+- Group closely related fields into Structs.
+- Use Lists for repeated values.
+- Use `description` on types, properties, and enum members when names are not
+  self-explanatory.
+- Use PascalCase type names and enum member names.
+- Use Title Case enum member values.
+- Use camelCase property names.
 
-```json
-{ "dataType": "Boolean" }
-```
+Well-known formats:
 
-```json
-{ "dataType": "Enum", "members": { "MemberName": { "value": "Member Value" } } }
-```
+- String: `dev.superego:String.PlainDate` (`YYYY-MM-DD`),
+  `dev.superego:String.PlainTime` (`[T]HH[:mm[:ss[.sss]]]`),
+  `dev.superego:String.Instant` (ISO 8601 with milliseconds and offset),
+  `dev.superego:String.Markdown`.
+- Number: `dev.superego:Number.Integer`.
+- JsonObject: `dev.superego:JsonObject.ExcalidrawDrawing`,
+  `dev.superego:JsonObject.GeoJSON`, `dev.superego:JsonObject.TiptapRichText`.
+- Content values for `dataType: "JsonObject"` must be objects with
+  `"__dataType": "JsonObject"`.
 
-```json
-{ "dataType": "DocumentRef", "collectionId": "Collection_..." }
-```
+## CLI
 
-```json
-{ "dataType": "File", "accept": { "image/*": [".png", ".jpg"] } }
-```
+Run `superego <domain> <command> --help` for command-specific options and JSON
+schemas.
 
-```json
-{ "dataType": "JsonObject" }
-```
+### JSON Inputs
 
-Use `description` on types, properties, and enum members when names are not
-self-explanatory.
+Most data commands take named options.
+
+- String options take plain shell strings: `--id Collection_abc`.
+- To pass `null` for nullable string options, use JSON null:
+  `--collection-id null`.
+- Objects, arrays, booleans, numbers, and null must be valid JSON in one shell
+  argument: `--definition '{"collectionId":"Collection_abc","content":{}}'`.
+- Mixed-type options use JSON.
+- Use `collections get-typescript-schema` before writing document content or
+  TypeScript functions for a collection.
