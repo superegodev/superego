@@ -8,6 +8,9 @@
 - **Package manager:** Yarn (Berry) via Corepack. PnP is **not** used.
 - Follow existing patterns in the package you are editing; keep changes focused
   and consistent with surrounding code.
+- **Never force push. Never amend commits that have already been pushed.** If a
+  pushed commit needs a fix, create a new forward commit and push normally,
+  unless the user explicitly instructs otherwise.
 - **Never** use abbreviations for variable names, aside from common
   abbreviations (e.g., `i` for loop variables), acronyms (e.g., `url`), and
   idiomatic library namespace aliases (e.g., `v` for Valibot).
