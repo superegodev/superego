@@ -1,6 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
@@ -11,10 +11,10 @@ export async function createCliBackend(): Promise<ExecutingBackend> {
     await import("@superego/quickjs-javascript-sandbox/nodejs");
   const { SqliteDataRepositoriesManager } =
     await import("@superego/sqlite-data-repositories");
-  const dataPath = getElectronUserDataPath();
-  mkdirSync(dataPath, { recursive: true });
+  const databaseFile = getDatabaseFile();
+  mkdirSync(dirname(databaseFile), { recursive: true });
   const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-    fileName: join(dataPath, "superego.db"),
+    fileName: databaseFile,
     defaultGlobalSettings: {
       appearance: { theme: Theme.Auto },
       inference: {
@@ -43,6 +43,14 @@ export async function createCliBackend(): Promise<ExecutingBackend> {
     new MultiDriverInferenceServiceFactory(),
     [],
   );
+}
+
+function getDatabaseFile(): string {
+  const databaseFile = process.env["SUPEREGO_DATABASE_FILE"];
+  if (databaseFile) {
+    return resolve(databaseFile);
+  }
+  return join(getElectronUserDataPath(), "superego.db");
 }
 
 function getElectronUserDataPath(): string {
