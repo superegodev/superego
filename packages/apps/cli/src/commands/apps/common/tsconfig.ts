@@ -1,13 +1,7 @@
+import { typescriptTsconfigCompilerOptions } from "@superego/shared-utils";
+
 const tsconfig = {
-  compilerOptions: {
-    target: "ESNext",
-    module: "ESNext",
-    moduleResolution: "Bundler",
-    jsx: "react",
-    strict: true,
-    skipLibCheck: true,
-    allowSyntheticDefaultImports: true,
-  },
+  compilerOptions: typescriptTsconfigCompilerOptions,
   include: ["main.tsx", "Collection_*.ts", "node_modules/**/*.d.ts"],
 };
 

@@ -1,0 +1,7 @@
+import type { StubItem } from "../generated/ProtoCollection_0.js";
+
+export default function getContentBlockingKeys(
+  stubItem: StubItem
+): string[] {
+  return [];
+}
