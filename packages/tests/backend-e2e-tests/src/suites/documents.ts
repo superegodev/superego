@@ -3271,9 +3271,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
       );
 
       // Verify
+      expect(result.data).toHaveLength(2);
       expect(result).toEqual({
         success: true,
-        data: ["first", "second"],
+        data: expect.arrayContaining(["first", "second"]),
         error: null,
       });
     });

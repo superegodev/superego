@@ -6,8 +6,9 @@ export function findCollectionByName(
   snapshot: DatabaseSnapshot,
   name: RegExp,
 ): Collection {
+  const statelessName = makeStatelessRegExp(name);
   const collection = snapshot.collections.find((candidate) =>
-    name.test(candidate.settings.name),
+    statelessName.test(candidate.settings.name),
   );
   expect(collection).toBeDefined();
   return collection!;
@@ -71,7 +72,12 @@ export function expectSingleChangedDocument(
 }
 
 export function findAppByName(apps: App[], name: RegExp): App {
-  const app = apps.find((candidate) => name.test(candidate.name));
+  const statelessName = makeStatelessRegExp(name);
+  const app = apps.find((candidate) => statelessName.test(candidate.name));
   expect(app).toBeDefined();
   return app!;
+}
+
+function makeStatelessRegExp(regExp: RegExp): RegExp {
+  return new RegExp(regExp.source, regExp.flags.replace(/[gy]/g, ""));
 }

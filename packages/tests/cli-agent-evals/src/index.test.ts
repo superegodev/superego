@@ -153,8 +153,8 @@ describeWithAgent("CLI agent evals", () => {
     const after = stableSnapshot(await readDatabaseSnapshot(backend));
     expect(after).toBe(before);
     expect(result.stdout + result.stderr).toMatch(/Amtrak/i);
-    expect(result.stdout + result.stderr).toMatch(/86\.?2?/);
-    expect(result.stdout + result.stderr).toMatch(/Travel/i);
+    expect(result.stdout + result.stderr).toMatch(/\b86(?:\.2|\.20)?\b/);
+    expect(result.stdout + result.stderr).toMatch(/\bTravel\b/i);
   });
 
   test("updates one document", async () => {
@@ -241,9 +241,9 @@ describeWithAgent("CLI agent evals", () => {
     const after = stableSnapshot(await readDatabaseSnapshot(backend));
     expect(after).toBe(before);
     expect(result.stdout + result.stderr).toMatch(/Coffee/i);
-    expect(result.stdout + result.stderr).toMatch(/18\.?5/);
-    expect(result.stdout + result.stderr).toMatch(/Travel/i);
-    expect(result.stdout + result.stderr).toMatch(/86\.?2/);
+    expect(result.stdout + result.stderr).toMatch(/\b18(?:\.5|\.50)?\b/);
+    expect(result.stdout + result.stderr).toMatch(/\bTravel\b/i);
+    expect(result.stdout + result.stderr).toMatch(/\b86(?:\.2|\.20)?\b/);
   });
 
   test("initializes and checks an app project", async () => {

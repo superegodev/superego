@@ -149,6 +149,9 @@ function toFunctionValue(
   typeDefinition: AnyTypeDefinition,
   timeZone: string,
 ): unknown {
+  if (value === undefined) {
+    return undefined;
+  }
   if (value === null) {
     return null;
   }

@@ -26,12 +26,14 @@ export default defineConfig({
     {
       name: "make-cli-executable",
       closeBundle() {
-        chmodSync(resolve("dist/cli/superego.js"), 0o755);
+        const cliDistDir = resolve(import.meta.dirname, "dist/cli");
+        chmodSync(resolve(cliDistDir, "superego.js"), 0o755);
         copyFileSync(
           resolve(
+            import.meta.dirname,
             "../../../node_modules/@jitl/quickjs-wasmfile-release-sync/dist/emscripten-module.wasm",
           ),
-          resolve("dist/cli/emscripten-module.wasm"),
+          resolve(cliDistDir, "emscripten-module.wasm"),
         );
       },
     },
