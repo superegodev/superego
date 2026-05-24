@@ -1,16 +1,14 @@
 import { resolve } from "node:path";
 import { Command } from "commander";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
+import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
   resolveLockedTargetCollections,
   runAppCommand,
 } from "../common/commandUtils.js";
-import {
-  assertEmptyTarget,
-  buildLock,
-  writeAppProject,
-} from "../common/index.js";
+import { buildLock } from "../common/lock.js";
+import writeAppProject from "../common/writeAppProject.js";
 
 export default useMarkdownHelp(
   new Command("checkout")
@@ -21,7 +19,7 @@ export default useMarkdownHelp(
       await runAppCommand(async () => {
         const projectPath = resolve(path);
         assertEmptyTarget(projectPath);
-        const backend = await createCliBackend();
+        const backend = await createBackend();
         const appsResult = await backend.apps.list();
         if (!appsResult.success) {
           throw new Error(JSON.stringify(appsResult.error));

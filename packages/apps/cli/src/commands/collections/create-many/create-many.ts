@@ -1,5 +1,5 @@
 import { CollectionsCreateMany } from "@superego/executing-backend";
-import createBackendCommand from "../../../utils/backendCommand.js";
+import createBackendCommand from "../../../utils/createBackendCommand.js";
 import help from "./help.md?raw";
 
 export default createBackendCommand({

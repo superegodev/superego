@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
   getLockedApp,
@@ -7,14 +7,10 @@ import {
   runAppCommand,
   sameArray,
 } from "../common/commandUtils.js";
-import {
-  buildLock,
-  compileApp,
-  readLock,
-  readMainSource,
-  readManifest,
-  writeLock,
-} from "../common/index.js";
+import { compileApp } from "../common/compile.js";
+import { buildLock, readLock, writeLock } from "../common/lock.js";
+import { readMainSource } from "../common/mainSource.js";
+import { readManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
   new Command("commit")
@@ -24,7 +20,7 @@ export default useMarkdownHelp(
         const path = process.cwd();
         const manifest = readManifest(path);
         const lock = readLock(path);
-        const backend = await createCliBackend();
+        const backend = await createBackend();
         const operations: string[] = [];
 
         if (!lock) {

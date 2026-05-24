@@ -1,16 +1,13 @@
 import type { CollectionId } from "@superego/backend";
 import { Command } from "commander";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
   resolveLatestTargetCollections,
   runAppCommand,
 } from "../common/commandUtils.js";
-import {
-  readManifest,
-  regenerateGeneratedFiles,
-  writeManifest,
-} from "../common/index.js";
+import { regenerateGeneratedFiles } from "../common/generatedFiles.js";
+import { readManifest, writeManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
   new Command("remove-collection")
@@ -29,7 +26,7 @@ export default useMarkdownHelp(
             (targetCollectionId) => targetCollectionId !== collectionId,
           ),
         };
-        const backend = await createCliBackend();
+        const backend = await createBackend();
         const targetCollections = await resolveLatestTargetCollections(
           backend,
           nextManifest.targetCollectionIds,

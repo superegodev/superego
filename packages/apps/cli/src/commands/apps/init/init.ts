@@ -1,18 +1,16 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
 import { Command } from "commander";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
+import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
   collect,
   resolveLatestTargetCollections,
   runAppCommand,
 } from "../common/commandUtils.js";
-import {
-  assertEmptyTarget,
-  getInitialMainSource,
-  writeAppProject,
-} from "../common/index.js";
+import { getInitialMainSource } from "../common/mainSource.js";
+import writeAppProject from "../common/writeAppProject.js";
 
 export default useMarkdownHelp(
   new Command("init")
@@ -28,7 +26,7 @@ export default useMarkdownHelp(
         await runAppCommand(async () => {
           const projectPath = resolve(path);
           assertEmptyTarget(projectPath);
-          const backend = await createCliBackend();
+          const backend = await createBackend();
           const targetCollections = await resolveLatestTargetCollections(
             backend,
             options.collection,

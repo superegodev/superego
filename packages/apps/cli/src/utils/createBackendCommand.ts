@@ -2,7 +2,7 @@ import { SchemaJsonSchema } from "@superego/schema";
 import { toJsonSchema, type JsonSchema } from "@valibot/to-json-schema";
 import { Command } from "commander";
 import * as v from "valibot";
-import { createCliBackend } from "./backend.js";
+import createBackend from "./createBackend.js";
 import {
   setJsonOptionsHelp,
   setMarkdownHelp,
@@ -10,7 +10,7 @@ import {
 } from "./markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "./results.js";
 
-type CliBackend = Awaited<ReturnType<typeof createCliBackend>>;
+type CliBackend = Awaited<ReturnType<typeof createBackend>>;
 type BackendCall = (...args: any[]) => Promise<{ success: boolean }>;
 type BackendUsecaseClass = new (...args: any[]) => {
   argumentsSchema: v.GenericSchema<unknown, any[]>;
@@ -83,7 +83,7 @@ export default function createBackendCommand({
         });
       }
 
-      return getCall(await createCliBackend())(...validationResult.output);
+      return getCall(await createBackend())(...validationResult.output);
     });
   });
 

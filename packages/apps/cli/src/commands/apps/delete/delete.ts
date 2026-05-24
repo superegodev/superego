@@ -1,6 +1,6 @@
 import type { AppId } from "@superego/backend";
 import { Command } from "commander";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import { runCommand } from "../../../utils/results.js";
 
@@ -10,7 +10,7 @@ export default useMarkdownHelp(
     .argument("<appId>", "Backend app id")
     .action(async (appId: AppId) => {
       await runCommand(async () =>
-        (await createCliBackend()).apps.delete(appId, "delete"),
+        (await createBackend()).apps.delete(appId, "delete"),
       );
     }),
 );

@@ -1,12 +1,14 @@
 import { Command } from "commander";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
   getLockedApp,
   runAppCommand,
   sameArray,
 } from "../common/commandUtils.js";
-import { readLock, readMainSource, readManifest } from "../common/index.js";
+import { readLock } from "../common/lock.js";
+import { readMainSource } from "../common/mainSource.js";
+import { readManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
   new Command("status")
@@ -20,7 +22,7 @@ export default useMarkdownHelp(
         if (!lock) {
           return { status: ["new app"] };
         }
-        const backend = await createCliBackend();
+        const backend = await createBackend();
         const app = await getLockedApp(backend, lock.appId);
         const status: string[] = [];
         if (

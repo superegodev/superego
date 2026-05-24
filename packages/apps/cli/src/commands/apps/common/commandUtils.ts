@@ -3,7 +3,7 @@ import type {
   CollectionId,
   CollectionVersionId,
 } from "@superego/backend";
-import { createCliBackend } from "../../../utils/backend.js";
+import createBackend from "../../../utils/createBackend.js";
 import {
   runCommand,
   successfulResult,
@@ -11,7 +11,7 @@ import {
 } from "../../../utils/results.js";
 import type { TargetCollection } from "./types.js";
 
-export type CliBackend = Awaited<ReturnType<typeof createCliBackend>>;
+export type CliBackend = Awaited<ReturnType<typeof createBackend>>;
 
 export function collect(
   value: string,

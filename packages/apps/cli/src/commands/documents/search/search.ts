@@ -1,5 +1,5 @@
 import { DocumentsSearch } from "@superego/executing-backend";
-import createBackendCommand from "../../../utils/backendCommand.js";
+import createBackendCommand from "../../../utils/createBackendCommand.js";
 
 export default createBackendCommand({
   name: "search",

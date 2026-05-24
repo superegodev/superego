@@ -6,7 +6,9 @@ import { ExecutingBackend } from "@superego/executing-backend";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 
-export async function createCliBackend(): Promise<ExecutingBackend> {
+export default async function createBackend(): Promise<ExecutingBackend> {
+  // Keep backend-only runtime deps lazy so help and non-backend commands do not
+  // eagerly load Node SQLite or QuickJS wasm.
   const { QuickjsJavascriptSandbox } =
     await import("@superego/quickjs-javascript-sandbox/nodejs");
   const { SqliteDataRepositoriesManager } =

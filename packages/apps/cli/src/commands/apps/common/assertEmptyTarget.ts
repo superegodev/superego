@@ -1,6 +1,6 @@
 import { existsSync, readdirSync, statSync } from "node:fs";
 
-export function assertEmptyTarget(path: string): void {
+export default function assertEmptyTarget(path: string): void {
   if (!existsSync(path)) {
     return;
   }
