@@ -1,5 +1,9 @@
 # Superego CLI
 
+Superego is a local-first personal database. It stores collections, documents,
+files, conversations, and React-based collection-view apps in the local Superego
+database.
+
 Use `superego` to inspect and mutate the local Superego database.
 
 Rules:
