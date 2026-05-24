@@ -18,55 +18,53 @@ export default useMarkdownHelp(
     .description(
       "Validate all collections and apps in the development environment",
     )
-    .action(checkAction),
-);
+    .action(async () => {
+      const basePath = process.cwd();
+      const results: CheckResult[] = [];
+      const schemas = new Map<string, Schema>();
 
-async function checkAction(): Promise<void> {
-  const basePath = process.cwd();
-  const results: CheckResult[] = [];
-  const schemas = new Map<string, Schema>();
-
-  const packJsonPath = join(basePath, "pack.json");
-  if (existsSync(packJsonPath)) {
-    results.push(
-      checkJsonValidation("pack.json", packJsonPath, packJsonSchema()),
-    );
-  }
-
-  const collections = getProtoCollections(basePath);
-  for (const collectionName of collections) {
-    const { results: collectionResults, schema } = await checkCollection(
-      basePath,
-      collectionName,
-    );
-    results.push(...collectionResults);
-    if (schema) {
-      schemas.set(collectionName, schema);
-    }
-  }
-
-  results.push(...checkDemoDocuments(basePath, schemas));
-
-  const apps = getProtoApps(basePath);
-  for (const appName of apps) {
-    const appResults = await checkApp(basePath, appName, schemas);
-    results.push(...appResults);
-  }
-
-  // Print results and terminate.
-  let hasFailures = false;
-  for (const result of results) {
-    if (result.success) {
-      Log.pass(result.target);
-    } else {
-      hasFailures = true;
-      Log.fail(result.target);
-      for (const error of result.errors ?? []) {
-        Log.fail(error, 1);
+      const packJsonPath = join(basePath, "pack.json");
+      if (existsSync(packJsonPath)) {
+        results.push(
+          checkJsonValidation("pack.json", packJsonPath, packJsonSchema()),
+        );
       }
-    }
-  }
-  if (hasFailures) {
-    process.exit(1);
-  }
-}
+
+      const collections = getProtoCollections(basePath);
+      for (const collectionName of collections) {
+        const { results: collectionResults, schema } = await checkCollection(
+          basePath,
+          collectionName,
+        );
+        results.push(...collectionResults);
+        if (schema) {
+          schemas.set(collectionName, schema);
+        }
+      }
+
+      results.push(...checkDemoDocuments(basePath, schemas));
+
+      const apps = getProtoApps(basePath);
+      for (const appName of apps) {
+        const appResults = await checkApp(basePath, appName, schemas);
+        results.push(...appResults);
+      }
+
+      // Print results and terminate.
+      let hasFailures = false;
+      for (const result of results) {
+        if (result.success) {
+          Log.pass(result.target);
+        } else {
+          hasFailures = true;
+          Log.fail(result.target);
+          for (const error of result.errors ?? []) {
+            Log.fail(error, 1);
+          }
+        }
+      }
+      if (hasFailures) {
+        process.exit(1);
+      }
+    }),
+);
