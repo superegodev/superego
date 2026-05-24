@@ -8,7 +8,7 @@ import preview from "./preview/preview.js";
 
 export default useMarkdownHelp(
   new Command("devenv")
-    .description("Develop Superego packs")
+    .description("Develop Superego packs.")
     .addCommand(create)
     .addCommand(generateTypes)
     .addCommand(check)

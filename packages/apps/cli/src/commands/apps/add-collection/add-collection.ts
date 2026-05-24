@@ -11,18 +11,23 @@ import { readManifest, writeManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
   new Command("add-collection")
-    .description("Add a target collection to the local app project")
-    .argument("<collectionId>", "Collection id")
-    .action(async (collectionId: CollectionId) => {
+    .description("Add a target collection to the local app project.")
+    .requiredOption("--collection-id <collectionId>", "Collection id.")
+    .action(async (options: { collectionId: CollectionId }) => {
       await runAppCommand(async () => {
         const path = process.cwd();
         const manifest = readManifest(path);
-        if (manifest.targetCollectionIds.includes(collectionId)) {
-          throw new Error(`Collection ${collectionId} is already present.`);
+        if (manifest.targetCollectionIds.includes(options.collectionId)) {
+          throw new Error(
+            `Collection ${options.collectionId} is already present.`,
+          );
         }
         const nextManifest = {
           ...manifest,
-          targetCollectionIds: [...manifest.targetCollectionIds, collectionId],
+          targetCollectionIds: [
+            ...manifest.targetCollectionIds,
+            options.collectionId,
+          ],
         };
         const backend = await createBackend();
         const targetCollections = await resolveLatestTargetCollections(

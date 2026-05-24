@@ -11,9 +11,9 @@ import getSuperegoAppBin from "./getSuperegoAppBin.js";
 export default useMarkdownHelp(
   new Command("preview")
     .description(
-      "Preview the development environment in a dev instance of Superego",
+      "Preview the development environment in a dev instance of Superego.",
     )
-    .option("-w, --watch", "Watch for file changes and reload automatically")
+    .option("-w, --watch", "Watch for file changes and reload automatically.")
     .action(async (options: { watch?: boolean }) => {
       const basePath = process.cwd();
       const superegoAppBin = getSuperegoAppBin();

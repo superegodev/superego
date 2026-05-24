@@ -16,7 +16,7 @@ import type CheckResult from "./CheckResult.js";
 export default useMarkdownHelp(
   new Command("check")
     .description(
-      "Validate all collections and apps in the development environment",
+      "Validate all collections and apps in the development environment.",
     )
     .action(async () => {
       const basePath = process.cwd();

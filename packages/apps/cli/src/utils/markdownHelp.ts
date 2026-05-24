@@ -6,7 +6,7 @@ interface JsonOptionHelp {
 }
 
 const jsonOptionsHelpByCommand = new WeakMap<Command, JsonOptionHelp[]>();
-const markdownHelpByCommand = new WeakMap<Command, string>();
+const additionalNotesByCommand = new WeakMap<Command, string>();
 
 export function setJsonOptionsHelp(
   command: Command,
@@ -15,8 +15,11 @@ export function setJsonOptionsHelp(
   jsonOptionsHelpByCommand.set(command, jsonOptionsHelp);
 }
 
-export function setMarkdownHelp(command: Command, markdownHelp: string): void {
-  markdownHelpByCommand.set(command, markdownHelp);
+export function setAdditionalNotes(
+  command: Command,
+  additionalNotes: string,
+): void {
+  additionalNotesByCommand.set(command, additionalNotes);
 }
 
 export function useMarkdownHelp(command: Command): Command {
@@ -28,13 +31,21 @@ export function useMarkdownHelp(command: Command): Command {
 
 function formatMarkdownHelp(command: Command): string {
   const lines: string[] = [];
-  const syntax = `${getCommandPath(command)} ${command.usage()}`.trim();
+  const visibleOptions = command.options.filter((option) => !option.hidden);
+  const usage =
+    visibleOptions.length > 0
+      ? command.usage()
+      : command
+          .usage()
+          .replace(/^\[options\]\s*/, "")
+          .replace(/\s+\[options\]/, "");
+  const syntax = `${getCommandPath(command)} ${usage}`.trim();
   lines.push(`# ${command.name()}`, "");
   lines.push("## Syntax", "", "```sh", syntax, "```", "");
 
   const description = command.description();
   if (description) {
-    lines.push("## Description", "", `- ${description}`, "");
+    lines.push("## Description", "", description, "");
   }
 
   const argumentsHelp = command.registeredArguments.map((argument) => {
@@ -45,9 +56,10 @@ function formatMarkdownHelp(command: Command): string {
     lines.push("## Arguments", "", ...argumentsHelp, "");
   }
 
-  const optionsHelp = command.options
-    .filter((option) => !option.hidden)
-    .map((option) => `- \`${option.flags}\`: ${option.description}`);
+  const optionsHelp = visibleOptions.map((option) => {
+    const required = option.mandatory ? "required" : "optional";
+    return `- \`${option.flags}\` (${required}): ${option.description}`;
+  });
   if (optionsHelp.length > 0) {
     lines.push("## Options", "", ...optionsHelp, "");
   }
@@ -67,16 +79,21 @@ function formatMarkdownHelp(command: Command): string {
     }
   }
 
-  const markdownHelp = markdownHelpByCommand.get(command);
-  if (markdownHelp) {
-    lines.push(markdownHelp.trim(), "");
-  }
-
   const subcommands = command.commands.map(
     (subcommand) => `- \`${subcommand.name()}\`: ${subcommand.description()}`,
   );
   if (subcommands.length > 0) {
     lines.push("## Commands", "", ...subcommands, "");
+  }
+
+  const additionalNotes = additionalNotesByCommand.get(command);
+  if (additionalNotes) {
+    lines.push(
+      "## Additional Notes",
+      "",
+      additionalNotes.trim().replace(/^## /gm, "### "),
+      "",
+    );
   }
 
   return `${lines.join("\n").trimEnd()}\n`;

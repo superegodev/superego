@@ -21,9 +21,9 @@ type Agent = keyof typeof agentDirectories;
 
 export default useMarkdownHelp(
   new Command("install-skill")
-    .description("Install the Superego CLI skill for a coding agent")
-    .option("--agent <agent>", "Known agent name")
-    .option("--directory <directory>", "Explicit skills directory")
+    .description("Install the Superego CLI skill for a coding agent.")
+    .option("--agent <agent>", "Known agent name.")
+    .option("--directory <directory>", "Explicit skills directory.")
     .action(async (options: { agent?: string; directory?: string }) => {
       await runCommand(async () => {
         const skillsDirectory = getSkillsDirectory(options);

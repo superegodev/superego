@@ -14,17 +14,23 @@ import writeAppProject from "../common/writeAppProject.js";
 
 export default useMarkdownHelp(
   new Command("init")
-    .description("Create a new local app project")
-    .argument("<path>", "New project path")
-    .option("--name <name>", "App name", "Untitled App")
-    .option("--collection <collectionId>", "Target collection", collect, [])
+    .description("Create a new local app project.")
+    .requiredOption("--path <path>", "New project path.")
+    .option("--name <name>", "App name.", "Untitled App")
+    .option(
+      "--collection <collectionId>",
+      "Target collection. Can be passed multiple times.",
+      collect,
+      [],
+    )
     .action(
-      async (
-        path: string,
-        options: { name: string; collection: CollectionId[] },
-      ) => {
+      async (options: {
+        path: string;
+        name: string;
+        collection: CollectionId[];
+      }) => {
         await runAppCommand(async () => {
-          const projectPath = resolve(path);
+          const projectPath = resolve(options.path);
           assertEmptyTarget(projectPath);
           const backend = await createBackend();
           const targetCollections = await resolveLatestTargetCollections(

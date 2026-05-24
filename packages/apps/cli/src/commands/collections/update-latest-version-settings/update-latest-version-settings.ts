@@ -1,6 +1,6 @@
 import { CollectionsUpdateLatestVersionSettings } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
-import help from "./help.md?raw";
+import additionalNotes from "./additional-notes.md?raw";
 
 export default createBackendCommand({
   name: "update-latest-version-settings",
@@ -15,5 +15,5 @@ export default createBackendCommand({
       description: "Collection version settings patch",
     },
   ],
-  help,
+  additionalNotes,
 });

@@ -1,8 +1,3 @@
-## Overview
-
-Superego is a local-first personal database. Data is stored as documents inside
-typed collections; apps extend how the data is viewed and edited.
-
 ### Concepts
 
 - A collection stores documents with the same shape.

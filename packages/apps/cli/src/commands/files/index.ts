@@ -4,6 +4,6 @@ import getContent from "./get-content/get-content.js";
 
 export default useMarkdownHelp(
   new Command("files")
-    .description("Read stored file content")
+    .description("Read stored file content.")
     .addCommand(getContent),
 );

@@ -1,6 +1,6 @@
 import { DocumentsCreateNewVersion } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
-import help from "./help.md?raw";
+import additionalNotes from "./additional-notes.md?raw";
 
 export default createBackendCommand({
   name: "create-new-version",
@@ -13,5 +13,5 @@ export default createBackendCommand({
     { name: "latest-version-id", description: "Latest document version id" },
     { name: "content", description: "Document content" },
   ],
-  help,
+  additionalNotes,
 });

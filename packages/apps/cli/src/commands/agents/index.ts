@@ -4,6 +4,6 @@ import installSkill from "./install-skill/install-skill.js";
 
 export default useMarkdownHelp(
   new Command("agents")
-    .description("Install coding-agent integrations")
+    .description("Install coding-agent integrations.")
     .addCommand(installSkill),
 );

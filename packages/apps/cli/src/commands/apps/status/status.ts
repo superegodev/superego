@@ -12,7 +12,7 @@ import { readManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
   new Command("status")
-    .description("Compare the local app project with the database")
+    .description("Compare the local app project with the database.")
     .action(async () => {
       await runAppCommand(async () => {
         const path = process.cwd();

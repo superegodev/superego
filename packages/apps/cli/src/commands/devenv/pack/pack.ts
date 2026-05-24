@@ -8,7 +8,7 @@ import Log from "../common/Log.js";
 
 export default useMarkdownHelp(
   new Command("pack")
-    .description("Compile the development environment into a pack.mpk file")
+    .description("Compile the development environment into a pack.mpk file.")
     .action(async () => {
       const basePath = process.cwd();
 

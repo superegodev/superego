@@ -13,13 +13,13 @@ import status from "./status/status.js";
 
 export default useMarkdownHelp(
   new Command("apps")
-    .description("Develop and publish collection-view apps")
+    .description("Develop and publish collection-view apps.")
     .addCommand(init)
     .addCommand(checkout)
     .addCommand(check)
     .addCommand(status)
-    .addCommand(diff())
-    .addCommand(commit())
+    .addCommand(diff)
+    .addCommand(commit)
     .addCommand(addCollection)
     .addCommand(removeCollection)
     .addCommand(list)

@@ -12,7 +12,7 @@ import { readManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
   new Command("check")
-    .description("Validate and compile the local app project")
+    .description("Validate and compile the local app project.")
     .action(async () => {
       await runAppCommand(async () => {
         const path = process.cwd();

@@ -23,8 +23,8 @@ import tsconfig from "./tsconfig.js";
 
 export default useMarkdownHelp(
   new Command("create")
-    .description("Create a new development environment")
-    .argument("<path>", "Directory path for the new development environment")
+    .description("Create a new development environment.")
+    .argument("<path>", "Directory path for the new development environment.")
     .action(async (targetPath: string) => {
       const basePath = resolve(targetPath);
 

@@ -7,22 +7,20 @@ import { readManifest } from "../common/manifest.js";
 import createApp from "./createApp.js";
 import updateApp from "./updateApp.js";
 
-export default function commit(): Command {
-  return useMarkdownHelp(
-    new Command("commit")
-      .description("Create or update the backend app from the local project")
-      .action(async () => {
-        await runAppCommand(async () => {
-          const path = process.cwd();
-          const manifest = readManifest(path);
-          const lock = readLock(path);
-          const backend = await createBackend();
+export default useMarkdownHelp(
+  new Command("commit")
+    .description("Create or update the backend app from the local project.")
+    .action(async () => {
+      await runAppCommand(async () => {
+        const path = process.cwd();
+        const manifest = readManifest(path);
+        const lock = readLock(path);
+        const backend = await createBackend();
 
-          if (!lock) {
-            return createApp({ backend, path, manifest });
-          }
-          return updateApp({ backend, path, manifest, lock });
-        });
-      }),
-  );
-}
+        if (!lock) {
+          return createApp({ backend, path, manifest });
+        }
+        return updateApp({ backend, path, manifest, lock });
+      });
+    }),
+);

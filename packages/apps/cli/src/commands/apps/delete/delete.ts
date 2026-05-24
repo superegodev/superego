@@ -6,11 +6,11 @@ import { runCommand } from "../../../utils/results.js";
 
 export default useMarkdownHelp(
   new Command("delete")
-    .description("Delete a backend app")
-    .argument("<appId>", "Backend app id")
-    .action(async (appId: AppId) => {
+    .description("Delete a backend app.")
+    .requiredOption("--id <value>", "Backend app id.")
+    .action(async (options: { id: AppId }) => {
       await runCommand(async () =>
-        (await createBackend()).apps.delete(appId, "delete"),
+        (await createBackend()).apps.delete(options.id, "delete"),
       );
     }),
 );

@@ -11,7 +11,7 @@ import updateSettings from "./update-settings/update-settings.js";
 
 export default useMarkdownHelp(
   new Command("collections")
-    .description("Manage collection schemas, settings, and versions")
+    .description("Manage collection schemas, settings, and versions.")
     .addCommand(create)
     .addCommand(createMany)
     .addCommand(updateSettings)

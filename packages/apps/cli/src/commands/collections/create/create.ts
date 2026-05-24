@@ -1,6 +1,6 @@
 import { CollectionsCreate } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
-import help from "./help.md?raw";
+import additionalNotes from "./additional-notes.md?raw";
 
 export default createBackendCommand({
   name: "create",
@@ -8,5 +8,5 @@ export default createBackendCommand({
   UsecaseClass: CollectionsCreate,
   getCall: (backend) => backend.collections.create,
   arguments: [{ name: "definition", description: "Collection definition" }],
-  help,
+  additionalNotes,
 });

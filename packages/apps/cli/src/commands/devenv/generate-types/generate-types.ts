@@ -10,7 +10,7 @@ import readJsonFile from "../common/readJsonFile.js";
 
 export default useMarkdownHelp(
   new Command("generate-types")
-    .description("Generate TypeScript typings from collection schemas")
+    .description("Generate TypeScript typings from collection schemas.")
     .action(async () => {
       const basePath = process.cwd();
       const collections = getProtoCollections(basePath);

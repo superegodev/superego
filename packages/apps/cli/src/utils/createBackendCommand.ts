@@ -5,7 +5,7 @@ import * as v from "valibot";
 import createBackend from "./createBackend.js";
 import {
   setJsonOptionsHelp,
-  setMarkdownHelp,
+  setAdditionalNotes,
   useMarkdownHelp,
 } from "./markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "./results.js";
@@ -32,7 +32,7 @@ interface BackendCommandOptions {
   UsecaseClass: BackendUsecaseClass;
   getCall: (backend: CliBackend) => BackendCall;
   arguments?: BackendCommandArgument[];
-  help?: string;
+  additionalNotes?: string;
 }
 
 export default function createBackendCommand({
@@ -41,7 +41,7 @@ export default function createBackendCommand({
   UsecaseClass,
   getCall,
   arguments: commandArguments = [],
-  help,
+  additionalNotes,
 }: BackendCommandOptions): Command {
   let command = new Command(name).description(description);
   const argumentSchemas = getArgumentSchemas(UsecaseClass);
@@ -56,10 +56,13 @@ export default function createBackendCommand({
     const flags = `--${argument.name} <${
       acceptsPlainString ? "value" : "json"
     }>`;
-    const optionDescription = `${
-      argument.required === false ? "Optional" : "Required"
-    }. ${argument.description}${acceptsPlainString ? "." : " JSON."}`;
-    command = command.option(flags, optionDescription);
+    const optionDescription = `${argument.description}${
+      acceptsPlainString ? "." : " JSON."
+    }`;
+    command =
+      argument.required === false
+        ? command.option(flags, optionDescription)
+        : command.requiredOption(flags, optionDescription);
   }
 
   command.action(async (options: Record<string, string | undefined>) => {
@@ -91,8 +94,8 @@ export default function createBackendCommand({
     command,
     getJsonOptionsHelp(UsecaseClass, commandArguments),
   );
-  if (help) {
-    setMarkdownHelp(command, help);
+  if (additionalNotes) {
+    setAdditionalNotes(command, additionalNotes);
   }
   return useMarkdownHelp(command);
 }
