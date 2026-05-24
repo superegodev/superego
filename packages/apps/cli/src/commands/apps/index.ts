@@ -5,6 +5,7 @@ import check from "./check/check.js";
 import checkout from "./checkout/checkout.js";
 import commit from "./commit/commit.js";
 import deleteCommand from "./delete/delete.js";
+import diff from "./diff/diff.js";
 import init from "./init/init.js";
 import list from "./list/list.js";
 import removeCollection from "./remove-collection/remove-collection.js";
@@ -17,6 +18,7 @@ export default useMarkdownHelp(
     .addCommand(checkout)
     .addCommand(check)
     .addCommand(status)
+    .addCommand(diff)
     .addCommand(commit)
     .addCommand(addCollection)
     .addCommand(removeCollection)

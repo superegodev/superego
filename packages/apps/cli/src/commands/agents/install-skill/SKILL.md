@@ -25,8 +25,8 @@ Command map:
   `list-versions`, `get`, `get-version`, `search`, `execute-typescript-function`
 - `files`: `get-content`
 - `agents`: `install-skill`
-- `apps`: `init`, `checkout`, `check`, `status`, `commit`, `add-collection`,
-  `remove-collection`, `delete`, `list`
+- `apps`: `init`, `checkout`, `check`, `status`, `diff`, `commit`,
+  `add-collection`, `remove-collection`, `delete`, `list`
 - `devenv`: `create`, `generate-types`, `check`, `pack`, `preview`
 
 Common workflows:

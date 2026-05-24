@@ -23,6 +23,7 @@ Commands:
 
 - `superego apps check`: validate and compile.
 - `superego apps status`: compare local durable files with the database.
+- `superego apps diff`: show local changes compared with the database.
 - `superego apps add-collection Collection_...`: add a target collection and
   regenerate types.
 - `superego apps remove-collection Collection_...`: remove a target collection
