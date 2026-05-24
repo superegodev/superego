@@ -2,6 +2,16 @@
 
 Superego apps are single-entrypoint collection-view apps.
 
+Project lifecycle:
+
+- Use `superego apps init <path>` only for a brand-new app that does not yet
+  exist in Superego.
+- Use `superego apps checkout <path> <appId>` to edit an existing app from the
+  database.
+- `app.lock.json` records the app id, app version, and target collection
+  versions that this checkout was based on. Treat it as generated state, not
+  editable source.
+
 Project files:
 
 - Edit `app.json` for name and target collections.
@@ -18,3 +28,14 @@ Commands:
 - `superego apps remove-collection Collection_...`: remove a target collection
   and regenerate types.
 - `superego apps commit`: create/update the backend app.
+
+Recovering stale checkouts:
+
+- If `superego apps status` reports `checkout stale`, the backend app changed
+  after this project was checked out.
+- Do not edit `app.lock.json` to force a commit.
+- Preserve local edits to `app.json` and `main.tsx`, then refresh from the
+  database with `superego apps checkout <new-path> <appId>` or re-checkout after
+  saving your local changes elsewhere.
+- Reapply the local edits to the refreshed checkout, run `superego apps check`,
+  then `superego apps commit`.
