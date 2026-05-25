@@ -1,20 +1,26 @@
 import pkg from "../../package.json" with { type: "json" };
 
-const cliArgIndex = process.argv.indexOf("--cli");
+const cliArgs = getCliArgs();
 
-if (cliArgIndex !== -1) {
-  void startCliProcess(cliArgIndex);
+if (cliArgs) {
+  void startCliProcess(cliArgs);
 } else {
   void startElectronProcess();
 }
 
-async function startCliProcess(cliArgIndex: number): Promise<void> {
+function getCliArgs(): string[] | null {
+  const separatorIndex = process.argv.findIndex(
+    (argument) => argument === "--cli",
+  );
+  if (separatorIndex === -1) {
+    return null;
+  }
+  return process.argv.slice(separatorIndex + 1);
+}
+
+async function startCliProcess(cliArgs: string[]): Promise<void> {
   const { cli } = await import("@superego/cli");
-  const argv = [
-    process.argv[0] ?? "superego-app",
-    "superego",
-    ...process.argv.slice(cliArgIndex + 1),
-  ];
+  const argv = [process.argv[0] ?? "superego-app", "superego", ...cliArgs];
 
   try {
     await cli({ version: pkg.version, argv });
