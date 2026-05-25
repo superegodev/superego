@@ -15,9 +15,22 @@ Project lifecycle:
 Project files:
 
 - Edit `app.json` for name and target collections.
-- Edit `main.tsx` for UI.
+- Edit `main.tsx` for UI. It must default-export a function component.
+- Import generated `Collection_*.ts` types from `main.tsx` for type safety.
 - Treat `Collection_*.ts`, `node_modules/**`, `tsconfig.json`, `AGENTS.md`, and
   `.agents/**` as generated.
+
+Runtime imports:
+
+- Use `@superego/app-sandbox/components` for UI components. Read
+  `node_modules/@superego/app-sandbox/components.d.ts` for available exports and
+  props.
+- Use `@superego/app-sandbox/hooks` for document hooks. Read
+  `node_modules/@superego/app-sandbox/hooks.d.ts` for signatures.
+- Use `@superego/app-sandbox/theme` for theme tokens. Read
+  `node_modules/@superego/app-sandbox/theme.d.ts` for available tokens.
+- Use `react` for React APIs.
+- Use `echarts/*` types with the Echart component.
 
 Commands:
 

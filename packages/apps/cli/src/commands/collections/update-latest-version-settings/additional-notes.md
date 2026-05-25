@@ -1,4 +1,6 @@
-## Input Notes
+### Input Rules
 
-For `settings-patch.defaultDocumentViewUiOptions`, use the same structure
-documented for `superego collections create --help`.
+For `settings-patch.contentSummaryGetter`,
+`settings-patch.contentBlockingKeysGetter`, and
+`settings-patch.defaultDocumentViewUiOptions`, use the same rules documented for
+`superego collections create --help`.

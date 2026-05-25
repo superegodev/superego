@@ -113,12 +113,12 @@ Well-known formats:
 - Content values for `dataType: "JsonObject"` must be objects with
   `"__dataType": "JsonObject"`.
 
-## CLI
+### CLI
 
 Run `superego <domain> <command> --help` for command-specific options and JSON
 schemas.
 
-### JSON Inputs
+#### JSON Inputs
 
 Most data commands take named options.
 

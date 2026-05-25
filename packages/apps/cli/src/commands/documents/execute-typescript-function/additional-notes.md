@@ -1,4 +1,4 @@
-## Input Notes
+### Input Rules
 
 Use this for structured filtering, joins, sorting, or aggregation across all
 documents in one or more collections. Use `documents search` for simple text
