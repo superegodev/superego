@@ -8,6 +8,8 @@ Use `superego` to inspect and mutate the local Superego database.
 
 Rules:
 
+- **NEVER** read or write the Superego SQLite database directly. Use the
+  `superego` CLI only.
 - Commands output JSON unless invoked with `--help`.
 - `agents install-skill` is user-facing and outputs normal text; other commands
   are for agent/tool use.
@@ -15,8 +17,6 @@ Rules:
 - Local workflow commands output `{ "success": true, "data": ... }` or
   `{ "success": false, "error": ... }`.
 - Run `superego <domain> <command> --help` before using an unfamiliar command.
-- Never read or write the Superego SQLite database directly. Use the `superego`
-  CLI only.
 - Do not run Superego CLI commands in parallel. The app and CLI share one SQLite
   database.
 - Commands with inputs take `--args <file>`, where `<file>` contains a JSON
