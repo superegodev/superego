@@ -1,34 +1,24 @@
 import { Command } from "commander";
 
-interface JsonArgsFileHelp {
-  schema: unknown;
+interface MarkdownHelpOptions {
+  argsFileSchema?: unknown;
+  additionalNotes?: string;
 }
 
-const jsonArgsFileHelpByCommand = new WeakMap<Command, JsonArgsFileHelp>();
-const additionalNotesByCommand = new WeakMap<Command, string>();
-
-export function setJsonArgsFileHelp(
+export function useMarkdownHelp(
   command: Command,
-  jsonArgsFileHelp: JsonArgsFileHelp,
-): void {
-  jsonArgsFileHelpByCommand.set(command, jsonArgsFileHelp);
-}
-
-export function setAdditionalNotes(
-  command: Command,
-  additionalNotes: string,
-): void {
-  additionalNotesByCommand.set(command, additionalNotes);
-}
-
-export function useMarkdownHelp(command: Command): Command {
+  options: MarkdownHelpOptions = {},
+): Command {
   command.configureHelp({
-    formatHelp: formatMarkdownHelp,
+    formatHelp: () => formatMarkdownHelp(command, options),
   });
   return command;
 }
 
-function formatMarkdownHelp(command: Command): string {
+function formatMarkdownHelp(
+  command: Command,
+  options: MarkdownHelpOptions,
+): string {
   const lines: string[] = [];
   const visibleOptions = command.options.filter((option) => !option.hidden);
   const usage =
@@ -63,13 +53,12 @@ function formatMarkdownHelp(command: Command): string {
     lines.push("## Options", "", ...optionsHelp, "");
   }
 
-  const jsonArgsFileHelp = jsonArgsFileHelpByCommand.get(command);
-  if (jsonArgsFileHelp) {
+  if (options.argsFileSchema) {
     lines.push(
       "## Args File Schema",
       "",
       "```json",
-      JSON.stringify(jsonArgsFileHelp.schema, null, 2),
+      JSON.stringify(options.argsFileSchema, null, 2),
       "```",
       "",
     );
@@ -82,9 +71,8 @@ function formatMarkdownHelp(command: Command): string {
     lines.push("## Commands", "", ...subcommands, "");
   }
 
-  const additionalNotes = additionalNotesByCommand.get(command);
-  if (additionalNotes) {
-    lines.push("## Additional Notes", "", additionalNotes.trim(), "");
+  if (options.additionalNotes) {
+    lines.push("## Additional Notes", "", options.additionalNotes.trim(), "");
   }
 
   return `${lines.join("\n").trimEnd()}\n`;

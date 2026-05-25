@@ -1,29 +1,42 @@
+import { toJsonSchema } from "@valibot/to-json-schema";
 import type { Command } from "commander";
-import {
-  assertNoUnknownArgs,
-  getOptionalStringArg,
-  getOptionalStringArrayArg,
-  getRequiredStringArg,
-  readArgsFileOrThrow,
-} from "../../../utils/argsFile.js";
-import { setJsonArgsFileHelp } from "../../../utils/markdownHelp.js";
+import * as v from "valibot";
+import { ArgsFileError, readArgsFileOrThrow } from "../../../utils/argsFile.js";
 
-export function requireArgsFile(command: Command, schema: unknown): Command {
-  setJsonArgsFileHelp(command, { schema });
+export function requireArgsFile(command: Command): Command {
   return command.requiredOption("--args <file>", "Path to JSON args file.");
 }
 
-export function readAppsArgs(
+export function readAppsArgs<TInput, TOutput>(
   path: string,
-  allowedKeys: string[],
-): Record<string, unknown> {
+  schema: v.GenericSchema<TInput, TOutput>,
+): TOutput {
   const args = readArgsFileOrThrow(path);
-  assertNoUnknownArgs(args, allowedKeys);
-  return args;
+  const result = v.safeParse(schema, args);
+  if (!result.success) {
+    throw new ArgsFileError({
+      issues: result.issues.map((issue) => ({
+        message: issue.message,
+        path: issue.path
+          ?.filter(
+            (item) =>
+              typeof item.key === "string" || typeof item.key === "number",
+          )
+          .map((item) => ({ key: item.key as string | number })),
+      })),
+    });
+  }
+  return result.output;
 }
 
-export {
-  getOptionalStringArg,
-  getOptionalStringArrayArg,
-  getRequiredStringArg,
-};
+export function getArgsFileJsonSchema(
+  schema: v.GenericSchema<unknown, unknown>,
+): unknown {
+  const jsonSchema = toJsonSchema(schema, {
+    target: "draft-2020-12",
+    typeMode: "input",
+    errorMode: "ignore",
+  });
+  delete jsonSchema.$schema;
+  return jsonSchema;
+}

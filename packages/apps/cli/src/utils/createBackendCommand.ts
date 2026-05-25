@@ -4,11 +4,7 @@ import { Command } from "commander";
 import * as v from "valibot";
 import { readArgsFile } from "./argsFile.js";
 import createBackend from "./createBackend.js";
-import {
-  setJsonArgsFileHelp,
-  setAdditionalNotes,
-  useMarkdownHelp,
-} from "./markdownHelp.js";
+import { useMarkdownHelp } from "./markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "./results.js";
 
 type CliBackend = Awaited<ReturnType<typeof createBackend>>;
@@ -84,15 +80,12 @@ export default function createBackendCommand({
     });
   });
 
-  if (hasInputArguments(commandArguments)) {
-    setJsonArgsFileHelp(command, {
-      schema: getJsonArgsFileHelp(UsecaseClass, commandArguments),
-    });
-  }
-  if (additionalNotes) {
-    setAdditionalNotes(command, additionalNotes);
-  }
-  return useMarkdownHelp(command);
+  return useMarkdownHelp(command, {
+    argsFileSchema: hasInputArguments(commandArguments)
+      ? getJsonArgsFileHelp(UsecaseClass, commandArguments)
+      : undefined,
+    additionalNotes,
+  });
 }
 
 function readArguments(

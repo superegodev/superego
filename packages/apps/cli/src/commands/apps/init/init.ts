@@ -1,12 +1,11 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
 import { Command } from "commander";
+import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
-  getOptionalStringArg,
-  getOptionalStringArrayArg,
-  getRequiredStringArg,
+  getArgsFileJsonSchema,
   readAppsArgs,
   requireArgsFile,
 } from "../common/args.js";
@@ -18,25 +17,21 @@ import {
 import { getInitialMainSource } from "../common/mainSource.js";
 import writeAppProject from "../common/writeAppProject.js";
 
+const argsSchema = v.strictObject({
+  path: v.string(),
+  name: v.optional(v.string()),
+  collection: v.optional(v.array(v.string())),
+});
+
 export default useMarkdownHelp(
   requireArgsFile(
     new Command("init").description("Create a new local app project."),
-    {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        path: { type: "string" },
-        name: { type: "string" },
-        collection: { type: "array", items: { type: "string" } },
-      },
-      required: ["path"],
-    },
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, ["path", "name", "collection"]);
-      const path = getRequiredStringArg(args, "path");
-      const name = getOptionalStringArg(args, "name", "Untitled App");
-      const collection = getOptionalStringArrayArg(args, "collection", []);
+      const args = readAppsArgs(options.args, argsSchema);
+      const path = args.path;
+      const name = args.name ?? "Untitled App";
+      const collection = args.collection ?? [];
       const projectPath = resolve(path);
       assertEmptyTarget(projectPath);
       const backend = await createBackend();
@@ -62,4 +57,5 @@ export default useMarkdownHelp(
       };
     });
   }),
+  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
 );

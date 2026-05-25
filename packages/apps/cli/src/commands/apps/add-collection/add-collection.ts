@@ -1,9 +1,10 @@
 import type { CollectionId } from "@superego/backend";
 import { Command } from "commander";
+import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
-  getRequiredStringArg,
+  getArgsFileJsonSchema,
   readAppsArgs,
   requireArgsFile,
 } from "../common/args.js";
@@ -14,26 +15,19 @@ import {
 import { regenerateGeneratedFiles } from "../common/generatedFiles.js";
 import { readManifest, writeManifest } from "../common/manifest.js";
 
+const argsSchema = v.strictObject({
+  collectionId: v.string(),
+});
+
 export default useMarkdownHelp(
   requireArgsFile(
     new Command("add-collection").description(
       "Add a target collection to the local app project.",
     ),
-    {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        collectionId: { type: "string" },
-      },
-      required: ["collectionId"],
-    },
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, ["collectionId"]);
-      const collectionId = getRequiredStringArg(
-        args,
-        "collectionId",
-      ) as CollectionId;
+      const args = readAppsArgs(options.args, argsSchema);
+      const collectionId = args.collectionId as CollectionId;
       const path = process.cwd();
       const manifest = readManifest(path);
       if (manifest.targetCollectionIds.includes(collectionId)) {
@@ -53,4 +47,5 @@ export default useMarkdownHelp(
       return { targetCollectionIds: nextManifest.targetCollectionIds };
     });
   }),
+  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
 );

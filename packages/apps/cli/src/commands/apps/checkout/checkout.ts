@@ -1,9 +1,10 @@
 import { resolve } from "node:path";
 import { Command } from "commander";
+import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
-  getRequiredStringArg,
+  getArgsFileJsonSchema,
   readAppsArgs,
   requireArgsFile,
 } from "../common/args.js";
@@ -15,25 +16,21 @@ import {
 import { buildLock } from "../common/lock.js";
 import writeAppProject from "../common/writeAppProject.js";
 
+const argsSchema = v.strictObject({
+  path: v.string(),
+  appId: v.string(),
+});
+
 export default useMarkdownHelp(
   requireArgsFile(
     new Command("checkout").description(
       "Check out an existing backend app into a local folder.",
     ),
-    {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        path: { type: "string" },
-        appId: { type: "string" },
-      },
-      required: ["path", "appId"],
-    },
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, ["path", "appId"]);
-      const path = getRequiredStringArg(args, "path");
-      const appId = getRequiredStringArg(args, "appId");
+      const args = readAppsArgs(options.args, argsSchema);
+      const path = args.path;
+      const appId = args.appId;
       const projectPath = resolve(path);
       assertEmptyTarget(projectPath);
       const backend = await createBackend();
@@ -65,4 +62,5 @@ export default useMarkdownHelp(
       return { path: projectPath, appId: app.id };
     });
   }),
+  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
 );
