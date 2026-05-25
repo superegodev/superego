@@ -2,10 +2,7 @@ export default function toSqliteLockedError(error: unknown): unknown {
   if (!isSqliteLockedError(error)) {
     return error;
   }
-  return new Error(
-    "SQLite database is locked. Avoid parallel Superego CLI commands.",
-    { cause: error },
-  );
+  return new Error("SQLite database is locked.", { cause: error });
 }
 
 function isSqliteLockedError(error: unknown): boolean {
