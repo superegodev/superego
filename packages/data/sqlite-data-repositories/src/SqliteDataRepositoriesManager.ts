@@ -8,6 +8,7 @@ import migrate from "./migrations/migrate.js";
 import SqliteConversationTextSearchIndex from "./repositories/SqliteConversationTextSearchIndex.js";
 import SqliteDocumentTextSearchIndex from "./repositories/SqliteDocumentTextSearchIndex.js";
 import SqliteDataRepositories from "./SqliteDataRepositories.js";
+import toSqliteLockedError from "./toSqliteLockedError.js";
 
 export default class SqliteDataRepositoriesManager implements DataRepositoriesManager {
   private searchTextIndexStates = {
@@ -30,16 +31,15 @@ export default class SqliteDataRepositoriesManager implements DataRepositoriesMa
     ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
   ): Promise<ReturnValue> {
     const transactionSucceededCallbacks: (() => void)[] = [];
-    let db: DatabaseSync | null = null;
+    const db = this.openDb();
+    db.exec("BEGIN");
+    const repos = new SqliteDataRepositories(
+      db,
+      this.options.defaultGlobalSettings,
+      this.searchTextIndexStates,
+      (callback) => transactionSucceededCallbacks.push(callback),
+    );
     try {
-      db = this.openDb();
-      db.exec("BEGIN");
-      const repos = new SqliteDataRepositories(
-        db,
-        this.options.defaultGlobalSettings,
-        this.searchTextIndexStates,
-        (callback) => transactionSucceededCallbacks.push(callback),
-      );
       const { action, returnValue } = await fn(repos);
       db.exec(action === "commit" ? "COMMIT" : "ROLLBACK");
       if (action === "commit") {
@@ -49,12 +49,12 @@ export default class SqliteDataRepositoriesManager implements DataRepositoriesMa
       }
       return returnValue;
     } catch (error) {
-      if (db?.isTransaction) {
+      if (db.isTransaction) {
         db.exec("ROLLBACK");
       }
       throw toSqliteLockedError(error);
     } finally {
-      db?.close();
+      db.close();
     }
   }
 
@@ -94,28 +94,4 @@ export default class SqliteDataRepositoriesManager implements DataRepositoriesMa
       }
     });
   }
-}
-
-function toSqliteLockedError(error: unknown): unknown {
-  if (!isSqliteLockedError(error)) {
-    return error;
-  }
-  return new Error(
-    "SQLite database is locked. Superego app and CLI share one SQLite database; avoid parallel Superego CLI commands and retry after the current Superego operation finishes.",
-    { cause: error },
-  );
-}
-
-function isSqliteLockedError(error: unknown): boolean {
-  if (typeof error !== "object" || error === null) {
-    return false;
-  }
-  const message = "message" in error ? String(error.message) : "";
-  const code = "code" in error ? String(error.code) : "";
-  return (
-    code === "SQLITE_BUSY" ||
-    code === "SQLITE_LOCKED" ||
-    message.includes("database is locked") ||
-    message.includes("database table is locked")
-  );
 }
