@@ -14,33 +14,16 @@ done
 
 source_dir=$(CDPATH= cd -P -- "$(dirname -- "$source_path")" >/dev/null 2>&1 && pwd)
 
-run_cli() {
-  command_path=$1
-  shift
-  stderr_file=$(mktemp)
-  set +e
-  "$command_path" --cli "$@" 2>"$stderr_file"
-  status=$?
-  set -e
-  awk '
-    /MachPortRendezvousServer/ { next }
-    /No rendezvous client, terminating process \(parent died\?\)/ { next }
-    { print > "/dev/stderr" }
-  ' "$stderr_file"
-  rm -f "$stderr_file"
-  exit "$status"
-}
-
 if [ -x "$source_dir/../MacOS/superego-app" ]; then
-  run_cli "$source_dir/../MacOS/superego-app" "$@"
+  exec "$source_dir/../MacOS/superego-app" --cli "$@"
 fi
 
 if [ -n "${APPDIR:-}" ] && [ -x "$APPDIR/superego-app" ]; then
-  run_cli "$APPDIR/superego-app" "$@"
+  exec "$APPDIR/superego-app" --cli "$@"
 fi
 
 if [ -x "$source_dir/../superego-app" ]; then
-  run_cli "$source_dir/../superego-app" "$@"
+  exec "$source_dir/../superego-app" --cli "$@"
 fi
 
-run_cli superego-app "$@"
+exec superego-app --cli "$@"

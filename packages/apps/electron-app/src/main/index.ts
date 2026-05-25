@@ -1,45 +1,39 @@
-import { cli } from "@superego/cli";
 import pkg from "../../package.json" with { type: "json" };
 
 const cliArgIndex = process.argv.indexOf("--cli");
 
 if (cliArgIndex !== -1) {
-  startCliProcess(cliArgIndex);
+  void startCliProcess(cliArgIndex);
 } else {
   void startElectronProcess();
 }
 
-function startCliProcess(cliArgIndex: number): void {
+async function startCliProcess(cliArgIndex: number): Promise<void> {
+  const { cli } = await import("@superego/cli");
   const argv = [
     process.argv[0] ?? "superego-app",
     "superego",
     ...process.argv.slice(cliArgIndex + 1),
   ];
 
-  cli({ version: pkg.version, argv })
-    .catch((error: unknown) => {
-      console.error(error instanceof Error ? error.message : String(error));
-      process.exitCode = 1;
-    })
-    .finally(() => {
-      const exitCode =
-        process.exitCode === undefined ? 0 : Number(process.exitCode);
-      process.exit(Number.isFinite(exitCode) ? exitCode : 1);
-    });
+  try {
+    await cli({ version: pkg.version, argv });
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
+  } finally {
+    const exitCode =
+      process.exitCode === undefined ? 0 : Number(process.exitCode);
+    process.exit(Number.isFinite(exitCode) ? exitCode : 1);
+  }
 }
 
 async function startElectronProcess(): Promise<void> {
-  const [
-    { app, BrowserWindow },
-    { default: createWindow },
-    { default: onReady },
-    { default: registerAppSandboxProtocol },
-  ] = await Promise.all([
-    import("electron"),
-    import("./createWindow.js"),
-    import("./onReady.js"),
-    import("./registerAppSandboxProtocol.js"),
-  ]);
+  const { app, BrowserWindow } = await import("electron");
+  const { default: createWindow } = await import("./createWindow.js");
+  const { default: onReady } = await import("./onReady.js");
+  const { default: registerAppSandboxProtocol } =
+    await import("./registerAppSandboxProtocol.js");
 
   registerAppSandboxProtocol();
 
