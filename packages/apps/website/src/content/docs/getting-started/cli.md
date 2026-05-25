@@ -2,40 +2,23 @@
 title: CLI
 ---
 
-The Superego CLI is primarily meant for coding agents, such as OpenClaw, Codex,
-Claude Code, or any other agent running in your local workspace.
+The Superego CLI is for using Superego through agents such as OpenClaw, Codex,
+or Claude Code.
 
-Agents use it to inspect and mutate the local Superego database, then make
-changes through normal files, git commits, and pull requests. The main workflow
-is app development: an agent can check out an app, edit it in your editor's
-workspace, validate it, and commit the updated app back into Superego.
+You can then ask your agent to manage Superego collections, change data, or
+build apps.
 
-## Getting started
+To install the CLI, click the **Install CLI** button in the **Developer** menu
+of the app, after which you'll have the `superego` command in your terminal.
 
-To install the CLI, just click the **Install CLI** button in the **Developer**
-menu of the app.
-
-After installing the CLI, run:
+You can then use it to install a skill for your agent:
 
 ```sh
-superego agents install-skill
+superego agents install-skill --agent claude
 ```
 
-This installs instructions that teach compatible coding agents how to use the
-Superego CLI safely. Then point your agent at your project and ask it to create,
-inspect, or update Superego apps and data.
+(Supported agents: `claude`, `codex`, `copilot`, `cursor`, `gemini`, `windsurf`,
+`kiro`, `opencode`.)
 
-Run `superego --help` to inspect the command surface directly.
-
-## Commands
-
-- `superego collection-categories`: create, update, delete, and list collection
-  categories.
-- `superego collections`: create, update, delete, list, and inspect typed
-  collections.
-- `superego documents`: create, update, delete, list, search, and inspect
-  documents.
-- `superego files`: retrieve file content.
-- `superego agents`: install agent skills.
-- `superego apps`: create, checkout, validate, inspect, commit, and delete
-  collection-view apps.
+You can then ask your agent to do almost everything Superego allows you to do
+(you can run `superego --help` to see all available commands).
