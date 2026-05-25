@@ -36,7 +36,6 @@ export default {
     ignore: [
       "^/scripts",
       "^/src",
-      "devenv.vite.config.ts",
       "electron.vite.config.ts",
       "forge.config.ts",
       "tsconfig.json",

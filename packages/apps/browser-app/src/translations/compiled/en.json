@@ -243,38 +243,6 @@
       "value": "Boutique"
     }
   ],
-  "Boutique.tsx_XBMGwY": [
-    {
-      "type": 0,
-      "value": "Failed to decode pack file"
-    }
-  ],
-  "Boutique.tsx_a1s4zI": [
-    {
-      "type": 0,
-      "value": "Or install your own"
-    }
-  ],
-  "Boutique.tsx_rrrB1P": [
-    {
-      "type": 0,
-      "value": "Drop "
-    },
-    {
-      "type": 8,
-      "value": "packMpk",
-      "children": [
-        {
-          "type": 0,
-          "value": "pack.mpk"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " to install"
-    }
-  ],
   "BoutiquePack.tsx_AHlDyN": [
     {
       "type": 0,
@@ -1712,6 +1680,32 @@
       "value": "The assistant encountered an error."
     }
   ],
+  "Explainer.tsx_2ouWR4": [
+    {
+      "type": 8,
+      "value": "p",
+      "children": [
+        {
+          "type": 0,
+          "value": " Here in the Boutique you can find pre-made collections and apps, bundled into thematic "
+        },
+        {
+          "type": 8,
+          "value": "b",
+          "children": [
+            {
+              "type": 0,
+              "value": "packs"
+            }
+          ]
+        },
+        {
+          "type": 0,
+          "value": " you can install in one click. "
+        }
+      ]
+    }
+  ],
   "Explainer.tsx_Np7GhL": [
     {
       "type": 8,
@@ -1832,60 +1826,6 @@
         {
           "type": 0,
           "value": " what data you want to store, and it will create a collection for you. "
-        }
-      ]
-    }
-  ],
-  "Explainer.tsx_kM11wK": [
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Here in the Boutique you can find pre-made collections and apps, bundled into thematic "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "packs"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " you can install in one click. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " You can also use the "
-        },
-        {
-          "type": 8,
-          "value": "cliDocsLink",
-          "children": [
-            {
-              "type": 0,
-              "value": "Superego CLI"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " to create your own packs. (Drop below to install.) "
         }
       ]
     }
@@ -2552,16 +2492,6 @@
       "value": "There are no items in the list"
     }
   ],
-  "LocalPack.tsx_/hNhmZ": [
-    {
-      "type": 0,
-      "value": "Custom Packs » "
-    },
-    {
-      "type": 1,
-      "value": "packId"
-    }
-  ],
   "Logo.tsx_FbFgI4": [
     {
       "type": 0,
@@ -2846,16 +2776,6 @@
     {
       "type": 0,
       "value": "Boutique » "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
-  "PackMainPanel.tsx_hgmRAL": [
-    {
-      "type": 0,
-      "value": "Custom Packs » "
     },
     {
       "type": 1,

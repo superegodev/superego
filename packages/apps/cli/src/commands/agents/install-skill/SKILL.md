@@ -27,7 +27,6 @@ Command map:
 - `agents`: `install-skill`
 - `apps`: `init`, `checkout`, `check`, `status`, `diff`, `commit`,
   `add-collection`, `remove-collection`, `delete`, `list`
-- `devenv`: `create`, `generate-types`, `check`, `pack`, `preview`
 
 Common workflows:
 
@@ -37,4 +36,3 @@ Common workflows:
   `superego apps init ./my-app --collection Collection_...`
 - Validate an app project: `superego apps check`
 - Commit an app project: `superego apps commit`
-- Create a development environment: `superego devenv create ./my-pack`

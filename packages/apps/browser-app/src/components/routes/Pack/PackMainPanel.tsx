@@ -3,7 +3,6 @@ import { Id } from "@superego/shared-utils";
 import { useState } from "react";
 import { PiEye, PiEyeFill } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import { PackSource } from "../../../business-logic/navigation/Route.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import classnames from "../../../utils/classnames.js";
 import isEmpty from "../../../utils/isEmpty.js";
@@ -19,9 +18,8 @@ import PackEntityCounts from "./PackEntityCounts.js";
 
 interface Props {
   pack: PackType;
-  source: PackSource;
 }
-export default function PackMainPanel({ pack, source }: Props) {
+export default function PackMainPanel({ pack }: Props) {
   const intl = useIntl();
   const theme = useTheme();
   const [isInstallModalOpen, setInstallModalOpen] = useState(false);
@@ -50,16 +48,10 @@ export default function PackMainPanel({ pack, source }: Props) {
   const isShowingCollections =
     isCollectionsOpen && collectionPreviews.length > 0;
 
-  const title =
-    source === PackSource.Boutique
-      ? intl.formatMessage(
-          { defaultMessage: "Boutique » {packName}" },
-          { packName: pack.info.name },
-        )
-      : intl.formatMessage(
-          { defaultMessage: "Custom Packs » {packName}" },
-          { packName: pack.info.name },
-        );
+  const title = intl.formatMessage(
+    { defaultMessage: "Boutique » {packName}" },
+    { packName: pack.info.name },
+  );
 
   return (
     <Shell.Panel slot="Main">
@@ -124,7 +116,6 @@ export default function PackMainPanel({ pack, source }: Props) {
         ) : null}
         <InstallPackModal
           pack={pack}
-          source={source}
           isOpen={isInstallModalOpen}
           onClose={() => setInstallModalOpen(false)}
         />

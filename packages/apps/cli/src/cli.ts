@@ -4,7 +4,6 @@ import agents from "./commands/agents/index.js";
 import apps from "./commands/apps/index.js";
 import collectionCategories from "./commands/collection-categories/index.js";
 import collections from "./commands/collections/index.js";
-import devenv from "./commands/devenv/index.js";
 import documents from "./commands/documents/index.js";
 import files from "./commands/files/index.js";
 import { setAdditionalNotes, useMarkdownHelp } from "./utils/markdownHelp.js";
@@ -24,8 +23,7 @@ export default function cli(options: {
     .addCommand(documents)
     .addCommand(files)
     .addCommand(agents)
-    .addCommand(apps)
-    .addCommand(devenv);
+    .addCommand(apps);
   setAdditionalNotes(program, additionalNotes);
   useMarkdownHelp(program);
   return program.parseAsync(options.argv).then(() => undefined);
