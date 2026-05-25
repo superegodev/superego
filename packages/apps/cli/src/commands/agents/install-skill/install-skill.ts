@@ -3,7 +3,6 @@ import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 import { Command } from "commander";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
-import { runCommand, successfulResult } from "../../../utils/results.js";
 import skillContent from "./SKILL.md?raw";
 
 const agentDirectories = {
@@ -25,7 +24,7 @@ export default useMarkdownHelp(
     .option("--agent <agent>", "Known agent name.")
     .option("--directory <directory>", "Explicit skills directory.")
     .action(async (options: { agent?: string; directory?: string }) => {
-      await runCommand(async () => {
+      try {
         const skillsDirectory = getSkillsDirectory(options);
         const skillDirectory = join(skillsDirectory, "superego-cli");
         await mkdir(skillDirectory, { recursive: true });
@@ -34,11 +33,17 @@ export default useMarkdownHelp(
           skillContent,
           "utf-8",
         );
-        return successfulResult({
-          directory: skillDirectory,
-          file: join(skillDirectory, "SKILL.md"),
-        });
-      });
+        process.stdout.write(
+          `Installed Superego CLI skill at ${join(skillDirectory, "SKILL.md")}\n`,
+        );
+      } catch (error) {
+        process.stderr.write(
+          `Failed to install Superego CLI skill: ${
+            error instanceof Error ? error.message : String(error)
+          }\n`,
+        );
+        process.exitCode = 1;
+      }
     }),
 );
 

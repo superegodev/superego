@@ -2,9 +2,10 @@ import { SchemaJsonSchema } from "@superego/schema";
 import { toJsonSchema, type JsonSchema } from "@valibot/to-json-schema";
 import { Command } from "commander";
 import * as v from "valibot";
+import { readArgsFile } from "./argsFile.js";
 import createBackend from "./createBackend.js";
 import {
-  setJsonOptionsHelp,
+  setJsonArgsFileHelp,
   setAdditionalNotes,
   useMarkdownHelp,
 } from "./markdownHelp.js";
@@ -44,33 +45,26 @@ export default function createBackendCommand({
   additionalNotes,
 }: BackendCommandOptions): Command {
   let command = new Command(name).description(description);
-  const argumentSchemas = getArgumentSchemas(UsecaseClass);
 
-  for (const [index, argument] of commandArguments.entries()) {
-    if ("fixedValue" in argument) {
-      continue;
-    }
-    const acceptsPlainString = isStringLikeArgumentSchema(
-      argumentSchemas[index],
+  if (hasInputArguments(commandArguments)) {
+    command = command.requiredOption(
+      "--args <file>",
+      "Path to JSON args file.",
     );
-    const flags = `--${argument.name} <${
-      acceptsPlainString ? "value" : "json"
-    }>`;
-    const optionDescription = `${argument.description}${
-      acceptsPlainString ? "." : " JSON."
-    }`;
-    command =
-      argument.required === false
-        ? command.option(flags, optionDescription)
-        : command.requiredOption(flags, optionDescription);
   }
 
-  command.action(async (options: Record<string, string | undefined>) => {
+  command.action(async (options: { args?: string }) => {
     await runCommand(async () => {
+      const argsFileResult = options.args
+        ? readArgsFile(options.args)
+        : ({ success: true, data: {}, error: null } as const);
+      if (!argsFileResult.success) {
+        return argsFileResult;
+      }
+
       const parsedArguments = readArguments(
         commandArguments,
-        argumentSchemas,
-        options,
+        argsFileResult.data!,
       );
       if (!parsedArguments.success) {
         return parsedArguments;
@@ -90,10 +84,11 @@ export default function createBackendCommand({
     });
   });
 
-  setJsonOptionsHelp(
-    command,
-    getJsonOptionsHelp(UsecaseClass, commandArguments),
-  );
+  if (hasInputArguments(commandArguments)) {
+    setJsonArgsFileHelp(command, {
+      schema: getJsonArgsFileHelp(UsecaseClass, commandArguments),
+    });
+  }
   if (additionalNotes) {
     setAdditionalNotes(command, additionalNotes);
   }
@@ -102,136 +97,53 @@ export default function createBackendCommand({
 
 function readArguments(
   commandArguments: BackendCommandArgument[],
-  argumentSchemas: (v.GenericSchema<unknown, unknown> | undefined)[],
-  options: Record<string, string | undefined>,
+  args: Record<string, unknown>,
 ) {
+  const expectedKeys = commandArguments
+    .filter((argument) => !("fixedValue" in argument))
+    .map((argument) => toOptionPropertyName(argument.name));
+  const unknownKeys = Object.keys(args).filter(
+    (key) => !expectedKeys.includes(key),
+  );
+  if (unknownKeys.length > 0) {
+    return unsuccessfulResult("ArgumentsNotValid", {
+      issues: unknownKeys.map((key) => ({
+        message: `Unknown args key "${key}".`,
+        path: [{ key }],
+      })),
+    });
+  }
+
   const parsed: unknown[] = [];
-  for (const [index, argument] of commandArguments.entries()) {
+  for (const argument of commandArguments) {
     if ("fixedValue" in argument) {
       parsed.push(argument.fixedValue);
       continue;
     }
-    const raw = options[toOptionPropertyName(argument.name)];
+    const key = toOptionPropertyName(argument.name);
+    const raw = args[key];
     if (raw === undefined) {
       if (argument.required !== false) {
         return unsuccessfulResult("ArgumentsNotValid", {
-          issues: [{ message: `Missing required option --${argument.name}.` }],
+          issues: [{ message: `Missing required args key "${key}".` }],
         });
       }
       parsed.push(undefined);
       continue;
     }
-    const parsedArgument = parseArgument(
-      raw,
-      argumentSchemas[index],
-      argument.name,
-    );
-    if (!parsedArgument.success) {
-      return parsedArgument;
-    }
-    parsed.push(parsedArgument.data);
+    parsed.push(raw);
   }
   return { success: true as const, data: parsed, error: null };
 }
 
-function parseArgument(
-  raw: string,
-  schema: v.GenericSchema<unknown, unknown> | undefined,
-  name: string,
-) {
-  if (schema && isStringLikeArgumentSchema(schema)) {
-    if (raw === "null" && isNullableArgumentSchema(schema)) {
-      return { success: true as const, data: null, error: null };
-    }
-    if (raw.startsWith('"')) {
-      try {
-        return {
-          success: true as const,
-          data: JSON.parse(raw) as unknown,
-          error: null,
-        };
-      } catch (error) {
-        return unsuccessfulResult("ArgumentsNotValid", {
-          issues: [
-            {
-              message: `--${name} must be a plain string or valid JSON string: ${
-                error instanceof Error ? error.message : String(error)
-              }`,
-            },
-          ],
-        });
-      }
-    }
-    return { success: true as const, data: raw, error: null };
-  }
-
-  try {
-    return {
-      success: true as const,
-      data: JSON.parse(raw) as unknown,
-      error: null,
-    };
-  } catch (error) {
-    return unsuccessfulResult("ArgumentsNotValid", {
-      issues: [
-        {
-          message: `--${name} must be valid JSON: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
-        },
-      ],
-    });
-  }
-}
-
-function isStringLikeArgumentSchema(
-  schema: v.GenericSchema<unknown, unknown> | undefined,
-): boolean {
-  if (!schema) {
-    return false;
-  }
-  const schemaInternals = schema as any;
-  switch (schemaInternals.type) {
-    case "string":
-    case "custom":
-      return true;
-    case "optional":
-    case "nullable":
-      return isStringLikeArgumentSchema(schemaInternals.wrapped);
-    case "union":
-      return schemaInternals.options.every(isStringLikeArgumentSchema);
-    default:
-      return false;
-  }
-}
-
-function isNullableArgumentSchema(
-  schema: v.GenericSchema<unknown, unknown>,
-): boolean {
-  const schemaInternals = schema as any;
-  switch (schemaInternals.type) {
-    case "nullable":
-      return true;
-    case "optional":
-      return isNullableArgumentSchema(schemaInternals.wrapped);
-    case "union":
-      return schemaInternals.options.some(
-        (option: v.GenericSchema<unknown, unknown>) =>
-          isNullArgumentSchema(option) || isNullableArgumentSchema(option),
-      );
-    default:
-      return false;
-  }
-}
-
-function isNullArgumentSchema(
-  schema: v.GenericSchema<unknown, unknown>,
-): boolean {
-  return (schema as any).type === "null";
-}
-
 function getArgumentSchemas(UsecaseClass: BackendUsecaseClass) {
   return (getArgumentsSchema(UsecaseClass) as TupleSchemaWithItems).items ?? [];
+}
+
+function hasInputArguments(
+  commandArguments: BackendCommandArgument[],
+): boolean {
+  return commandArguments.some((argument) => !("fixedValue" in argument));
 }
 
 function toOptionPropertyName(name: string): string {
@@ -253,22 +165,27 @@ function getArgumentsSchema(UsecaseClass: BackendUsecaseClass) {
   return usecase.argumentsSchema;
 }
 
-function getJsonOptionsHelp(
+function getJsonArgsFileHelp(
   UsecaseClass: BackendUsecaseClass,
   commandArguments: BackendCommandArgument[],
 ) {
   const argumentSchemas = getArgumentSchemas(UsecaseClass);
-  return commandArguments.flatMap((argument, index) => {
-    if ("fixedValue" in argument) {
-      return [];
-    }
-    return [
-      {
-        name: argument.name,
-        schema: toArgumentJsonSchema(argumentSchemas[index]),
-      },
-    ];
-  });
+  const inputArguments = commandArguments
+    .map((argument, index) => ({ argument, index }))
+    .filter(({ argument }) => !("fixedValue" in argument));
+  return {
+    type: "object",
+    additionalProperties: false,
+    properties: Object.fromEntries(
+      inputArguments.map(({ argument, index }) => [
+        toOptionPropertyName(argument.name),
+        toArgumentJsonSchema(argumentSchemas[index]),
+      ]),
+    ),
+    required: inputArguments
+      .filter(({ argument }) => argument.required !== false)
+      .map(({ argument }) => toOptionPropertyName(argument.name)),
+  };
 }
 
 function toArgumentJsonSchema(
