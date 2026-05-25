@@ -20,5 +20,6 @@ Run `superego --help` to see available commands.
 - `superego documents`: create, update, delete, list, search, and inspect
   documents.
 - `superego files`: retrieve file content.
+- `superego agents`: install agent skills.
 - `superego apps`: create, checkout, validate, inspect, commit, and delete
   collection-view apps.
