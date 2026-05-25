@@ -3,6 +3,11 @@ import { Command } from "commander";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
+  getRequiredStringArg,
+  readAppsArgs,
+  requireArgsFile,
+} from "../common/args.js";
+import {
   resolveLatestTargetCollections,
   runAppCommand,
 } from "../common/commandUtils.js";
@@ -10,33 +15,34 @@ import { regenerateGeneratedFiles } from "../common/generatedFiles.js";
 import { readManifest, writeManifest } from "../common/manifest.js";
 
 export default useMarkdownHelp(
-  new Command("add-collection")
-    .description("Add a target collection to the local app project.")
-    .requiredOption("--collection-id <collectionId>", "Collection id.")
-    .action(async (options: { collectionId: CollectionId }) => {
-      await runAppCommand(async () => {
-        const path = process.cwd();
-        const manifest = readManifest(path);
-        if (manifest.targetCollectionIds.includes(options.collectionId)) {
-          throw new Error(
-            `Collection ${options.collectionId} is already present.`,
-          );
-        }
-        const nextManifest = {
-          ...manifest,
-          targetCollectionIds: [
-            ...manifest.targetCollectionIds,
-            options.collectionId,
-          ],
-        };
-        const backend = await createBackend();
-        const targetCollections = await resolveLatestTargetCollections(
-          backend,
-          nextManifest.targetCollectionIds,
-        );
-        await writeManifest(path, nextManifest);
-        await regenerateGeneratedFiles(path, targetCollections);
-        return { targetCollectionIds: nextManifest.targetCollectionIds };
-      });
-    }),
+  requireArgsFile(
+    new Command("add-collection").description(
+      "Add a target collection to the local app project.",
+    ),
+  ).action(async (options: { args: string }) => {
+    await runAppCommand(async () => {
+      const args = readAppsArgs(options.args, ["collectionId"]);
+      const collectionId = getRequiredStringArg(
+        args,
+        "collectionId",
+      ) as CollectionId;
+      const path = process.cwd();
+      const manifest = readManifest(path);
+      if (manifest.targetCollectionIds.includes(collectionId)) {
+        throw new Error(`Collection ${collectionId} is already present.`);
+      }
+      const nextManifest = {
+        ...manifest,
+        targetCollectionIds: [...manifest.targetCollectionIds, collectionId],
+      };
+      const backend = await createBackend();
+      const targetCollections = await resolveLatestTargetCollections(
+        backend,
+        nextManifest.targetCollectionIds,
+      );
+      await writeManifest(path, nextManifest);
+      await regenerateGeneratedFiles(path, targetCollections);
+      return { targetCollectionIds: nextManifest.targetCollectionIds };
+    });
+  }),
 );

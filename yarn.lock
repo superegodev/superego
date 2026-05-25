@@ -6781,8 +6781,10 @@ __metadata:
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/tsc-typescript-compiler": "workspace:*"
+    "@types/mime-types": "npm:^3.0.1"
     "@valibot/to-json-schema": "npm:^1.7.0"
     commander: "npm:^14.0.3"
+    mime-types: "npm:^3.0.2"
     typescript: "npm:^6.0.3"
     valibot: "npm:^1.4.0"
   languageName: unknown
@@ -8645,6 +8647,13 @@ __metadata:
   version: 2.0.13
   resolution: "@types/mdx@npm:2.0.13"
   checksum: 10c0/5edf1099505ac568da55f9ae8a93e7e314e8cbc13d3445d0be61b75941226b005e1390d9b95caecf5dcb00c9d1bab2f1f60f6ff9876dc091a48b547495007720
+  languageName: node
+  linkType: hard
+
+"@types/mime-types@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@types/mime-types@npm:3.0.1"
+  checksum: 10c0/61c2056529dc5bc73c25b2a053e21f063fd547c21e12a2be94ca78b89b0f83c9a75afed9a8bda3c78592ee880acc82778302651527f7882cf5ba8e58ab320e29
   languageName: node
   linkType: hard
 
@@ -15316,12 +15325,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mime-db@npm:^1.54.0":
+  version: 1.54.0
+  resolution: "mime-db@npm:1.54.0"
+  checksum: 10c0/8d907917bc2a90fa2df842cdf5dfeaf509adc15fe0531e07bb2f6ab15992416479015828d6a74200041c492e42cce3ebf78e5ce714388a0a538ea9c53eece284
+  languageName: node
+  linkType: hard
+
 "mime-types@npm:^2.1.25, mime-types@npm:^2.1.27":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
     mime-db: "npm:1.52.0"
   checksum: 10c0/82fb07ec56d8ff1fc999a84f2f217aa46cb6ed1033fefaabd5785b9a974ed225c90dc72fff460259e66b95b73648596dbcc50d51ed69cdf464af2d237d3149b2
+  languageName: node
+  linkType: hard
+
+"mime-types@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "mime-types@npm:3.0.2"
+  dependencies:
+    mime-db: "npm:^1.54.0"
+  checksum: 10c0/35a0dd1035d14d185664f346efcdb72e93ef7a9b6e9ae808bd1f6358227010267fab52657b37562c80fc888ff76becb2b2938deb5e730818b7983bf8bd359767
   languageName: node
   linkType: hard
 

@@ -161,6 +161,7 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    /** Atomic: if any collection fails, no collections are created. */
     createMany(
       definitions: CollectionDefinition[],
     ): ResultPromise<
@@ -345,6 +346,7 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    /** Atomic: if any document fails, no documents are created. */
     createMany(
       definitions: DocumentDefinition[],
     ): ResultPromise<

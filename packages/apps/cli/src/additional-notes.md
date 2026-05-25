@@ -115,18 +115,28 @@ Well-known formats:
 
 ### CLI
 
-Run `superego <domain> <command> --help` for command-specific options and JSON
-schemas.
+Run `superego <domain> <command> --help` for command-specific options and args
+file schemas.
 
 #### JSON Inputs
 
-Most data commands take named options.
+Commands with inputs take a single `--args <file>` option. The file must contain
+a JSON object keyed by camelCase argument names.
 
-- String options take plain shell strings: `--id Collection_abc`.
-- To pass `null` for nullable string options, use JSON null:
-  `--collection-id null`.
-- Objects, arrays, booleans, numbers, and null must be valid JSON in one shell
-  argument: `--definition '{"collectionId":"Collection_abc","content":{}}'`.
-- Mixed-type options use JSON.
+- Example:
+  ```json
+  {
+    "collectionId": "Collection_abc",
+    "id": "Document_abc"
+  }
+  ```
+- Relative file paths inside args files are resolved from the args file
+  directory.
+- For document file fields, use `{ "$file": "/path/to/file" }`; the CLI reads
+  the file and sends it as a Superego file value.
+- **NEVER** read or write the Superego SQLite database directly. Use the CLI
+  only.
+- Do not run Superego CLI commands in parallel. The app and CLI share one SQLite
+  database.
 - Use `collections get-typescript-schema` before writing document content or
   TypeScript functions for a collection.

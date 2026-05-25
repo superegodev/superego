@@ -3,6 +3,7 @@ import type {
   CollectionId,
   CollectionVersionId,
 } from "@superego/backend";
+import { isArgsFileError } from "../../../utils/argsFile.js";
 import createBackend from "../../../utils/createBackend.js";
 import {
   runCommand,
@@ -13,13 +14,6 @@ import type { TargetCollection } from "./types.js";
 
 export type CliBackend = Awaited<ReturnType<typeof createBackend>>;
 
-export function collect(
-  value: string,
-  previous: CollectionId[],
-): CollectionId[] {
-  return [...previous, value as CollectionId];
-}
-
 export async function runAppCommand<Data>(
   run: () => Promise<Data>,
 ): Promise<void> {
@@ -27,6 +21,9 @@ export async function runAppCommand<Data>(
     try {
       return successfulResult(await run());
     } catch (error) {
+      if (isArgsFileError(error)) {
+        return unsuccessfulResult("ArgumentsNotValid", error.details);
+      }
       return unsuccessfulResult("CommandFailed", {
         message: error instanceof Error ? error.message : String(error),
       });

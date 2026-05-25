@@ -8,6 +8,7 @@ import migrate from "./migrations/migrate.js";
 import SqliteConversationTextSearchIndex from "./repositories/SqliteConversationTextSearchIndex.js";
 import SqliteDocumentTextSearchIndex from "./repositories/SqliteDocumentTextSearchIndex.js";
 import SqliteDataRepositories from "./SqliteDataRepositories.js";
+import toSqliteLockedError from "./toSqliteLockedError.js";
 
 export default class SqliteDataRepositoriesManager implements DataRepositoriesManager {
   private searchTextIndexStates = {
@@ -51,7 +52,7 @@ export default class SqliteDataRepositoriesManager implements DataRepositoriesMa
       if (db.isTransaction) {
         db.exec("ROLLBACK");
       }
-      throw error;
+      throw toSqliteLockedError(error);
     } finally {
       db.close();
     }
@@ -59,16 +60,26 @@ export default class SqliteDataRepositoriesManager implements DataRepositoriesMa
 
   runMigrations(): void {
     const db = this.openDb();
-    migrate(db);
-    db.close();
+    try {
+      migrate(db);
+    } catch (error) {
+      throw toSqliteLockedError(error);
+    } finally {
+      db.close();
+    }
   }
 
   private openDb() {
     const { fileName, enableForeignKeyConstraints = true } = this.options;
     const db = new DatabaseSync(fileName, { enableForeignKeyConstraints });
-    db.exec("PRAGMA journal_mode = WAL");
-    db.exec("PRAGMA synchronous = FULL");
-    return db;
+    try {
+      db.exec("PRAGMA journal_mode = WAL");
+      db.exec("PRAGMA synchronous = FULL");
+      return db;
+    } catch (error) {
+      db.close();
+      throw toSqliteLockedError(error);
+    }
   }
 
   private static runTransactionSucceededCallbacks(callbacks: (() => void)[]) {

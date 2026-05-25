@@ -3,9 +3,15 @@ import { AppType, type CollectionId } from "@superego/backend";
 import { Command } from "commander";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
+import {
+  getOptionalStringArg,
+  getOptionalStringArrayArg,
+  getRequiredStringArg,
+  readAppsArgs,
+  requireArgsFile,
+} from "../common/args.js";
 import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
-  collect,
   resolveLatestTargetCollections,
   runAppCommand,
 } from "../common/commandUtils.js";
@@ -13,47 +19,37 @@ import { getInitialMainSource } from "../common/mainSource.js";
 import writeAppProject from "../common/writeAppProject.js";
 
 export default useMarkdownHelp(
-  new Command("init")
-    .description("Create a new local app project.")
-    .requiredOption("--path <path>", "New project path.")
-    .option("--name <name>", "App name.", "Untitled App")
-    .option(
-      "--collection <collectionId>",
-      "Target collection. Can be passed multiple times.",
-      collect,
-      [],
-    )
-    .action(
-      async (options: {
-        path: string;
-        name: string;
-        collection: CollectionId[];
-      }) => {
-        await runAppCommand(async () => {
-          const projectPath = resolve(options.path);
-          assertEmptyTarget(projectPath);
-          const backend = await createBackend();
-          const targetCollections = await resolveLatestTargetCollections(
-            backend,
-            options.collection,
-          );
-          const manifest = {
-            name: options.name,
-            type: AppType.CollectionView,
-            targetCollectionIds: options.collection,
-          };
-          await writeAppProject(
-            projectPath,
-            manifest,
-            getInitialMainSource(targetCollections),
-            targetCollections,
-            null,
-          );
-          return {
-            path: projectPath,
-            targetCollectionIds: options.collection,
-          };
-        });
-      },
-    ),
+  requireArgsFile(
+    new Command("init").description("Create a new local app project."),
+  ).action(async (options: { args: string }) => {
+    await runAppCommand(async () => {
+      const args = readAppsArgs(options.args, ["path", "name", "collection"]);
+      const path = getRequiredStringArg(args, "path");
+      const name = getOptionalStringArg(args, "name", "Untitled App");
+      const collection = getOptionalStringArrayArg(args, "collection", []);
+      const projectPath = resolve(path);
+      assertEmptyTarget(projectPath);
+      const backend = await createBackend();
+      const targetCollections = await resolveLatestTargetCollections(
+        backend,
+        collection as CollectionId[],
+      );
+      const manifest = {
+        name,
+        type: AppType.CollectionView,
+        targetCollectionIds: collection as CollectionId[],
+      };
+      await writeAppProject(
+        projectPath,
+        manifest,
+        getInitialMainSource(targetCollections),
+        targetCollections,
+        null,
+      );
+      return {
+        path: projectPath,
+        targetCollectionIds: collection,
+      };
+    });
+  }),
 );

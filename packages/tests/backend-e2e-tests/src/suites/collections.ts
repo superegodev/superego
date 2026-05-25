@@ -110,6 +110,70 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("atomicity: no collections created if one fails validation", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "valid collection",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: null,
+          },
+        },
+        {
+          settings: {
+            name: "",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: null,
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result.success).toBe(false);
+      expect(result.error?.name).toBe("CollectionSettingsNotValid");
+      const listResult = await backend.collections.list();
+      assert.isTrue(listResult.success);
+      expect(listResult.data).toHaveLength(0);
+    });
+
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
       const { backend } = deps();

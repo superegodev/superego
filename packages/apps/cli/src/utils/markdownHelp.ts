@@ -1,18 +1,17 @@
 import { Command } from "commander";
 
-interface JsonOptionHelp {
-  name: string;
+interface JsonArgsFileHelp {
   schema: unknown;
 }
 
-const jsonOptionsHelpByCommand = new WeakMap<Command, JsonOptionHelp[]>();
+const jsonArgsFileHelpByCommand = new WeakMap<Command, JsonArgsFileHelp>();
 const additionalNotesByCommand = new WeakMap<Command, string>();
 
-export function setJsonOptionsHelp(
+export function setJsonArgsFileHelp(
   command: Command,
-  jsonOptionsHelp: JsonOptionHelp[],
+  jsonArgsFileHelp: JsonArgsFileHelp,
 ): void {
-  jsonOptionsHelpByCommand.set(command, jsonOptionsHelp);
+  jsonArgsFileHelpByCommand.set(command, jsonArgsFileHelp);
 }
 
 export function setAdditionalNotes(
@@ -64,19 +63,16 @@ function formatMarkdownHelp(command: Command): string {
     lines.push("## Options", "", ...optionsHelp, "");
   }
 
-  const jsonOptionsHelp = jsonOptionsHelpByCommand.get(command);
-  if (jsonOptionsHelp && jsonOptionsHelp.length > 0) {
-    lines.push("## JSON Options", "");
-    for (const optionHelp of jsonOptionsHelp) {
-      lines.push(
-        `### --${optionHelp.name}`,
-        "",
-        "```json",
-        JSON.stringify(optionHelp.schema, null, 2),
-        "```",
-        "",
-      );
-    }
+  const jsonArgsFileHelp = jsonArgsFileHelpByCommand.get(command);
+  if (jsonArgsFileHelp) {
+    lines.push(
+      "## Args File Schema",
+      "",
+      "```json",
+      JSON.stringify(jsonArgsFileHelp.schema, null, 2),
+      "```",
+      "",
+    );
   }
 
   const subcommands = command.commands.map(
