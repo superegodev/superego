@@ -119,9 +119,6 @@
   "Boutique.tsx_J4ocUB": {
     "defaultMessage": "Boutique"
   },
-  "BoutiquePack.tsx_AHlDyN": {
-    "defaultMessage": "Boutique » {packId}"
-  },
   "BrowserApp.tsx_w1vfWS": {
     "defaultMessage": "Error loading app"
   },
@@ -1048,6 +1045,9 @@
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
+  },
+  "Pack.tsx_AHlDyN": {
+    "defaultMessage": "Boutique » {packId}"
   },
   "PackCard.tsx_EgRJme": {
     "defaultMessage": "Screenshot of the pack"

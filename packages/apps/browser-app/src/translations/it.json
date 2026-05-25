@@ -113,9 +113,6 @@
   "Boutique.tsx_J4ocUB": {
     "defaultMessage": "Boutique"
   },
-  "BoutiquePack.tsx_AHlDyN": {
-    "defaultMessage": "Boutique » {packId}"
-  },
   "BooleanField.tsx_KKkUks": {
     "defaultMessage": "Vero"
   },
@@ -1069,6 +1066,9 @@
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"
+  },
+  "Pack.tsx_AHlDyN": {
+    "defaultMessage": "Boutique » {packId}"
   },
   "PackCard.tsx_EgRJme": {
     "defaultMessage": "Screenshot del pacchetto"
