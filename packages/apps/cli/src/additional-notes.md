@@ -134,7 +134,8 @@ a JSON object keyed by camelCase argument names.
   directory.
 - For document file fields, use `{ "$file": "/path/to/file" }`; the CLI reads
   the file and sends it as a Superego file value.
-- Do not read or write the Superego SQLite database directly. Use the CLI only.
+- **NEVER** read or write the Superego SQLite database directly. Use the CLI
+  only.
 - Do not run Superego CLI commands in parallel. The app and CLI share one SQLite
   database.
 - Use `collections get-typescript-schema` before writing document content or
