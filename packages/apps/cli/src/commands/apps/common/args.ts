@@ -6,8 +6,10 @@ import {
   getRequiredStringArg,
   readArgsFileOrThrow,
 } from "../../../utils/argsFile.js";
+import { setJsonArgsFileHelp } from "../../../utils/markdownHelp.js";
 
-export function requireArgsFile(command: Command): Command {
+export function requireArgsFile(command: Command, schema: unknown): Command {
+  setJsonArgsFileHelp(command, { schema });
   return command.requiredOption("--args <file>", "Path to JSON args file.");
 }
 

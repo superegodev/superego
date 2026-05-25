@@ -11,9 +11,14 @@ import {
 } from "../common/args.js";
 
 export default useMarkdownHelp(
-  requireArgsFile(
-    new Command("delete").description("Delete a backend app."),
-  ).action(async (options: { args: string }) => {
+  requireArgsFile(new Command("delete").description("Delete a backend app."), {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      id: { type: "string" },
+    },
+    required: ["id"],
+  }).action(async (options: { args: string }) => {
     await runCommand(async () => {
       try {
         const args = readAppsArgs(options.args, ["id"]);

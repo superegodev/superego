@@ -20,6 +20,15 @@ export default useMarkdownHelp(
     new Command("checkout").description(
       "Check out an existing backend app into a local folder.",
     ),
+    {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        path: { type: "string" },
+        appId: { type: "string" },
+      },
+      required: ["path", "appId"],
+    },
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
       const args = readAppsArgs(options.args, ["path", "appId"]);

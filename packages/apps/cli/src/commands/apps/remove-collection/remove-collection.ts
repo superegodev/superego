@@ -19,6 +19,14 @@ export default useMarkdownHelp(
     new Command("remove-collection").description(
       "Remove a target collection from the local app project.",
     ),
+    {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        collectionId: { type: "string" },
+      },
+      required: ["collectionId"],
+    },
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
       const args = readAppsArgs(options.args, ["collectionId"]);

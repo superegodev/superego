@@ -4,10 +4,11 @@ Superego apps are single-entrypoint collection-view apps.
 
 Project lifecycle:
 
-- Use `superego apps init <path>` only for a brand-new app that does not yet
-  exist in Superego.
-- Use `superego apps checkout <path> <appId>` to edit an existing app from the
-  database.
+- Use `superego apps init --args <file>` only for a brand-new app that does not
+  yet exist in Superego. It creates a local app project without `app.lock.json`.
+- `app.lock.json` appears after `superego apps commit` creates the backend app.
+- Use `superego apps checkout --args <file>` to edit an existing app from the
+  database. It creates a locked checkout with `app.lock.json`.
 - `app.lock.json` records the app id, app version, and target collection
   versions that this checkout was based on. Treat it as generated state, not
   editable source.
@@ -23,12 +24,12 @@ Project files:
 Runtime imports:
 
 - Use `@superego/app-sandbox/components` for UI components. Read
-  `node_modules/@superego/app-sandbox/components.d.ts` for available exports and
-  props.
+  `node_modules/@superego/app-sandbox/components/index.d.ts` for available
+  exports and props.
 - Use `@superego/app-sandbox/hooks` for document hooks. Read
-  `node_modules/@superego/app-sandbox/hooks.d.ts` for signatures.
+  `node_modules/@superego/app-sandbox/hooks/index.d.ts` for signatures.
 - Use `@superego/app-sandbox/theme` for theme tokens. Read
-  `node_modules/@superego/app-sandbox/theme.d.ts` for available tokens.
+  `node_modules/@superego/app-sandbox/theme/index.d.ts` for available tokens.
 - Use `react` for React APIs.
 - Use `echarts/*` types with the Echart component.
 
@@ -47,7 +48,8 @@ Recovering stale checkouts:
 
 - If `superego apps status` reports `checkout stale`, the backend app changed
   after this project was checked out.
-- Do not edit `app.lock.json` to force a commit.
+- Do not edit `app.lock.json` to force a commit. Use it only as generated state
+  once present.
 - Preserve local edits to `app.json` and `main.tsx`, then refresh from the
   database with `superego apps checkout <new-path> <appId>` or re-checkout after
   saving your local changes elsewhere.

@@ -21,6 +21,16 @@ import writeAppProject from "../common/writeAppProject.js";
 export default useMarkdownHelp(
   requireArgsFile(
     new Command("init").description("Create a new local app project."),
+    {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        path: { type: "string" },
+        name: { type: "string" },
+        collection: { type: "array", items: { type: "string" } },
+      },
+      required: ["path"],
+    },
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
       const args = readAppsArgs(options.args, ["path", "name", "collection"]);
