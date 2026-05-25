@@ -2,7 +2,7 @@
 title: CLI
 ---
 
-The Superego CLI is for using Superego through agents such as OpenClaw, Codex,
+The Superego CLI is for using Superego through agents such as OpenCode, Codex,
 or Claude Code.
 
 You can then ask your agent to manage Superego collections, change data, or
