@@ -5,7 +5,7 @@ import { app, dialog } from "electron";
 
 const INSTALL_DIR = join(app.getPath("home"), ".local/bin");
 const INSTALL_PATH = join(INSTALL_DIR, "superego");
-const CLI_PATH = join(process.resourcesPath, "superego.js");
+const CLI_PATH = join(process.resourcesPath, "superego");
 
 export default {
   isInstalled(): boolean {

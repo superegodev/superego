@@ -9,7 +9,10 @@ import documents from "./commands/documents/index.js";
 import files from "./commands/files/index.js";
 import { setAdditionalNotes, useMarkdownHelp } from "./utils/markdownHelp.js";
 
-export default function cli(options: { version: string }): void {
+export default function cli(options: {
+  version: string;
+  argv?: readonly string[];
+}): Promise<void> {
   const program = new Command()
     .name("superego")
     .version(options.version, "-V, --version", "Output the version number.")
@@ -25,5 +28,5 @@ export default function cli(options: { version: string }): void {
     .addCommand(devenv);
   setAdditionalNotes(program, additionalNotes);
   useMarkdownHelp(program);
-  program.parse();
+  return program.parseAsync(options.argv).then(() => undefined);
 }

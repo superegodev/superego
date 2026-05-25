@@ -36,16 +36,12 @@ export default {
     ignore: [
       "^/scripts",
       "^/src",
-      "cli.vite.config.ts",
       "devenv.vite.config.ts",
       "electron.vite.config.ts",
       "forge.config.ts",
       "tsconfig.json",
     ],
-    extraResource: [
-      "./dist/cli/superego.js",
-      "./dist/cli/emscripten-module.wasm",
-    ],
+    extraResource: ["./dist/cli/superego", "./dist/cli/emscripten-module.wasm"],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
     extendInfo: {
