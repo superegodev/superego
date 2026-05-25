@@ -1,4 +1,5 @@
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
+import CliIPCProxyServer from "../ipc-proxies/CliIPCProxyServer.js";
 import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
 import OpenInNativeBrowserIPCProxyServer from "../ipc-proxies/OpenInNativeBrowserIPCProxyServer.js";
 import WindowCloseIPCProxyServer from "../ipc-proxies/WindowCloseIPCProxyServer.js";
@@ -18,9 +19,12 @@ export default function onReadyProd(): void {
   new OpenFileWithNativeAppIPCProxyServer(backend).start();
   new OpenInNativeBrowserIPCProxyServer().start();
   new WindowCloseIPCProxyServer().start();
-  setApplicationMenu(intl, {
+  const menuHandlers = {
     onNewWindow: createWindow,
     onExportDatabase: () => exportDatabase(backend, intl),
-  });
+  };
+  const refreshApplicationMenu = () => setApplicationMenu(intl, menuHandlers);
+  new CliIPCProxyServer(intl, refreshApplicationMenu).start();
+  refreshApplicationMenu();
   createWindow();
 }

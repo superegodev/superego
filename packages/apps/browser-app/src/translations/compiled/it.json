@@ -4544,6 +4544,32 @@
       "value": "."
     }
   ],
+  "Welcome.tsx_hmNCAz": [
+    {
+      "type": 8,
+      "value": "installCliButton",
+      "children": [
+        {
+          "type": 0,
+          "value": "Installa la CLI "
+        },
+        {
+          "type": 8,
+          "value": "cliName",
+          "children": [
+            {
+              "type": 0,
+              "value": "superego"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
   "Welcome.tsx_mD6yYG": [
     {
       "type": 8,

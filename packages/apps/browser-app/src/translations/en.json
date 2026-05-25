@@ -1559,6 +1559,9 @@
   "Welcome.tsx_NZjpCr": {
     "defaultMessage": "<settingsLink>Configure the AI assistant</settingsLink>."
   },
+  "Welcome.tsx_hmNCAz": {
+    "defaultMessage": "<installCliButton>Install the <cliName>superego</cliName> CLI</installCliButton>."
+  },
   "Welcome.tsx_mD6yYG": {
     "defaultMessage": "<createCollectionLink>Create your first collection</createCollectionLink>, or <boutiqueLink>install a pre-made one</boutiqueLink> from the Boutique."
   },

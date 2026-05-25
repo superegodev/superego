@@ -1670,6 +1670,9 @@
   "Welcome.tsx_mNIlLz": {
     "defaultMessage": "<createAppLink>Crea la tua prima app</createAppLink>."
   },
+  "Welcome.tsx_hmNCAz": {
+    "defaultMessage": "<installCliButton>Installa la CLI <cliName>superego</cliName></installCliButton>."
+  },
   "downloadFile.ts_sG8Krh": {
     "defaultMessage": "Download del file non riuscito"
   },

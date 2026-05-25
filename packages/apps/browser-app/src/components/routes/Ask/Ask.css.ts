@@ -91,6 +91,17 @@ export const Welcome = {
     textDecorationLine: "underline",
     textDecorationStyle: "dashed",
   }),
+
+  stepButton: style({
+    background: "none",
+    border: 0,
+    padding: 0,
+    color: vars.colors.text.secondary,
+    cursor: "pointer",
+    font: "inherit",
+    textDecorationLine: "underline",
+    textDecorationStyle: "dashed",
+  }),
 };
 
 export const WelcomeStep = {
