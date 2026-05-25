@@ -2,7 +2,7 @@ import { cli } from "@superego/cli";
 import { app, BrowserWindow } from "electron";
 import pkg from "../../package.json" with { type: "json" };
 import createWindow from "./createWindow.js";
-import onReadyProd from "./onReadyProd.js";
+import onReady from "./onReady.js";
 import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
 
 startMainProcess();
@@ -33,7 +33,7 @@ function startMainProcess(): void {
 
     app
       .on("ready", () => {
-        onReadyProd();
+        onReady();
       })
       .on("window-all-closed", () => {
         if (process.platform !== "darwin") {

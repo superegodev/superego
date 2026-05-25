@@ -11,9 +11,9 @@ import setApplicationMenu from "./setApplicationMenu.js";
 import startOAuth2PKCECallbackServer from "./startOAuth2PKCECallbackServer.js";
 import getIntl from "./translations/getIntl.js";
 
-export default function onReadyProd(): void {
+export default function onReady(): void {
   const intl = getIntl();
-  const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT, false);
+  const backend = createBackend(OAUTH2_PKCE_CALLBACK_SERVER_PORT);
   startOAuth2PKCECallbackServer(OAUTH2_PKCE_CALLBACK_SERVER_PORT, backend);
   new BackendIPCProxyServer(backend).start();
   new OpenFileWithNativeAppIPCProxyServer(backend).start();

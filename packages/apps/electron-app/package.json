@@ -31,7 +31,6 @@
     "@superego/browser-app": "workspace:*",
     "@superego/cli": "workspace:*",
     "@superego/connectors": "workspace:*",
-    "@superego/demo-data-repositories": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
