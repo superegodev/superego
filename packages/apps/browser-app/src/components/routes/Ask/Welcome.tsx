@@ -18,26 +18,25 @@ export default function Welcome() {
   );
 
   useEffect(() => {
-    if (!electronMainWorld.isElectron) {
-      return;
+    if (electronMainWorld.isElectron) {
+      electronMainWorld.cli.isInstalled().then(setIsCliInstalled);
     }
-
-    electronMainWorld.cli.isInstalled().then(setIsCliInstalled);
   }, []);
 
   const isStep1Complete = !isEmpty(globalSettings.inference.providers);
-  const isInstallCliStepComplete = isCliInstalled;
   const isStep2Complete = !isEmpty(collections);
   const isStep3Complete = !isEmpty(apps);
+  const isStep4Complete = isCliInstalled;
 
   const isStep2Enabled = isStep1Complete;
   const isStep3Enabled = isStep1Complete && isStep2Complete;
+  const isStep4Enabled = isStep1Complete && isStep2Complete && isStep3Complete;
 
   const showWelcome =
     !isStep1Complete ||
-    !isInstallCliStepComplete ||
     !isStep2Complete ||
-    !isStep3Complete;
+    !isStep3Complete ||
+    !isStep4Complete;
 
   const installCli = async () => {
     if (!electronMainWorld.isElectron || isCliInstalled) {
@@ -71,30 +70,6 @@ export default function Welcome() {
             }}
           />
         </WelcomeStep>
-        {electronMainWorld.isElectron ? (
-          <WelcomeStep completed={isInstallCliStepComplete} enabled={true}>
-            <FormattedMessage
-              defaultMessage="<installCliButton>Install the <cliName>superego</cliName> CLI</installCliButton>."
-              values={{
-                cliName: (chunks: ReactNode) => (
-                  <InlineCode>{chunks}</InlineCode>
-                ),
-                installCliButton: (chunks: ReactNode) =>
-                  isInstallCliStepComplete ? (
-                    chunks
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={installCli}
-                      className={cs.Welcome.stepButton}
-                    >
-                      {chunks}
-                    </button>
-                  ),
-              }}
-            />
-          </WelcomeStep>
-        ) : null}
         <WelcomeStep completed={isStep2Complete} enabled={isStep2Enabled}>
           <FormattedMessage
             defaultMessage="<createCollectionLink>Create your first collection</createCollectionLink>, or <boutiqueLink>install a pre-made one</boutiqueLink> from the Boutique."
@@ -147,6 +122,30 @@ export default function Welcome() {
             }}
           />
         </WelcomeStep>
+        {electronMainWorld.isElectron ? (
+          <WelcomeStep completed={isStep4Complete} enabled={isStep4Enabled}>
+            <FormattedMessage
+              defaultMessage="<installCliButton>Install the <cliName>superego</cliName> CLI</installCliButton>."
+              values={{
+                cliName: (chunks: ReactNode) => (
+                  <InlineCode>{chunks}</InlineCode>
+                ),
+                installCliButton: (chunks: ReactNode) =>
+                  isStep4Complete ? (
+                    chunks
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={installCli}
+                      className={cs.Welcome.stepButton}
+                    >
+                      {chunks}
+                    </button>
+                  ),
+              }}
+            />
+          </WelcomeStep>
+        ) : null}
       </ol>
     </div>
   ) : null;
