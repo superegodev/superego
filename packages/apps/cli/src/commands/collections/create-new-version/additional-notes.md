@@ -1,4 +1,5 @@
-## Input Notes
+### Input Rules
 
-For `settings.defaultDocumentViewUiOptions`, use the same structure documented
-for `superego collections create --help`.
+For `settings.contentSummaryGetter`, `settings.contentBlockingKeysGetter`, and
+`settings.defaultDocumentViewUiOptions`, use the same rules documented for
+`superego collections create --help`.

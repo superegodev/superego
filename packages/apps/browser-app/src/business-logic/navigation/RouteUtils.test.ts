@@ -1,7 +1,7 @@
 import { Id } from "@superego/shared-utils";
 import { expect, it } from "vitest";
 import type Route from "./Route.js";
-import { CollectionRouteView, PackSource, RouteName } from "./Route.js";
+import { CollectionRouteView, RouteName } from "./Route.js";
 import { fromHref, toHref } from "./RouteUtils.js";
 
 const testRoutes: Route[] = [
@@ -119,12 +119,6 @@ const testRoutes: Route[] = [
   {
     name: RouteName.Pack,
     packId: "Pack_dev.superego.boutique.productivity",
-    source: PackSource.Boutique,
-  },
-  {
-    name: RouteName.Pack,
-    packId: "Pack_dev.superego.boutique.productivity",
-    source: PackSource.Local,
   },
   {
     name: RouteName.BackgroundJobs,

@@ -33,11 +33,6 @@ export enum CollectionRouteView {
   App = "App",
 }
 
-export enum PackSource {
-  Local = "Local",
-  Boutique = "Boutique",
-}
-
 type Route =
   | {
       name: RouteName.Ask;
@@ -104,7 +99,6 @@ type Route =
   | {
       name: RouteName.Pack;
       packId: PackId;
-      source: PackSource;
     }
   | {
       name: RouteName.BackgroundJobs;

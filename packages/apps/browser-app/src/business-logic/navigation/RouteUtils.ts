@@ -9,7 +9,7 @@ import type {
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import type Route from "./Route.js";
-import { CollectionRouteView, PackSource, RouteName } from "./Route.js";
+import { CollectionRouteView, RouteName } from "./Route.js";
 
 export function toHref(route: Route): string {
   switch (route.name) {
@@ -64,7 +64,7 @@ export function toHref(route: Route): string {
     case RouteName.Boutique:
       return "/boutique";
     case RouteName.Pack:
-      return `/packs/${route.packId}?source=${route.source}`;
+      return `/packs/${route.packId}`;
     case RouteName.BackgroundJobs:
       return "/background-jobs";
     case RouteName.BackgroundJob:
@@ -228,15 +228,10 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/packs/:packId{/}?" }),
-    toRoute: (match) => {
-      const source = new URLSearchParams(match.search.input).get("source");
-      return {
-        name: RouteName.Pack,
-        packId: decodePathSegment<PackId>(match.pathname.groups["packId"]),
-        source:
-          source === PackSource.Local ? PackSource.Local : PackSource.Boutique,
-      };
-    },
+    toRoute: (match) => ({
+      name: RouteName.Pack,
+      packId: decodePathSegment<PackId>(match.pathname.groups["packId"]),
+    }),
   },
   {
     pattern: new URLPattern({ pathname: "/boutique{/}?" }),

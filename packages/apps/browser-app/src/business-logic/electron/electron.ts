@@ -5,6 +5,7 @@ export const electronMainWorld: ElectronMainWorld =
     ? {
         isElectron: true,
         backend: (window as any).backend,
+        cli: (window as any).cli,
         openInNativeBrowser: (window as any).openInNativeBrowser,
         openFileWithNativeApp: (window as any).openFileWithNativeApp,
         windowClose: (window as any).windowClose,

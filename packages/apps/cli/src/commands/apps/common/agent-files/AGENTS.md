@@ -16,5 +16,5 @@ Rules:
 - Use `superego apps check` before committing.
 - Use `superego apps commit` to write durable changes to Superego.
 - Runtime imports may use `react`, `@superego/app-sandbox/components`,
-  `@superego/app-sandbox/hooks`, and `@superego/app-sandbox/theme`.
+  `@superego/app-sandbox/hooks`, `@superego/app-sandbox/theme`, and `echarts/*`.
 - Only `main.tsx` is committed as app source.

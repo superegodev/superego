@@ -6,6 +6,10 @@ type ElectronMainWorld =
   | {
       isElectron: true;
       backend: Backend;
+      cli: {
+        isInstalled(): Promise<boolean>;
+        install(): Promise<boolean>;
+      };
       openInNativeBrowser: (url: string) => Promise<void>;
       openFileWithNativeApp: (
         file: ProtoFile | FileRef,

@@ -1,4 +1,4 @@
-## Input Notes
+### Input Rules
 
 - `definition.content` must match the latest schema for
   `definition.collectionId`.

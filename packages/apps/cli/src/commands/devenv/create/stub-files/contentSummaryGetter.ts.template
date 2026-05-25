@@ -1,7 +1,0 @@
-import type { StubItem } from "../generated/ProtoCollection_0.js";
-
-export default function getContentSummary(
-  stubItem: StubItem
-): Record<string, string | number | boolean | null> {
-  return {};
-}

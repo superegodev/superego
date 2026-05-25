@@ -88,12 +88,7 @@ function formatMarkdownHelp(command: Command): string {
 
   const additionalNotes = additionalNotesByCommand.get(command);
   if (additionalNotes) {
-    lines.push(
-      "## Additional Notes",
-      "",
-      additionalNotes.trim().replace(/^## /gm, "### "),
-      "",
-    );
+    lines.push("## Additional Notes", "", additionalNotes.trim(), "");
   }
 
   return `${lines.join("\n").trimEnd()}\n`;
