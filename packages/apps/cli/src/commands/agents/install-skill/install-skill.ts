@@ -33,14 +33,14 @@ export default useMarkdownHelp(
           skillContent,
           "utf-8",
         );
-        process.stdout.write(
-          `Installed Superego CLI skill at ${join(skillDirectory, "SKILL.md")}\n`,
+        console.log(
+          `Installed Superego CLI skill at ${join(skillDirectory, "SKILL.md")}`,
         );
       } catch (error) {
-        process.stderr.write(
+        console.error(
           `Failed to install Superego CLI skill: ${
             error instanceof Error ? error.message : String(error)
-          }\n`,
+          }`,
         );
         process.exitCode = 1;
       }
