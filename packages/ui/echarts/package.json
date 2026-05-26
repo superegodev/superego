@@ -14,7 +14,7 @@
   "dependencies": {
     "@superego/backend": "workspace:*",
     "@superego/themes": "workspace:*",
-    "echarts": "^6.0.0"
+    "echarts": "^6.1.0"
   },
   "devDependencies": {
     "typescript": "^6.0.3"

@@ -52,10 +52,10 @@
     "@electron-forge/plugin-fuses": "^7.11.1",
     "@electron-forge/publisher-github": "^7.11.1",
     "@electron/fuses": "^2.1.1",
-    "@formatjs/cli": "^6.16.0",
-    "@formatjs/unplugin": "^1.1.12",
+    "@formatjs/cli": "^6.16.1",
+    "@formatjs/unplugin": "^1.1.13",
     "@reforged/maker-appimage": "^5.2.0",
-    "electron": "42.1.0",
+    "electron": "42.2.0",
     "electron-vite": "6.0.0-beta.1",
     "vite": "^8.0.13"
   },
