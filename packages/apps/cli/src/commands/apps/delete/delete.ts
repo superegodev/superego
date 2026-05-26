@@ -7,7 +7,7 @@ import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "../../../utils/results.js";
 import { readAppsArgs, requireArgsFile } from "../common/args.js";
 
-const argsFileSchema = v.strictObject({
+const argsSchema = v.strictObject({
   id: v.string(),
 });
 
@@ -17,7 +17,7 @@ export default useMarkdownHelp(
   ).action(async (options: { args: string }) => {
     await runCommand(async () => {
       try {
-        const args = readAppsArgs(options.args, argsFileSchema);
+        const args = readAppsArgs(options.args, argsSchema);
         const id = args.id as AppId;
         return (await createBackend()).apps.delete(id, "delete");
       } catch (error) {
@@ -28,5 +28,5 @@ export default useMarkdownHelp(
       }
     });
   }),
-  { argsFileSchema },
+  { argsSchema },
 );

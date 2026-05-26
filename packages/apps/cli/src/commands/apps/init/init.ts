@@ -13,7 +13,7 @@ import {
 import { getInitialMainSource } from "../common/mainSource.js";
 import writeAppProject from "../common/writeAppProject.js";
 
-const argsFileSchema = v.strictObject({
+const argsSchema = v.strictObject({
   path: v.string(),
   name: v.optional(v.string()),
   collection: v.optional(v.array(v.string())),
@@ -24,7 +24,7 @@ export default useMarkdownHelp(
     new Command("init").description("Create a new local app project."),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, argsFileSchema);
+      const args = readAppsArgs(options.args, argsSchema);
       const path = args.path;
       const name = args.name ?? "Untitled App";
       const collection = args.collection ?? [];
@@ -53,5 +53,5 @@ export default useMarkdownHelp(
       };
     });
   }),
-  { argsFileSchema },
+  { argsSchema },
 );

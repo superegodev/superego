@@ -3,7 +3,7 @@ import type * as v from "valibot";
 import { getJsonSchemaHelp } from "./jsonSchemaHelp.js";
 
 interface MarkdownHelpOptions {
-  argsFileSchema?: v.GenericSchema<unknown, unknown>;
+  argsSchema?: v.GenericSchema<unknown, unknown>;
   additionalNotes?: string;
 }
 
@@ -55,12 +55,12 @@ function formatMarkdownHelp(
     lines.push("## Options", "", ...optionsHelp, "");
   }
 
-  if (options.argsFileSchema) {
+  if (options.argsSchema) {
     lines.push(
       "## Args File Schema",
       "",
       "```json",
-      JSON.stringify(getJsonSchemaHelp(options.argsFileSchema), null, 2),
+      JSON.stringify(getJsonSchemaHelp(options.argsSchema), null, 2),
       "```",
       "",
     );

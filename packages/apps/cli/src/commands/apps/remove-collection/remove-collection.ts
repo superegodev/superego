@@ -11,7 +11,7 @@ import {
 import { regenerateGeneratedFiles } from "../common/generatedFiles.js";
 import { readManifest, writeManifest } from "../common/manifest.js";
 
-const argsFileSchema = v.strictObject({
+const argsSchema = v.strictObject({
   collectionId: v.string(),
 });
 
@@ -22,7 +22,7 @@ export default useMarkdownHelp(
     ),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, argsFileSchema);
+      const args = readAppsArgs(options.args, argsSchema);
       const collectionId = args.collectionId as CollectionId;
       const path = process.cwd();
       const manifest = readManifest(path);
@@ -45,5 +45,5 @@ export default useMarkdownHelp(
       return { targetCollectionIds: nextManifest.targetCollectionIds };
     });
   }),
-  { argsFileSchema },
+  { argsSchema },
 );

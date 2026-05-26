@@ -79,8 +79,8 @@ export default function createBackendCommand({
   });
 
   return useMarkdownHelp(command, {
-    argsFileSchema: hasInputArguments(commandArguments)
-      ? getArgsFileSchema(UsecaseClass, commandArguments)
+    argsSchema: hasInputArguments(commandArguments)
+      ? getArgsSchema(UsecaseClass, commandArguments)
       : undefined,
     additionalNotes,
   });
@@ -156,7 +156,7 @@ function getArgumentsSchema(UsecaseClass: BackendUsecaseClass) {
   return usecase.argumentsSchema;
 }
 
-function getArgsFileSchema(
+function getArgsSchema(
   UsecaseClass: BackendUsecaseClass,
   commandArguments: BackendCommandArgument[],
 ) {

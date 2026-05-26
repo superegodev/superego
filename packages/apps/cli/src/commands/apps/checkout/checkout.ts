@@ -12,7 +12,7 @@ import {
 import { buildLock } from "../common/lock.js";
 import writeAppProject from "../common/writeAppProject.js";
 
-const argsFileSchema = v.strictObject({
+const argsSchema = v.strictObject({
   path: v.string(),
   appId: v.string(),
 });
@@ -24,7 +24,7 @@ export default useMarkdownHelp(
     ),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, argsFileSchema);
+      const args = readAppsArgs(options.args, argsSchema);
       const path = args.path;
       const appId = args.appId;
       const projectPath = resolve(path);
@@ -58,5 +58,5 @@ export default useMarkdownHelp(
       return { path: projectPath, appId: app.id };
     });
   }),
-  { argsFileSchema },
+  { argsSchema },
 );
