@@ -30,6 +30,6 @@
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   }
 }

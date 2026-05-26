@@ -18,7 +18,7 @@
     "@superego/vitest-registered": "workspace:*",
     "luxon": "^3.7.2",
     "p-map": "^7.0.4",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   },
   "devDependencies": {
     "@types/luxon": "^3.7.1",

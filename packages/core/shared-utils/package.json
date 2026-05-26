@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",
-    "@vitest/browser-playwright": "^4.1.6",
+    "@vitest/browser-playwright": "^4.1.7",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   }
 }
