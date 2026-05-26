@@ -136,6 +136,11 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=6144
         run: yarn build-electron --arch=${{ matrix.arch }}
+      - name: Verify electron dry-run state
+        run: |
+          test -d packages/apps/electron-app/out/publish-dry-run
+          find packages/apps/electron-app/out/publish-dry-run -name '*.forge.publish' -type f | grep .
+          find packages/apps/electron-app/out/make -type f
       - name: Get OS friendly name
         id: get-os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
@@ -145,6 +150,7 @@ jobs:
           name: ${{ steps.get-os.outputs.name }}-${{ matrix.arch }}-app
           path: ${{ matrix.artifact-path }}
           compression-level: 0
+          if-no-files-found: error
 
   add-pr-comment:
     needs: [build-deploy-demo, build-deploy-website, build-deploy-electron]
