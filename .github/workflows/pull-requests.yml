@@ -4,7 +4,6 @@ on: pull_request
 
 jobs:
   qa:
-    if: false
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v6
@@ -88,6 +87,7 @@ jobs:
         run: yarn deploy-website:preview --branch ${{ github.event.number }}
 
   build-deploy-electron:
+    needs: qa
     strategy:
       matrix:
         include:
@@ -134,25 +134,12 @@ jobs:
           printf '%s' "$(jq ".version = \"0.0.0-PR-${PR_NUMBER}\"" $PKG_JSON_PATH)" > $PKG_JSON_PATH
       - name: Build
         env:
-          DEBUG: electron-forge:*
           NODE_OPTIONS: --max-old-space-size=6144
         run: yarn build-electron --arch=${{ matrix.arch }}
       - name: Verify electron dry-run state
         run: |
-          set +e
-          echo "out directory:"
-          find packages/apps/electron-app/out -maxdepth 4 -type f -o -type d
-          echo "dry-run state:"
-          find packages/apps/electron-app/out/publish-dry-run -name '*.forge.publish' -type f
-          echo "make artifacts:"
-          find packages/apps/electron-app/out/make -type f
-          test -d packages/apps/electron-app/out/publish-dry-run
-          dry_run_dir_exists=$?
-          find packages/apps/electron-app/out/publish-dry-run -name '*.forge.publish' -type f | grep .
-          dry_run_file_exists=$?
-          find packages/apps/electron-app/out/make -type f | grep .
-          make_artifact_exists=$?
-          exit $((dry_run_dir_exists || dry_run_file_exists || make_artifact_exists))
+          dry_run_state="$(find packages/apps/electron-app/out/publish-dry-run -name '*.forge.publish' -type f -print -quit)"
+          test -n "$dry_run_state"
       - name: Get OS friendly name
         id: get-os
         run: echo "name=$(echo ${{ matrix.os }} | cut -d'-' -f1)" >> $GITHUB_OUTPUT
