@@ -6,7 +6,7 @@ import collectionCategories from "./commands/collection-categories/index.js";
 import collections from "./commands/collections/index.js";
 import documents from "./commands/documents/index.js";
 import files from "./commands/files/index.js";
-import { setAdditionalNotes, useMarkdownHelp } from "./utils/markdownHelp.js";
+import { useMarkdownHelp } from "./utils/markdownHelp.js";
 
 export default function cli(options: {
   version: string;
@@ -24,7 +24,6 @@ export default function cli(options: {
     .addCommand(files)
     .addCommand(agents)
     .addCommand(apps);
-  setAdditionalNotes(program, additionalNotes);
-  useMarkdownHelp(program);
+  useMarkdownHelp(program, { additionalNotes });
   return program.parseAsync(options.argv).then(() => undefined);
 }

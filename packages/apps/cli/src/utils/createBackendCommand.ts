@@ -1,14 +1,8 @@
-import { SchemaJsonSchema } from "@superego/schema";
-import { toJsonSchema, type JsonSchema } from "@valibot/to-json-schema";
 import { Command } from "commander";
 import * as v from "valibot";
 import { readArgsFile } from "./argsFile.js";
 import createBackend from "./createBackend.js";
-import {
-  setJsonArgsFileHelp,
-  setAdditionalNotes,
-  useMarkdownHelp,
-} from "./markdownHelp.js";
+import { useMarkdownHelp } from "./markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "./results.js";
 
 type CliBackend = Awaited<ReturnType<typeof createBackend>>;
@@ -84,15 +78,12 @@ export default function createBackendCommand({
     });
   });
 
-  if (hasInputArguments(commandArguments)) {
-    setJsonArgsFileHelp(command, {
-      schema: getJsonArgsFileHelp(UsecaseClass, commandArguments),
-    });
-  }
-  if (additionalNotes) {
-    setAdditionalNotes(command, additionalNotes);
-  }
-  return useMarkdownHelp(command);
+  return useMarkdownHelp(command, {
+    argsSchema: hasInputArguments(commandArguments)
+      ? getArgsSchema(UsecaseClass, commandArguments)
+      : undefined,
+    additionalNotes,
+  });
 }
 
 function readArguments(
@@ -165,7 +156,7 @@ function getArgumentsSchema(UsecaseClass: BackendUsecaseClass) {
   return usecase.argumentsSchema;
 }
 
-function getJsonArgsFileHelp(
+function getArgsSchema(
   UsecaseClass: BackendUsecaseClass,
   commandArguments: BackendCommandArgument[],
 ) {
@@ -173,135 +164,22 @@ function getJsonArgsFileHelp(
   const inputArguments = commandArguments
     .map((argument, index) => ({ argument, index }))
     .filter(({ argument }) => !("fixedValue" in argument));
-  return {
-    type: "object",
-    additionalProperties: false,
-    properties: Object.fromEntries(
+  return v.strictObject(
+    Object.fromEntries(
       inputArguments.map(({ argument, index }) => [
         toOptionPropertyName(argument.name),
-        toArgumentJsonSchema(argumentSchemas[index]),
+        toArgsFilePropertySchema(argument, argumentSchemas[index] ?? v.any()),
       ]),
     ),
-    required: inputArguments
-      .filter(({ argument }) => argument.required !== false)
-      .map(({ argument }) => toOptionPropertyName(argument.name)),
-  };
+  );
 }
 
-function toArgumentJsonSchema(
-  schema: v.GenericSchema<unknown, unknown> | undefined,
-): JsonSchema {
-  if (!schema) {
-    return {};
-  }
-  try {
-    const jsonSchema = improveJsonSchema(
-      toJsonSchema(sanitizeSchemaForJsonSchema(schema), {
-        target: "draft-2020-12",
-        typeMode: "input",
-        errorMode: "ignore",
-      }),
-    );
-    delete jsonSchema.$schema;
-    return jsonSchema;
-  } catch (error) {
-    return {
-      description: `JSON Schema conversion failed: ${
-        error instanceof Error ? error.message : String(error)
-      }`,
-    };
-  }
-}
-
-function sanitizeSchemaForJsonSchema(
+function toArgsFilePropertySchema(
+  argument: BackendCommandArgument,
   schema: v.GenericSchema<unknown, unknown>,
 ): v.GenericSchema<unknown, unknown> {
-  const schemaInternals = schema as any;
-  switch (schemaInternals.type) {
-    case "custom":
-      return v.string();
-    case "lazy":
-      return v.any();
-    case "array":
-      return v.array(sanitizeSchemaForJsonSchema(schemaInternals.item));
-    case "optional":
-      return v.optional(sanitizeSchemaForJsonSchema(schemaInternals.wrapped));
-    case "nullable":
-      return v.nullable(sanitizeSchemaForJsonSchema(schemaInternals.wrapped));
-    case "strict_object":
-      return v.strictObject(sanitizeEntries(schemaInternals.entries));
-    case "object":
-      return v.object(sanitizeEntries(schemaInternals.entries));
-    case "loose_object":
-      return v.looseObject(sanitizeEntries(schemaInternals.entries));
-    case "record":
-      return v.record(
-        sanitizeSchemaForJsonSchema(schemaInternals.key) as v.GenericSchema<
-          string,
-          string
-        >,
-        sanitizeSchemaForJsonSchema(schemaInternals.value),
-      );
-    case "tuple":
-      return v.tuple(schemaInternals.items.map(sanitizeSchemaForJsonSchema));
-    case "union":
-      return v.union(schemaInternals.options.map(sanitizeSchemaForJsonSchema));
-    default:
-      return schema;
+  if (argument.required === false) {
+    return v.optional(schema);
   }
-}
-
-function sanitizeEntries(
-  entries: Record<string, v.GenericSchema<unknown, unknown>>,
-) {
-  return Object.fromEntries(
-    Object.entries(entries).map(([key, value]) => [
-      key,
-      sanitizeSchemaForJsonSchema(value),
-    ]),
-  );
-}
-
-function improveJsonSchema(schema: JsonSchema): JsonSchema {
-  if (isWeakCollectionSchemaJsonSchema(schema)) {
-    return stripSchemaMetadata(SchemaJsonSchema as JsonSchema);
-  }
-  if (Array.isArray(schema)) {
-    return schema.map((item) =>
-      typeof item === "object" && item !== null
-        ? improveJsonSchema(item as JsonSchema)
-        : item,
-    ) as JsonSchema;
-  }
-  if (typeof schema !== "object" || schema === null) {
-    return schema;
-  }
-
-  return Object.fromEntries(
-    Object.entries(schema).map(([key, value]) => [
-      key,
-      typeof value === "object" && value !== null
-        ? improveJsonSchema(value as JsonSchema)
-        : value,
-    ]),
-  ) as JsonSchema;
-}
-
-function isWeakCollectionSchemaJsonSchema(schema: JsonSchema): boolean {
-  return (
-    typeof schema === "object" &&
-    schema !== null &&
-    "type" in schema &&
-    schema.type === "object" &&
-    "properties" in schema &&
-    typeof schema.properties === "object" &&
-    schema.properties !== null &&
-    "types" in schema.properties &&
-    "rootType" in schema.properties
-  );
-}
-
-function stripSchemaMetadata(schema: JsonSchema): JsonSchema {
-  const { $schema: _schema, $id: _id, ...schemaWithoutMetadata } = schema;
-  return schemaWithoutMetadata;
+  return schema;
 }

@@ -1,12 +1,9 @@
 import { resolve } from "node:path";
 import { Command } from "commander";
+import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
-import {
-  getRequiredStringArg,
-  readAppsArgs,
-  requireArgsFile,
-} from "../common/args.js";
+import { readAppsArgs, requireArgsFile } from "../common/args.js";
 import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
   resolveLockedTargetCollections,
@@ -15,6 +12,11 @@ import {
 import { buildLock } from "../common/lock.js";
 import writeAppProject from "../common/writeAppProject.js";
 
+const argsSchema = v.strictObject({
+  path: v.string(),
+  appId: v.string(),
+});
+
 export default useMarkdownHelp(
   requireArgsFile(
     new Command("checkout").description(
@@ -22,9 +24,9 @@ export default useMarkdownHelp(
     ),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, ["path", "appId"]);
-      const path = getRequiredStringArg(args, "path");
-      const appId = getRequiredStringArg(args, "appId");
+      const args = readAppsArgs(options.args, argsSchema);
+      const path = args.path;
+      const appId = args.appId;
       const projectPath = resolve(path);
       assertEmptyTarget(projectPath);
       const backend = await createBackend();
@@ -56,4 +58,5 @@ export default useMarkdownHelp(
       return { path: projectPath, appId: app.id };
     });
   }),
+  { argsSchema },
 );
