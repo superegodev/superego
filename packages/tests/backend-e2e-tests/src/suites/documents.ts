@@ -3187,4 +3187,118 @@ export default rd<GetDependencies>("Documents", (deps) => {
       );
     });
   });
+
+  describe("executeTypescriptFunction", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.documents.executeTypescriptFunction(
+        ["not-a-valid-id"] as any,
+        "export default function main() { return null; }",
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("success", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult1 = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "first" },
+      });
+      assert.isTrue(createDocumentResult1.success);
+      const createDocumentResult2 = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "second" },
+      });
+      assert.isTrue(createDocumentResult2.success);
+
+      // Exercise
+      const result = await backend.documents.executeTypescriptFunction(
+        [createCollectionResult.data.id],
+        `
+          import type * as TargetCollection from "./${createCollectionResult.data.id}.ts";
+
+          interface Document<Content> {
+            id: string;
+            versionId: string;
+            content: Content;
+          }
+
+          export default function main(documentsByCollection: {
+            "${createCollectionResult.data.id}": Document<TargetCollection.Root>[];
+          }) {
+            return documentsByCollection["${createCollectionResult.data.id}"].map(
+              (document) => document.content.title,
+            );
+          }
+        `,
+      );
+
+      // Verify
+      expect(result.data).toHaveLength(2);
+      expect(result).toEqual({
+        success: true,
+        data: expect.arrayContaining(["first", "second"]),
+        error: null,
+      });
+    });
+
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const collectionId = Id.generate.collection();
+
+      // Exercise
+      const result = await backend.documents.executeTypescriptFunction(
+        [collectionId],
+        "export default function main() { return null; }",
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+  });
 });

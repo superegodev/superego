@@ -13,8 +13,10 @@ import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
 import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
+import type CollectionsGetTypescriptSchema from "../../usecases/collections/GetTypescriptSchema.js";
 import type DocumentsCreateMany from "../../usecases/documents/CreateMany.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
+import type DocumentsExecuteTypescriptFunction from "../../usecases/documents/ExecuteTypescriptFunction.js";
 import type DocumentsList from "../../usecases/documents/List.js";
 import type DocumentsSearch from "../../usecases/documents/Search.js";
 import type FilesGetContent from "../../usecases/files/GetContent.js";
@@ -42,8 +44,10 @@ export default class FactotumAssistant extends Assistant {
     private usecases: {
       documentsCreateMany: DocumentsCreateMany;
       documentsCreateNewVersion: DocumentsCreateNewVersion;
+      documentsExecuteTypescriptFunction: DocumentsExecuteTypescriptFunction;
       documentsList: DocumentsList;
       documentsSearch: DocumentsSearch;
+      collectionsGetTypescriptSchema: CollectionsGetTypescriptSchema;
       filesGetContent: FilesGetContent;
     },
     private javascriptSandbox: JavascriptSandbox,
@@ -140,15 +144,15 @@ export default class FactotumAssistant extends Assistant {
     inferenceOptions: InferenceOptions<"completion">,
   ): Promise<ToolResult> {
     if (GetCollectionTypescriptSchema.is(toolCall)) {
-      return GetCollectionTypescriptSchema.exec(toolCall, this.collections);
+      return GetCollectionTypescriptSchema.exec(
+        toolCall,
+        this.usecases.collectionsGetTypescriptSchema,
+      );
     }
     if (ExecuteTypescriptFunction.is(toolCall)) {
       return ExecuteTypescriptFunction.exec(
         toolCall,
-        this.collections,
-        this.usecases.documentsList,
-        this.javascriptSandbox,
-        this.typescriptCompiler,
+        this.usecases.documentsExecuteTypescriptFunction,
       );
     }
     if (CreateDocuments.is(toolCall)) {

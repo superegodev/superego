@@ -110,6 +110,70 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("atomicity: no collections created if one fails validation", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "valid collection",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: null,
+          },
+        },
+        {
+          settings: {
+            name: "",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: null,
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result.success).toBe(false);
+      expect(result.error?.name).toBe("CollectionSettingsNotValid");
+      const listResult = await backend.collections.list();
+      assert.isTrue(listResult.success);
+      expect(listResult.data).toHaveLength(0);
+    });
+
     it("error: CollectionCategoryNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -4055,7 +4119,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
                     remoteDocumentId: "remoteId",
                     remoteDocumentVersionId: "remoteVersionId",
                     cause: expect.objectContaining({
-                      name: "ExecutingJavascriptFunctionFailed",
+                      name: "ExecutingTypescriptFunctionFailed",
                     }),
                   }),
                 }),
@@ -7852,6 +7916,87 @@ export default rd<GetDependencies>("Collections", (deps) => {
         success: true,
         data: createResult.data.latestVersion,
         error: null,
+      });
+    });
+  });
+
+  describe("getTypescriptSchema", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.getTypescriptSchema(
+        "not-a-valid-id" as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("success", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const result = await backend.collections.getTypescriptSchema(
+        createResult.data.id,
+      );
+
+      // Verify
+      assert.isTrue(result.success);
+      expect(result.data).toContain("export type Root");
+      expect(result.data).toContain("title: string");
+    });
+
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const collectionId = Id.generate.collection();
+
+      // Exercise
+      const result =
+        await backend.collections.getTypescriptSchema(collectionId);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
       });
     });
   });

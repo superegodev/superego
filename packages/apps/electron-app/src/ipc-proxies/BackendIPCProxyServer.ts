@@ -30,9 +30,4 @@ export default class BackendIPCProxyServer {
       }
     }
   }
-
-  /** Used in devenv mode. */
-  replaceBackend(backend: Backend) {
-    this.backend = backend;
-  }
 }

@@ -1,4 +1,5 @@
 import { SchemaJsonSchema } from "@superego/schema";
+import { getMonacoTypescriptCompilerOptions } from "@superego/shared-utils";
 import * as monaco from "monaco-editor";
 import editorWorker from "monaco-editor/esm/vs/editor/editor.worker.js?worker";
 import cssWorker from "monaco-editor/esm/vs/language/css/css.worker.js?worker";
@@ -28,49 +29,9 @@ import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker.js?work
   },
 };
 monaco.typescript.typescriptDefaults.setEagerModelSync(true);
-monaco.typescript.typescriptDefaults.setCompilerOptions({
-  // Emit
-  noEmit: false,
-  sourceMap: false,
-  declaration: false,
-  declarationMap: false,
-
-  // Modules
-  module: monaco.typescript.ModuleKind.ESNext,
-  moduleResolution: monaco.typescript.ModuleResolutionKind.NodeJs,
-
-  // Interop constraints
-  allowSyntheticDefaultImports: true,
-
-  // Language and environment
-  target: monaco.typescript.ScriptTarget.ESNext,
-  jsx: monaco.typescript.JsxEmit.React,
-
-  // Completeness
-  skipLibCheck: true,
-
-  // Type checking options
-  allowUnreachableCode: false,
-  allowUnusedLabels: false,
-  alwaysStrict: true,
-  exactOptionalPropertyTypes: false,
-  noFallthroughCasesInSwitch: true,
-  noImplicitAny: true,
-  noImplicitOverride: false,
-  noImplicitReturns: true,
-  noImplicitThis: true,
-  noPropertyAccessFromIndexSignature: false,
-  noUncheckedIndexedAccess: false,
-  noUnusedLocals: false,
-  noUnusedParameters: false,
-  strict: true,
-  strictBindCallApply: true,
-  strictBuiltinIteratorReturn: true,
-  strictFunctionTypes: true,
-  strictNullChecks: true,
-  strictPropertyInitialization: true,
-  useUnknownInCatchVariables: true,
-});
+monaco.typescript.typescriptDefaults.setCompilerOptions(
+  getMonacoTypescriptCompilerOptions(monaco.typescript),
+);
 monaco.json.jsonDefaults.setDiagnosticsOptions({
   schemas: [
     {

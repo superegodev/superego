@@ -26,7 +26,7 @@
 
 - [x] Document versioning.
 - [x] Full-text search.
-- [ ] CLI. 🚧
+- [x] CLI.
 - [ ] AI-assisted data import.
 - [ ] Mobile app.
 - [ ] Sync via file-syncing service.

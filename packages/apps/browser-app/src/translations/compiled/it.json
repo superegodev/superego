@@ -243,48 +243,6 @@
       "value": "Boutique"
     }
   ],
-  "Boutique.tsx_XBMGwY": [
-    {
-      "type": 0,
-      "value": "Impossibile decodificare il file pack"
-    }
-  ],
-  "Boutique.tsx_a1s4zI": [
-    {
-      "type": 0,
-      "value": "Oppure installa il tuo"
-    }
-  ],
-  "Boutique.tsx_rrrB1P": [
-    {
-      "type": 0,
-      "value": "Trascina "
-    },
-    {
-      "type": 8,
-      "value": "packMpk",
-      "children": [
-        {
-          "type": 0,
-          "value": "pack.mpk"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " per installare"
-    }
-  ],
-  "BoutiquePack.tsx_AHlDyN": [
-    {
-      "type": 0,
-      "value": "Boutique » "
-    },
-    {
-      "type": 1,
-      "value": "packId"
-    }
-  ],
   "BrowserApp.tsx_w1vfWS": [
     {
       "type": 0,
@@ -1704,6 +1662,32 @@
       "value": "L'assistente ha riscontrato un errore."
     }
   ],
+  "Explainer.tsx_2ouWR4": [
+    {
+      "type": 8,
+      "value": "p",
+      "children": [
+        {
+          "type": 0,
+          "value": " Qui nella Boutique puoi trovare collezioni e app già pronte, raggruppate in "
+        },
+        {
+          "type": 8,
+          "value": "b",
+          "children": [
+            {
+              "type": 0,
+              "value": "pack"
+            }
+          ]
+        },
+        {
+          "type": 0,
+          "value": " tematici che puoi installare con un click. "
+        }
+      ]
+    }
+  ],
   "Explainer.tsx_Np7GhL": [
     {
       "type": 8,
@@ -1824,60 +1808,6 @@
         {
           "type": 0,
           "value": " quali dati vuoi archiviare e creerà una collezione per te. "
-        }
-      ]
-    }
-  ],
-  "Explainer.tsx_kM11wK": [
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Qui nel Boutique puoi trovare collezioni e app già pronte, raggruppate in "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "pack"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " tematici che puoi installare con un click. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Puoi anche usare la "
-        },
-        {
-          "type": 8,
-          "value": "cliDocsLink",
-          "children": [
-            {
-              "type": 0,
-              "value": "CLI di Superego"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " per creare i tuoi pack. (Trascinali qui sotto per installarli.) "
         }
       ]
     }
@@ -2544,16 +2474,6 @@
       "value": "Non ci sono elementi nell'elenco"
     }
   ],
-  "LocalPack.tsx_/hNhmZ": [
-    {
-      "type": 0,
-      "value": "Pack personalizzati » "
-    },
-    {
-      "type": 1,
-      "value": "packId"
-    }
-  ],
   "Logo.tsx_FbFgI4": [
     {
       "type": 0,
@@ -2692,6 +2612,16 @@
     {
       "type": 0,
       "value": " su null"
+    }
+  ],
+  "Pack.tsx_AHlDyN": [
+    {
+      "type": 0,
+      "value": "Boutique » "
+    },
+    {
+      "type": 1,
+      "value": "packId"
     }
   ],
   "PackCard.tsx_EgRJme": [
@@ -2838,16 +2768,6 @@
     {
       "type": 0,
       "value": "Boutique » "
-    },
-    {
-      "type": 1,
-      "value": "packName"
-    }
-  ],
-  "PackMainPanel.tsx_hgmRAL": [
-    {
-      "type": 0,
-      "value": "Pack personalizzati » "
     },
     {
       "type": 1,
@@ -4616,6 +4536,32 @@
         {
           "type": 0,
           "value": "Configura l'assistente AI"
+        }
+      ]
+    },
+    {
+      "type": 0,
+      "value": "."
+    }
+  ],
+  "Welcome.tsx_hmNCAz": [
+    {
+      "type": 8,
+      "value": "installCliButton",
+      "children": [
+        {
+          "type": 0,
+          "value": "Installa la CLI "
+        },
+        {
+          "type": 8,
+          "value": "cliName",
+          "children": [
+            {
+              "type": 0,
+              "value": "superego"
+            }
+          ]
         }
       ]
     },

@@ -1,36 +1,21 @@
-import { app, BrowserWindow } from "electron";
-import createWindow from "./createWindow.js";
-import onReadyDevenv from "./onReadyDevenv.js";
-import onReadyProd from "./onReadyProd.js";
-import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
+import startCliProcess from "./startCliProcess.js";
 
-registerAppSandboxProtocol();
+const cliArgs = getCliArgs();
 
-const isDevenv = process.argv.includes("--devenv");
+if (cliArgs) {
+  void startCliProcess(cliArgs);
+} else {
+  const { default: startElectronProcess } =
+    await import("./startElectronProcess.js");
+  startElectronProcess();
+}
 
-app
-  .on("ready", () => {
-    if (isDevenv) {
-      onReadyDevenv();
-    } else {
-      onReadyProd();
-    }
-  })
-  .on("window-all-closed", () => {
-    if (isDevenv || process.platform !== "darwin") {
-      app.quit();
-    }
-  })
-  .on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow(isDevenv);
-    }
-  })
-  .on("web-contents-created", (_event, contents) => {
-    contents.on("will-navigate", (event) => {
-      // Disable navigation. BrowserApp doesn't use navigation, so we don't
-      // actually expect any navigation attempt. Still, if they occur, they
-      // are probably erroneous and we want to prevent them.
-      event.preventDefault();
-    });
-  });
+function getCliArgs(): string[] | null {
+  const separatorIndex = process.argv.findIndex(
+    (argument) => argument === "--cli",
+  );
+  if (separatorIndex === -1) {
+    return null;
+  }
+  return process.argv.slice(separatorIndex + 1);
+}

@@ -5,13 +5,18 @@ import CodeBlock from "../../../design-system/CodeBlock/CodeBlock.js";
 interface Props {
   toolResult: ToolResult;
 }
+
+type LegacyGetCollectionTypescriptSchemaOutputData = {
+  typescriptSchema: string;
+};
+
 export default function ToolResultOutput({ toolResult }: Props) {
   return ConversationUtils.isSuccessfulGetCollectionTypescriptSchemaToolResult(
     toolResult,
   ) ? (
     <CodeBlock
       language="typescript"
-      code={toolResult.output.data.typescriptSchema}
+      code={getCollectionTypescriptSchemaOutputCode(toolResult.output.data)}
       showCopyButton={true}
     />
   ) : (
@@ -27,4 +32,14 @@ export default function ToolResultOutput({ toolResult }: Props) {
       showCopyButton={true}
     />
   );
+}
+
+function getCollectionTypescriptSchemaOutputCode(
+  data: string | LegacyGetCollectionTypescriptSchemaOutputData,
+): string {
+  if (typeof data === "string") {
+    return data;
+  }
+  // Support the legacy persisted payload shape for backwards compatibility.
+  return data.typescriptSchema;
 }

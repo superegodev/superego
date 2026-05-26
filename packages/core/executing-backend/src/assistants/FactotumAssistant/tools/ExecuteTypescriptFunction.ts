@@ -1,22 +1,8 @@
-import {
-  type Collection,
-  type CollectionId,
-  type ToolCall,
-  ToolName,
-  type ToolResult,
-} from "@superego/backend";
+import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
 import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
-import { codegen } from "@superego/schema";
-import { makeUnsuccessfulResult } from "@superego/shared-utils";
-import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
-import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
-import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
-import type DocumentsList from "../../../usecases/documents/List.js";
-import type AssistantDocument from "../utils/AssistantDocument.js";
-import { toAssistantDocument } from "../utils/AssistantDocument.js";
+import type DocumentsExecuteTypescriptFunction from "../../../usecases/documents/ExecuteTypescriptFunction.js";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.ExecuteTypescriptFunction {
@@ -25,101 +11,33 @@ export default {
 
   async exec(
     toolCall: ToolCall.ExecuteTypescriptFunction,
-    collections: Collection[],
-    documentsList: DocumentsList,
-    javascriptSandbox: JavascriptSandbox,
-    typescriptCompiler: TypescriptCompiler,
+    documentsExecuteTypescriptFunction: DocumentsExecuteTypescriptFunction,
   ): Promise<ToolResult.ExecuteTypescriptFunction> {
-    const { collectionIds, typescriptFunction } = toolCall.input;
-    const uniqueCollectionIds = [...new Set(collectionIds)];
-    const collectionsById = new Map(
-      collections.map((collection) => [collection.id, collection]),
+    const output = await documentsExecuteTypescriptFunction.exec(
+      toolCall.input.collectionIds,
+      toolCall.input.typescriptFunction,
     );
-    const missingCollectionId = uniqueCollectionIds.find(
-      (collectionId) => !collectionsById.has(collectionId),
-    );
-    if (missingCollectionId) {
+    if (output.success) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(
-          makeResultError("CollectionNotFound", {
-            collectionId: missingCollectionId,
-          }),
-        ),
-      };
+        output,
+      } as ToolResult.ExecuteTypescriptFunction;
     }
-
-    const typeDeclarations = uniqueCollectionIds.map((collectionId) => {
-      const collection = collectionsById.get(collectionId)!;
-      return {
-        path: `/${collectionId}.ts` as `/${string}.ts`,
-        source: codegen(collection.latestVersion.schema),
-      };
-    });
-
-    const { data: javascriptFunction, error: compileError } =
-      await typescriptCompiler.compile(
-        { path: "/main.ts", source: typescriptFunction },
-        [
-          ...typeDeclarations,
-          {
-            path: "/LocalInstant.d.ts",
-            source: LocalInstantTypeDeclaration,
-          },
-        ],
-      );
-    if (compileError) {
-      if (compileError.name === "UnexpectedError") {
-        throw new UnexpectedAssistantError(
-          [
-            `Compiling typescriptFunction failed with ${compileError.name}.`,
-            ` Cause: ${compileError.details.cause}`,
-          ].join(""),
-        );
-      }
+    if (
+      output.error.name === "CollectionNotFound" ||
+      output.error.name === "TypescriptCompilationFailed" ||
+      output.error.name === "ExecutingTypescriptFunctionFailed"
+    ) {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: makeUnsuccessfulResult(compileError),
-      };
+        output,
+      } as ToolResult.ExecuteTypescriptFunction;
     }
-
-    const documentsByCollection: Record<CollectionId, AssistantDocument[]> = {};
-
-    for (const collectionId of uniqueCollectionIds) {
-      const { data: documents, error: documentsListError } =
-        await documentsList.exec(collectionId, false);
-      if (documentsListError) {
-        throw new UnexpectedAssistantError(
-          [
-            `Listing documents failed with ${documentsListError.name}.`,
-            documentsListError.name === "UnexpectedError"
-              ? ` Cause: ${documentsListError.details.cause}`
-              : "",
-          ].join(""),
-        );
-      }
-      const collection = collectionsById.get(collectionId)!;
-      documentsByCollection[collectionId] = documents.map((document) =>
-        toAssistantDocument(
-          collection.latestVersion.schema,
-          document,
-          DateTime.local().zoneName,
-        ),
-      );
-    }
-
-    const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: javascriptFunction },
-      [documentsByCollection],
+    throw new UnexpectedAssistantError(
+      `Executing TypeScript function failed with ${output.error.name}. Cause: ${output.error.details.cause}`,
     );
-
-    return {
-      tool: toolCall.tool,
-      toolCallId: toolCall.id,
-      output: result,
-    } as ToolResult.ExecuteTypescriptFunction;
   },
 
   get(): InferenceService.Tool {

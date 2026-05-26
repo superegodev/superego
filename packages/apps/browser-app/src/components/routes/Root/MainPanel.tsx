@@ -62,7 +62,7 @@ export default function MainPanel() {
     case RouteName.Boutique:
       return <Boutique />;
     case RouteName.Pack:
-      return <Pack packId={activeRoute.packId} source={activeRoute.source} />;
+      return <Pack packId={activeRoute.packId} />;
     case RouteName.BackgroundJobs:
       return <BackgroundJobs />;
     case RouteName.BackgroundJob:

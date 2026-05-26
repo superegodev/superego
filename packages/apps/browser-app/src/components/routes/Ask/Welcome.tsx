@@ -1,8 +1,11 @@
 import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
+import { electronMainWorld } from "../../../business-logic/electron/electron.js";
 import { RouteName } from "../../../business-logic/navigation/Route.js";
 import isEmpty from "../../../utils/isEmpty.js";
+import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import Link from "../../design-system/Link/Link.js";
 import * as cs from "./Ask.css.js";
 import WelcomeStep from "./WelcomeStep.js";
@@ -10,14 +13,38 @@ import WelcomeStep from "./WelcomeStep.js";
 export default function Welcome() {
   const { globalSettings, collections, apps } = useGlobalData();
 
+  const [isCliInstalled, setIsCliInstalled] = useState(
+    !electronMainWorld.isElectron,
+  );
+
+  useEffect(() => {
+    if (electronMainWorld.isElectron) {
+      electronMainWorld.cli.isInstalled().then(setIsCliInstalled);
+    }
+  }, []);
+
   const isStep1Complete = !isEmpty(globalSettings.inference.providers);
   const isStep2Complete = !isEmpty(collections);
   const isStep3Complete = !isEmpty(apps);
+  const isStep4Complete = isCliInstalled;
 
   const isStep2Enabled = isStep1Complete;
   const isStep3Enabled = isStep1Complete && isStep2Complete;
+  const isStep4Enabled = isStep1Complete && isStep2Complete && isStep3Complete;
 
-  const showWelcome = !isStep1Complete || !isStep2Complete || !isStep3Complete;
+  const showWelcome =
+    !isStep1Complete ||
+    !isStep2Complete ||
+    !isStep3Complete ||
+    !isStep4Complete;
+
+  const installCli = async () => {
+    if (!electronMainWorld.isElectron || isCliInstalled) {
+      return;
+    }
+    const installed = await electronMainWorld.cli.install();
+    setIsCliInstalled(installed);
+  };
 
   return showWelcome ? (
     <div className={cs.Welcome.root}>
@@ -95,6 +122,30 @@ export default function Welcome() {
             }}
           />
         </WelcomeStep>
+        {electronMainWorld.isElectron ? (
+          <WelcomeStep completed={isStep4Complete} enabled={isStep4Enabled}>
+            <FormattedMessage
+              defaultMessage="<installCliButton>Install the <cliName>superego</cliName> CLI</installCliButton>."
+              values={{
+                cliName: (chunks: ReactNode) => (
+                  <InlineCode>{chunks}</InlineCode>
+                ),
+                installCliButton: (chunks: ReactNode) =>
+                  isStep4Complete ? (
+                    chunks
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={installCli}
+                      className={cs.Welcome.stepButton}
+                    >
+                      {chunks}
+                    </button>
+                  ),
+              }}
+            />
+          </WelcomeStep>
+        ) : null}
       </ol>
     </div>
   ) : null;

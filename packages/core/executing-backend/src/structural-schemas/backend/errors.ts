@@ -387,6 +387,16 @@ export const duplicateDocumentDetected = () =>
     >,
   ) as v.GenericSchema<unknown, DuplicateDocumentDetected>;
 
+export const executingTypescriptFunctionFailed = () =>
+  resultError(
+    "ExecutingTypescriptFunctionFailed",
+    v.strictObject({
+      message: v.string(),
+      name: v.optional(v.string()),
+      stack: v.optional(v.string()),
+    }),
+  );
+
 export const fileNotFound = () =>
   resultError("FileNotFound", v.strictObject({ fileId: fileId() }));
 
@@ -463,6 +473,20 @@ export const tooManyFailedImplementationAttempts = () =>
   resultError(
     "TooManyFailedImplementationAttempts",
     v.strictObject({ failedAttemptsCount: v.number() }),
+  );
+
+export const typescriptCompilationFailed = () =>
+  resultError(
+    "TypescriptCompilationFailed",
+    v.union([
+      v.strictObject({
+        reason: v.literal("TypeErrors"),
+        errors: v.string(),
+      }),
+      v.strictObject({
+        reason: v.literal("MissingOutput"),
+      }),
+    ]),
   );
 
 export const unexpectedError = () =>

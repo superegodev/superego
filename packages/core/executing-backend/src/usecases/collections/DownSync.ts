@@ -17,6 +17,7 @@ import {
 import type CollectionEntity from "../../entities/CollectionEntity.js";
 import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import type RemoteEntity from "../../entities/RemoteEntity.js";
+import makeExecutingTypescriptFunctionFailed from "../../makers/makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "../../makers/makeResultError.js";
 import type Connector from "../../requirements/Connector.js";
 import assertCollectionRemoteConnectorExists from "../../utils/assertCollectionRemoteConnectorExists.js";
@@ -244,7 +245,7 @@ export default class CollectionsDownSync extends Usecase {
         makeResultError("ConvertingRemoteDocumentFailed", {
           remoteDocumentId: addedOrModified.id,
           remoteDocumentVersionId: addedOrModified.versionId,
-          cause: conversionResult.error,
+          cause: makeExecutingTypescriptFunctionFailed(conversionResult.error),
         }),
       );
     }

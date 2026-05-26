@@ -42,7 +42,7 @@ import type {
   DocumentVersionIdNotMatching,
   DocumentVersionNotFound,
   DuplicateDocumentDetected,
-  ExecutingJavascriptFunctionFailed,
+  ExecutingTypescriptFunctionFailed,
   FileNotFound,
   FilesNotFound,
   GlobalSettingsNotValid,
@@ -106,7 +106,7 @@ type KnownResultError =
   | DocumentVersionIdNotMatching
   | DocumentVersionNotFound
   | DuplicateDocumentDetected
-  | ExecutingJavascriptFunctionFailed
+  | ExecutingTypescriptFunctionFailed
   | FileNotFound
   | FilesNotFound
   | GlobalSettingsNotValid

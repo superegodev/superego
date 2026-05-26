@@ -1,0 +1,25 @@
+{
+  "name": "@superego/cli-agent-evals",
+  "version": "2026.3.8",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test:e2e": "NODE_OPTIONS=\"--disable-warning=ExperimentalWarning\" vitest --reporter=verbose run"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/multi-driver-inference-service": "workspace:*",
+    "@superego/quickjs-javascript-sandbox": "workspace:*",
+    "@superego/schema": "workspace:*",
+    "@superego/sqlite-data-repositories": "workspace:*",
+    "@superego/tsc-typescript-compiler": "workspace:*",
+    "vitest": "^4.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.8.0",
+    "typescript": "^6.0.3"
+  }
+}

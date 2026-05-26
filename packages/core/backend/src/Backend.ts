@@ -41,6 +41,7 @@ import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
 import type DocumentVersionNotFound from "./errors/DocumentVersionNotFound.js";
 import type DuplicateDocumentDetected from "./errors/DuplicateDocumentDetected.js";
+import type ExecutingTypescriptFunctionFailed from "./errors/ExecutingTypescriptFunctionFailed.js";
 import type FileNotFound from "./errors/FileNotFound.js";
 import type FilesNotFound from "./errors/FilesNotFound.js";
 import type GlobalSettingsNotValid from "./errors/GlobalSettingsNotValid.js";
@@ -54,6 +55,7 @@ import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNo
 import type ReferencedDocumentsNotFound from "./errors/ReferencedDocumentsNotFound.js";
 import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImplementationAttempts.js";
+import type TypescriptCompilationFailed from "./errors/TypescriptCompilationFailed.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
 import type WriteTypescriptModuleToolNotCalled from "./errors/WriteTypescriptModuleToolNotCalled.js";
 import type AppId from "./ids/AppId.js";
@@ -159,6 +161,7 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    /** Atomic: if any collection fails, no collections are created. */
     createMany(
       definitions: CollectionDefinition[],
     ): ResultPromise<
@@ -318,6 +321,13 @@ export default interface Backend {
       CollectionVersion,
       CollectionVersionNotFound | ArgumentsNotValid | UnexpectedError
     >;
+
+    getTypescriptSchema(
+      collectionId: CollectionId,
+    ): ResultPromise<
+      string,
+      CollectionNotFound | ArgumentsNotValid | UnexpectedError
+    >;
   };
 
   documents: {
@@ -336,6 +346,7 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    /** Atomic: if any document fails, no documents are created. */
     createMany(
       definitions: DocumentDefinition[],
     ): ResultPromise<
@@ -436,6 +447,18 @@ export default interface Backend {
     ): ResultPromise<
       DocumentVersion,
       DocumentVersionNotFound | ArgumentsNotValid | UnexpectedError
+    >;
+
+    executeTypescriptFunction(
+      collectionIds: CollectionId[],
+      typescriptFunction: string,
+    ): ResultPromise<
+      any,
+      | CollectionNotFound
+      | TypescriptCompilationFailed
+      | ExecutingTypescriptFunctionFailed
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
 
     search(

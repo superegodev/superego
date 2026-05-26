@@ -39,9 +39,11 @@ import isEmpty from "../../utils/isEmpty.js";
 import Usecase from "../../utils/Usecase.js";
 import CollectionCategoriesList from "../collection-categories/List.js";
 import CollectionsCreateMany from "../collections/CreateMany.js";
+import CollectionsGetTypescriptSchema from "../collections/GetTypescriptSchema.js";
 import CollectionsList from "../collections/List.js";
 import DocumentsCreateMany from "../documents/CreateMany.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
+import DocumentsExecuteTypescriptFunction from "../documents/ExecuteTypescriptFunction.js";
 import DocumentsList from "../documents/List.js";
 import DocumentsSearch from "../documents/Search.js";
 import FilesGetContent from "../files/GetContent.js";
@@ -228,7 +230,13 @@ export default class AssistantsProcessConversation extends Usecase {
             documentsCreateMany: this.sub(DocumentsCreateMany),
             documentsList: this.sub(DocumentsList),
             documentsCreateNewVersion: this.sub(DocumentsCreateNewVersion),
+            documentsExecuteTypescriptFunction: this.sub(
+              DocumentsExecuteTypescriptFunction,
+            ),
             documentsSearch: this.sub(DocumentsSearch),
+            collectionsGetTypescriptSchema: this.sub(
+              CollectionsGetTypescriptSchema,
+            ),
             filesGetContent: this.sub(FilesGetContent),
           },
           this.javascriptSandbox,

@@ -18,6 +18,7 @@ import {
 import { DateTime } from "luxon";
 import * as v from "valibot";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
+import makeExecutingTypescriptFunctionFailed from "../../../makers/makeExecutingTypescriptFunctionFailed.js";
 import makeLiteDocument from "../../../makers/makeLiteDocument.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import makeValidationIssues from "../../../makers/makeValidationIssues.js";
@@ -135,7 +136,9 @@ export default {
       return {
         tool: toolCall.tool,
         toolCallId: toolCall.id,
-        output: result,
+        output: makeUnsuccessfulResult(
+          makeExecutingTypescriptFunctionFailed(result.error),
+        ),
       };
     }
 

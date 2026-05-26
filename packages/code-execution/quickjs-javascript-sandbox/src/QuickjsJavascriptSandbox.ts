@@ -1,7 +1,4 @@
-import type {
-  ExecutingJavascriptFunctionFailed,
-  TypescriptModule,
-} from "@superego/backend";
+import type { TypescriptModule } from "@superego/backend";
 import type { JavascriptSandbox } from "@superego/executing-backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -48,7 +45,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   public async executeSyncFunction(
     typescriptModule: TypescriptModule,
     args: any[],
-  ): ResultPromise<any, ExecutingJavascriptFunctionFailed> {
+  ): ResultPromise<any, JavascriptSandbox.ExecutingFunctionFailed> {
     let vm: QuickJSContext;
     let defaultExport: QuickJSHandle;
     try {
@@ -58,7 +55,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
         success: false,
         data: null,
         error: {
-          name: "ExecutingJavascriptFunctionFailed",
+          name: "ExecutingFunctionFailed",
           details: QuickjsJavascriptSandbox.extractErrorDetails(
             error,
             "Unknown error importing module",
@@ -72,7 +69,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
         success: false,
         data: null,
         error: {
-          name: "ExecutingJavascriptFunctionFailed",
+          name: "ExecutingFunctionFailed",
           details: {
             message: "The default export of the module is not a function",
           },
@@ -102,7 +99,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
           success: false,
           data: null,
           error: {
-            name: "ExecutingJavascriptFunctionFailed",
+            name: "ExecutingFunctionFailed",
             details: QuickjsJavascriptSandbox.extractErrorDetails(
               error,
               "Unknown error executing function",
@@ -149,7 +146,7 @@ export default class QuickjsJavascriptSandbox implements JavascriptSandbox {
   private static extractErrorDetails(
     error: unknown,
     fallbackMessage: string,
-  ): ExecutingJavascriptFunctionFailed["details"] {
+  ): JavascriptSandbox.ExecutingFunctionFailed["details"] {
     return typeof error === "object" && error !== null
       ? {
           message:
