@@ -5,13 +5,9 @@ import { ArgsFileError } from "../../../utils/argsFile.js";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "../../../utils/results.js";
-import {
-  getArgsFileJsonSchema,
-  readAppsArgs,
-  requireArgsFile,
-} from "../common/args.js";
+import { readAppsArgs, requireArgsFile } from "../common/args.js";
 
-const argsSchema = v.strictObject({
+const argsFileSchema = v.strictObject({
   id: v.string(),
 });
 
@@ -21,7 +17,7 @@ export default useMarkdownHelp(
   ).action(async (options: { args: string }) => {
     await runCommand(async () => {
       try {
-        const args = readAppsArgs(options.args, argsSchema);
+        const args = readAppsArgs(options.args, argsFileSchema);
         const id = args.id as AppId;
         return (await createBackend()).apps.delete(id, "delete");
       } catch (error) {
@@ -32,5 +28,5 @@ export default useMarkdownHelp(
       }
     });
   }),
-  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
+  { argsFileSchema },
 );

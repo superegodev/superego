@@ -4,11 +4,7 @@ import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
-import {
-  getArgsFileJsonSchema,
-  readAppsArgs,
-  requireArgsFile,
-} from "../common/args.js";
+import { readAppsArgs, requireArgsFile } from "../common/args.js";
 import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
   resolveLatestTargetCollections,
@@ -17,7 +13,7 @@ import {
 import { getInitialMainSource } from "../common/mainSource.js";
 import writeAppProject from "../common/writeAppProject.js";
 
-const argsSchema = v.strictObject({
+const argsFileSchema = v.strictObject({
   path: v.string(),
   name: v.optional(v.string()),
   collection: v.optional(v.array(v.string())),
@@ -28,7 +24,7 @@ export default useMarkdownHelp(
     new Command("init").description("Create a new local app project."),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, argsSchema);
+      const args = readAppsArgs(options.args, argsFileSchema);
       const path = args.path;
       const name = args.name ?? "Untitled App";
       const collection = args.collection ?? [];
@@ -57,5 +53,5 @@ export default useMarkdownHelp(
       };
     });
   }),
-  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
+  { argsFileSchema },
 );

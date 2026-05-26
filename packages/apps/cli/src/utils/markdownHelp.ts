@@ -1,7 +1,9 @@
 import { Command } from "commander";
+import type * as v from "valibot";
+import { getJsonSchemaHelp } from "./jsonSchemaHelp.js";
 
 interface MarkdownHelpOptions {
-  argsFileSchema?: unknown;
+  argsFileSchema?: v.GenericSchema<unknown, unknown>;
   additionalNotes?: string;
 }
 
@@ -58,7 +60,7 @@ function formatMarkdownHelp(
       "## Args File Schema",
       "",
       "```json",
-      JSON.stringify(options.argsFileSchema, null, 2),
+      JSON.stringify(getJsonSchemaHelp(options.argsFileSchema), null, 2),
       "```",
       "",
     );

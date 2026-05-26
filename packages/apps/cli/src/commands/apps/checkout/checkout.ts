@@ -3,11 +3,7 @@ import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
-import {
-  getArgsFileJsonSchema,
-  readAppsArgs,
-  requireArgsFile,
-} from "../common/args.js";
+import { readAppsArgs, requireArgsFile } from "../common/args.js";
 import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
   resolveLockedTargetCollections,
@@ -16,7 +12,7 @@ import {
 import { buildLock } from "../common/lock.js";
 import writeAppProject from "../common/writeAppProject.js";
 
-const argsSchema = v.strictObject({
+const argsFileSchema = v.strictObject({
   path: v.string(),
   appId: v.string(),
 });
@@ -28,7 +24,7 @@ export default useMarkdownHelp(
     ),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, argsSchema);
+      const args = readAppsArgs(options.args, argsFileSchema);
       const path = args.path;
       const appId = args.appId;
       const projectPath = resolve(path);
@@ -62,5 +58,5 @@ export default useMarkdownHelp(
       return { path: projectPath, appId: app.id };
     });
   }),
-  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
+  { argsFileSchema },
 );

@@ -1,4 +1,3 @@
-import { toJsonSchema } from "@valibot/to-json-schema";
 import type { Command } from "commander";
 import * as v from "valibot";
 import { ArgsFileError, readArgsFileOrThrow } from "../../../utils/argsFile.js";
@@ -27,16 +26,4 @@ export function readAppsArgs<TInput, TOutput>(
     });
   }
   return result.output;
-}
-
-export function getArgsFileJsonSchema(
-  schema: v.GenericSchema<unknown, unknown>,
-): unknown {
-  const jsonSchema = toJsonSchema(schema, {
-    target: "draft-2020-12",
-    typeMode: "input",
-    errorMode: "ignore",
-  });
-  delete jsonSchema.$schema;
-  return jsonSchema;
 }

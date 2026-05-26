@@ -3,11 +3,7 @@ import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
-import {
-  getArgsFileJsonSchema,
-  readAppsArgs,
-  requireArgsFile,
-} from "../common/args.js";
+import { readAppsArgs, requireArgsFile } from "../common/args.js";
 import {
   resolveLatestTargetCollections,
   runAppCommand,
@@ -15,7 +11,7 @@ import {
 import { regenerateGeneratedFiles } from "../common/generatedFiles.js";
 import { readManifest, writeManifest } from "../common/manifest.js";
 
-const argsSchema = v.strictObject({
+const argsFileSchema = v.strictObject({
   collectionId: v.string(),
 });
 
@@ -26,7 +22,7 @@ export default useMarkdownHelp(
     ),
   ).action(async (options: { args: string }) => {
     await runAppCommand(async () => {
-      const args = readAppsArgs(options.args, argsSchema);
+      const args = readAppsArgs(options.args, argsFileSchema);
       const collectionId = args.collectionId as CollectionId;
       const path = process.cwd();
       const manifest = readManifest(path);
@@ -47,5 +43,5 @@ export default useMarkdownHelp(
       return { targetCollectionIds: nextManifest.targetCollectionIds };
     });
   }),
-  { argsFileSchema: getArgsFileJsonSchema(argsSchema) },
+  { argsFileSchema },
 );

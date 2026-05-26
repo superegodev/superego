@@ -51,7 +51,8 @@ Recovering stale checkouts:
 - Do not edit `app.lock.json` to force a commit. Use it only as generated state
   once present.
 - Preserve local edits to `app.json` and `main.tsx`, then refresh from the
-  database with `superego apps checkout <new-path> <appId>` or re-checkout after
-  saving your local changes elsewhere.
+  database with `superego apps checkout --args <file>` using an args file that
+  contains `path` and `appId`, or re-checkout after saving your local changes
+  elsewhere.
 - Reapply the local edits to the refreshed checkout, run `superego apps check`,
   then `superego apps commit`.
