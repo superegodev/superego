@@ -38,6 +38,7 @@ globalStyle(`${Markdown.root} table`, {
   lineHeight: vars.spacing._4_5,
 });
 globalStyle(`${Markdown.root} thead th`, {
+  background: vars.colors.background.surface,
   paddingInline: vars.spacing._2,
   paddingBlock: vars.spacing._3,
   textAlign: "left",
@@ -46,6 +47,21 @@ globalStyle(`${Markdown.root} thead th`, {
   position: "sticky",
   top: 0,
   zIndex: 1,
+});
+globalStyle(`${Markdown.root} thead th::after`, {
+  content: "",
+  position: "absolute",
+  insetInline: 0,
+  bottom: `calc(-1 * ${vars.spacing._2})`,
+  height: vars.spacing._2,
+  pointerEvents: "none",
+  background: `
+    linear-gradient(
+      180deg,
+      ${vars.colors.background.surface} 0%,
+      rgb(from ${vars.colors.background.surface} r g b / 0) 100%
+    )
+  `,
 });
 globalStyle(`${Markdown.root} tbody tr`, {
   borderBlockStart: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
