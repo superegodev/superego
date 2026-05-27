@@ -104,6 +104,7 @@ export function toolResult(): v.GenericSchema<unknown, ToolResult> {
     tool: v.string(),
     toolCallId: v.string(),
     output: v.any(),
+    artifacts: v.optional(v.any()),
   }) as unknown as v.GenericSchema<unknown, ToolResult>;
 }
 

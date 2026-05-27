@@ -1216,6 +1216,121 @@ export default rd<GetDependencies>("Assistants", (deps) => {
       );
       expect(result.data.messages.length).toBeGreaterThanOrEqual(1);
     });
+
+    it("success: gets conversation with tool result artifacts", async () => {
+      // Setup mocks
+      let collectionId = "";
+      let callCount = 0;
+      const artifactProducingInferenceService: InferenceService = {
+        generateNextMessage: async (_messages, _tools, inferenceOptions) => {
+          callCount++;
+          if (callCount === 1) {
+            return {
+              id: Id.generate.message(),
+              role: MessageRole.Assistant,
+              toolCalls: [
+                {
+                  id: "call-1",
+                  tool: ToolName.CreateDocuments,
+                  input: {
+                    documents: [
+                      { collectionId, content: { title: "Buy milk" } },
+                    ],
+                  },
+                },
+              ],
+              reasoning: {},
+              inferenceOptions,
+              generationStats: {
+                timeTaken: 0,
+                inputTokens: 0,
+                outputTokens: 0,
+                totalTokens: 0,
+              },
+              createdAt: new Date(),
+            };
+          }
+          return {
+            id: Id.generate.message(),
+            role: MessageRole.Assistant,
+            content: [{ type: MessageContentPartType.Text, text: "Done" }],
+            reasoning: {},
+            inferenceOptions,
+            generationStats: {
+              timeTaken: 0,
+              inputTokens: 0,
+              outputTokens: 0,
+              totalTokens: 0,
+            },
+            createdAt: new Date(),
+          };
+        },
+        stt: async () => "Mock",
+        inspectFile: async () => "Mock",
+      };
+
+      // Setup SUT
+      const { backend } = deps({
+        inferenceService: artifactProducingInferenceService,
+      });
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "tasks",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      collectionId = createCollectionResult.data.id;
+      const startResult = await backend.assistants.startConversation(
+        AssistantName.Factotum,
+        [{ type: MessageContentPartType.Text, text: "Create a task" }],
+        validInferenceOptions,
+      );
+      assert.isTrue(startResult.success);
+      await waitForConversationProcessing(backend, startResult.data.id);
+
+      // Exercise
+      const result = await backend.assistants.getConversation(
+        startResult.data.id,
+      );
+
+      // Verify
+      assert.isTrue(result.success);
+      const toolMessage = result.data.messages.find(
+        (message) => message.role === MessageRole.Tool,
+      );
+      assert.isDefined(toolMessage);
+      expect(toolMessage.toolResults[0]).toEqual(
+        expect.objectContaining({
+          artifacts: expect.objectContaining({
+            documents: expect.any(Array),
+          }),
+        }),
+      );
+    });
   });
 
   describe("getLiveConversation", () => {
