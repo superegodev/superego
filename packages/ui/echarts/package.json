@@ -1,6 +1,6 @@
 {
   "name": "@superego/echarts",
-  "version": "2026.5.1",
+  "version": "2026.5.2",
   "private": true,
   "type": "module",
   "exports": {
