@@ -31,7 +31,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
               driver: InferenceProviderDriver.OpenResponses,
               models: [
                 {
-                  id: "google/gemini-3.1-flash-lite-preview",
+                  id: "google/gemini-3.1-flash-lite",
                   name: "Gemini 3 Flash Lite",
                   capabilities: {
                     audioUnderstanding: true,
@@ -46,20 +46,20 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
             completion: {
               providerModelRef: {
                 providerName: "superego",
-                modelId: "google/gemini-3.1-flash-lite-preview",
+                modelId: "google/gemini-3.1-flash-lite",
               },
               reasoningEffort: ReasoningEffort.Medium,
             },
             transcription: {
               providerModelRef: {
                 providerName: "superego",
-                modelId: "google/gemini-3.1-flash-lite-preview",
+                modelId: "google/gemini-3.1-flash-lite",
               },
             },
             fileInspection: {
               providerModelRef: {
                 providerName: "superego",
-                modelId: "google/gemini-3.1-flash-lite-preview",
+                modelId: "google/gemini-3.1-flash-lite",
               },
             },
           },
