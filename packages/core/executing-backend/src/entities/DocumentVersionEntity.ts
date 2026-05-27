@@ -11,7 +11,6 @@ import type { DocumentRef } from "@superego/schema";
 
 export default interface DocumentVersionEntity {
   id: DocumentVersionId;
-  remoteId: string | null;
   previousVersionId: DocumentVersionId | null;
   collectionId: CollectionId;
   documentId: DocumentId;

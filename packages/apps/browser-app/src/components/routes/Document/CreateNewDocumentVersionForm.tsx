@@ -21,7 +21,7 @@ import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";
 
-export type ReadOnlyReason = "remote" | "history-version";
+export type ReadOnlyReason = "history-version";
 
 interface Props {
   collection: Collection;
@@ -137,23 +137,19 @@ export default function CreateNewDocumentVersionForm({
           variant="info"
           className={cs.CreateNewDocumentVersionForm.readOnlyAlert}
         >
-          {readOnlyReason === "remote" ? (
-            <FormattedMessage defaultMessage="This document is synced from a remote source and cannot be edited." />
-          ) : (
-            <FormattedMessage
-              defaultMessage="Viewing document version from <b>{date}</b>. Document editing is disabled."
-              values={{
-                date: (
-                  <FormattedDate
-                    value={documentVersion.createdAt}
-                    dateStyle="medium"
-                    timeStyle="medium"
-                  />
-                ),
-                ...formattedMessageHtmlTags,
-              }}
-            />
-          )}
+          <FormattedMessage
+            defaultMessage="Viewing document version from <b>{date}</b>. Document editing is disabled."
+            values={{
+              date: (
+                <FormattedDate
+                  value={documentVersion.createdAt}
+                  dateStyle="medium"
+                  timeStyle="medium"
+                />
+              ),
+              ...formattedMessageHtmlTags,
+            }}
+          />
         </Alert>
       ) : null}
       <RHFContentField

@@ -161,11 +161,7 @@ export default class CollectionsUpdateSettings extends BackendUsecase<
     await this.repos.collection.replace(updatedCollection);
 
     return makeSuccessfulResult(
-      makeCollection(
-        updatedCollection,
-        latestVersion,
-        this.getConnector(updatedCollection),
-      ),
+      makeCollection(updatedCollection, latestVersion),
     );
   }
 }

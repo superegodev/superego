@@ -141,7 +141,6 @@ describe.concurrent.each(assistantsModels)(
         javascriptSandbox,
         typescriptCompiler,
         inferenceServiceFactory,
-        [],
       );
 
       const inferenceOptions = {

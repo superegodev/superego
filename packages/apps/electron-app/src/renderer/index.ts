@@ -18,9 +18,6 @@ const queryClient = new QueryClient({
 renderBrowserApp((window as any).backend, queryClient);
 
 window.addEventListener("message", (evt) => {
-  if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
-    queryClient.invalidateQueries({ queryKey: ["listCollections"] });
-  }
   if (
     evt.data?.type === "NavigationRequested" &&
     typeof evt.data.href === "string"

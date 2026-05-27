@@ -1,7 +1,6 @@
 import {
   type Backend,
   type CollectionNotFound,
-  type ConnectorDoesNotSupportUpSyncing,
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
@@ -42,7 +41,6 @@ import isEmpty from "../../utils/isEmpty.js";
 type ExecReturnValue = ResultPromise<
   Document,
   | CollectionNotFound
-  | ConnectorDoesNotSupportUpSyncing
   | DocumentContentNotValid
   | FilesNotFound
   | ReferencedDocumentsNotFound
@@ -60,7 +58,6 @@ export default class DocumentsCreate extends BackendUsecase<
     structuralSchemas.backend.types.document(),
     [
       structuralSchemas.backend.errors.collectionNotFound(),
-      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
       structuralSchemas.backend.errors.documentContentNotValid(),
       structuralSchemas.backend.errors.duplicateDocumentDetected(),
       structuralSchemas.backend.errors.filesNotFound(),
@@ -79,32 +76,18 @@ export default class DocumentsCreate extends BackendUsecase<
   ): ExecReturnValue;
   async exec(
     definition: DocumentDefinition,
-    options:
-      | {
-          createdBy: DocumentVersionCreator.Assistant;
-          conversationId: ConversationId;
-          documentId?: DocumentId;
-          skipReferenceCheckForDocumentIds?: DocumentId[];
-        }
-      | {
-          createdBy: DocumentVersionCreator.Connector;
-          remoteId: string;
-          remoteVersionId: string;
-          remoteUrl: string | null;
-          remoteDocument: any;
-        },
+    options: {
+      createdBy: DocumentVersionCreator.Assistant;
+      conversationId: ConversationId;
+      documentId?: DocumentId;
+      skipReferenceCheckForDocumentIds?: DocumentId[];
+    },
   ): ExecReturnValue;
   async exec(
     definition: DocumentDefinition,
     options: {
-      createdBy?:
-        | DocumentVersionCreator.Assistant
-        | DocumentVersionCreator.Connector;
+      createdBy?: DocumentVersionCreator.Assistant;
       conversationId?: ConversationId;
-      remoteId?: string;
-      remoteVersionId?: string;
-      remoteUrl?: string | null;
-      remoteDocument?: any;
       documentId?: DocumentId;
       skipReferenceCheckForDocumentIds?: DocumentId[];
     } = {},
@@ -117,23 +100,6 @@ export default class DocumentsCreate extends BackendUsecase<
     if (!collection) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionNotFound", { collectionId }),
-      );
-    }
-
-    if (
-      // Right now no connector supports up-syncing, so checking if the
-      // collection has a remote is sufficient. TODO: update condition once
-      // connectors support up-syncing.
-      collection.remote !== null &&
-      options.createdBy !== DocumentVersionCreator.Connector
-    ) {
-      return makeUnsuccessfulResult(
-        makeResultError("ConnectorDoesNotSupportUpSyncing", {
-          collectionId: collectionId,
-          connectorName: collection.remote.connector.name,
-          message:
-            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
-        }),
       );
     }
 
@@ -247,14 +213,8 @@ export default class DocumentsCreate extends BackendUsecase<
     }
 
     const now = new Date();
-    // TypeScript doesn't understand that if remoteId is not null all other
-    // remote* properties are not null.
-    // @ts-expect-error
     const document: DocumentEntity = {
       id: options.documentId ?? Id.generate.document(),
-      remoteId: options.remoteId ?? null,
-      remoteUrl: options.remoteUrl ?? null,
-      latestRemoteDocument: options.remoteDocument ?? null,
       collectionId: collectionId,
       createdAt: now,
     };
@@ -275,7 +235,6 @@ export default class DocumentsCreate extends BackendUsecase<
     );
     const documentVersion: DocumentVersionEntity = {
       id: documentVersionId,
-      remoteId: options.remoteVersionId ?? null,
       previousVersionId: null,
       documentId: document.id,
       collectionId: collectionId,

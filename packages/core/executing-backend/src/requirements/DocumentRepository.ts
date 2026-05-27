@@ -11,10 +11,6 @@ export default interface DocumentRepository {
   exists(id: DocumentId): Promise<boolean>;
   oneExistsWhereCollectionIdEq(collectionId: CollectionId): Promise<boolean>;
   find(id: DocumentId): Promise<DocumentEntity | null>;
-  findWhereCollectionIdAndRemoteIdEq(
-    collectionId: CollectionId,
-    remoteId: string,
-  ): Promise<DocumentEntity | null>;
   findAllWhereCollectionIdEq(
     collectionId: CollectionId,
   ): Promise<DocumentEntity[]>;

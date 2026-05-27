@@ -7,9 +7,8 @@ export default function makeDocument(
   document: DocumentEntity,
   latestVersion: DocumentVersionEntity,
 ): Document {
-  const { latestRemoteDocument, ...rest } = document;
   return {
-    ...rest,
+    ...document,
     latestVersion: makeDocumentVersion(latestVersion),
   };
 }

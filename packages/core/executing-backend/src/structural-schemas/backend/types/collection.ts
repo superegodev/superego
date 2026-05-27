@@ -17,7 +17,6 @@ import {
   protoCollectionCategoryId,
 } from "../ids.js";
 import { defaultDocumentViewUiOptions } from "./defaultDocumentViewUiOptions.js";
-import { remote, remoteConverters } from "./remote.js";
 import { typescriptModule } from "./typescript.js";
 
 export function collectionSettings(): v.GenericSchema<
@@ -56,7 +55,6 @@ export function collectionVersion(): v.GenericSchema<
     schema: schemaValibotSchemas.schema(),
     settings: collectionVersionSettings(),
     migration: v.nullable(typescriptModule()),
-    remoteConverters: v.nullable(remoteConverters()),
     createdAt: v.date(),
   });
 }
@@ -66,7 +64,6 @@ export function collection(): v.GenericSchema<unknown, Collection> {
     id: collectionId(),
     latestVersion: collectionVersion(),
     settings: collectionSettings(),
-    remote: v.nullable(remote()),
     createdAt: v.date(),
   });
 }

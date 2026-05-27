@@ -32,24 +32,6 @@
   "AssistantsSettings.tsx_xIOlmn": {
     "defaultMessage": "Le tue preferenze"
   },
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
-    "defaultMessage": "Autentica il connettore"
-  },
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": {
-    "defaultMessage": "Ri-autentica il connettore"
-  },
-  "AuthenticationSettings.tsx_B7p2EC": {
-    "defaultMessage": "Segreto del client"
-  },
-  "AuthenticationSettings.tsx_KTNoOq": {
-    "defaultMessage": "Chiave API"
-  },
-  "AuthenticationSettings.tsx_Q0U6OF": {
-    "defaultMessage": "Impostazioni di autenticazione"
-  },
-  "AuthenticationSettings.tsx_U5+MBC": {
-    "defaultMessage": "ID del client"
-  },
   "BackgroundJob.tsx_EiyxpM": {
     "defaultMessage": "Terminato il"
   },
@@ -191,9 +173,6 @@
   "CollectionSettings.tsx_GjrlL9": {
     "defaultMessage": "Impostazioni generali"
   },
-  "CollectionSettings.tsx_JJBzhX": {
-    "defaultMessage": "Remoto"
-  },
   "CollectionSettings.tsx_VcipZo": {
     "defaultMessage": "Impostazioni dell'ultima versione"
   },
@@ -211,18 +190,6 @@
   },
   "CompilationInProgressIndicator.tsx_MCO54A": {
     "defaultMessage": "Compilazione in corso..."
-  },
-  "ConnectorSelect.tsx_Gnbr9F": {
-    "defaultMessage": "Seleziona un connettore"
-  },
-  "ConnectorSelect.tsx_nSFiyf": {
-    "defaultMessage": "Il connettore non può essere modificato dopo aver configurato un remoto."
-  },
-  "ConnectorSelect.tsx_r8XsCU": {
-    "defaultMessage": "Connettore"
-  },
-  "ConnectorSettings.tsx_1B+Bnl": {
-    "defaultMessage": "Impostazioni del connettore"
   },
   "ContentBlockingKeysTab.tsx_mzcj4a": {
     "defaultMessage": "Aggiorna la funzione <code>getContentBlockingKeys</code> per riflettere le modifiche allo schema."
@@ -389,17 +356,11 @@
   "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
     "defaultMessage": "2. Deduplicazione"
   },
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": {
-    "defaultMessage": "5. Convertitori remoti"
-  },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Nuova versione del documento creata"
   },
   "CreateNewDocumentVersionForm.tsx_KtoryI": {
     "defaultMessage": "Si sta visualizzando la versione del documento del <b>{date}</b>. La modifica del documento è disabilitata."
-  },
-  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
-    "defaultMessage": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Errore durante il salvataggio del documento"
@@ -412,9 +373,6 @@
   },
   "CreatedByLine.tsx_qTzfr9": {
     "defaultMessage": "Creato nella conversazione"
-  },
-  "CreatedByLine.tsx_ufqNmd": {
-    "defaultMessage": "Creato dalla sincronizzazione"
   },
   "DatePickerInput.tsx_/GCoTA": {
     "defaultMessage": "Cancella"
@@ -500,9 +458,6 @@
   "ModalContent.tsx_qjTjxw": {
     "defaultMessage": "<p> Eliminando il documento cancellerai definitivamente il documento, tutte le sue versioni e tutti i suoi file. </p> <p> Se sei sicuro di voler eliminare il documento, scrivi <i>delete</i> nel campo sottostante. </p>"
   },
-  "Document.tsx_AB6IO/": {
-    "defaultMessage": "Vai al documento remoto"
-  },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
   },
@@ -527,20 +482,11 @@
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
-  "DocumentInfoModal.tsx_1D7voQ": {
-    "defaultMessage": "Sincronizzato con {remote}"
-  },
   "DocumentInfoModal.tsx_gm5+Hy": {
     "defaultMessage": "ID collezione:"
   },
   "DocumentInfoModal.tsx_i3P6ZD": {
     "defaultMessage": "Creato il:"
-  },
-  "DocumentInfoModal.tsx_h6SlY+": {
-    "defaultMessage": "ID documento remoto:"
-  },
-  "DocumentInfoModal.tsx_nY1/sq": {
-    "defaultMessage": "ID versione documento remoto:"
   },
   "DocumentInfoModal.tsx_ps0LGU": {
     "defaultMessage": "Informazioni documento"
@@ -566,9 +512,6 @@
   "DocumentRefField.tsx_hX5PAb": {
     "defaultMessage": "Nessun risultato trovato"
   },
-  "DocumentTableRow.tsx_aBBLZR": {
-    "defaultMessage": "Apri documento remoto"
-  },
   "DocumentTableRow.tsx_vT9jcW": {
     "defaultMessage": "Sommario dei contenuti non valido"
   },
@@ -592,18 +535,6 @@
   },
   "DocumentsTable.tsx_kGGU2D": {
     "defaultMessage": "ID"
-  },
-  "DocumentsTable.tsx_xIoGG9": {
-    "defaultMessage": "Vai a"
-  },
-  "DownSyncInfoModal.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "DownSyncInfoModal.tsx_8I58x/": {
-    "defaultMessage": "Sincronizzazione con {remote}"
-  },
-  "DownSyncInfoModal.tsx_dKtz/9": {
-    "defaultMessage": "Sincronizza"
   },
   "DuplicateDocumentDetectedModal.tsx_47FYwb": {
     "defaultMessage": "Annulla"
@@ -1184,30 +1115,6 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
   },
-  "Remote.tsx_s8FZNF": {
-    "defaultMessage": "<p> Puoi sincronizzare una collezione con un'origine dati esterna (un <b>remoto</b>). Quando configuri un remoto, diventa la <i>fonte di verità</i> per quella collezione. </p> <p> La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura <code>fromRemoteDocument</code> e puoi filtrare quali documenti remoti vengono sincronizzati. </p> <p> Per configurare un remoto, configura un <i>connettore</i> verso l'origine dati esterna. </p> <p> Alcuni connettori supportano solo la <b>sincronizzazione dal</b> remoto, rendendo la collezione in sola lettura. Altri supportano anche la <b>sincronizzazione verso</b> il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. </p> <p> Ulteriori informazioni su <a>https://superego.dev/connectors</a>. </p>"
-  },
-  "RemoteConverters.tsx_3cBs4J": {
-    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci <code>null</code> per non sincronizzare il documento."
-  },
-  "RemoteConverters.tsx_GqZhDC": {
-    "defaultMessage": "Dal documento remoto"
-  },
-  "RemoteConverters.tsx_abnr48": {
-    "defaultMessage": "Convertitori di documenti remoti"
-  },
-  "RemoteConvertersTab.tsx_3cBs4J": {
-    "defaultMessage": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci <code>null</code> per non sincronizzare il documento."
-  },
-  "RemoteConvertersTab.tsx_CPS541": {
-    "defaultMessage": "Aggiorna la funzione <code>fromRemoteDocument</code> per riflettere le modifiche allo schema."
-  },
-  "RemoteConvertersTab.tsx_GqZhDC": {
-    "defaultMessage": "Dal documento remoto"
-  },
-  "RemoteConvertersTab.tsx_J/yjzE": {
-    "defaultMessage": "Crea una nuova versione e migra i documenti"
-  },
   "RenameCollectionCategoryModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
@@ -1274,9 +1181,6 @@
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
   },
-  "SchemaTab.tsx_Vi4BUn": {
-    "defaultMessage": "<p> Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: </p> <ol> <li>Implementa le modifiche allo schema che vuoi effettuare.</li> <li> Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. </li> <li> Poiché si tratta di una collezione remota, aggiorna anche i relativi convertitori remoti. </li> </ol>"
-  },
   "SearchModal.tsx_xmcVZ0": {
     "defaultMessage": "Cerca"
   },
@@ -1336,12 +1240,6 @@
   },
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Aggiungi un modello con comprensione audio per usare la voce"
-  },
-  "SetCollectionRemoteForm.tsx_fsGyC4": {
-    "defaultMessage": "Aggiorna remoto"
-  },
-  "SetCollectionRemoteForm.tsx_m8TXbJ": {
-    "defaultMessage": "Imposta remoto"
   },
   "SetNameAndSaveModal.tsx_47FYwb": {
     "defaultMessage": "Annulla"
@@ -1681,21 +1579,6 @@
   },
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} secondi"
-  },
-  "getDownSyncAction.tsx_IJWuS/": {
-    "defaultMessage": "Ultima sincronizzazione {lastSucceededAt, date, ::MMM d, HH:mm}"
-  },
-  "getDownSyncAction.tsx_RRA+40": {
-    "defaultMessage": "Autenticati con {remote}"
-  },
-  "getDownSyncAction.tsx_dKtz/9": {
-    "defaultMessage": "Sincronizza"
-  },
-  "getDownSyncAction.tsx_eOnwqs": {
-    "defaultMessage": "Sincronizzazione in corso"
-  },
-  "getDownSyncAction.tsx_mG35sa": {
-    "defaultMessage": "Ultima sincronizzazione non riuscita"
   },
   "getIntlMessages.ts_/GCoTA": {
     "defaultMessage": "Cancella"

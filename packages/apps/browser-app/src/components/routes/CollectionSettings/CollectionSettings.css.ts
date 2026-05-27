@@ -23,11 +23,3 @@ export const UpdateCollectionVersionSettingsForm = {
     justifyContent: "flex-end",
   }),
 };
-
-export const SetCollectionRemoteForm = {
-  buttons: style({
-    display: "flex",
-    justifyContent: "flex-end",
-    gap: vars.spacing._2,
-  }),
-};

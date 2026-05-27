@@ -13,7 +13,6 @@ export declare function useCreateDocument(): {
   error: {
     name:
       | "CollectionNotFound"
-      | "ConnectorDoesNotSupportUpSyncing"
       | "DocumentContentNotValid"
       | "FilesNotFound"
       | "UnexpectedError";
@@ -60,7 +59,6 @@ export declare function useCreateNewDocumentVersion(): {
     name:
       | "CollectionNotFound"
       | "DocumentNotFound"
-      | "ConnectorDoesNotSupportUpSyncing"
       | "DocumentVersionIdNotMatching"
       | "DocumentContentNotValid"
       | "FilesNotFound"

@@ -2,7 +2,6 @@ import type {
   CollectionId,
   CollectionVersionId,
   CollectionVersionSettings,
-  RemoteConverters,
   TypescriptModule,
 } from "@superego/backend";
 import type { Schema } from "@superego/schema";
@@ -14,6 +13,5 @@ export default interface CollectionVersionEntity {
   schema: Schema;
   settings: CollectionVersionSettings;
   migration: TypescriptModule | null;
-  remoteConverters: RemoteConverters | null;
   createdAt: Date;
 }

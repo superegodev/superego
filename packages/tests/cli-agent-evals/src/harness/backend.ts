@@ -36,7 +36,6 @@ export function createEvalBackend(databaseFile: string): ExecutingBackend {
     new QuickjsJavascriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
-    [],
   );
 }
 

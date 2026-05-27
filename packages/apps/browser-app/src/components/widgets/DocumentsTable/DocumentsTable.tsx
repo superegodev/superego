@@ -5,7 +5,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import classnames from "../../../utils/classnames.js";
-import CollectionUtils from "../../../utils/CollectionUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import Pagination from "../../design-system/Pagination/Pagination.js";
 import Table from "../../design-system/Table/Table.js";
@@ -107,15 +106,6 @@ export default function DocumentsTable({
                 {property.label}
               </Table.Column>
             ))}
-            {collection && CollectionUtils.hasRemote(collection) ? (
-              <Table.Column
-                align="center"
-                // Setting to zero makes it of minimal width.
-                maxWidth={0}
-              >
-                <FormattedMessage defaultMessage="Go to" />
-              </Table.Column>
-            ) : null}
             {showCreatedAt && screenSize > ScreenSize.Medium ? (
               <Table.Column
                 maxWidth={150}
@@ -146,7 +136,6 @@ export default function DocumentsTable({
             {(document) => (
               <DocumentTableRow
                 collectionId={collectionId}
-                collection={collection}
                 document={document}
                 sortedProperties={sortedProperties}
                 showCreatedAt={showCreatedAt}

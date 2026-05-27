@@ -65,42 +65,6 @@
       "value": "Your preferences"
     }
   ],
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
-    {
-      "type": 0,
-      "value": "Authenticate connector"
-    }
-  ],
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": [
-    {
-      "type": 0,
-      "value": "Re-authenticate connector"
-    }
-  ],
-  "AuthenticationSettings.tsx_B7p2EC": [
-    {
-      "type": 0,
-      "value": "Client secret"
-    }
-  ],
-  "AuthenticationSettings.tsx_KTNoOq": [
-    {
-      "type": 0,
-      "value": "API key"
-    }
-  ],
-  "AuthenticationSettings.tsx_Q0U6OF": [
-    {
-      "type": 0,
-      "value": "Authentication settings"
-    }
-  ],
-  "AuthenticationSettings.tsx_U5+MBC": [
-    {
-      "type": 0,
-      "value": "Client ID"
-    }
-  ],
   "BackgroundJob.tsx_EiyxpM": [
     {
       "type": 0,
@@ -441,12 +405,6 @@
       "value": "General settings"
     }
   ],
-  "CollectionSettings.tsx_JJBzhX": [
-    {
-      "type": 0,
-      "value": "Remote"
-    }
-  ],
   "CollectionSettings.tsx_VcipZo": [
     {
       "type": 0,
@@ -481,30 +439,6 @@
     {
       "type": 0,
       "value": "Compiling..."
-    }
-  ],
-  "ConnectorSelect.tsx_Gnbr9F": [
-    {
-      "type": 0,
-      "value": "Select a connector"
-    }
-  ],
-  "ConnectorSelect.tsx_nSFiyf": [
-    {
-      "type": 0,
-      "value": "The connector cannot be changed once a remote is configured."
-    }
-  ],
-  "ConnectorSelect.tsx_r8XsCU": [
-    {
-      "type": 0,
-      "value": "Connector"
-    }
-  ],
-  "ConnectorSettings.tsx_1B+Bnl": [
-    {
-      "type": 0,
-      "value": "Connector settings"
     }
   ],
   "ContentBlockingKeysTab.tsx_mzcj4a": [
@@ -920,12 +854,6 @@
       "value": "2. Deduplication"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
-    {
-      "type": 0,
-      "value": "5. Remote converters"
-    }
-  ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
     {
       "type": 1,
@@ -956,12 +884,6 @@
       "value": ". Document editing is disabled."
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
-    {
-      "type": 0,
-      "value": "This document is synced from a remote source and cannot be edited."
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
@@ -984,12 +906,6 @@
     {
       "type": 0,
       "value": "Created in conversation"
-    }
-  ],
-  "CreatedByLine.tsx_ufqNmd": [
-    {
-      "type": 0,
-      "value": "Created by sync"
     }
   ],
   "DatePickerInput.tsx_/GCoTA": [
@@ -1228,12 +1144,6 @@
       "value": "Command confirmation"
     }
   ],
-  "Document.tsx_AB6IO/": [
-    {
-      "type": 0,
-      "value": "Go to remote document"
-    }
-  ],
   "Document.tsx_EPTOBf": [
     {
       "type": 1,
@@ -1298,38 +1208,16 @@
       "value": "documentId"
     }
   ],
-  "DocumentInfoModal.tsx_1D7voQ": [
-    {
-      "type": 0,
-      "value": "Synced with "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
   "DocumentInfoModal.tsx_gm5+Hy": [
     {
       "type": 0,
       "value": "Collection ID:"
     }
   ],
-  "DocumentInfoModal.tsx_h6SlY+": [
-    {
-      "type": 0,
-      "value": "Remote document ID:"
-    }
-  ],
   "DocumentInfoModal.tsx_i3P6ZD": [
     {
       "type": 0,
       "value": "Created at:"
-    }
-  ],
-  "DocumentInfoModal.tsx_nY1/sq": [
-    {
-      "type": 0,
-      "value": "Remote document version ID:"
     }
   ],
   "DocumentInfoModal.tsx_ps0LGU": [
@@ -1378,12 +1266,6 @@
     {
       "type": 0,
       "value": "No results found"
-    }
-  ],
-  "DocumentTableRow.tsx_aBBLZR": [
-    {
-      "type": 0,
-      "value": "Open remote document"
     }
   ],
   "DocumentTableRow.tsx_vT9jcW": [
@@ -1436,34 +1318,6 @@
     {
       "type": 0,
       "value": "Id"
-    }
-  ],
-  "DocumentsTable.tsx_xIoGG9": [
-    {
-      "type": 0,
-      "value": "Go to"
-    }
-  ],
-  "DownSyncInfoModal.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "DownSyncInfoModal.tsx_8I58x/": [
-    {
-      "type": 0,
-      "value": "Syncing with "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
-  "DownSyncInfoModal.tsx_dKtz/9": [
-    {
-      "type": 0,
-      "value": "Sync"
     }
   ],
   "DuplicateDocumentDetectedModal.tsx_47FYwb": [
@@ -3372,256 +3226,6 @@
       "value": "Medium"
     }
   ],
-  "Remote.tsx_s8FZNF": [
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " You can sync a collection with an external data source (a "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "remote"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": "). When a remote is configured, it becomes the "
-        },
-        {
-          "type": 8,
-          "value": "i",
-          "children": [
-            {
-              "type": 0,
-              "value": "source of truth"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " for that collection. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your "
-        },
-        {
-          "type": 8,
-          "value": "code",
-          "children": [
-            {
-              "type": 0,
-              "value": "fromRemoteDocument"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " mapping, and you can filter which remote documents are synced. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " To set up a remote, configure a "
-        },
-        {
-          "type": 8,
-          "value": "i",
-          "children": [
-            {
-              "type": 0,
-              "value": "connector"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " to the external data source. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Some connectors support only "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "syncing down from"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " the remote, making the collection read-only. Others also support "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "syncing up to"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " the remote, so creates, updates, and deletes in the collection are propagated to the remote. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " More info at "
-        },
-        {
-          "type": 8,
-          "value": "a",
-          "children": [
-            {
-              "type": 0,
-              "value": "https://superego.dev/connectors"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": ". "
-        }
-      ]
-    }
-  ],
-  "RemoteConverters.tsx_3cBs4J": [
-    {
-      "type": 0,
-      "value": "TypeScript function transforming a remote document into the content of a local document. Return "
-    },
-    {
-      "type": 8,
-      "value": "code",
-      "children": [
-        {
-          "type": 0,
-          "value": "null"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " to skip syncing the document."
-    }
-  ],
-  "RemoteConverters.tsx_GqZhDC": [
-    {
-      "type": 0,
-      "value": "From remote document"
-    }
-  ],
-  "RemoteConverters.tsx_abnr48": [
-    {
-      "type": 0,
-      "value": "Remote document converters"
-    }
-  ],
-  "RemoteConvertersTab.tsx_3cBs4J": [
-    {
-      "type": 0,
-      "value": "TypeScript function transforming a remote document into the content of a local document. Return "
-    },
-    {
-      "type": 8,
-      "value": "code",
-      "children": [
-        {
-          "type": 0,
-          "value": "null"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " to skip syncing the document."
-    }
-  ],
-  "RemoteConvertersTab.tsx_CPS541": [
-    {
-      "type": 0,
-      "value": "Update the "
-    },
-    {
-      "type": 8,
-      "value": "code",
-      "children": [
-        {
-          "type": 0,
-          "value": "fromRemoteDocument"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " function to reflect schema changes."
-    }
-  ],
-  "RemoteConvertersTab.tsx_GqZhDC": [
-    {
-      "type": 0,
-      "value": "From remote document"
-    }
-  ],
-  "RemoteConvertersTab.tsx_J/yjzE": [
-    {
-      "type": 0,
-      "value": "Create new version and migrate documents"
-    }
-  ],
   "RenameCollectionCategoryModalForm.tsx_47FYwb": [
     {
       "type": 0,
@@ -3890,74 +3494,6 @@
       "value": "Schema"
     }
   ],
-  "SchemaTab.tsx_Vi4BUn": [
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "ol",
-      "children": [
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "type": 8,
-          "value": "li",
-          "children": [
-            {
-              "type": 0,
-              "value": "Implement the schema changes you want to make."
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "type": 8,
-          "value": "li",
-          "children": [
-            {
-              "type": 0,
-              "value": " Update the collection's content summary getter to reflect those changes. "
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "type": 8,
-          "value": "li",
-          "children": [
-            {
-              "type": 0,
-              "value": " Since this is a remote collection, update its remote converters as well. "
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " "
-        }
-      ]
-    }
-  ],
   "SearchModal.tsx_xmcVZ0": [
     {
       "type": 0,
@@ -4088,18 +3624,6 @@
     {
       "type": 0,
       "value": "Add model w/ audio understanding to use voice"
-    }
-  ],
-  "SetCollectionRemoteForm.tsx_fsGyC4": [
-    {
-      "type": 0,
-      "value": "Update remote"
-    }
-  ],
-  "SetCollectionRemoteForm.tsx_m8TXbJ": [
-    {
-      "type": 0,
-      "value": "Set remote"
     }
   ],
   "SetNameAndSaveModal.tsx_47FYwb": [
@@ -4709,55 +4233,6 @@
     {
       "type": 0,
       "value": " seconds"
-    }
-  ],
-  "getDownSyncAction.tsx_IJWuS/": [
-    {
-      "type": 0,
-      "value": "Last synced "
-    },
-    {
-      "type": 3,
-      "value": "lastSucceededAt",
-      "style": {
-        "type": 1,
-        "pattern": "MMM d, HH:mm",
-        "parsedOptions": {
-          "month": "short",
-          "day": "numeric",
-          "hour": "2-digit",
-          "hourCycle": "h23",
-          "minute": "2-digit"
-        }
-      }
-    }
-  ],
-  "getDownSyncAction.tsx_RRA+40": [
-    {
-      "type": 0,
-      "value": "Authenticate with "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
-  "getDownSyncAction.tsx_dKtz/9": [
-    {
-      "type": 0,
-      "value": "Sync"
-    }
-  ],
-  "getDownSyncAction.tsx_eOnwqs": [
-    {
-      "type": 0,
-      "value": "Syncing"
-    }
-  ],
-  "getDownSyncAction.tsx_mG35sa": [
-    {
-      "type": 0,
-      "value": "Last sync failed"
     }
   ],
   "getIntlMessages.ts_/GCoTA": [

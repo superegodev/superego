@@ -13,12 +13,6 @@ export default function CreatedByLine({ createdBy }: Props) {
           <FormattedMessage defaultMessage="Created by you" />
         </div>
       );
-    case DocumentVersionCreator.Connector:
-      return (
-        <div className={cs.CreatedByLine.root}>
-          <FormattedMessage defaultMessage="Created by sync" />
-        </div>
-      );
     case DocumentVersionCreator.Assistant:
       return (
         <div className={cs.CreatedByLine.root}>

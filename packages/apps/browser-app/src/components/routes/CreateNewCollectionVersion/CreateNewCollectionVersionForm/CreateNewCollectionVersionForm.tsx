@@ -8,14 +8,12 @@ import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
-import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
 import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
-import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import FormStateEffects from "../../../widgets/FormStateEffects/FormStateEffects.js";
 import ContentBlockingKeysTab from "./ContentBlockingKeysTab.js";
@@ -23,7 +21,6 @@ import ContentSummaryTab from "./ContentSummaryTab.js";
 import type CreateNewCollectionVersionFormValues from "./CreateNewCollectionVersionFormValues.js";
 import DefaultDocumentViewUiOptionsTab from "./DefaultDocumentViewUiOptionsTab.js";
 import MigrationTab from "./MigrationTab.js";
-import RemoteConvertersTab from "./RemoteConvertersTab.js";
 import SchemaTab from "./SchemaTab.js";
 import TabTitle from "./TabTitle.js";
 
@@ -54,10 +51,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
           collection.latestVersion.settings.contentSummaryGetter,
         defaultDocumentViewUiOptions:
           collection.latestVersion.settings.defaultDocumentViewUiOptions,
-        migration: CollectionUtils.hasRemote(collection)
-          ? null
-          : defaultMigration,
-        remoteConverters: collection.latestVersion.remoteConverters,
+        migration: defaultMigration,
       },
       mode: "all",
       resolver: (values, context, options) => {
@@ -80,8 +74,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
                 currentSchema,
               ),
             ),
-            migration: v.nullable(forms.schemas.typescriptModule(intl)),
-            remoteConverters: v.nullable(forms.schemas.remoteConverters(intl)),
+            migration: forms.schemas.typescriptModule(intl),
           }),
         )(values, context, options);
       },
@@ -98,7 +91,6 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         defaultDocumentViewUiOptions: values.defaultDocumentViewUiOptions,
       },
       values.migration,
-      values.remoteConverters,
     );
     if (success) {
       toasts.add({
@@ -131,12 +123,8 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     typeof schema === "string" || formState.errors.schema
   );
 
-  // When schema changes, if it's valid:
-  // - Require recompilation of contentSummaryGetter, contentBlockingKeysGetter,
-  //   and remoteConverters (for collections with a remote). Don't update the
-  //   sources, since they're what the user set in the previous collection version.
-  // - For collections with a remote: update migration, if still the default
-  //   one, and in any case require recompilation.
+  // When schema changes, if it's valid, require recompilation of the typed
+  // modules and update the migration default when it has not been customized.
   useEffect(() => {
     if (!isSchemaValid) {
       return;
@@ -152,25 +140,16 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
         forms.constants.COMPILATION_REQUIRED,
       );
     }
-    if (getValues("remoteConverters") !== null) {
-      setValue(
-        "remoteConverters.fromRemoteDocument.compiled",
-        forms.constants.COMPILATION_REQUIRED,
+    const currentMigrationSource = getValues("migration.source");
+    if (currentMigrationSource === lastDefaultMigrationSourceRef.current) {
+      const newDefault = forms.defaults.migration(
+        collection.latestVersion.schema,
+        schema,
       );
-    }
-
-    if (getValues("migration") !== null) {
-      const currentMigrationSource = getValues("migration.source");
-      if (currentMigrationSource === lastDefaultMigrationSourceRef.current) {
-        const newDefault = forms.defaults.migration(
-          collection.latestVersion.schema,
-          schema,
-        );
-        setValue("migration", newDefault);
-        lastDefaultMigrationSourceRef.current = newDefault.source;
-      } else {
-        setValue("migration.compiled", forms.constants.COMPILATION_REQUIRED);
-      }
+      setValue("migration", newDefault);
+      lastDefaultMigrationSourceRef.current = newDefault.source;
+    } else {
+      setValue("migration.compiled", forms.constants.COMPILATION_REQUIRED);
     }
   }, [
     collection.latestVersion.schema,
@@ -179,10 +158,6 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     getValues,
     isSchemaValid,
   ]);
-
-  const { connectors } = useGlobalData();
-  const connectorName = collection.remote?.connector.name;
-  const connector = connectors.find(({ name }) => name === connectorName);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -195,7 +170,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
                 <FormattedMessage defaultMessage="1. Schema" />
               </TabTitle>
             ),
-            panel: <SchemaTab control={control} collection={collection} />,
+            panel: <SchemaTab control={control} />,
           },
           {
             title: (
@@ -233,43 +208,22 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
             ),
             isDisabled: !(isSchemaDirty && isSchemaValid),
           },
-          CollectionUtils.hasRemote(collection) && connector
-            ? {
-                title: (
-                  <TabTitle hasErrors={!!formState.errors.remoteConverters}>
-                    <FormattedMessage defaultMessage="5. Remote converters" />
-                  </TabTitle>
-                ),
-                panel: (
-                  <RemoteConvertersTab
-                    control={control}
-                    collection={collection}
-                    schema={schema}
-                    connector={connector}
-                    result={result}
-                  />
-                ),
-                isDisabled: !(isSchemaDirty && isSchemaValid),
-              }
-            : null,
-          !CollectionUtils.hasRemote(collection)
-            ? {
-                title: (
-                  <TabTitle hasErrors={!!formState.errors.migration}>
-                    <FormattedMessage defaultMessage="5. Migration" />
-                  </TabTitle>
-                ),
-                panel: (
-                  <MigrationTab
-                    control={control}
-                    schema={schema}
-                    collection={collection}
-                    result={result}
-                  />
-                ),
-                isDisabled: !(isSchemaDirty && isSchemaValid),
-              }
-            : null,
+          {
+            title: (
+              <TabTitle hasErrors={!!formState.errors.migration}>
+                <FormattedMessage defaultMessage="5. Migration" />
+              </TabTitle>
+            ),
+            panel: (
+              <MigrationTab
+                control={control}
+                schema={schema}
+                collection={collection}
+                result={result}
+              />
+            ),
+            isDisabled: !(isSchemaDirty && isSchemaValid),
+          },
         ]}
       />
     </Form>

@@ -10,7 +10,6 @@ import {
   listAppsQuery,
   listCollectionCategoriesQuery,
   listCollectionsQuery,
-  listConnectorsQuery,
 } from "./business-logic/backend/hooks.js";
 import { BackendProvider } from "./business-logic/backend/useBackend.js";
 import { fromHref } from "./business-logic/navigation/RouteUtils.js";
@@ -40,7 +39,6 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                   listCollectionCategoriesQuery([]),
                   listCollectionsQuery([]),
                   listAppsQuery([]),
-                  listConnectorsQuery([]),
                   getGlobalSettingsQuery([]),
                   getDeveloperPromptsQuery([]),
                 ]}
@@ -57,7 +55,6 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                   collectionCategories,
                   collections,
                   apps,
-                  connectors,
                   globalSettings,
                   developerPrompts,
                 ) => (
@@ -66,7 +63,6 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                       collectionCategories,
                       collections,
                       apps,
-                      connectors,
                       globalSettings,
                       developerPrompts,
                     }}

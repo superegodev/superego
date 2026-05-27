@@ -43,7 +43,6 @@ export default async function createBackend(): Promise<ExecutingBackend> {
     new QuickjsJavascriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
-    [],
   );
 }
 

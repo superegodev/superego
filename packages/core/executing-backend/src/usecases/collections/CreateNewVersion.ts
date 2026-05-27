@@ -14,8 +14,6 @@ import {
   type DefaultDocumentViewUiOptionsNotValid,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
-  type RemoteConverters,
-  type RemoteConvertersNotValid,
   type TypescriptModule,
   type UnexpectedError,
 } from "@superego/backend";
@@ -58,8 +56,7 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
       Schema
     >,
     structuralSchemas.backend.types.collectionVersionSettings(),
-    v.nullable(structuralSchemas.backend.types.typescriptModule()),
-    v.nullable(structuralSchemas.backend.types.remoteConverters()),
+    structuralSchemas.backend.types.typescriptModule(),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.collection(),
@@ -73,7 +70,6 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
       structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
       structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
       structuralSchemas.backend.errors.referencedCollectionsNotFound(),
-      structuralSchemas.backend.errors.remoteConvertersNotValid(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
@@ -83,8 +79,7 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
     latestVersionId: CollectionVersionId,
     schema: Schema,
     settings: CollectionVersionSettings,
-    migration: TypescriptModule | null,
-    remoteConverters: RemoteConverters | null,
+    migration: TypescriptModule,
   ): ResultPromise<
     Collection,
     | CollectionNotFound
@@ -95,7 +90,6 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
     | ContentSummaryGetterNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | CollectionMigrationNotValid
-    | RemoteConvertersNotValid
     | CollectionMigrationFailed
     | UnexpectedError
   > {
@@ -219,91 +213,21 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
       }
     }
 
-    // Validate migration and remoteConverters.
-    if (collection.remote) {
-      if (migration !== null) {
-        return makeUnsuccessfulResult(
-          makeResultError("CollectionMigrationNotValid", {
-            collectionId: id,
-            issues: [
-              { message: "Collection has a remote; migration must be null." },
-            ],
-          }),
-        );
-      }
-      if (remoteConverters === null) {
-        return makeUnsuccessfulResult(
-          makeResultError("RemoteConvertersNotValid", {
-            collectionId: id,
-            issues: [
-              {
-                message:
-                  "Collection has a remote; remoteConverters must not be null.",
-              },
-            ],
-          }),
-        );
-      }
-      if (
-        !(await this.javascriptSandbox.moduleDefaultExportsFunction(
-          remoteConverters.fromRemoteDocument,
-        ))
-      ) {
-        return makeUnsuccessfulResult(
-          makeResultError("RemoteConvertersNotValid", {
-            collectionId: id,
-            issues: [
-              {
-                message:
-                  "The default export of the fromRemoteDocument TypescriptModule is not a function",
-                path: [{ key: "fromRemoteDocument" }],
-              },
-            ],
-          }),
-        );
-      }
-    } else {
-      if (migration === null) {
-        return makeUnsuccessfulResult(
-          makeResultError("CollectionMigrationNotValid", {
-            collectionId: id,
-            issues: [
-              {
-                message:
-                  "Collection has no remote; migration must not be null.",
-              },
-            ],
-          }),
-        );
-      }
-      if (remoteConverters !== null) {
-        return makeUnsuccessfulResult(
-          makeResultError("RemoteConvertersNotValid", {
-            collectionId: id,
-            issues: [
-              {
-                message:
-                  "Collection has no remote; remoteConverters must be null.",
-              },
-            ],
-          }),
-        );
-      }
-      if (
-        !(await this.javascriptSandbox.moduleDefaultExportsFunction(migration))
-      ) {
-        return makeUnsuccessfulResult(
-          makeResultError("CollectionMigrationNotValid", {
-            collectionId: id,
-            issues: [
-              {
-                message:
-                  "The default export of the migration TypescriptModule is not a function",
-              },
-            ],
-          }),
-        );
-      }
+    // Validate migration.
+    if (
+      !(await this.javascriptSandbox.moduleDefaultExportsFunction(migration))
+    ) {
+      return makeUnsuccessfulResult(
+        makeResultError("CollectionMigrationNotValid", {
+          collectionId: id,
+          issues: [
+            {
+              message:
+                "The default export of the migration TypescriptModule is not a function",
+            },
+          ],
+        }),
+      );
     }
 
     // Create new collection version.
@@ -318,7 +242,6 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
         defaultDocumentViewUiOptions: settings.defaultDocumentViewUiOptions,
       },
       migration: migration,
-      remoteConverters: remoteConverters,
       createdAt: new Date(),
     };
     await this.repos.collectionVersion.insert(collectionVersion);
@@ -327,7 +250,7 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
     const documents = await this.repos.document.findAllWhereCollectionIdEq(id);
     const migrationResults = await pMap(
       documents,
-      (document) => this.migrateDocument(migration, remoteConverters, document),
+      (document) => this.migrateDocument(migration, document),
       { concurrency: 1 },
     );
     const failedDocumentMigrations = migrationResults.filter(
@@ -342,18 +265,11 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
       );
     }
 
-    return makeSuccessfulResult(
-      makeCollection(
-        collection,
-        collectionVersion,
-        this.getConnector(collection),
-      ),
-    );
+    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
   }
 
   private async migrateDocument(
-    migration: TypescriptModule | null,
-    remoteConverters: RemoteConverters | null,
+    migration: TypescriptModule,
     document: DocumentEntity,
   ): Promise<
     | undefined
@@ -372,20 +288,9 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
         latestDocumentVersion,
       );
 
-      // Migration strategy:
-      // - For collections without a remote, run the migration function on the
-      //   previous content.
-      // - For collections with a remote, run the updated fromRemoteDocument
-      //   function on the latest remote document.
       const executionResult = await this.javascriptSandbox.executeSyncFunction(
-        // ! assertion as the validation above guarantees that if migration is
-        // null, remoteConverters is not.
-        migration !== null ? migration : remoteConverters!.fromRemoteDocument,
-        [
-          migration !== null
-            ? latestDocumentVersion.content
-            : document.latestRemoteDocument,
-        ],
+        migration,
+        [latestDocumentVersion.content],
       );
 
       if (!executionResult.success) {
@@ -405,7 +310,6 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
         executionResult.data,
         {
           createdBy: DocumentVersionCreator.Migration,
-          remoteVersionId: latestDocumentVersion.remoteId,
         },
       );
 

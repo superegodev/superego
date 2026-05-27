@@ -30,7 +30,6 @@
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
     "@superego/cli": "workspace:*",
-    "@superego/connectors": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",

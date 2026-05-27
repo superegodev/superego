@@ -42,7 +42,6 @@ export default class SqliteDocumentVersionRepository implements DocumentVersionR
         INSERT INTO "${documentVersionsTable}"
           (
             "id",
-            "remote_id",
             "previous_version_id",
             "collection_id",
             "document_id",
@@ -58,11 +57,10 @@ export default class SqliteDocumentVersionRepository implements DocumentVersionR
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         documentVersion.id,
-        documentVersion.remoteId,
         documentVersion.previousVersionId,
         documentVersion.collectionId,
         documentVersion.documentId,

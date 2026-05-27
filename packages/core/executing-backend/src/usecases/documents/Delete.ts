@@ -3,7 +3,6 @@ import type {
   CollectionId,
   CollectionNotFound,
   CommandConfirmationNotValid,
-  ConnectorDoesNotSupportUpSyncing,
   DocumentId,
   DocumentIsReferenced,
   DocumentNotFound,
@@ -31,7 +30,6 @@ export default class DocumentsDelete extends BackendUsecase<
   resultSchema = structuralSchemas.global.result(v.null(), [
     structuralSchemas.backend.errors.collectionNotFound(),
     structuralSchemas.backend.errors.commandConfirmationNotValid(),
-    structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
     structuralSchemas.backend.errors.documentIsReferenced(),
     structuralSchemas.backend.errors.documentNotFound(),
     structuralSchemas.backend.errors.unexpectedError(),
@@ -41,13 +39,11 @@ export default class DocumentsDelete extends BackendUsecase<
     collectionId: CollectionId,
     id: DocumentId,
     commandConfirmation: string,
-    allowDeletingRemoteDocument = false,
     ignoreIntraCollectionRefs = false,
   ): ResultPromise<
     null,
     | CollectionNotFound
     | DocumentNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | CommandConfirmationNotValid
     | DocumentIsReferenced
     | UnexpectedError
@@ -72,20 +68,6 @@ export default class DocumentsDelete extends BackendUsecase<
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentNotFound", { documentId: id }),
-      );
-    }
-
-    // Right now no connector supports up-syncing, so checking if the collection
-    // has a remote is sufficient. TODO: update condition once connectors
-    // support up-syncing.
-    if (collection.remote !== null && !allowDeletingRemoteDocument) {
-      return makeUnsuccessfulResult(
-        makeResultError("ConnectorDoesNotSupportUpSyncing", {
-          collectionId: collectionId,
-          connectorName: collection.remote.connector.name,
-          message:
-            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
-        }),
       );
     }
 

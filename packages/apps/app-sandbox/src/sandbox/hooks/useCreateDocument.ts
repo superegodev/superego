@@ -1,6 +1,5 @@
 import type {
   CollectionNotFound,
-  ConnectorDoesNotSupportUpSyncing,
   DocumentContentNotValid,
   DocumentDefinition,
   FilesNotFound,
@@ -17,7 +16,6 @@ interface UseCreateDocument {
   isSuccess: boolean;
   error:
     | CollectionNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError
@@ -29,7 +27,6 @@ export default function useCreateDocument(): UseCreateDocument {
   const { mutate, isIdle, isPending, isError, isSuccess, error } = useMutation<
     null,
     | CollectionNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError,

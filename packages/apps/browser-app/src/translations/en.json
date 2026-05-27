@@ -32,24 +32,6 @@
   "AssistantsSettings.tsx_xIOlmn": {
     "defaultMessage": "Your preferences"
   },
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": {
-    "defaultMessage": "Authenticate connector"
-  },
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": {
-    "defaultMessage": "Re-authenticate connector"
-  },
-  "AuthenticationSettings.tsx_B7p2EC": {
-    "defaultMessage": "Client secret"
-  },
-  "AuthenticationSettings.tsx_KTNoOq": {
-    "defaultMessage": "API key"
-  },
-  "AuthenticationSettings.tsx_Q0U6OF": {
-    "defaultMessage": "Authentication settings"
-  },
-  "AuthenticationSettings.tsx_U5+MBC": {
-    "defaultMessage": "Client ID"
-  },
   "BackgroundJob.tsx_EiyxpM": {
     "defaultMessage": "Finished at"
   },
@@ -200,9 +182,6 @@
   "CollectionSettings.tsx_GjrlL9": {
     "defaultMessage": "General settings"
   },
-  "CollectionSettings.tsx_JJBzhX": {
-    "defaultMessage": "Remote"
-  },
   "CollectionSettings.tsx_VcipZo": {
     "defaultMessage": "Latest version settings"
   },
@@ -220,18 +199,6 @@
   },
   "CompilationInProgressIndicator.tsx_MCO54A": {
     "defaultMessage": "Compiling..."
-  },
-  "ConnectorSelect.tsx_Gnbr9F": {
-    "defaultMessage": "Select a connector"
-  },
-  "ConnectorSelect.tsx_nSFiyf": {
-    "defaultMessage": "The connector cannot be changed once a remote is configured."
-  },
-  "ConnectorSelect.tsx_r8XsCU": {
-    "defaultMessage": "Connector"
-  },
-  "ConnectorSettings.tsx_1B+Bnl": {
-    "defaultMessage": "Connector settings"
   },
   "ContentBlockingKeysTab.tsx_mzcj4a": {
     "defaultMessage": "Update the <code>getContentBlockingKeys</code> function to reflect schema changes."
@@ -398,17 +365,11 @@
   "CreateNewCollectionVersionForm.tsx_oL/+8Y": {
     "defaultMessage": "2. Deduplication"
   },
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": {
-    "defaultMessage": "5. Remote converters"
-  },
   "CreateNewDocumentVersion.tsx_p5+z7U": {
     "defaultMessage": "{collection} » Created new document version"
   },
   "CreateNewDocumentVersionForm.tsx_KtoryI": {
     "defaultMessage": "Viewing document version from <b>{date}</b>. Document editing is disabled."
-  },
-  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": {
-    "defaultMessage": "This document is synced from a remote source and cannot be edited."
   },
   "CreateNewDocumentVersionForm.tsx_p6/GR5": {
     "defaultMessage": "Error saving document"
@@ -421,9 +382,6 @@
   },
   "CreatedByLine.tsx_qTzfr9": {
     "defaultMessage": "Created in conversation"
-  },
-  "CreatedByLine.tsx_ufqNmd": {
-    "defaultMessage": "Created by sync"
   },
   "DatePickerInput.tsx_/GCoTA": {
     "defaultMessage": "Clear"
@@ -494,9 +452,6 @@
   "DeleteConversationModalForm.tsx_lml5ZH": {
     "defaultMessage": "Command confirmation"
   },
-  "Document.tsx_AB6IO/": {
-    "defaultMessage": "Go to remote document"
-  },
   "Document.tsx_EPTOBf": {
     "defaultMessage": "{collection} » {document}"
   },
@@ -521,20 +476,11 @@
   "Document.tsx_zugcbb": {
     "defaultMessage": "{collection} » {documentId}"
   },
-  "DocumentInfoModal.tsx_1D7voQ": {
-    "defaultMessage": "Synced with {remote}"
-  },
   "DocumentInfoModal.tsx_gm5+Hy": {
     "defaultMessage": "Collection ID:"
   },
-  "DocumentInfoModal.tsx_h6SlY+": {
-    "defaultMessage": "Remote document ID:"
-  },
   "DocumentInfoModal.tsx_i3P6ZD": {
     "defaultMessage": "Created at:"
-  },
-  "DocumentInfoModal.tsx_nY1/sq": {
-    "defaultMessage": "Remote document version ID:"
   },
   "DocumentInfoModal.tsx_ps0LGU": {
     "defaultMessage": "Document info"
@@ -560,9 +506,6 @@
   "DocumentRefField.tsx_hX5PAb": {
     "defaultMessage": "No results found"
   },
-  "DocumentTableRow.tsx_aBBLZR": {
-    "defaultMessage": "Open remote document"
-  },
   "DocumentTableRow.tsx_vT9jcW": {
     "defaultMessage": "Invalid content summary"
   },
@@ -586,18 +529,6 @@
   },
   "DocumentsTable.tsx_kGGU2D": {
     "defaultMessage": "Id"
-  },
-  "DocumentsTable.tsx_xIoGG9": {
-    "defaultMessage": "Go to"
-  },
-  "DownSyncInfoModal.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "DownSyncInfoModal.tsx_8I58x/": {
-    "defaultMessage": "Syncing with {remote}"
-  },
-  "DownSyncInfoModal.tsx_dKtz/9": {
-    "defaultMessage": "Sync"
   },
   "DuplicateDocumentDetectedModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
@@ -1208,30 +1139,6 @@
   "ReasoningEffortSelect.tsx_ovJ26C": {
     "defaultMessage": "Medium"
   },
-  "Remote.tsx_s8FZNF": {
-    "defaultMessage": "<p> You can sync a collection with an external data source (a <b>remote</b>). When a remote is configured, it becomes the <i>source of truth</i> for that collection. </p> <p> The collection isn't necessarily an exact replica of the remote. Documents pulled from the remote are transformed to match your collection's schema via your <code>fromRemoteDocument</code> mapping, and you can filter which remote documents are synced. </p> <p> To set up a remote, configure a <i>connector</i> to the external data source. </p> <p> Some connectors support only <b>syncing down from</b> the remote, making the collection read-only. Others also support <b>syncing up to</b> the remote, so creates, updates, and deletes in the collection are propagated to the remote. </p> <p> More info at <a>https://superego.dev/connectors</a>. </p>"
-  },
-  "RemoteConverters.tsx_3cBs4J": {
-    "defaultMessage": "TypeScript function transforming a remote document into the content of a local document. Return <code>null</code> to skip syncing the document."
-  },
-  "RemoteConverters.tsx_GqZhDC": {
-    "defaultMessage": "From remote document"
-  },
-  "RemoteConverters.tsx_abnr48": {
-    "defaultMessage": "Remote document converters"
-  },
-  "RemoteConvertersTab.tsx_3cBs4J": {
-    "defaultMessage": "TypeScript function transforming a remote document into the content of a local document. Return <code>null</code> to skip syncing the document."
-  },
-  "RemoteConvertersTab.tsx_CPS541": {
-    "defaultMessage": "Update the <code>fromRemoteDocument</code> function to reflect schema changes."
-  },
-  "RemoteConvertersTab.tsx_GqZhDC": {
-    "defaultMessage": "From remote document"
-  },
-  "RemoteConvertersTab.tsx_J/yjzE": {
-    "defaultMessage": "Create new version and migrate documents"
-  },
   "RenameCollectionCategoryModalForm.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
@@ -1298,9 +1205,6 @@
   "SchemaTab.tsx_Lktmvk": {
     "defaultMessage": "Schema"
   },
-  "SchemaTab.tsx_Vi4BUn": {
-    "defaultMessage": "<p> Every time you want to change the schema of a collection (e.g., to add, change, or remove properties), you need to create a new collection version. The process involves the following steps: </p> <ol> <li>Implement the schema changes you want to make.</li> <li> Update the collection's content summary getter to reflect those changes. </li> <li> Since this is a remote collection, update its remote converters as well. </li> </ol>"
-  },
   "SearchModal.tsx_xmcVZ0": {
     "defaultMessage": "Search"
   },
@@ -1360,12 +1264,6 @@
   },
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Add model w/ audio understanding to use voice"
-  },
-  "SetCollectionRemoteForm.tsx_fsGyC4": {
-    "defaultMessage": "Update remote"
-  },
-  "SetCollectionRemoteForm.tsx_m8TXbJ": {
-    "defaultMessage": "Set remote"
   },
   "SetNameAndSaveModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
@@ -1576,21 +1474,6 @@
   },
   "formatDuration.ts_lf6GDO": {
     "defaultMessage": "{seconds, number, ::.##} seconds"
-  },
-  "getDownSyncAction.tsx_IJWuS/": {
-    "defaultMessage": "Last synced {lastSucceededAt, date, ::MMM d, HH:mm}"
-  },
-  "getDownSyncAction.tsx_RRA+40": {
-    "defaultMessage": "Authenticate with {remote}"
-  },
-  "getDownSyncAction.tsx_dKtz/9": {
-    "defaultMessage": "Sync"
-  },
-  "getDownSyncAction.tsx_eOnwqs": {
-    "defaultMessage": "Syncing"
-  },
-  "getDownSyncAction.tsx_mG35sa": {
-    "defaultMessage": "Last sync failed"
   },
   "getIntlMessages.ts_/GCoTA": {
     "defaultMessage": "Clear"

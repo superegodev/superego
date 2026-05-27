@@ -8,13 +8,6 @@ export const MigrationTab = {
   }),
 };
 
-export const RemoteConvertersTab = {
-  submitButtonContainer: style({
-    display: "flex",
-    justifyContent: "flex-end",
-  }),
-};
-
 export const TabTitle = {
   root: style({
     display: "flex",

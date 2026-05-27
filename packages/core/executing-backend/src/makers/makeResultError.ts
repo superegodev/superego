@@ -2,7 +2,6 @@ import type {
   AppNameNotValid,
   AppNotFound,
   ArgumentsNotValid,
-  CannotChangeCollectionRemoteConnector,
   CannotContinueConversation,
   CannotRecoverConversation,
   CannotRetryLastResponse,
@@ -11,10 +10,7 @@ import type {
   CollectionCategoryIconNotValid,
   CollectionCategoryNameNotValid,
   CollectionCategoryNotFound,
-  CollectionHasDocuments,
-  CollectionHasNoRemote,
   CollectionIsReferenced,
-  CollectionIsSyncing,
   CollectionMigrationFailed,
   CollectionMigrationNotValid,
   CollectionNotFound,
@@ -23,13 +19,6 @@ import type {
   CollectionVersionIdNotMatching,
   CollectionVersionNotFound,
   CommandConfirmationNotValid,
-  ConnectorAuthenticationFailed,
-  ConnectorAuthenticationSettingsNotValid,
-  ConnectorDoesNotSupportUpSyncing,
-  ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy,
-  ConnectorNotAuthenticated,
-  ConnectorNotFound,
-  ConnectorSettingsNotValid,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   ContentSummaryNotValid,
@@ -54,8 +43,6 @@ import type {
   ParentCollectionCategoryNotFound,
   ReferencedCollectionsNotFound,
   ReferencedDocumentsNotFound,
-  RemoteConvertersNotValid,
-  SyncingChangesFailed,
   TooManyFailedImplementationAttempts,
   TypescriptCompilationFailed,
   UnexpectedError,
@@ -66,7 +53,6 @@ type KnownResultError =
   | AppNameNotValid
   | AppNotFound
   | ArgumentsNotValid
-  | CannotChangeCollectionRemoteConnector
   | CannotContinueConversation
   | CannotRecoverConversation
   | CannotRetryLastResponse
@@ -75,10 +61,7 @@ type KnownResultError =
   | CollectionCategoryIconNotValid
   | CollectionCategoryNameNotValid
   | CollectionCategoryNotFound
-  | CollectionHasDocuments
-  | CollectionHasNoRemote
   | CollectionIsReferenced
-  | CollectionIsSyncing
   | CollectionMigrationFailed
   | CollectionMigrationNotValid
   | CollectionNotFound
@@ -87,13 +70,6 @@ type KnownResultError =
   | CollectionVersionIdNotMatching
   | CollectionVersionNotFound
   | CommandConfirmationNotValid
-  | ConnectorAuthenticationFailed
-  | ConnectorAuthenticationSettingsNotValid
-  | ConnectorDoesNotSupportUpSyncing
-  | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
-  | ConnectorNotAuthenticated
-  | ConnectorNotFound
-  | ConnectorSettingsNotValid
   | ContentBlockingKeysGetterNotValid
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
@@ -118,8 +94,6 @@ type KnownResultError =
   | ParentCollectionCategoryNotFound
   | ReferencedCollectionsNotFound
   | ReferencedDocumentsNotFound
-  | RemoteConvertersNotValid
-  | SyncingChangesFailed
   | TooManyFailedImplementationAttempts
   | TypescriptCompilationFailed
   | UnexpectedError

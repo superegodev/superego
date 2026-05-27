@@ -18,10 +18,6 @@ contextBridge.exposeInMainWorld(
 );
 contextBridge.exposeInMainWorld("windowClose", WindowCloseIPCProxyClient());
 
-ipcRenderer.on("OAuth2PKCEFlowSucceeded", (_evt, data) => {
-  window.postMessage(data, "*");
-});
-
 ipcRenderer.on("NavigationRequested", (_evt, data) => {
   window.postMessage(data, "*");
 });

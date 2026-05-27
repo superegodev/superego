@@ -10,6 +10,7 @@ import m0007 from "./0007.sql?raw";
 import m0008 from "./0008.sql?raw";
 import m0009 from "./0009.sql?raw";
 import m0010 from "./0010.sql?raw";
+import m0011 from "./0011.sql?raw";
 
 const migrationFiles = {
   "0000.sql": m0000,
@@ -23,6 +24,7 @@ const migrationFiles = {
   "0008.sql": m0008,
   "0009.sql": m0009,
   "0010.sql": m0010,
+  "0011.sql": m0011,
 };
 const table = "migrations";
 

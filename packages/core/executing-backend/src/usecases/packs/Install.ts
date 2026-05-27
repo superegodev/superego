@@ -15,7 +15,6 @@ import type {
   CollectionNotFound,
   CollectionSchemaNotValid,
   CollectionSettingsNotValid,
-  ConnectorDoesNotSupportUpSyncing,
   ContentBlockingKeysGetterNotValid,
   ContentSummaryGetterNotValid,
   DefaultDocumentViewUiOptionsNotValid,
@@ -87,7 +86,6 @@ export default class PacksInstall extends BackendUsecase<
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.collectionSchemaNotValid(),
       structuralSchemas.backend.errors.collectionSettingsNotValid(),
-      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
       structuralSchemas.backend.errors.contentBlockingKeysGetterNotValid(),
       structuralSchemas.backend.errors.contentSummaryGetterNotValid(),
       structuralSchemas.backend.errors.defaultDocumentViewUiOptionsNotValid(),
@@ -129,7 +127,6 @@ export default class PacksInstall extends BackendUsecase<
     | ReferencedDocumentsNotFound
     | MakingContentBlockingKeysFailed
     | DuplicateDocumentDetected
-    | ConnectorDoesNotSupportUpSyncing
     | UnexpectedError
   > {
     // Step 1: Generate all IDs upfront.
