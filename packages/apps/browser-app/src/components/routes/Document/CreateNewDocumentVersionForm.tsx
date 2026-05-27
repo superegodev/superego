@@ -21,8 +21,6 @@ import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js
 import RHFContentField from "../../widgets/RHFContentField/RHFContentField.js";
 import * as cs from "./Document.css.js";
 
-export type ReadOnlyReason = "history-version";
-
 interface Props {
   collection: Collection;
   collectionSchema?: Schema;
@@ -31,7 +29,7 @@ interface Props {
   documentVersion?: DocumentVersion;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
-  readOnlyReason: ReadOnlyReason | null;
+  isReadOnly: boolean;
 }
 export default function CreateNewDocumentVersionForm({
   collection,
@@ -42,11 +40,9 @@ export default function CreateNewDocumentVersionForm({
   documentVersion = document.latestVersion,
   formId,
   setSubmitDisabled,
-  readOnlyReason,
+  isReadOnly,
 }: Props) {
   const intl = useIntl();
-
-  const isReadOnly = readOnlyReason !== null;
 
   const { mutate } = useCreateNewDocumentVersion();
 
@@ -132,7 +128,7 @@ export default function CreateNewDocumentVersionForm({
         triggerExitWarningWhenDirty={true}
         isDisabled={isReadOnly}
       />
-      {readOnlyReason !== null ? (
+      {isReadOnly ? (
         <Alert
           variant="info"
           className={cs.CreateNewDocumentVersionForm.readOnlyAlert}

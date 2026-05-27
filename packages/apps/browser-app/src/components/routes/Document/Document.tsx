@@ -182,7 +182,7 @@ export default function Document({
                   }
                   formId={createFormId}
                   setSubmitDisabled={setIsCreateFormSubmitDisabled}
-                  readOnlyReason={isShowingHistory ? "history-version" : null}
+                  isShowingHistory={isShowingHistory}
                 />
               </div>
               {isShowingHistory ? (
