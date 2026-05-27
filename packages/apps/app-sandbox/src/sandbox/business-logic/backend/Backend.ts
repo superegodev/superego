@@ -1,7 +1,6 @@
 import type {
   CollectionId,
   CollectionNotFound,
-  ConnectorDoesNotSupportUpSyncing,
   Document,
   DocumentContentNotValid,
   DocumentDefinition,
@@ -40,7 +39,6 @@ export default class Backend {
   ): ResultPromise<
     Document,
     | CollectionNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError
@@ -57,7 +55,6 @@ export default class Backend {
     Document,
     | CollectionNotFound
     | DocumentNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentVersionIdNotMatching
     | DocumentContentNotValid
     | FilesNotFound

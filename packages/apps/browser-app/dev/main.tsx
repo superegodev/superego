@@ -1,11 +1,4 @@
 import { AssistantName, Theme } from "@superego/backend";
-import {
-  GoogleCalendar,
-  GoogleContacts,
-  onOAuth2PKCEAuthorizationResponseUrl,
-  StravaActivities,
-} from "@superego/connectors";
-import { BrowserSessionStorage } from "@superego/connectors/requirements/browser";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
@@ -15,8 +8,6 @@ import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 import monaco from "../src/monaco.js";
 
-const redirectUri = "http://localhost:5173/OAuth2PKCECallback";
-const sessionStorage = new BrowserSessionStorage();
 const backend = new ExecutingBackend(
   new DemoDataRepositoriesManager({
     appearance: { theme: Theme.Auto },
@@ -42,11 +33,6 @@ const backend = new ExecutingBackend(
     async () => (await import("../src/monaco.js")).default,
   ),
   new MultiDriverInferenceServiceFactory(),
-  [
-    new GoogleCalendar(redirectUri, sessionStorage),
-    new GoogleContacts(redirectUri, sessionStorage),
-    new StravaActivities(redirectUri, sessionStorage),
-  ],
 );
 
 const queryClient = new QueryClient({
@@ -62,29 +48,7 @@ const queryClient = new QueryClient({
   },
 });
 
-if (window.location.href.startsWith(redirectUri)) {
-  const result = await onOAuth2PKCEAuthorizationResponseUrl(
-    backend,
-    window.location.href,
-  );
-  if (result.success) {
-    if (window.opener) {
-      window.opener.postMessage({ type: "OAuth2PKCEFlowSucceeded" }, "*");
-    }
-    window.close();
-  } else {
-    console.error("authenticateOAuth2PKCEConnector failed", result.error);
-    window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
-  }
-} else {
-  renderBrowserApp(backend, queryClient);
-}
-
-window.addEventListener("message", (evt) => {
-  if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
-    queryClient.invalidateQueries({ queryKey: ["listCollections"] });
-  }
-});
+renderBrowserApp(backend, queryClient);
 
 (window as any).backend = backend;
 (window as any).monaco = monaco;

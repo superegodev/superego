@@ -68,29 +68,26 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests(
-  ({ connector, inferenceService, inferenceSettings, config } = {}) => {
-    const effectiveGlobalSettings = inferenceSettings
-      ? { ...defaultGlobalSettings, inference: inferenceSettings }
-      : defaultGlobalSettings;
+registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
+  const effectiveGlobalSettings = inferenceSettings
+    ? { ...defaultGlobalSettings, inference: inferenceSettings }
+    : defaultGlobalSettings;
 
-    const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-      fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-      defaultGlobalSettings: effectiveGlobalSettings,
-    });
-    dataRepositoriesManager.runMigrations();
+  const dataRepositoriesManager = new SqliteDataRepositoriesManager({
+    fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
+    defaultGlobalSettings: effectiveGlobalSettings,
+  });
+  dataRepositoriesManager.runMigrations();
 
-    return {
-      backend: new ExecutingBackend(
-        dataRepositoriesManager,
-        new QuickjsJavascriptSandbox(),
-        new TscTypescriptCompiler(),
-        inferenceService
-          ? { create: () => inferenceService }
-          : new MockInferenceServiceFactory(),
-        connector ? [connector] : [],
-        config,
-      ),
-    };
-  },
-);
+  return {
+    backend: new ExecutingBackend(
+      dataRepositoriesManager,
+      new QuickjsJavascriptSandbox(),
+      new TscTypescriptCompiler(),
+      inferenceService
+        ? { create: () => inferenceService }
+        : new MockInferenceServiceFactory(),
+      config,
+    ),
+  };
+});

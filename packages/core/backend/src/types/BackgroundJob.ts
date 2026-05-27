@@ -2,7 +2,6 @@ import type { ResultError } from "@superego/global-types";
 import type BackgroundJobName from "../enums/BackgroundJobName.js";
 import type BackgroundJobStatus from "../enums/BackgroundJobStatus.js";
 import type BackgroundJobId from "../ids/BackgroundJobId.js";
-import type CollectionId from "../ids/CollectionId.js";
 import type ConversationId from "../ids/ConversationId.js";
 import type InferenceOptions from "./InferenceOptions.js";
 
@@ -50,15 +49,8 @@ namespace BackgroundJob {
       inferenceOptions: InferenceOptions<"completion">;
     }
   >;
-
-  export type DownSyncCollection = BaseBackgroundJob<
-    BackgroundJobName.DownSyncCollection,
-    { id: CollectionId }
-  >;
 }
 
-type BackgroundJob =
-  | BackgroundJob.ProcessConversation
-  | BackgroundJob.DownSyncCollection;
+type BackgroundJob = BackgroundJob.ProcessConversation;
 
 export default BackgroundJob;

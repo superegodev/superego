@@ -7,13 +7,6 @@ import {
   Theme,
 } from "@superego/backend";
 import { renderBrowserApp } from "@superego/browser-app";
-import {
-  GoogleCalendar,
-  GoogleContacts,
-  onOAuth2PKCEAuthorizationResponseUrl,
-  StravaActivities,
-} from "@superego/connectors";
-import { BrowserSessionStorage } from "@superego/connectors/requirements/browser";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
@@ -23,10 +16,6 @@ import { QueryClient } from "@tanstack/react-query";
 import loadDemoData from "./demoData/loadDemoData.js";
 
 const isProduction = import.meta.env["VITE_DEPLOY_ENVIRONMENT"];
-const redirectUri = isProduction
-  ? "https://demo.superego.dev/OAuth2PKCECallback"
-  : "http://localhost:5173/OAuth2PKCECallback";
-const sessionStorage = new BrowserSessionStorage();
 const commitSha = import.meta.env["VITE_COMMIT_SHA"]?.slice(0, 7);
 const databaseName = commitSha ? `superego-${commitSha}` : "superego";
 const dataRepositoriesManager = new DemoDataRepositoriesManager(
@@ -101,11 +90,6 @@ const backend = new ExecutingBackend(
     async () => (await import("@superego/browser-app/monaco")).default,
   ),
   new MultiDriverInferenceServiceFactory(),
-  [
-    new GoogleCalendar(redirectUri, sessionStorage),
-    new GoogleContacts(redirectUri, sessionStorage),
-    new StravaActivities(redirectUri, sessionStorage),
-  ],
 );
 
 const queryClient = new QueryClient({
@@ -121,33 +105,11 @@ const queryClient = new QueryClient({
   },
 });
 
-if (window.location.href.startsWith(redirectUri)) {
-  const result = await onOAuth2PKCEAuthorizationResponseUrl(
-    backend,
-    window.location.href,
-  );
-  if (result.success) {
-    if (window.opener) {
-      window.opener.postMessage({ type: "OAuth2PKCEFlowSucceeded" }, "*");
-    }
-    window.close();
-  } else {
-    console.error("authenticateOAuth2PKCEConnector failed", result.error);
-    window.document.body.innerHTML = `<pre><code>${JSON.stringify(result.error, null, 2)}</code></pre>`;
-  }
-} else {
-  const collectionsResult = await backend.collections.list();
-  if (collectionsResult.success && collectionsResult.data.length === 0) {
-    await loadDemoData(backend);
-  }
-  renderBrowserApp(backend, queryClient);
+const collectionsResult = await backend.collections.list();
+if (collectionsResult.success && collectionsResult.data.length === 0) {
+  await loadDemoData(backend);
 }
-
-window.addEventListener("message", (evt) => {
-  if (evt.data?.type === "OAuth2PKCEFlowSucceeded") {
-    queryClient.invalidateQueries({ queryKey: ["listCollections"] });
-  }
-});
+renderBrowserApp(backend, queryClient);
 
 (window as any).backend = backend;
 console.log(

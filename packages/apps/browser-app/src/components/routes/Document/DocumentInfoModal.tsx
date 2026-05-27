@@ -1,35 +1,22 @@
-import type { Collection, Document } from "@superego/backend";
+import type { Document } from "@superego/backend";
 import { FormattedDate, FormattedMessage } from "react-intl";
-import toTitleCase from "../../../utils/toTitleCase.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
 import * as cs from "./Document.css.js";
 
 interface Props {
-  collection: Collection;
   document: Document;
   isOpen: boolean;
   onClose: () => void;
 }
 export default function DocumentInfoModal({
-  collection,
   document,
   isOpen,
   onClose,
 }: Props) {
-  const isRemote = document.remoteId !== null;
   return (
     <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
       <ModalDialog.Heading>
-        {isRemote ? (
-          <FormattedMessage
-            defaultMessage="Synced with {remote}"
-            values={{
-              remote: toTitleCase(collection.remote?.connector.name ?? "-"),
-            }}
-          />
-        ) : (
-          <FormattedMessage defaultMessage="Document info" />
-        )}
+        <FormattedMessage defaultMessage="Document info" />
       </ModalDialog.Heading>
       <dl className={cs.DocumentInfoModal.infoProperties}>
         <div className={cs.DocumentInfoModal.infoProperty}>
@@ -72,26 +59,6 @@ export default function DocumentInfoModal({
             />
           </dd>
         </div>
-        {isRemote ? (
-          <>
-            <div className={cs.DocumentInfoModal.infoProperty}>
-              <dt className={cs.DocumentInfoModal.infoPropertyName}>
-                <FormattedMessage defaultMessage="Remote document ID:" />
-              </dt>
-              <dd className={cs.DocumentInfoModal.infoPropertyValue.id}>
-                {document.remoteId ?? "-"}
-              </dd>
-            </div>
-            <div className={cs.DocumentInfoModal.infoProperty}>
-              <dt className={cs.DocumentInfoModal.infoPropertyName}>
-                <FormattedMessage defaultMessage="Remote document version ID:" />
-              </dt>
-              <dd className={cs.DocumentInfoModal.infoPropertyValue.id}>
-                {document.latestVersion.remoteId ?? "-"}
-              </dd>
-            </div>
-          </>
-        ) : null}
       </dl>
     </ModalDialog>
   );

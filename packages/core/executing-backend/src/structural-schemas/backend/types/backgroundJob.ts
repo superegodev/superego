@@ -6,7 +6,7 @@ import {
 } from "@superego/backend";
 import * as v from "valibot";
 import unknownResultError from "../../global/unknownResultError.js";
-import { backgroundJobId, collectionId, conversationId } from "../ids.js";
+import { backgroundJobId, conversationId } from "../ids.js";
 import { inferenceOptions } from "./inference.js";
 
 const enqueuedStatusEntries = () => ({
@@ -71,22 +71,9 @@ const processConversationEntries = () => ({
   enqueuedAt: v.date(),
 });
 
-const downSyncCollectionEntries = () => ({
-  id: backgroundJobId(),
-  name: v.literal(BackgroundJobName.DownSyncCollection),
-  input: v.strictObject({ id: collectionId() }),
-  enqueuedAt: v.date(),
-});
-
 const liteProcessConversationEntries = () => ({
   id: backgroundJobId(),
   name: v.literal(BackgroundJobName.ProcessConversation),
-  enqueuedAt: v.date(),
-});
-
-const liteDownSyncCollectionEntries = () => ({
-  id: backgroundJobId(),
-  name: v.literal(BackgroundJobName.DownSyncCollection),
   enqueuedAt: v.date(),
 });
 
@@ -106,22 +93,6 @@ export function backgroundJob(): v.GenericSchema<unknown, BackgroundJob> {
     }),
     v.strictObject({
       ...processConversationEntries(),
-      ...failedStatusEntries(),
-    }),
-    v.strictObject({
-      ...downSyncCollectionEntries(),
-      ...enqueuedStatusEntries(),
-    }),
-    v.strictObject({
-      ...downSyncCollectionEntries(),
-      ...processingStatusEntries(),
-    }),
-    v.strictObject({
-      ...downSyncCollectionEntries(),
-      ...succeededStatusEntries(),
-    }),
-    v.strictObject({
-      ...downSyncCollectionEntries(),
       ...failedStatusEntries(),
     }),
   ]) as v.GenericSchema<unknown, BackgroundJob>;
@@ -146,22 +117,6 @@ export function liteBackgroundJob(): v.GenericSchema<
     }),
     v.strictObject({
       ...liteProcessConversationEntries(),
-      ...liteFailedStatusEntries(),
-    }),
-    v.strictObject({
-      ...liteDownSyncCollectionEntries(),
-      ...liteEnqueuedStatusEntries(),
-    }),
-    v.strictObject({
-      ...liteDownSyncCollectionEntries(),
-      ...liteProcessingStatusEntries(),
-    }),
-    v.strictObject({
-      ...liteDownSyncCollectionEntries(),
-      ...liteSucceededStatusEntries(),
-    }),
-    v.strictObject({
-      ...liteDownSyncCollectionEntries(),
       ...liteFailedStatusEntries(),
     }),
   ]) as v.GenericSchema<unknown, LiteBackgroundJob>;

@@ -13,12 +13,7 @@ export default createBackendCommand({
     { name: "latest-version-id", description: "Latest collection version id" },
     { name: "schema", description: "New Superego Schema" },
     { name: "settings", description: "Collection version settings" },
-    { name: "migration", description: "Collection migration module or null" },
-    {
-      name: "remote-converters",
-      description: "Remote converters",
-      fixedValue: null,
-    },
+    { name: "migration", description: "Collection migration module" },
   ],
   additionalNotes,
 });

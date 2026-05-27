@@ -9,8 +9,6 @@ import type ContentSummary from "./ContentSummary.js";
 
 export default interface DocumentVersion {
   id: DocumentVersionId;
-  /** Id of the remote counterpart of this document version. */
-  remoteId: string | null;
   collectionVersionId: CollectionVersionId;
   /** Id of the previous version. Null if this is the first version. */
   previousVersionId: DocumentVersionId | null;

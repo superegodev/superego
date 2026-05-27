@@ -1,14 +1,9 @@
-import {
-  ConnectorAuthenticationStrategy,
-  DocumentVersionCreator,
-} from "@superego/backend";
-import type { Connector } from "@superego/executing-backend";
-import { DataType, type Schema } from "@superego/schema";
+import { DocumentVersionCreator } from "@superego/backend";
+import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
-import triggerAndWaitForDownSync from "../utils/triggerAndWaitForDownSync.js";
 
 export default rd<GetDependencies>("Documents", (deps) => {
   describe("create", () => {
@@ -42,108 +37,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
         error: {
           name: "CollectionNotFound",
           details: { collectionId },
-        },
-      });
-    });
-
-    it("error: ConnectorDoesNotSupportUpSyncing", async () => {
-      // Setup mocks
-      const mockConnector: Connector.OAuth2PKCE<Schema> = {
-        name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
-        settingsSchema: null,
-        remoteDocumentTypescriptSchema: {
-          types: "export type RemoteDocument = {};",
-          rootType: "RemoteDocument",
-        },
-        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
-        getAuthenticationState: async () => ({
-          success: true,
-          data: {
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
-          error: null,
-        }),
-        syncDown: async ({ authenticationState }) => ({
-          success: true,
-          data: {
-            changes: { addedOrModified: [], deleted: [] },
-            authenticationState,
-            syncPoint: "syncPoint",
-          },
-          error: null,
-        }),
-      };
-
-      // Setup SUT
-      const { backend } = deps({ connector: mockConnector });
-      const createCollectionResult = await backend.collections.create({
-        settings: {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-          redirectToCollectionAfterDocumentCreation: false,
-        },
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                title: { dataType: DataType.String },
-              },
-            },
-          },
-          rootType: "Root",
-        },
-        versionSettings: {
-          contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-          defaultDocumentViewUiOptions: null,
-        },
-      });
-      assert.isTrue(createCollectionResult.success);
-      const setRemoteResult = await backend.collections.setRemote(
-        createCollectionResult.data.id,
-        mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        null,
-        {
-          fromRemoteDocument: {
-            source: "",
-            compiled:
-              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
-          },
-        },
-      );
-      assert.isTrue(setRemoteResult.success);
-
-      // Exercise
-      const createDocumentResult = await backend.documents.create({
-        collectionId: createCollectionResult.data.id,
-        content: { title: "title" },
-      });
-
-      // Verify
-      expect(createDocumentResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "ConnectorDoesNotSupportUpSyncing",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            connectorName: mockConnector.name,
-            message:
-              "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
-          },
         },
       });
     });
@@ -518,12 +411,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
       assert.isTrue(createDuplicateDocumentResult.success);
       expect(createDuplicateDocumentResult.data).toEqual({
         id: expect.id("Document"),
-        remoteId: null,
-        remoteUrl: null,
         collectionId: createCollectionResult.data.id,
         latestVersion: expect.objectContaining({
           id: expect.id("DocumentVersion"),
-          remoteId: null,
           previousVersionId: null,
           collectionVersionId: createCollectionResult.data.latestVersion.id,
           conversationId: null,
@@ -586,12 +476,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
       assert.isTrue(createDocumentResult.success);
       expect(createDocumentResult.data).toEqual({
         id: expect.id("Document"),
-        remoteId: null,
-        remoteUrl: null,
         collectionId: createCollectionResult.data.id,
         latestVersion: expect.objectContaining({
           id: expect.id("DocumentVersion"),
-          remoteId: null,
           previousVersionId: null,
           collectionVersionId: createCollectionResult.data.latestVersion.id,
           conversationId: null,
@@ -900,12 +787,9 @@ export default rd<GetDependencies>("Documents", (deps) => {
       expect(result.data).toHaveLength(1);
       expect(result.data[0]).toEqual({
         id: expect.id("Document"),
-        remoteId: null,
-        remoteUrl: null,
         collectionId: createCollectionResult.data.id,
         latestVersion: expect.objectContaining({
           id: expect.id("DocumentVersion"),
-          remoteId: null,
           previousVersionId: null,
           collectionVersionId: createCollectionResult.data.latestVersion.id,
           conversationId: null,
@@ -1238,132 +1122,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
         error: {
           name: "DocumentNotFound",
           details: { documentId },
-        },
-      });
-    });
-
-    it("error: ConnectorDoesNotSupportUpSyncing", async () => {
-      // Setup mocks
-      const changes: Connector.Changes = {
-        addedOrModified: [
-          {
-            id: "remoteId",
-            versionId: "remoteVersionId",
-            url: "remoteUrl",
-            content: { title: "remote title" },
-          },
-        ],
-        deleted: [],
-      };
-      const mockConnector: Connector.OAuth2PKCE<Schema> = {
-        name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
-        settingsSchema: {
-          types: { Settings: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Settings",
-        },
-        remoteDocumentTypescriptSchema: {
-          types: "export type RemoteDocument = { title: string };",
-          rootType: "RemoteDocument",
-        },
-        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
-        getAuthenticationState: async () => ({
-          success: true,
-          data: {
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
-          error: null,
-        }),
-        syncDown: async ({ authenticationState }) => ({
-          success: true,
-          data: { changes, authenticationState, syncPoint: "syncPoint" },
-          error: null,
-        }),
-      };
-
-      // Setup SUT
-      const { backend } = deps({ connector: mockConnector });
-      const createCollectionResult = await backend.collections.create({
-        settings: {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-          redirectToCollectionAfterDocumentCreation: false,
-        },
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        versionSettings: {
-          contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-          defaultDocumentViewUiOptions: null,
-        },
-      });
-      assert.isTrue(createCollectionResult.success);
-      const setRemoteResult = await backend.collections.setRemote(
-        createCollectionResult.data.id,
-        mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        {},
-        {
-          fromRemoteDocument: {
-            source: "",
-            compiled:
-              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
-          },
-        },
-      );
-      assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2PKCEConnectorResult =
-        await backend.collections.authenticateOAuth2PKCEConnector(
-          createCollectionResult.data.id,
-          "authorizationResponseUrl",
-        );
-      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
-      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
-      const listDocumentsResult = await backend.documents.list(
-        createCollectionResult.data.id,
-      );
-      assert.isTrue(listDocumentsResult.success);
-      const remoteDocument = listDocumentsResult.data[0];
-      assert.isDefined(remoteDocument);
-
-      // Exercise
-      const createNewDocumentVersionResult =
-        await backend.documents.createNewVersion(
-          createCollectionResult.data.id,
-          remoteDocument.id,
-          remoteDocument.latestVersion.id,
-          { title: "updated" },
-        );
-
-      // Verify
-      expect(createNewDocumentVersionResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "ConnectorDoesNotSupportUpSyncing",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            connectorName: mockConnector.name,
-            message:
-              "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
-          },
         },
       });
     });
@@ -1948,132 +1706,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
           details: {
             requiredCommandConfirmation: "delete",
             suppliedCommandConfirmation: "not-delete",
-          },
-        },
-      });
-    });
-
-    it("error: ConnectorDoesNotSupportUpSyncing", async () => {
-      // Setup mocks
-      const changes: Connector.Changes = {
-        addedOrModified: [
-          {
-            id: "remoteId",
-            versionId: "remoteVersionId",
-            url: "remoteUrl",
-            content: { title: "remote title" },
-          },
-        ],
-        deleted: [],
-      };
-      const mockConnector: Connector.OAuth2PKCE<Schema> = {
-        name: "MockConnector",
-        authenticationStrategy: ConnectorAuthenticationStrategy.OAuth2PKCE,
-        settingsSchema: {
-          types: { Settings: { dataType: DataType.Struct, properties: {} } },
-          rootType: "Settings",
-        },
-        remoteDocumentTypescriptSchema: {
-          types: "export type RemoteDocument = { title: string };",
-          rootType: "RemoteDocument",
-        },
-        getAuthorizationRequestUrl: async () => "authorizationRequestUrl",
-        getAuthenticationState: async () => ({
-          success: true,
-          data: {
-            accessToken: "accessToken",
-            refreshToken: "refreshToken",
-            accessTokenExpiresAt: new Date(),
-          },
-          error: null,
-        }),
-        syncDown: async ({ authenticationState }) => ({
-          success: true,
-          data: { changes, authenticationState, syncPoint: "syncPoint" },
-          error: null,
-        }),
-      };
-
-      // Setup SUT
-      const { backend } = deps({ connector: mockConnector });
-      const createCollectionResult = await backend.collections.create({
-        settings: {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-          redirectToCollectionAfterDocumentCreation: false,
-        },
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: {
-                title: { dataType: DataType.String },
-              },
-            },
-          },
-          rootType: "Root",
-        },
-        versionSettings: {
-          contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-          defaultDocumentViewUiOptions: null,
-        },
-      });
-      assert.isTrue(createCollectionResult.success);
-      const setRemoteResult = await backend.collections.setRemote(
-        createCollectionResult.data.id,
-        mockConnector.name,
-        { clientId: "clientId", clientSecret: "clientSecret" },
-        {},
-        {
-          fromRemoteDocument: {
-            source: "",
-            compiled:
-              "export default function fromRemoteDocument(remote) { return { title: remote.title }; }",
-          },
-        },
-      );
-      assert.isTrue(setRemoteResult.success);
-      const authenticateOAuth2PKCEConnectorResult =
-        await backend.collections.authenticateOAuth2PKCEConnector(
-          createCollectionResult.data.id,
-          "authorizationResponseUrl",
-        );
-      assert.isTrue(authenticateOAuth2PKCEConnectorResult.success);
-      await triggerAndWaitForDownSync(backend, createCollectionResult.data.id);
-      const listDocumentsResult = await backend.documents.list(
-        createCollectionResult.data.id,
-      );
-      assert.isTrue(listDocumentsResult.success);
-      const remoteDocument = listDocumentsResult.data[0];
-      assert.isDefined(remoteDocument);
-
-      // Exercise
-      const deleteDocumentResult = await backend.documents.delete(
-        createCollectionResult.data.id,
-        remoteDocument.id,
-        "delete",
-      );
-
-      // Verify
-      expect(deleteDocumentResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "ConnectorDoesNotSupportUpSyncing",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            connectorName: mockConnector.name,
-            message:
-              "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
           },
         },
       });

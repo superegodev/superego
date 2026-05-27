@@ -248,8 +248,6 @@ export default class CollectionUpdateLatestVersionSettings extends BackendUsecas
       }
     }
 
-    return makeSuccessfulResult(
-      makeCollection(collection, updatedVersion, this.getConnector(collection)),
-    );
+    return makeSuccessfulResult(makeCollection(collection, updatedVersion));
   }
 }

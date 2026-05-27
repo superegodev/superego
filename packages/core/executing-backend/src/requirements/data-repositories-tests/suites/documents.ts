@@ -12,9 +12,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
     // Exercise
     const document: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: null,
-      remoteUrl: null,
-      latestRemoteDocument: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -40,9 +37,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
     const { dataRepositoriesManager } = deps();
     const document: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: "remoteId",
-      remoteUrl: "original remoteUrl",
-      latestRemoteDocument: { original: "original" },
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -56,8 +50,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
     // Exercise
     const updatedDocument: DocumentEntity = {
       ...document,
-      remoteUrl: "updated remoteUrl",
-      latestRemoteDocument: { updated: "updated" },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
@@ -81,9 +73,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
     const { dataRepositoriesManager } = deps();
     const document: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: null,
-      remoteUrl: null,
-      latestRemoteDocument: null,
       collectionId: Id.generate.collection(),
       createdAt: new Date(),
     };
@@ -121,25 +110,16 @@ export default rd<GetDependencies>("Documents", (deps) => {
     const collection2Id = Id.generate.collection();
     const document1: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: null,
-      remoteUrl: null,
-      latestRemoteDocument: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document2: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: null,
-      remoteUrl: null,
-      latestRemoteDocument: null,
       collectionId: collection1Id,
       createdAt: new Date(),
     };
     const document3: DocumentEntity = {
       id: Id.generate.document(),
-      remoteId: null,
-      remoteUrl: null,
-      latestRemoteDocument: null,
       collectionId: collection2Id,
       createdAt: new Date(),
     };
@@ -190,9 +170,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const { dataRepositoriesManager } = deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
-        remoteId: null,
-        remoteUrl: null,
-        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -238,9 +215,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const { dataRepositoriesManager } = deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
-        remoteId: null,
-        remoteUrl: null,
-        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -290,9 +264,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const { dataRepositoriesManager } = deps();
       const document: DocumentEntity = {
         id: Id.generate.document(),
-        remoteId: null,
-        remoteUrl: null,
-        latestRemoteDocument: null,
         collectionId: Id.generate.collection(),
         createdAt: new Date(),
       };
@@ -332,75 +303,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
     });
   });
 
-  describe("finding by collection id and remote id", () => {
-    it("case: exists => returns it", async () => {
-      // Setup SUT
-      const { dataRepositoriesManager } = deps();
-      const remoteId = "remoteId";
-      const document: DocumentEntity = {
-        id: Id.generate.document(),
-        remoteId: remoteId,
-        remoteUrl: "remoteUrl",
-        latestRemoteDocument: {},
-        collectionId: Id.generate.collection(),
-        createdAt: new Date(),
-      };
-      await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => {
-          await repos.document.insert(document);
-          return { action: "commit", returnValue: null };
-        },
-      );
-
-      // Exercise
-      const found = await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => ({
-          action: "commit",
-          returnValue: await repos.document.findWhereCollectionIdAndRemoteIdEq(
-            document.collectionId,
-            remoteId,
-          ),
-        }),
-      );
-
-      // Verify
-      expect(found).toEqual(document);
-    });
-
-    it("case: doesn't exist => returns null", async () => {
-      // Setup SUT
-      const { dataRepositoriesManager } = deps();
-      const document: DocumentEntity = {
-        id: Id.generate.document(),
-        remoteId: "remoteId",
-        remoteUrl: "remoteUrl",
-        latestRemoteDocument: {},
-        collectionId: Id.generate.collection(),
-        createdAt: new Date(),
-      };
-      await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => {
-          await repos.document.insert(document);
-          return { action: "commit", returnValue: null };
-        },
-      );
-
-      // Exercise
-      const found = await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => ({
-          action: "commit",
-          returnValue: await repos.document.findWhereCollectionIdAndRemoteIdEq(
-            document.collectionId,
-            "differentRemoteId",
-          ),
-        }),
-      );
-
-      // Verify
-      expect(found).toEqual(null);
-    });
-  });
-
   describe("finding all by collection id", () => {
     it("case: no documents in collection => returns empty array", async () => {
       // Setup SUT
@@ -427,25 +329,16 @@ export default rd<GetDependencies>("Documents", (deps) => {
       const collection2Id = Id.generate.collection();
       const document1: DocumentEntity = {
         id: Id.generate.document(),
-        remoteId: null,
-        remoteUrl: null,
-        latestRemoteDocument: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document2: DocumentEntity = {
         id: Id.generate.document(),
-        remoteId: null,
-        remoteUrl: null,
-        latestRemoteDocument: null,
         collectionId: collection1Id,
         createdAt: new Date(),
       };
       const document3: DocumentEntity = {
         id: Id.generate.document(),
-        remoteId: null,
-        remoteUrl: null,
-        latestRemoteDocument: null,
         collectionId: collection2Id,
         createdAt: new Date(),
       };

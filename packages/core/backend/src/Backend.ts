@@ -5,7 +5,6 @@ import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
 import type ArgumentsNotValid from "./errors/ArgumentsNotValid.js";
 import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
-import type CannotChangeCollectionRemoteConnector from "./errors/CannotChangeCollectionRemoteConnector.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
 import type CannotRecoverConversation from "./errors/CannotRecoverConversation.js";
 import type CannotRetryLastResponse from "./errors/CannotRetryLastResponse.js";
@@ -13,10 +12,7 @@ import type CollectionCategoryHasChildren from "./errors/CollectionCategoryHasCh
 import type CollectionCategoryIconNotValid from "./errors/CollectionCategoryIconNotValid.js";
 import type CollectionCategoryNameNotValid from "./errors/CollectionCategoryNameNotValid.js";
 import type CollectionCategoryNotFound from "./errors/CollectionCategoryNotFound.js";
-import type CollectionHasDocuments from "./errors/CollectionHasDocuments.js";
-import type CollectionHasNoRemote from "./errors/CollectionHasNoRemote.js";
 import type CollectionIsReferenced from "./errors/CollectionIsReferenced.js";
-import type CollectionIsSyncing from "./errors/CollectionIsSyncing.js";
 import type CollectionMigrationFailed from "./errors/CollectionMigrationFailed.js";
 import type CollectionMigrationNotValid from "./errors/CollectionMigrationNotValid.js";
 import type CollectionNotFound from "./errors/CollectionNotFound.js";
@@ -25,12 +21,6 @@ import type CollectionSettingsNotValid from "./errors/CollectionSettingsNotValid
 import type CollectionVersionIdNotMatching from "./errors/CollectionVersionIdNotMatching.js";
 import type CollectionVersionNotFound from "./errors/CollectionVersionNotFound.js";
 import type CommandConfirmationNotValid from "./errors/CommandConfirmationNotValid.js";
-import type ConnectorAuthenticationSettingsNotValid from "./errors/ConnectorAuthenticationSettingsNotValid.js";
-import type ConnectorDoesNotSupportUpSyncing from "./errors/ConnectorDoesNotSupportUpSyncing.js";
-import type ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy from "./errors/ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy.js";
-import type ConnectorNotAuthenticated from "./errors/ConnectorNotAuthenticated.js";
-import type ConnectorNotFound from "./errors/ConnectorNotFound.js";
-import type ConnectorSettingsNotValid from "./errors/ConnectorSettingsNotValid.js";
 import type ContentBlockingKeysGetterNotValid from "./errors/ContentBlockingKeysGetterNotValid.js";
 import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotValid.js";
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
@@ -53,7 +43,6 @@ import type ParentCollectionCategoryIsDescendant from "./errors/ParentCollection
 import type ParentCollectionCategoryNotFound from "./errors/ParentCollectionCategoryNotFound.js";
 import type ReferencedCollectionsNotFound from "./errors/ReferencedCollectionsNotFound.js";
 import type ReferencedDocumentsNotFound from "./errors/ReferencedDocumentsNotFound.js";
-import type RemoteConvertersNotValid from "./errors/RemoteConvertersNotValid.js";
 import type TooManyFailedImplementationAttempts from "./errors/TooManyFailedImplementationAttempts.js";
 import type TypescriptCompilationFailed from "./errors/TypescriptCompilationFailed.js";
 import type UnexpectedError from "./errors/UnexpectedError.js";
@@ -80,8 +69,6 @@ import type CollectionDefinition from "./types/CollectionDefinition.js";
 import type CollectionSettings from "./types/CollectionSettings.js";
 import type CollectionVersion from "./types/CollectionVersion.js";
 import type CollectionVersionSettings from "./types/CollectionVersionSettings.js";
-import type Connector from "./types/Connector.js";
-import type ConnectorAuthenticationSettings from "./types/ConnectorAuthenticationSettings.js";
 import type Conversation from "./types/Conversation.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
@@ -96,7 +83,6 @@ import type LitePack from "./types/LitePack.js";
 import type Message from "./types/Message.js";
 import type MinimalDocumentVersion from "./types/MinimalDocumentVersion.js";
 import type Pack from "./types/Pack.js";
-import type RemoteConverters from "./types/RemoteConverters.js";
 import type TextSearchResult from "./types/TextSearchResult.js";
 import type TypescriptFile from "./types/TypescriptFile.js";
 import type TypescriptModule from "./types/TypescriptModule.js";
@@ -191,70 +177,13 @@ export default interface Backend {
       | UnexpectedError
     >;
 
-    setRemote(
-      id: CollectionId,
-      connectorName: string,
-      connectorAuthenticationSettings: ConnectorAuthenticationSettings,
-      connectorSettings: any,
-      remoteConverters: RemoteConverters,
-    ): ResultPromise<
-      Collection,
-      | CollectionNotFound
-      | CollectionHasDocuments
-      | ConnectorNotFound
-      | CannotChangeCollectionRemoteConnector
-      | ConnectorAuthenticationSettingsNotValid
-      | ConnectorSettingsNotValid
-      | RemoteConvertersNotValid
-      | ArgumentsNotValid
-      | UnexpectedError
-    >;
-
-    getOAuth2PKCEConnectorAuthorizationRequestUrl(
-      id: CollectionId,
-    ): ResultPromise<
-      string,
-      | CollectionNotFound
-      | CollectionHasNoRemote
-      | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
-      | ArgumentsNotValid
-      | UnexpectedError
-    >;
-
-    authenticateOAuth2PKCEConnector(
-      id: CollectionId,
-      authorizationResponseUrl: string,
-    ): ResultPromise<
-      Collection,
-      | CollectionNotFound
-      | CollectionHasNoRemote
-      | ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy
-      | ArgumentsNotValid
-      | UnexpectedError
-    >;
-
-    triggerDownSync(
-      id: CollectionId,
-    ): ResultPromise<
-      Collection,
-      | CollectionNotFound
-      | CollectionHasNoRemote
-      | CollectionIsSyncing
-      | ConnectorNotAuthenticated
-      | ArgumentsNotValid
-      | UnexpectedError
-    >;
-
     /** Creates a new version for the collection and migrates all documents. */
     createNewVersion(
       id: CollectionId,
       latestVersionId: CollectionVersionId,
       schema: Schema,
       settings: CollectionVersionSettings,
-      /** Null for collections with a remote. */
-      migration: TypescriptModule | null,
-      /** Null for collections without a remote. */
-      remoteConverters: RemoteConverters | null,
+      migration: TypescriptModule,
     ): ResultPromise<
       Collection,
       | CollectionNotFound
@@ -265,7 +194,6 @@ export default interface Backend {
       | ContentBlockingKeysGetterNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | CollectionMigrationNotValid
-      | RemoteConvertersNotValid
       | CollectionMigrationFailed
       | ArgumentsNotValid
       | UnexpectedError
@@ -309,11 +237,6 @@ export default interface Backend {
 
     list(): ResultPromise<Collection[], ArgumentsNotValid | UnexpectedError>;
 
-    listConnectors(): ResultPromise<
-      Connector[],
-      ArgumentsNotValid | UnexpectedError
-    >;
-
     getVersion(
       collectionId: CollectionId,
       collectionVersionId: CollectionVersionId,
@@ -336,7 +259,6 @@ export default interface Backend {
     ): ResultPromise<
       Document,
       | CollectionNotFound
-      | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
@@ -352,7 +274,6 @@ export default interface Backend {
     ): ResultPromise<
       Document[],
       | CollectionNotFound
-      | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
@@ -371,7 +292,6 @@ export default interface Backend {
       Document,
       | CollectionNotFound
       | DocumentNotFound
-      | ConnectorDoesNotSupportUpSyncing
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | MakingContentBlockingKeysFailed
@@ -397,7 +317,6 @@ export default interface Backend {
       | CollectionNotFound
       | DocumentNotFound
       | CommandConfirmationNotValid
-      | ConnectorDoesNotSupportUpSyncing
       | DocumentIsReferenced
       | ArgumentsNotValid
       | UnexpectedError
@@ -672,7 +591,6 @@ export default interface Backend {
       | ReferencedDocumentsNotFound
       | MakingContentBlockingKeysFailed
       | DuplicateDocumentDetected
-      | ConnectorDoesNotSupportUpSyncing
       | ArgumentsNotValid
       | UnexpectedError
     >;

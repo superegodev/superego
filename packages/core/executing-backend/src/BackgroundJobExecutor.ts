@@ -4,13 +4,11 @@ import type Config from "./Config.js";
 import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import type LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
-import type Connector from "./requirements/Connector.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
-import CollectionsDownSync from "./usecases/collections/DownSync.js";
 
 export default class BackgroundJobExecutor {
   constructor(
@@ -18,7 +16,6 @@ export default class BackgroundJobExecutor {
     private javascriptSandbox: JavascriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
-    private connectors: Connector[],
     private liveConversationStore: LiveConversationStore,
     private config: Config,
   ) {}
@@ -31,7 +28,6 @@ export default class BackgroundJobExecutor {
 
     const UsecaseClass = {
       [BackgroundJobName.ProcessConversation]: AssistantsProcessConversation,
-      [BackgroundJobName.DownSyncCollection]: CollectionsDownSync,
     }[backgroundJob.name];
 
     await this.dataRepositoriesManager
@@ -41,7 +37,6 @@ export default class BackgroundJobExecutor {
           this.javascriptSandbox,
           this.typescriptCompiler,
           this.inferenceServiceFactory,
-          this.connectors,
           this.liveConversationStore,
           this.config,
         );

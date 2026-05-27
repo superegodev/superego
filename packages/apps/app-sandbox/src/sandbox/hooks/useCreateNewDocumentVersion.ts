@@ -1,7 +1,6 @@
 import type {
   CollectionId,
   CollectionNotFound,
-  ConnectorDoesNotSupportUpSyncing,
   DocumentContentNotValid,
   DocumentId,
   DocumentNotFound,
@@ -27,7 +26,6 @@ interface UseCreateNewDocumentVersion {
   error:
     | CollectionNotFound
     | DocumentNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentVersionIdNotMatching
     | DocumentContentNotValid
     | FilesNotFound
@@ -41,7 +39,6 @@ export default function useCreateNewDocumentVersion(): UseCreateNewDocumentVersi
     null,
     | CollectionNotFound
     | DocumentNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentVersionIdNotMatching
     | DocumentContentNotValid
     | FilesNotFound

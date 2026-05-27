@@ -58,7 +58,6 @@ const contentSummaryResult = () =>
 
 const documentVersionBase = () => ({
   id: documentVersionId(),
-  remoteId: v.nullable(v.string()),
   collectionVersionId: collectionVersionId(),
   previousVersionId: v.nullable(documentVersionId()),
   conversationId: v.nullable(conversationId()),
@@ -95,45 +94,21 @@ export function minimalDocumentVersion(): v.GenericSchema<
 }
 
 export function document(): v.GenericSchema<unknown, Document> {
-  return v.union([
-    v.strictObject({
-      id: documentId(),
-      collectionId: collectionId(),
-      latestVersion: documentVersion(),
-      createdAt: v.date(),
-      remoteId: v.null(),
-      remoteUrl: v.null(),
-    }),
-    v.strictObject({
-      id: documentId(),
-      collectionId: collectionId(),
-      latestVersion: documentVersion(),
-      createdAt: v.date(),
-      remoteId: v.string(),
-      remoteUrl: v.nullable(v.string()),
-    }),
-  ]) as v.GenericSchema<unknown, Document>;
+  return v.strictObject({
+    id: documentId(),
+    collectionId: collectionId(),
+    latestVersion: documentVersion(),
+    createdAt: v.date(),
+  });
 }
 
 export function liteDocument(): v.GenericSchema<unknown, LiteDocument> {
-  return v.union([
-    v.strictObject({
-      id: documentId(),
-      collectionId: collectionId(),
-      latestVersion: liteDocumentVersion(),
-      createdAt: v.date(),
-      remoteId: v.null(),
-      remoteUrl: v.null(),
-    }),
-    v.strictObject({
-      id: documentId(),
-      collectionId: collectionId(),
-      latestVersion: liteDocumentVersion(),
-      createdAt: v.date(),
-      remoteId: v.string(),
-      remoteUrl: v.nullable(v.string()),
-    }),
-  ]) as v.GenericSchema<unknown, LiteDocument>;
+  return v.strictObject({
+    id: documentId(),
+    collectionId: collectionId(),
+    latestVersion: liteDocumentVersion(),
+    createdAt: v.date(),
+  }) as v.GenericSchema<unknown, LiteDocument>;
 }
 
 export function documentDefinition(): v.GenericSchema<

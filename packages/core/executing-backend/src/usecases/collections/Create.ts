@@ -252,7 +252,6 @@ export default class CollectionsCreate extends BackendUsecase<
           settingsValidationResult.output
             .redirectToCollectionAfterDocumentCreation,
       },
-      remote: null,
       createdAt: now,
     };
     const collectionVersion: CollectionVersionEntity = {
@@ -267,7 +266,6 @@ export default class CollectionsCreate extends BackendUsecase<
           versionSettings.defaultDocumentViewUiOptions,
       },
       migration: null,
-      remoteConverters: null,
       createdAt: now,
     };
     if (!options.dryRun) {
@@ -275,8 +273,6 @@ export default class CollectionsCreate extends BackendUsecase<
       await this.repos.collectionVersion.insert(collectionVersion);
     }
 
-    return makeSuccessfulResult(
-      makeCollection(collection, collectionVersion, null),
-    );
+    return makeSuccessfulResult(makeCollection(collection, collectionVersion));
   }
 }

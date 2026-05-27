@@ -1,7 +1,6 @@
 import type {
   Backend,
   CollectionNotFound,
-  ConnectorDoesNotSupportUpSyncing,
   ConversationId,
   Document,
   DocumentContentNotValid,
@@ -48,7 +47,6 @@ export default class DocumentsCreateMany extends BackendUsecase<
     v.array(structuralSchemas.backend.types.document()),
     [
       structuralSchemas.backend.errors.collectionNotFound(),
-      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
       structuralSchemas.backend.errors.documentContentNotValid(),
       structuralSchemas.backend.errors.duplicateDocumentDetected(),
       structuralSchemas.backend.errors.filesNotFound(),
@@ -64,7 +62,6 @@ export default class DocumentsCreateMany extends BackendUsecase<
   ): ResultPromise<
     Document[],
     | CollectionNotFound
-    | ConnectorDoesNotSupportUpSyncing
     | DocumentContentNotValid
     | FilesNotFound
     | ReferencedDocumentsNotFound

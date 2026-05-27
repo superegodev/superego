@@ -22,13 +22,3 @@ export const DocumentsTable = {
     marginBlockStart: vars.spacing._2,
   }),
 };
-
-export const DocumentsTableRow = {
-  remoteUrlLink: style({
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  }),
-};

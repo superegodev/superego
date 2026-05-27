@@ -1,5 +1,4 @@
 import type { DatabaseSync } from "node:sqlite";
-import { encode } from "@msgpack/msgpack";
 import type { CollectionId, CollectionVersionId } from "@superego/backend";
 import type {
   CollectionVersionEntity,
@@ -31,12 +30,11 @@ export default class SqliteCollectionVersionRepository implements CollectionVers
             "schema",
             "settings",
             "migration",
-            "remote_converters",
             "created_at",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         collectionVersion.id,
@@ -46,9 +44,6 @@ export default class SqliteCollectionVersionRepository implements CollectionVers
         JSON.stringify(collectionVersion.settings),
         collectionVersion.migration
           ? JSON.stringify(collectionVersion.migration)
-          : null,
-        collectionVersion.remoteConverters
-          ? encode(collectionVersion.remoteConverters)
           : null,
         collectionVersion.createdAt.toISOString(),
         1,
@@ -65,7 +60,6 @@ export default class SqliteCollectionVersionRepository implements CollectionVers
           "schema" = ?,
           "settings" = ?,
           "migration" = ?,
-          "remote_converters" = ?,
           "created_at" = ?
         WHERE "id" = ?
       `)
@@ -76,9 +70,6 @@ export default class SqliteCollectionVersionRepository implements CollectionVers
         JSON.stringify(collectionVersion.settings),
         collectionVersion.migration
           ? JSON.stringify(collectionVersion.migration)
-          : null,
-        collectionVersion.remoteConverters
-          ? encode(collectionVersion.remoteConverters)
           : null,
         collectionVersion.createdAt.toISOString(),
         collectionVersion.id,

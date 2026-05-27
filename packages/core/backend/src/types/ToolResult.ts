@@ -4,7 +4,6 @@ import type CollectionCategoryNotFound from "../errors/CollectionCategoryNotFoun
 import type CollectionNotFound from "../errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "../errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "../errors/CollectionSettingsNotValid.js";
-import type ConnectorDoesNotSupportUpSyncing from "../errors/ConnectorDoesNotSupportUpSyncing.js";
 import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
 import type DocumentNotFound from "../errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMatching.js";
@@ -68,7 +67,6 @@ namespace ToolResult {
         }[];
       },
       | CollectionNotFound
-      | ConnectorDoesNotSupportUpSyncing
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound
@@ -87,7 +85,6 @@ namespace ToolResult {
       },
       | CollectionNotFound
       | DocumentNotFound
-      | ConnectorDoesNotSupportUpSyncing
       | DocumentVersionIdNotMatching
       | DocumentContentNotValid
       | FilesNotFound

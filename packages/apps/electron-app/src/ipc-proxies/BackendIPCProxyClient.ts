@@ -32,21 +32,12 @@ export default class BackendIPCProxyClient implements Backend {
       create: this.makeMainIpcCall("collections.create"),
       createMany: this.makeMainIpcCall("collections.createMany"),
       updateSettings: this.makeMainIpcCall("collections.updateSettings"),
-      setRemote: this.makeMainIpcCall("collections.setRemote"),
-      getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeMainIpcCall(
-        "collections.getOAuth2PKCEConnectorAuthorizationRequestUrl",
-      ),
-      authenticateOAuth2PKCEConnector: this.makeMainIpcCall(
-        "collections.authenticateOAuth2PKCEConnector",
-      ),
-      triggerDownSync: this.makeMainIpcCall("collections.triggerDownSync"),
       createNewVersion: this.makeMainIpcCall("collections.createNewVersion"),
       updateLatestVersionSettings: this.makeMainIpcCall(
         "collections.updateLatestVersionSettings",
       ),
       delete: this.makeMainIpcCall("collections.delete"),
       list: this.makeMainIpcCall("collections.list"),
-      listConnectors: this.makeMainIpcCall("collections.listConnectors"),
       getVersion: this.makeMainIpcCall("collections.getVersion"),
       getTypescriptSchema: this.makeMainIpcCall(
         "collections.getTypescriptSchema",

@@ -81,7 +81,6 @@
     "@formatjs/cli": "^6.16.3",
     "@formatjs/unplugin": "^1.1.15",
     "@superego/app-sandbox": "workspace:*",
-    "@superego/connectors": "workspace:*",
     "@superego/demo-data-repositories": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/monaco-typescript-compiler": "workspace:*",

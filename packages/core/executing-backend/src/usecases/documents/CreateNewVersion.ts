@@ -2,7 +2,6 @@ import {
   type Backend,
   type CollectionId,
   type CollectionNotFound,
-  type ConnectorDoesNotSupportUpSyncing,
   type ConversationId,
   type Document,
   type DocumentContentNotValid,
@@ -24,7 +23,6 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import * as v from "valibot";
-import type DocumentEntity from "../../entities/DocumentEntity.js";
 import type DocumentVersionEntity from "../../entities/DocumentVersionEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import makeContentBlockingKeys from "../../makers/makeContentBlockingKeys.js";
@@ -45,7 +43,6 @@ type ExecReturnValue = ResultPromise<
   Document,
   | CollectionNotFound
   | DocumentNotFound
-  | ConnectorDoesNotSupportUpSyncing
   | DocumentVersionIdNotMatching
   | DocumentContentNotValid
   | MakingContentBlockingKeysFailed
@@ -66,7 +63,6 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     structuralSchemas.backend.types.document(),
     [
       structuralSchemas.backend.errors.collectionNotFound(),
-      structuralSchemas.backend.errors.connectorDoesNotSupportUpSyncing(),
       structuralSchemas.backend.errors.documentContentNotValid(),
       structuralSchemas.backend.errors.documentNotFound(),
       structuralSchemas.backend.errors.documentVersionIdNotMatching(),
@@ -95,13 +91,6 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
         }
       | {
           createdBy: DocumentVersionCreator.Migration;
-          remoteVersionId: string | null;
-        }
-      | {
-          createdBy: DocumentVersionCreator.Connector;
-          remoteVersionId: string;
-          remoteUrl: string | null;
-          remoteDocument: any;
         },
   ): ExecReturnValue;
   async exec(
@@ -112,12 +101,8 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     options?: {
       createdBy:
         | DocumentVersionCreator.Assistant
-        | DocumentVersionCreator.Migration
-        | DocumentVersionCreator.Connector;
+        | DocumentVersionCreator.Migration;
       conversationId?: ConversationId;
-      remoteVersionId?: string | null;
-      remoteUrl?: string | null;
-      remoteDocument?: any;
     },
   ): ExecReturnValue {
     const collection = await this.repos.collection.find(collectionId);
@@ -131,24 +116,6 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     if (!document || document.collectionId !== collectionId) {
       return makeUnsuccessfulResult(
         makeResultError("DocumentNotFound", { documentId: id }),
-      );
-    }
-
-    if (
-      // Right now no connector supports up-syncing, so checking if the
-      // collection has a remote is sufficient. TODO: update condition once
-      // connectors support up-syncing.
-      collection.remote !== null &&
-      options?.createdBy !== DocumentVersionCreator.Connector &&
-      options?.createdBy !== DocumentVersionCreator.Migration
-    ) {
-      return makeUnsuccessfulResult(
-        makeResultError("ConnectorDoesNotSupportUpSyncing", {
-          collectionId: collectionId,
-          connectorName: collection.remote.connector.name,
-          message:
-            "The collection has a remote, and its connector does not support up-syncing. This effectively makes the collection read-only.",
-        }),
       );
     }
 
@@ -257,7 +224,6 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     );
     const documentVersion: DocumentVersionEntity = {
       id: documentVersionId,
-      remoteId: options?.remoteVersionId ?? null,
       previousVersionId: latestVersionId,
       documentId: id,
       collectionId: document.collectionId,
@@ -288,17 +254,6 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
       createdAt: now,
       content: protoFileWithId.content,
     }));
-    if (options?.createdBy === DocumentVersionCreator.Connector) {
-      const updatedDocument: DocumentEntity = {
-        ...document,
-        // TypeScript doesn't understand, but if createdBy === Connector, then
-        // options.remoteUrl is not undefined.
-        // @ts-expect-error
-        remoteUrl: options.remoteUrl,
-        latestRemoteDocument: options.remoteDocument,
-      };
-      await this.repos.document.replace(updatedDocument);
-    }
     await this.repos.documentVersion.insert(documentVersion);
     await this.repos.documentTextSearchIndex.upsert(
       collectionId,

@@ -96,8 +96,6 @@ export default class CollectionsDelete extends BackendUsecase<
         id,
         document.id,
         "delete",
-        // allowDeletingRemoteDocument
-        true,
         // ignoreIntraCollectionRefs, to allow deleting documents that reference
         // each other within this collection.
         true,

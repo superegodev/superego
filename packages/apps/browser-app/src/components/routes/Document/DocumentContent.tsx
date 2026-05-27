@@ -10,9 +10,7 @@ import {
   getDocumentVersionQuery,
 } from "../../../business-logic/backend/hooks.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";
-import CreateNewDocumentVersionForm, {
-  type ReadOnlyReason,
-} from "./CreateNewDocumentVersionForm.js";
+import CreateNewDocumentVersionForm from "./CreateNewDocumentVersionForm.js";
 
 interface Props {
   collection: Collection;
@@ -21,7 +19,7 @@ interface Props {
   documentVersions: MinimalDocumentVersion[];
   formId: string;
   setSubmitDisabled: (disabled: boolean) => void;
-  readOnlyReason: ReadOnlyReason | null;
+  isShowingHistory: boolean;
 }
 export default function DocumentContent({
   collection,
@@ -30,7 +28,7 @@ export default function DocumentContent({
   documentVersions,
   formId,
   setSubmitDisabled,
-  readOnlyReason,
+  isShowingHistory,
 }: Props) {
   if (documentVersionId === document.latestVersion.id) {
     return (
@@ -40,7 +38,7 @@ export default function DocumentContent({
         document={document}
         formId={formId}
         setSubmitDisabled={setSubmitDisabled}
-        readOnlyReason={readOnlyReason}
+        isReadOnly={isShowingHistory}
       />
     );
   }
@@ -75,7 +73,7 @@ export default function DocumentContent({
           documentVersion={documentVersion}
           formId={formId}
           setSubmitDisabled={setSubmitDisabled}
-          readOnlyReason="history-version"
+          isReadOnly={true}
         />
       )}
     </DataLoader>

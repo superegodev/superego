@@ -28,7 +28,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     // Exercise
     const documentVersion: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: Id.generate.collection(),
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
@@ -66,7 +65,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -113,7 +111,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -160,7 +157,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -208,7 +204,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -256,7 +251,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -319,7 +313,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     const collection2Id = Id.generate.collection();
     const documentVersion1: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: collection1Id,
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
@@ -334,7 +327,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     };
     const documentVersion2: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: collection1Id,
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
@@ -349,7 +341,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     };
     const documentVersion3: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: collection2Id,
       documentId: Id.generate.document(),
       collectionVersionId: Id.generate.collectionVersion(),
@@ -417,7 +408,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     const document2Id = Id.generate.document();
     const documentVersion1: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: collectionId,
       documentId: document1Id,
       collectionVersionId: Id.generate.collectionVersion(),
@@ -432,7 +422,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     };
     const documentVersion2: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: collectionId,
       documentId: document1Id,
       collectionVersionId: Id.generate.collectionVersion(),
@@ -447,7 +436,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
     };
     const documentVersion3: DocumentVersionEntity = {
       id: Id.generate.documentVersion(),
-      remoteId: null,
       collectionId: collectionId,
       documentId: document2Id,
       collectionVersionId: Id.generate.collectionVersion(),
@@ -500,7 +488,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -538,7 +525,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const documentId = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -553,7 +539,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -568,7 +553,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -583,7 +567,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion4: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -644,7 +627,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const documentId = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -659,7 +641,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -746,7 +727,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const document2Id = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -761,7 +741,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -776,7 +755,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -792,7 +770,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Different document - should not be included
       const documentVersion4: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document2Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -839,7 +816,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const documentId = Id.generate.document();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -904,7 +880,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Document versions under the target collection version.
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: collectionVersionId,
@@ -919,7 +894,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: collectionVersionId,
@@ -936,7 +910,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // included.
       const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: otherCollectionVersionId,
@@ -984,7 +957,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // First version (non latest).
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: collectionVersionId,
@@ -1000,7 +972,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Second version (latest).
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: collectionVersionId,
@@ -1066,7 +1037,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const document2Id = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1081,7 +1051,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document1Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1096,7 +1065,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: document2Id,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1111,7 +1079,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion4: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1158,7 +1125,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Create a document that doesn't reference the target
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1205,7 +1171,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Document that references the target
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1224,7 +1189,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Document that doesn't reference the target
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1272,7 +1236,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Older version that references the target
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: referencingDocumentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1291,7 +1254,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Newer version that also references the target
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: documentVersion1.collectionId,
         documentId: referencingDocumentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1340,7 +1302,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // First document that references the target
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1359,7 +1320,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       // Second document that references the target
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: Id.generate.collection(),
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1407,7 +1367,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const collectionId = Id.generate.collection();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1449,7 +1408,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const collectionId = Id.generate.collection();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1493,7 +1451,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const contentBlockingKeys = ["key:1", "key:2"];
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collection1Id,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1536,7 +1493,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const documentId = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1551,7 +1507,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1597,7 +1552,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
 
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1612,7 +1566,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1658,7 +1611,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const collectionId = Id.generate.collection();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1700,7 +1652,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const collectionId = Id.generate.collection();
       const documentVersion: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: Id.generate.document(),
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1747,7 +1698,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       const documentId = Id.generate.document();
       const documentVersion1: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1762,7 +1712,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion2: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),
@@ -1777,7 +1726,6 @@ export default rd<GetDependencies>("Document versions", (deps) => {
       };
       const documentVersion3: DocumentVersionEntity = {
         id: Id.generate.documentVersion(),
-        remoteId: null,
         collectionId: collectionId,
         documentId: documentId,
         collectionVersionId: Id.generate.collectionVersion(),

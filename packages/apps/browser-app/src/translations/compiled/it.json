@@ -65,42 +65,6 @@
       "value": "Le tue preferenze"
     }
   ],
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_Zdmqoc": [
-    {
-      "type": 0,
-      "value": "Autentica il connettore"
-    }
-  ],
-  "AuthenticateOAuth2PKCEConnectorButton.tsx_wAxMM5": [
-    {
-      "type": 0,
-      "value": "Ri-autentica il connettore"
-    }
-  ],
-  "AuthenticationSettings.tsx_B7p2EC": [
-    {
-      "type": 0,
-      "value": "Segreto del client"
-    }
-  ],
-  "AuthenticationSettings.tsx_KTNoOq": [
-    {
-      "type": 0,
-      "value": "Chiave API"
-    }
-  ],
-  "AuthenticationSettings.tsx_Q0U6OF": [
-    {
-      "type": 0,
-      "value": "Impostazioni di autenticazione"
-    }
-  ],
-  "AuthenticationSettings.tsx_U5+MBC": [
-    {
-      "type": 0,
-      "value": "ID del client"
-    }
-  ],
   "BackgroundJob.tsx_EiyxpM": [
     {
       "type": 0,
@@ -437,12 +401,6 @@
       "value": "Impostazioni generali"
     }
   ],
-  "CollectionSettings.tsx_JJBzhX": [
-    {
-      "type": 0,
-      "value": "Remoto"
-    }
-  ],
   "CollectionSettings.tsx_VcipZo": [
     {
       "type": 0,
@@ -477,30 +435,6 @@
     {
       "type": 0,
       "value": "Compilazione in corso..."
-    }
-  ],
-  "ConnectorSelect.tsx_Gnbr9F": [
-    {
-      "type": 0,
-      "value": "Seleziona un connettore"
-    }
-  ],
-  "ConnectorSelect.tsx_nSFiyf": [
-    {
-      "type": 0,
-      "value": "Il connettore non può essere modificato dopo aver configurato un remoto."
-    }
-  ],
-  "ConnectorSelect.tsx_r8XsCU": [
-    {
-      "type": 0,
-      "value": "Connettore"
-    }
-  ],
-  "ConnectorSettings.tsx_1B+Bnl": [
-    {
-      "type": 0,
-      "value": "Impostazioni del connettore"
     }
   ],
   "ContentBlockingKeysTab.tsx_mzcj4a": [
@@ -912,12 +846,6 @@
       "value": "2. Deduplicazione"
     }
   ],
-  "CreateNewCollectionVersionForm.tsx_sSfm9D": [
-    {
-      "type": 0,
-      "value": "5. Convertitori remoti"
-    }
-  ],
   "CreateNewDocumentVersion.tsx_p5+z7U": [
     {
       "type": 1,
@@ -948,12 +876,6 @@
       "value": ". La modifica del documento è disabilitata."
     }
   ],
-  "CreateNewDocumentVersionForm.tsx_gzZ4Jo": [
-    {
-      "type": 0,
-      "value": "Questo documento è sincronizzato da una fonte remota e non può essere modificato."
-    }
-  ],
   "CreateNewDocumentVersionForm.tsx_p6/GR5": [
     {
       "type": 0,
@@ -976,12 +898,6 @@
     {
       "type": 0,
       "value": "Creato nella conversazione"
-    }
-  ],
-  "CreatedByLine.tsx_ufqNmd": [
-    {
-      "type": 0,
-      "value": "Creato dalla sincronizzazione"
     }
   ],
   "DatePickerInput.tsx_/GCoTA": [
@@ -1220,12 +1136,6 @@
       "value": "Conferma comando"
     }
   ],
-  "Document.tsx_AB6IO/": [
-    {
-      "type": 0,
-      "value": "Vai al documento remoto"
-    }
-  ],
   "Document.tsx_EPTOBf": [
     {
       "type": 1,
@@ -1290,38 +1200,16 @@
       "value": "documentId"
     }
   ],
-  "DocumentInfoModal.tsx_1D7voQ": [
-    {
-      "type": 0,
-      "value": "Sincronizzato con "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
   "DocumentInfoModal.tsx_gm5+Hy": [
     {
       "type": 0,
       "value": "ID collezione:"
     }
   ],
-  "DocumentInfoModal.tsx_h6SlY+": [
-    {
-      "type": 0,
-      "value": "ID documento remoto:"
-    }
-  ],
   "DocumentInfoModal.tsx_i3P6ZD": [
     {
       "type": 0,
       "value": "Creato il:"
-    }
-  ],
-  "DocumentInfoModal.tsx_nY1/sq": [
-    {
-      "type": 0,
-      "value": "ID versione documento remoto:"
     }
   ],
   "DocumentInfoModal.tsx_ps0LGU": [
@@ -1370,12 +1258,6 @@
     {
       "type": 0,
       "value": "Nessun risultato trovato"
-    }
-  ],
-  "DocumentTableRow.tsx_aBBLZR": [
-    {
-      "type": 0,
-      "value": "Apri documento remoto"
     }
   ],
   "DocumentTableRow.tsx_vT9jcW": [
@@ -1428,34 +1310,6 @@
     {
       "type": 0,
       "value": "ID"
-    }
-  ],
-  "DocumentsTable.tsx_xIoGG9": [
-    {
-      "type": 0,
-      "value": "Vai a"
-    }
-  ],
-  "DownSyncInfoModal.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "DownSyncInfoModal.tsx_8I58x/": [
-    {
-      "type": 0,
-      "value": "Sincronizzazione con "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
-  "DownSyncInfoModal.tsx_dKtz/9": [
-    {
-      "type": 0,
-      "value": "Sincronizza"
     }
   ],
   "DuplicateDocumentDetectedModal.tsx_47FYwb": [
@@ -3350,256 +3204,6 @@
       "value": "Medio"
     }
   ],
-  "Remote.tsx_s8FZNF": [
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Puoi sincronizzare una collezione con un'origine dati esterna (un "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "remoto"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": "). Quando configuri un remoto, diventa la "
-        },
-        {
-          "type": 8,
-          "value": "i",
-          "children": [
-            {
-              "type": 0,
-              "value": "fonte di verità"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " per quella collezione. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " La collezione non è necessariamente una replica esatta del remoto. I documenti prelevati dal remoto vengono trasformati per rispettare lo schema della tua collezione tramite la mappatura "
-        },
-        {
-          "type": 8,
-          "value": "code",
-          "children": [
-            {
-              "type": 0,
-              "value": "fromRemoteDocument"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " e puoi filtrare quali documenti remoti vengono sincronizzati. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Per configurare un remoto, configura un "
-        },
-        {
-          "type": 8,
-          "value": "i",
-          "children": [
-            {
-              "type": 0,
-              "value": "connettore"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " verso l'origine dati esterna. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Alcuni connettori supportano solo la "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "sincronizzazione dal"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " remoto, rendendo la collezione in sola lettura. Altri supportano anche la "
-        },
-        {
-          "type": 8,
-          "value": "b",
-          "children": [
-            {
-              "type": 0,
-              "value": "sincronizzazione verso"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " il remoto, così le creazioni, gli aggiornamenti e le eliminazioni nella collezione vengono propagate al remoto. "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Ulteriori informazioni su "
-        },
-        {
-          "type": 8,
-          "value": "a",
-          "children": [
-            {
-              "type": 0,
-              "value": "https://superego.dev/connectors"
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": ". "
-        }
-      ]
-    }
-  ],
-  "RemoteConverters.tsx_3cBs4J": [
-    {
-      "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci "
-    },
-    {
-      "type": 8,
-      "value": "code",
-      "children": [
-        {
-          "type": 0,
-          "value": "null"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " per non sincronizzare il documento."
-    }
-  ],
-  "RemoteConverters.tsx_GqZhDC": [
-    {
-      "type": 0,
-      "value": "Dal documento remoto"
-    }
-  ],
-  "RemoteConverters.tsx_abnr48": [
-    {
-      "type": 0,
-      "value": "Convertitori di documenti remoti"
-    }
-  ],
-  "RemoteConvertersTab.tsx_3cBs4J": [
-    {
-      "type": 0,
-      "value": "Funzione TypeScript che trasforma un documento remoto nel contenuto di un documento locale. Restituisci "
-    },
-    {
-      "type": 8,
-      "value": "code",
-      "children": [
-        {
-          "type": 0,
-          "value": "null"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " per non sincronizzare il documento."
-    }
-  ],
-  "RemoteConvertersTab.tsx_CPS541": [
-    {
-      "type": 0,
-      "value": "Aggiorna la funzione "
-    },
-    {
-      "type": 8,
-      "value": "code",
-      "children": [
-        {
-          "type": 0,
-          "value": "fromRemoteDocument"
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " per riflettere le modifiche allo schema."
-    }
-  ],
-  "RemoteConvertersTab.tsx_GqZhDC": [
-    {
-      "type": 0,
-      "value": "Dal documento remoto"
-    }
-  ],
-  "RemoteConvertersTab.tsx_J/yjzE": [
-    {
-      "type": 0,
-      "value": "Crea una nuova versione e migra i documenti"
-    }
-  ],
   "RenameCollectionCategoryModalForm.tsx_47FYwb": [
     {
       "type": 0,
@@ -3868,74 +3472,6 @@
       "value": "Schema"
     }
   ],
-  "SchemaTab.tsx_Vi4BUn": [
-    {
-      "type": 8,
-      "value": "p",
-      "children": [
-        {
-          "type": 0,
-          "value": " Ogni volta che vuoi modificare lo schema di una collezione (ad es. per aggiungere, modificare o rimuovere proprietà), devi creare una nuova versione della collezione. Il processo prevede i passaggi seguenti: "
-        }
-      ]
-    },
-    {
-      "type": 0,
-      "value": " "
-    },
-    {
-      "type": 8,
-      "value": "ol",
-      "children": [
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "type": 8,
-          "value": "li",
-          "children": [
-            {
-              "type": 0,
-              "value": "Implementa le modifiche allo schema che vuoi effettuare."
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "type": 8,
-          "value": "li",
-          "children": [
-            {
-              "type": 0,
-              "value": " Aggiorna il getter del sommario dei contenuti della collezione per riflettere tali modifiche. "
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " "
-        },
-        {
-          "type": 8,
-          "value": "li",
-          "children": [
-            {
-              "type": 0,
-              "value": " Poiché si tratta di una collezione remota, aggiorna anche i relativi convertitori remoti. "
-            }
-          ]
-        },
-        {
-          "type": 0,
-          "value": " "
-        }
-      ]
-    }
-  ],
   "SearchModal.tsx_xmcVZ0": [
     {
       "type": 0,
@@ -4066,18 +3602,6 @@
     {
       "type": 0,
       "value": "Aggiungi un modello con comprensione audio per usare la voce"
-    }
-  ],
-  "SetCollectionRemoteForm.tsx_fsGyC4": [
-    {
-      "type": 0,
-      "value": "Aggiorna remoto"
-    }
-  ],
-  "SetCollectionRemoteForm.tsx_m8TXbJ": [
-    {
-      "type": 0,
-      "value": "Imposta remoto"
     }
   ],
   "SetNameAndSaveModal.tsx_47FYwb": [
@@ -4683,55 +4207,6 @@
     {
       "type": 0,
       "value": " secondi"
-    }
-  ],
-  "getDownSyncAction.tsx_IJWuS/": [
-    {
-      "type": 0,
-      "value": "Ultima sincronizzazione "
-    },
-    {
-      "type": 3,
-      "value": "lastSucceededAt",
-      "style": {
-        "type": 1,
-        "pattern": "MMM d, HH:mm",
-        "parsedOptions": {
-          "month": "short",
-          "day": "numeric",
-          "hour": "2-digit",
-          "hourCycle": "h23",
-          "minute": "2-digit"
-        }
-      }
-    }
-  ],
-  "getDownSyncAction.tsx_RRA+40": [
-    {
-      "type": 0,
-      "value": "Autenticati con "
-    },
-    {
-      "type": 1,
-      "value": "remote"
-    }
-  ],
-  "getDownSyncAction.tsx_dKtz/9": [
-    {
-      "type": 0,
-      "value": "Sincronizza"
-    }
-  ],
-  "getDownSyncAction.tsx_eOnwqs": [
-    {
-      "type": 0,
-      "value": "Sincronizzazione in corso"
-    }
-  ],
-  "getDownSyncAction.tsx_mG35sa": [
-    {
-      "type": 0,
-      "value": "Ultima sincronizzazione non riuscita"
     }
   ],
   "getIntlMessages.ts_/GCoTA": [

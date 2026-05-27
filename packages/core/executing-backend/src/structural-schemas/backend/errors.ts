@@ -45,16 +45,6 @@ export const backgroundJobNotFound = () =>
     v.strictObject({ backgroundJobId: backgroundJobId() }),
   );
 
-export const cannotChangeCollectionRemoteConnector = () =>
-  resultError(
-    "CannotChangeCollectionRemoteConnector",
-    v.strictObject({
-      collectionId: collectionId(),
-      currentConnectorName: v.string(),
-      suppliedConnectorName: v.string(),
-    }),
-  );
-
 export const cannotContinueConversation = () =>
   resultError(
     "CannotContinueConversation",
@@ -125,18 +115,6 @@ export const collectionCategoryNotFound = () =>
     v.strictObject({ collectionCategoryId: collectionCategoryId() }),
   );
 
-export const collectionHasDocuments = () =>
-  resultError(
-    "CollectionHasDocuments",
-    v.strictObject({ collectionId: collectionId() }),
-  );
-
-export const collectionHasNoRemote = () =>
-  resultError(
-    "CollectionHasNoRemote",
-    v.strictObject({ collectionId: collectionId() }),
-  );
-
 export const collectionIsReferenced = () =>
   resultError(
     "CollectionIsReferenced",
@@ -144,12 +122,6 @@ export const collectionIsReferenced = () =>
       collectionId: collectionId(),
       referencingCollectionIds: v.array(collectionId()),
     }),
-  );
-
-export const collectionIsSyncing = () =>
-  resultError(
-    "CollectionIsSyncing",
-    v.strictObject({ collectionId: collectionId() }),
   );
 
 export const collectionMigrationFailed = () =>
@@ -230,62 +202,6 @@ export const commandConfirmationNotValid = () =>
     v.strictObject({
       suppliedCommandConfirmation: v.string(),
       requiredCommandConfirmation: v.string(),
-    }),
-  );
-
-export const connectorAuthenticationSettingsNotValid = () =>
-  resultError(
-    "ConnectorAuthenticationSettingsNotValid",
-    v.strictObject({
-      collectionId: collectionId(),
-      connectorName: v.string(),
-      issues: issues(),
-    }),
-  );
-
-export const connectorDoesNotSupportUpSyncing = () =>
-  resultError(
-    "ConnectorDoesNotSupportUpSyncing",
-    v.strictObject({
-      collectionId: collectionId(),
-      connectorName: v.string(),
-      message: v.string(),
-    }),
-  );
-
-export const connectorDoesNotUseOAuth2PKCEAuthenticationStrategy = () =>
-  resultError(
-    "ConnectorDoesNotUseOAuth2PKCEAuthenticationStrategy",
-    v.strictObject({
-      collectionId: collectionId(),
-      connectorName: v.string(),
-    }),
-  );
-
-export const connectorNotAuthenticated = () =>
-  resultError(
-    "ConnectorNotAuthenticated",
-    v.strictObject({
-      collectionId: collectionId(),
-      connectorName: v.string(),
-    }),
-  );
-
-export const connectorNotFound = () =>
-  resultError(
-    "ConnectorNotFound",
-    v.strictObject({
-      collectionId: collectionId(),
-      connectorName: v.string(),
-    }),
-  );
-
-export const connectorSettingsNotValid = () =>
-  resultError(
-    "ConnectorSettingsNotValid",
-    v.strictObject({
-      connectorName: v.string(),
-      issues: issues(),
     }),
   );
 
@@ -457,15 +373,6 @@ export const referencedDocumentsNotFound = () =>
       collectionId: collectionId(),
       documentId: v.nullable(documentId()),
       notFoundDocumentRefs: v.array(documentRefSchema()),
-    }),
-  );
-
-export const remoteConvertersNotValid = () =>
-  resultError(
-    "RemoteConvertersNotValid",
-    v.strictObject({
-      collectionId: collectionId(),
-      issues: issues(),
     }),
   );
 

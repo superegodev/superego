@@ -2,7 +2,6 @@ import type {
   App,
   Collection,
   CollectionCategory,
-  Connector,
   DeveloperPrompts,
   GlobalSettings,
 } from "@superego/backend";
@@ -12,7 +11,6 @@ export interface GlobalData {
   collectionCategories: CollectionCategory[];
   collections: Collection[];
   apps: App[];
-  connectors: Connector[];
   globalSettings: GlobalSettings;
   developerPrompts: DeveloperPrompts;
 }

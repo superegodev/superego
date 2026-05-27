@@ -22,7 +22,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
         assistantInstructions: null,
         redirectToCollectionAfterDocumentCreation: false,
       },
-      remote: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -56,7 +55,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
         assistantInstructions: null,
         redirectToCollectionAfterDocumentCreation: false,
       },
-      remote: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -105,7 +103,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
         assistantInstructions: null,
         redirectToCollectionAfterDocumentCreation: false,
       },
-      remote: null,
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -150,7 +147,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
           assistantInstructions: null,
           redirectToCollectionAfterDocumentCreation: false,
         },
-        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -205,7 +201,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
           assistantInstructions: null,
           redirectToCollectionAfterDocumentCreation: false,
         },
-        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -265,7 +260,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
           assistantInstructions: null,
           redirectToCollectionAfterDocumentCreation: false,
         },
-        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(
@@ -335,7 +329,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
           assistantInstructions: null,
           redirectToCollectionAfterDocumentCreation: false,
         },
-        remote: null,
         createdAt: new Date(),
       };
       const collection2: CollectionEntity = {
@@ -349,7 +342,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
           assistantInstructions: null,
           redirectToCollectionAfterDocumentCreation: false,
         },
-        remote: null,
         createdAt: new Date(),
       };
       await dataRepositoriesManager.runInSerializableTransaction(

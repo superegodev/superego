@@ -1,5 +1,4 @@
 import type { DatabaseSync } from "node:sqlite";
-import { encode } from "@msgpack/msgpack";
 import type { CollectionId, DocumentId } from "@superego/backend";
 import type {
   DocumentEntity,
@@ -19,22 +18,14 @@ export default class SqliteDocumentRepository implements DocumentRepository {
         INSERT INTO "${table}"
           (
             "id",
-            "remote_id",
-            "remote_url",
-            "latest_remote_document",
             "collection_id",
             "created_at"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?)
+          (?, ?, ?)
       `)
       .run(
         document.id,
-        document.remoteId,
-        document.remoteUrl,
-        document.latestRemoteDocument
-          ? encode(document.latestRemoteDocument)
-          : null,
         document.collectionId,
         document.createdAt.toISOString(),
       );
@@ -45,19 +36,11 @@ export default class SqliteDocumentRepository implements DocumentRepository {
       .prepare(`
           UPDATE "${table}"
           SET
-            "remote_id" = ?,
-            "remote_url" = ?,
-            "latest_remote_document" = ?,
             "collection_id" = ?,
             "created_at" = ?
           WHERE "id" = ?
         `)
       .run(
-        document.remoteId,
-        document.remoteUrl,
-        document.latestRemoteDocument
-          ? encode(document.latestRemoteDocument)
-          : null,
         document.collectionId,
         document.createdAt.toISOString(),
         document.id,
@@ -100,18 +83,6 @@ export default class SqliteDocumentRepository implements DocumentRepository {
     const document = this.db
       .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
       .get(id) as SqliteDocument | undefined;
-    return document ? toEntity(document) : null;
-  }
-
-  async findWhereCollectionIdAndRemoteIdEq(
-    collectionId: CollectionId,
-    remoteId: string,
-  ): Promise<DocumentEntity | null> {
-    const document = this.db
-      .prepare(
-        `SELECT * FROM "${table}" WHERE "collection_id" = ? AND "remote_id" = ?`,
-      )
-      .get(collectionId, remoteId) as SqliteDocument | undefined;
     return document ? toEntity(document) : null;
   }
 

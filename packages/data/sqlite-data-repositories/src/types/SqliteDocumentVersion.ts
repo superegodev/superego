@@ -15,7 +15,6 @@ import type { DiffPatcher } from "jsondiffpatch";
 
 type SqliteDocumentVersion = {
   id: DocumentVersionId;
-  remote_id: string | null;
   previous_version_id: DocumentVersionId | null;
   collection_id: CollectionId;
   document_id: DocumentId;
@@ -64,7 +63,6 @@ export function toEntity(
 ): DocumentVersionEntity {
   return {
     id: documentVersion.id,
-    remoteId: documentVersion.remote_id,
     previousVersionId: documentVersion.previous_version_id,
     collectionId: documentVersion.collection_id,
     documentId: documentVersion.document_id,
@@ -120,7 +118,6 @@ export function toMinimalEntity(
 ): MinimalDocumentVersionEntity {
   return {
     id: documentVersion.id,
-    remoteId: documentVersion.remote_id,
     previousVersionId: documentVersion.previous_version_id,
     collectionId: documentVersion.collection_id,
     documentId: documentVersion.document_id,

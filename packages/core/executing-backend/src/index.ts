@@ -17,7 +17,6 @@ export type { default as DocumentEntity } from "./entities/DocumentEntity.js";
 export type { default as DocumentVersionEntity } from "./entities/DocumentVersionEntity.js";
 export type { default as FileEntity } from "./entities/FileEntity.js";
 export type { default as MinimalDocumentVersionEntity } from "./entities/MinimalDocumentVersionEntity.js";
-export type { default as RemoteEntity } from "./entities/RemoteEntity.js";
 
 //////////////////
 // Requirements //
@@ -29,7 +28,6 @@ export type { default as BackgroundJobRepository } from "./requirements/Backgrou
 export type { default as CollectionCategoryRepository } from "./requirements/CollectionCategoryRepository.js";
 export type { default as CollectionRepository } from "./requirements/CollectionRepository.js";
 export type { default as CollectionVersionRepository } from "./requirements/CollectionVersionRepository.js";
-export type { default as Connector } from "./requirements/Connector.js";
 export type { default as ConversationRepository } from "./requirements/ConversationRepository.js";
 export type { default as ConversationTextSearchIndex } from "./requirements/ConversationTextSearchIndex.js";
 export type { default as DataRepositories } from "./requirements/DataRepositories.js";

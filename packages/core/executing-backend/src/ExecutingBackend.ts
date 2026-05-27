@@ -9,7 +9,6 @@ import type Config from "./Config.js";
 import LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
 import makeValidationIssues from "./makers/makeValidationIssues.js";
-import type Connector from "./requirements/Connector.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
@@ -38,18 +37,13 @@ import CollectionCategoriesCreate from "./usecases/collection-categories/Create.
 import CollectionCategoriesDelete from "./usecases/collection-categories/Delete.js";
 import CollectionCategoriesList from "./usecases/collection-categories/List.js";
 import CollectionCategoriesUpdate from "./usecases/collection-categories/Update.js";
-import CollectionsAuthenticateOAuth2PKCEConnector from "./usecases/collections/CollectionsAuthenticateOAuth2PKCEConnector.js";
 import CollectionsCreate from "./usecases/collections/Create.js";
 import CollectionsCreateMany from "./usecases/collections/CreateMany.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
-import CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl from "./usecases/collections/GetOAuth2PKCEConnectorAuthorizationRequestUrl.js";
 import CollectionsGetTypescriptSchema from "./usecases/collections/GetTypescriptSchema.js";
 import CollectionsGetVersion from "./usecases/collections/GetVersion.js";
 import CollectionsList from "./usecases/collections/List.js";
-import CollectionsListConnectors from "./usecases/collections/ListConnectors.js";
-import CollectionsSetRemote from "./usecases/collections/SetRemote.js";
-import CollectionsTriggerDownSync from "./usecases/collections/TriggerDownSync.js";
 import CollectionUpdateLatestVersionSettings from "./usecases/collections/UpdateLatestVersionSettings.js";
 import CollectionsUpdateSettings from "./usecases/collections/UpdateSettings.js";
 import DatabaseExport from "./usecases/database/Export.js";
@@ -95,7 +89,6 @@ export default class ExecutingBackend implements Backend {
     private javascriptSandbox: JavascriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
-    private connectors: Connector<any, any>[],
     config?: Partial<Config>,
   ) {
     this.resolvedConfig = {
@@ -114,15 +107,6 @@ export default class ExecutingBackend implements Backend {
       create: this.makeUsecase(CollectionsCreate, true),
       createMany: this.makeUsecase(CollectionsCreateMany, true),
       updateSettings: this.makeUsecase(CollectionsUpdateSettings, true),
-      setRemote: this.makeUsecase(CollectionsSetRemote, true),
-      getOAuth2PKCEConnectorAuthorizationRequestUrl: this.makeUsecase(
-        CollectionsGetOAuth2PKCEConnectorAuthorizationRequestUrl,
-        false,
-      ),
-      authenticateOAuth2PKCEConnector: this.makeUsecase(
-        CollectionsAuthenticateOAuth2PKCEConnector,
-        true,
-      ),
       createNewVersion: this.makeUsecase(CollectionsCreateNewVersion, true),
       updateLatestVersionSettings: this.makeUsecase(
         CollectionUpdateLatestVersionSettings,
@@ -130,8 +114,6 @@ export default class ExecutingBackend implements Backend {
       ),
       delete: this.makeUsecase(CollectionsDelete, true),
       list: this.makeUsecase(CollectionsList, false),
-      triggerDownSync: this.makeUsecase(CollectionsTriggerDownSync, true),
-      listConnectors: this.makeUsecase(CollectionsListConnectors, false),
       getVersion: this.makeUsecase(CollectionsGetVersion, false),
       getTypescriptSchema: this.makeUsecase(
         CollectionsGetTypescriptSchema,
@@ -232,7 +214,6 @@ export default class ExecutingBackend implements Backend {
       javascriptSandbox,
       typescriptCompiler,
       inferenceServiceFactory,
-      connectors,
       this.liveConversationStore,
       this.resolvedConfig,
     );
@@ -244,7 +225,6 @@ export default class ExecutingBackend implements Backend {
       javascriptSandbox: JavascriptSandbox,
       typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
-      connectors: Connector[],
       liveConversationStore: LiveConversationStore,
       config: Config,
     ) => BackendUsecase<Exec>,
@@ -259,7 +239,6 @@ export default class ExecutingBackend implements Backend {
               this.javascriptSandbox,
               this.typescriptCompiler,
               this.inferenceServiceFactory,
-              this.connectors,
               this.liveConversationStore,
               this.resolvedConfig,
             );

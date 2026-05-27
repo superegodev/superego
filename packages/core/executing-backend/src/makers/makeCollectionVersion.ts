@@ -10,7 +10,6 @@ export default function makeCollectionVersion(
     settings: collectionVersion.settings,
     previousVersionId: collectionVersion.previousVersionId,
     migration: collectionVersion.migration,
-    remoteConverters: collectionVersion.remoteConverters,
     createdAt: collectionVersion.createdAt,
   };
 }
