@@ -15,7 +15,7 @@ export default {
   versionSettings: {
     contentBlockingKeysGetter: null,
     contentSummaryGetter: `
-import type { Task } from "../generated/ProtoCollection_0.js";
+import type { Task } from "./CollectionSchema.js";
 
 export default function getContentSummary(
   task: Task
