@@ -6,6 +6,7 @@ import {
   Text,
   Tile,
 } from "@superego/app-sandbox/components";
+import type { EChartsOption } from "echarts";
 import React from "react";
 import type * as ProtoCollection_0 from "./ProtoCollection_0.js";
 
@@ -103,7 +104,7 @@ export default function App(props: Props): React.ReactElement | null {
   }, [filteredExpenses]);
 
   // Prepare data for category chart
-  const categoryChartData = React.useMemo(() => {
+  const categoryChartData = React.useMemo<EChartsOption>(() => {
     const data = Array.from(stats.categoryTotals.entries())
       .map(([category, amount]) => ({
         name: category,
@@ -137,7 +138,7 @@ export default function App(props: Props): React.ReactElement | null {
   }, [stats.categoryTotals]);
 
   // Prepare data for payment method chart
-  const paymentChartData = React.useMemo(() => {
+  const paymentChartData = React.useMemo<EChartsOption>(() => {
     const data = Array.from(stats.paymentTotals.entries()).map(
       ([method, amount]) => ({
         name: method,
@@ -190,7 +191,7 @@ export default function App(props: Props): React.ReactElement | null {
         <Select
           mode="single"
           value={selectedMonth}
-          onChange={setSelectedMonth}
+          onChange={(newValue) => setSelectedMonth(newValue ?? "")}
           showClearButton={false}
           options={monthOptions}
           label="Select Month"

@@ -36,7 +36,7 @@ export default function getContentSummary(
       ? security.priceHistory
           .slice()
           .sort((a, b) => a.instant.localeCompare(b.instant))
-          .at(-1).price
+          .at(-1)!.price
       : null;
   return {
     "{position:0,sortable:true,default-sort:asc} Ticker": security.ticker,
