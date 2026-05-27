@@ -30,12 +30,7 @@ export const Header = {
     marginBlockEnd: vars.spacing._2,
   }),
   toolbar: style({
-    opacity: 0,
-    selectors: {
-      "div:hover > &, &:has(:focus)": {
-        opacity: 1,
-      },
-    },
+    display: "flex",
   }),
   toolbarAction: style({
     fontSize: vars.typography.fontSizes.lg,
