@@ -61,11 +61,8 @@ export default rd<GetDependencies>("Files", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });

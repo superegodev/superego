@@ -34,6 +34,10 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
+import {
+  getCollectionGetterTypescriptLibs,
+  validateTypescriptModuleDefaultExportsFunction,
+} from "../../utils/typescriptModules.js";
 
 interface CollectionsCreateOptions {
   dryRun?: boolean;
@@ -179,43 +183,49 @@ export default class CollectionsCreate extends BackendUsecase<
     }
 
     if (versionSettings.contentBlockingKeysGetter !== null) {
-      const isContentBlockingKeysGetterValid =
-        await this.javascriptSandbox.moduleDefaultExportsFunction(
+      const validationResult =
+        await validateTypescriptModuleDefaultExportsFunction(
+          this.typescriptCompiler,
+          this.typescriptSandbox,
           versionSettings.contentBlockingKeysGetter,
+          "/contentBlockingKeysGetter.ts",
+          getCollectionGetterTypescriptLibs(resolvedSchema),
+          "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
         );
-      if (!isContentBlockingKeysGetterValid) {
+      if ("issues" in validationResult) {
         return makeUnsuccessfulResult(
           makeResultError("ContentBlockingKeysGetterNotValid", {
             collectionId: null,
             collectionVersionId: null,
-            issues: [
-              {
-                message:
-                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
-              },
-            ],
+            issues: validationResult.issues,
           }),
         );
       }
+      if (!validationResult.success) {
+        return makeUnsuccessfulResult(validationResult.error);
+      }
     }
 
-    const isContentSummaryGetterValid =
-      await this.javascriptSandbox.moduleDefaultExportsFunction(
+    const contentSummaryGetterValidationResult =
+      await validateTypescriptModuleDefaultExportsFunction(
+        this.typescriptCompiler,
+        this.typescriptSandbox,
         versionSettings.contentSummaryGetter,
+        "/contentSummaryGetter.ts",
+        getCollectionGetterTypescriptLibs(resolvedSchema),
+        "The default export of the contentSummaryGetter TypescriptModule is not a function",
       );
-    if (!isContentSummaryGetterValid) {
+    if ("issues" in contentSummaryGetterValidationResult) {
       return makeUnsuccessfulResult(
         makeResultError("ContentSummaryGetterNotValid", {
           collectionId: null,
           collectionVersionId: null,
-          issues: [
-            {
-              message:
-                "The default export of the contentSummaryGetter TypescriptModule is not a function",
-            },
-          ],
+          issues: contentSummaryGetterValidationResult.issues,
         }),
       );
+    }
+    if (!contentSummaryGetterValidationResult.success) {
+      return makeUnsuccessfulResult(contentSummaryGetterValidationResult.error);
     }
 
     // Validate defaultDocumentViewUiOptions.

@@ -1,9 +1,9 @@
 import type { ExecutingTypescriptFunctionFailed } from "@superego/backend";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import type TypescriptSandbox from "../requirements/TypescriptSandbox.js";
 import makeResultError from "./makeResultError.js";
 
 export default function makeExecutingTypescriptFunctionFailed(
-  error: JavascriptSandbox.ExecutingFunctionFailed,
+  error: TypescriptSandbox.ExecutingFunctionFailed,
 ): ExecutingTypescriptFunctionFailed {
   return makeResultError("ExecutingTypescriptFunctionFailed", error.details);
 }

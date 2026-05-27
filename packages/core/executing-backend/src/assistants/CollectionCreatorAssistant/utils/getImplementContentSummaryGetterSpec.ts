@@ -1,6 +1,6 @@
 import type { Backend } from "@superego/backend";
-import LocalInstantDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { codegen, type Schema } from "@superego/schema";
+import LocalInstantDeclaration from "@superego/typescript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { lowerFirst } from "es-toolkit";
 
 // TODO: move to dedicated package when refactoring CollectionCreator and the

@@ -1,0 +1,29 @@
+{
+  "name": "@superego/typescript-sandbox-global-utils",
+  "version": "2026.5.2",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    },
+    "./LocalInstant.d.ts": {
+      "import": "./types/LocalInstant.d.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose",
+    "generate-types": "node scripts/generateTypes.ts"
+  },
+  "dependencies": {
+    "@superego/schema": "workspace:*",
+    "luxon": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.1",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7",
+    "zx": "8.8.5-lite"
+  }
+}

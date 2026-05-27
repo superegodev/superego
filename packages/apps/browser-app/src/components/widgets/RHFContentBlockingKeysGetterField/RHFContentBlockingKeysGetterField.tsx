@@ -146,7 +146,7 @@ Guidelines:
 7. Deterministic output
    - The same content must always produce the exact same array of strings.
             `.trim(),
-            template: forms.defaults.contentBlockingKeysGetter(schema).source,
+            template: forms.defaults.contentBlockingKeysGetter(schema),
             userRequest: "Complete the implementation.",
           }}
           description={

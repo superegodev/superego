@@ -9,7 +9,7 @@ import {
 import { renderBrowserApp } from "@superego/browser-app";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
+import { FakeTypescriptSandbox } from "@superego/fake-typescript-sandbox/browser";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QueryClient } from "@tanstack/react-query";
@@ -85,7 +85,7 @@ const dataRepositoriesManager = new DemoDataRepositoriesManager(
 );
 const backend = new ExecutingBackend(
   dataRepositoriesManager,
-  new FakeJavascriptSandbox(),
+  new FakeTypescriptSandbox(),
   new MonacoTypescriptCompiler(
     async () => (await import("@superego/browser-app/monaco")).default,
   ),

@@ -357,11 +357,8 @@ export default rd<GetDependencies>("Inference", (deps) => {
 
         // Verify
         assert.isTrue(result.success);
-        expect(result.data).toEqual({
-          source: expect.any(String),
-          compiled: expect.any(String),
-        });
-        expect(result.data.source).toContain("getContentSummary");
+        expect(result.data).toEqual(expect.any(String));
+        expect(result.data).toContain("getContentSummary");
       },
     );
   });

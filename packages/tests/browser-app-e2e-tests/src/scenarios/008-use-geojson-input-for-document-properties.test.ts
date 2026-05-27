@@ -44,11 +44,8 @@ test("008. Use GeoJSON input for document properties", async ({ page }) => {
       },
       versionSettings: {
         contentBlockingKeysGetter: null,
-        contentSummaryGetter: {
-          source: "",
-          compiled:
-            "export default function getContentSummary() { return {}; }",
-        },
+        contentSummaryGetter:
+          "export default function getContentSummary() { return {}; }",
         defaultDocumentViewUiOptions: null,
       },
     });

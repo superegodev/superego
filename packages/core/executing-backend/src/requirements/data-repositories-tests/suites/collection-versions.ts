@@ -12,7 +12,8 @@ const schema: Schema = {
 };
 const settings: CollectionVersionSettings = {
   contentBlockingKeysGetter: null,
-  contentSummaryGetter: { source: "", compiled: "" },
+  contentSummaryGetter:
+    "export default function getContentSummary() { return {}; }",
   defaultDocumentViewUiOptions: null,
 };
 
@@ -75,10 +76,7 @@ export default rd<GetDependencies>("Collection versions", (deps) => {
       ...collectionVersion,
       settings: {
         contentBlockingKeysGetter: null,
-        contentSummaryGetter: {
-          source: "updatedSource",
-          compiled: "updatedCompiled",
-        },
+        contentSummaryGetter: "updatedSource",
         defaultDocumentViewUiOptions: null,
       },
     };

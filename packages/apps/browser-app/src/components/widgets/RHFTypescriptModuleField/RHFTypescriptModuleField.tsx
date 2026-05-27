@@ -7,7 +7,6 @@ import {
   type FieldValues,
   useController,
 } from "react-hook-form";
-import forms from "../../../business-logic/forms/forms.js";
 import { vars } from "../../../themes.css.js";
 import classnames from "../../../utils/classnames.js";
 import {
@@ -64,14 +63,7 @@ export default function RHFTypescriptModuleField<T extends FieldValues>({
   codeInputClassName,
 }: Props<T>) {
   const { field, fieldState } = useController({ control, name });
-  const value = field.value as Record<string, unknown> | null;
-  const isInvalid =
-    fieldState.invalid &&
-    !(
-      value !== null &&
-      typeof value === "object" &&
-      value["compiled"] === forms.constants.COMPILATION_IN_PROGRESS
-    );
+  const isInvalid = fieldState.invalid;
   return (
     <div
       data-disabled={isDisabled}
@@ -80,7 +72,7 @@ export default function RHFTypescriptModuleField<T extends FieldValues>({
       {label ? <Label>{label}</Label> : null}
       <CodeInput
         language={language}
-        value={field.value ?? { source: "", compiled: "" }}
+        value={field.value ?? ""}
         onChange={field.onChange}
         onBlur={field.onBlur}
         undoRedo={undoRedo}

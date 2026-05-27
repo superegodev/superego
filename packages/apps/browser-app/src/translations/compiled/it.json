@@ -4520,23 +4520,5 @@
       "type": 0,
       "value": "Apertura del file non riuscita"
     }
-  ],
-  "typescriptModule.ts_MZNYNj": [
-    {
-      "type": 0,
-      "value": "È necessaria la compilazione TypeScript"
-    }
-  ],
-  "typescriptModule.ts_lRjJvq": [
-    {
-      "type": 0,
-      "value": "Compilazione TypeScript in corso"
-    }
-  ],
-  "typescriptModule.ts_yZ+w+N": [
-    {
-      "type": 0,
-      "value": "Compilazione TypeScript non riuscita"
-    }
   ]
 }

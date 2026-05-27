@@ -70,7 +70,7 @@ configures the behavior of the UIs that render the summary. Examples:
   document properties.
 - The properties must always exist, but you can use \`null\` for empty values.
         `.trim(),
-        template: forms.defaults.contentSummaryGetter(schema).source,
+        template: forms.defaults.contentSummaryGetter(schema),
         userRequest: "Complete the implementation.",
       }}
       description={

@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { decode, encode } from "@msgpack/msgpack";
 import m0000 from "./0000.sql?raw";
 import m0001 from "./0001.sql?raw";
 import m0002 from "./0002.sql?raw";
@@ -11,6 +12,7 @@ import m0008 from "./0008.sql?raw";
 import m0009 from "./0009.sql?raw";
 import m0010 from "./0010.sql?raw";
 import m0011 from "./0011.sql?raw";
+import m0012 from "./0012.sql?raw";
 
 const migrationFiles = {
   "0000.sql": m0000,
@@ -25,6 +27,7 @@ const migrationFiles = {
   "0009.sql": m0009,
   "0010.sql": m0010,
   "0011.sql": m0011,
+  "0012.sql": m0012,
 };
 const table = "migrations";
 
@@ -61,9 +64,39 @@ export default function migrate(db: DatabaseSync) {
       continue;
     }
     db.exec(migrationFiles[fileName]);
+    if (fileName === "0012.sql") {
+      migrate0012AppVersionFiles(db);
+    }
     insertMigration.run(fileName, new Date().toISOString());
   }
   db.exec("COMMIT");
+}
+
+function migrate0012AppVersionFiles(db: DatabaseSync) {
+  const appVersions = db
+    .prepare(`SELECT "id", "files" FROM "app_versions"`)
+    .all() as { id: string; files: Buffer }[];
+  const updateAppVersionFiles = db.prepare(
+    `UPDATE "app_versions" SET "files" = ? WHERE "id" = ?`,
+  );
+
+  for (const appVersion of appVersions) {
+    const files = decode(appVersion.files) as Record<string, any>;
+    if (
+      typeof files["/main.tsx"] === "object" &&
+      files["/main.tsx"] !== null &&
+      typeof files["/main.tsx"].source === "string" &&
+      typeof files["/main.tsx"].compiled === "string"
+    ) {
+      updateAppVersionFiles.run(
+        encode({
+          "/main.tsx": files["/main.tsx"].source,
+          "/main.js": files["/main.tsx"].compiled,
+        }),
+        appVersion.id,
+      );
+    }
+  }
 }
 
 /**

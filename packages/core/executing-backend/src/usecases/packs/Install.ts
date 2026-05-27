@@ -1,9 +1,9 @@
 import type {
   App,
+  AppDefinition,
   AppId,
   AppNameNotValid,
   AppNotFound,
-  AppVersion,
   Backend,
   Collection,
   CollectionCategory,
@@ -33,6 +33,7 @@ import type {
   ProtoDocumentId,
   ReferencedCollectionsNotFound,
   ReferencedDocumentsNotFound,
+  TypescriptCompilationFailed,
   UnexpectedError,
   ValidationIssue,
 } from "@superego/backend";
@@ -97,6 +98,7 @@ export default class PacksInstall extends BackendUsecase<
       structuralSchemas.backend.errors.parentCollectionCategoryNotFound(),
       structuralSchemas.backend.errors.referencedCollectionsNotFound(),
       structuralSchemas.backend.errors.referencedDocumentsNotFound(),
+      structuralSchemas.backend.errors.typescriptCompilationFailed(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
@@ -121,6 +123,7 @@ export default class PacksInstall extends BackendUsecase<
     | ContentSummaryGetterNotValid
     | DefaultDocumentViewUiOptionsNotValid
     | AppNameNotValid
+    | TypescriptCompilationFailed
     | CollectionNotFound
     | DocumentContentNotValid
     | FilesNotFound
@@ -283,9 +286,9 @@ export default class PacksInstall extends BackendUsecase<
   }
 
   private static replaceProtoCollectionIdsInAppFiles(
-    files: AppVersion["files"],
+    files: AppDefinition<true>["files"],
     collectionIdMapping: Map<ProtoCollectionId, CollectionId>,
-  ): AppVersion["files"] {
+  ): AppDefinition["files"] {
     const mappingEntries = [...collectionIdMapping.entries()].sort(
       (a, b) => b[0].length - a[0].length,
     );
@@ -304,12 +307,9 @@ export default class PacksInstall extends BackendUsecase<
     return Object.fromEntries(
       Object.entries(files).map(([filePath, fileContent]) => [
         filePath,
-        {
-          source: replaceProtoCollectionIds(fileContent.source),
-          compiled: replaceProtoCollectionIds(fileContent.compiled),
-        },
+        replaceProtoCollectionIds(fileContent),
       ]),
-    ) as AppVersion["files"];
+    ) as AppDefinition["files"];
   }
 
   private static validateProtoIdReferences(

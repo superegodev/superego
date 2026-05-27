@@ -14,8 +14,7 @@ export default {
   schema: calendarEntriesSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { CalendarEntry } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -29,17 +28,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(calendarEntry) {
-  return {
-    "{position:0,sortable:true} Title": calendarEntry.title,
-    "{position:1,sortable:true,default-sort:asc} Start": calendarEntry.startTime,
-    "{position:2,sortable:true} End": calendarEntry.endTime,
-    "{position:3,sortable:true} Type": calendarEntry.type,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

@@ -39,7 +39,7 @@ export type { default as FileRepository } from "./requirements/FileRepository.js
 export type { default as GlobalSettingsRepository } from "./requirements/GlobalSettingsRepository.js";
 export { default as InferenceService } from "./requirements/InferenceService.js";
 export type { default as InferenceServiceFactory } from "./requirements/InferenceServiceFactory.js";
-export type { default as JavascriptSandbox } from "./requirements/JavascriptSandbox.js";
+export type { default as TypescriptSandbox } from "./requirements/TypescriptSandbox.js";
 export type { default as TypescriptCompiler } from "./requirements/TypescriptCompiler.js";
 
 //////////////

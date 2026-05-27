@@ -13,8 +13,7 @@ export default {
   },
   schema: accountsSchema,
   versionSettings: {
-    contentBlockingKeysGetter: {
-      source: `
+    contentBlockingKeysGetter: `
 import type { Account } from "./CollectionSchema.js";
 
 export default function getContentBlockingKeys(account: Account): string[] {
@@ -23,16 +22,7 @@ export default function getContentBlockingKeys(account: Account): string[] {
   ];
 }
       `.trim(),
-      compiled: `
-export default function getContentBlockingKeys(account) {
-  return [
-    \`name:\${account.name.trim().toLowerCase()}:broker:\${account.broker.trim().toLowerCase()}\`,
-  ];
-}
-      `.trim(),
-    },
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Account } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -45,16 +35,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(account) {
-  return {
-    "{position:0,sortable:true,default-sort:asc} Name": account.name,
-    "{position:1,sortable:true} Broker": account.broker,
-    "{position:2} Currency": account.currency,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

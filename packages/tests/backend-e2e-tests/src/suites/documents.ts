@@ -65,11 +65,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -126,11 +123,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -186,11 +180,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -251,16 +242,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
-          contentBlockingKeysGetter: {
-            source: "",
-            compiled:
-              "export default function getContentBlockingKeys() { return 123; }",
-          },
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentBlockingKeysGetter:
+            "export default function getContentBlockingKeys() { return 123; }",
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -314,17 +299,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
-          contentBlockingKeysGetter: {
-            source: "",
-            compiled:
-              // oxlint-disable-next-line no-template-curly-in-string -- intended.
-              "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
-          },
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentBlockingKeysGetter:
+            "export default function getContentBlockingKeys(content: { title: string }) { return [content.title]; }",
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -378,17 +356,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
-          contentBlockingKeysGetter: {
-            source: "",
-            compiled:
-              // oxlint-disable-next-line no-template-curly-in-string -- intended.
-              "export default function getContentBlockingKeys(content) { return [`title:${content.title}`]; }",
-          },
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentBlockingKeysGetter:
+            "export default function getContentBlockingKeys(content: { title: string }) { return [content.title]; }",
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -455,11 +426,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -558,11 +526,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -624,11 +589,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -696,11 +658,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -766,11 +725,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -835,11 +791,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -900,11 +853,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -991,11 +941,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1094,11 +1041,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1150,11 +1094,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1214,11 +1155,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1284,11 +1222,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1353,11 +1288,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1425,19 +1357,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           rootType: "Root",
         },
         versionSettings: {
-          contentBlockingKeysGetter: {
-            source: "",
-            compiled: `
-              export default function getContentBlockingKeys(content) {
-                return content.title === "title" ? ["title:title"] : 123;
-              }
-            `,
-          },
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentBlockingKeysGetter:
+            'export default function getContentBlockingKeys(content: { title: string }) { return content.title === "updated title" ? 123 : []; }',
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1503,11 +1426,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1620,11 +1540,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1675,11 +1592,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1739,11 +1653,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1820,11 +1731,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1911,11 +1819,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -1987,11 +1892,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2039,11 +1941,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2100,11 +1999,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2190,11 +2086,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2272,11 +2165,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2326,11 +2216,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2397,11 +2284,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2455,11 +2339,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2552,11 +2433,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2606,11 +2484,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2667,11 +2542,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2697,11 +2569,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2754,11 +2623,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2784,11 +2650,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -2860,11 +2723,8 @@ export default rd<GetDependencies>("Documents", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });

@@ -5,6 +5,7 @@ import type {
   AppNameNotValid,
   Backend,
   CollectionNotFound,
+  TypescriptCompilationFailed,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -17,12 +18,17 @@ import {
 import * as v from "valibot";
 import type AppEntity from "../../entities/AppEntity.js";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
+import type CollectionVersionEntity from "../../entities/CollectionVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
+import {
+  compileTypescriptModule,
+  getAppTypescriptLibs,
+} from "../../utils/typescriptModules.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
@@ -37,6 +43,7 @@ export default class AppsCreate extends BackendUsecase<
     [
       structuralSchemas.backend.errors.appNameNotValid(),
       structuralSchemas.backend.errors.collectionNotFound(),
+      structuralSchemas.backend.errors.typescriptCompilationFailed(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
@@ -46,7 +53,10 @@ export default class AppsCreate extends BackendUsecase<
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
-    AppNameNotValid | CollectionNotFound | UnexpectedError
+    | AppNameNotValid
+    | CollectionNotFound
+    | TypescriptCompilationFailed
+    | UnexpectedError
   > {
     const nameValidationResult = v.safeParse(valibotSchemas.appName(), name);
     if (!nameValidationResult.success) {
@@ -59,6 +69,7 @@ export default class AppsCreate extends BackendUsecase<
     }
 
     const targetCollections: AppVersionEntity["targetCollections"] = [];
+    const targetCollectionVersions: CollectionVersionEntity[] = [];
     for (const collectionId of targetCollectionIds) {
       const collection = await this.repos.collection.find(collectionId);
       if (!collection) {
@@ -76,6 +87,17 @@ export default class AppsCreate extends BackendUsecase<
         id: collectionId,
         versionId: latestCollectionVersion.id,
       });
+      targetCollectionVersions.push(latestCollectionVersion);
+    }
+
+    const compilationResult = await compileTypescriptModule(
+      this.typescriptCompiler,
+      files["/main.tsx"],
+      "/main.tsx",
+      getAppTypescriptLibs(targetCollectionVersions),
+    );
+    if (!compilationResult.success) {
+      return makeUnsuccessfulResult(compilationResult.error);
     }
 
     const now = new Date();
@@ -90,7 +112,10 @@ export default class AppsCreate extends BackendUsecase<
       previousVersionId: null,
       appId: app.id,
       targetCollections: targetCollections,
-      files: files,
+      files: {
+        "/main.tsx": files["/main.tsx"],
+        "/main.js": compilationResult.data,
+      },
       createdAt: now,
     };
 

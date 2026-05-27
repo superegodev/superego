@@ -12,8 +12,8 @@ import makeValidationIssues from "./makers/makeValidationIssues.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
-import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
+import type TypescriptSandbox from "./requirements/TypescriptSandbox.js";
 import AppsCreate from "./usecases/apps/Create.js";
 import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
 import AppsDelete from "./usecases/apps/Delete.js";
@@ -86,7 +86,7 @@ export default class ExecutingBackend implements Backend {
 
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
-    private javascriptSandbox: JavascriptSandbox,
+    private typescriptSandbox: TypescriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     config?: Partial<Config>,
@@ -211,7 +211,7 @@ export default class ExecutingBackend implements Backend {
     this.liveConversationStore = new LiveConversationStore();
     this.backgroundJobExecutor = new BackgroundJobExecutor(
       dataRepositoriesManager,
-      javascriptSandbox,
+      typescriptSandbox,
       typescriptCompiler,
       inferenceServiceFactory,
       this.liveConversationStore,
@@ -222,7 +222,7 @@ export default class ExecutingBackend implements Backend {
   private makeUsecase<Exec extends (...args: any[]) => any>(
     UsecaseClass: new (
       repos: DataRepositories,
-      javascriptSandbox: JavascriptSandbox,
+      typescriptSandbox: TypescriptSandbox,
       typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       liveConversationStore: LiveConversationStore,
@@ -236,7 +236,7 @@ export default class ExecutingBackend implements Backend {
           async (repos) => {
             const usecase = new UsecaseClass(
               repos,
-              this.javascriptSandbox,
+              this.typescriptSandbox,
               this.typescriptCompiler,
               this.inferenceServiceFactory,
               this.liveConversationStore,

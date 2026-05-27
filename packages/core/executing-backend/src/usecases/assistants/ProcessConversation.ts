@@ -239,7 +239,7 @@ export default class AssistantsProcessConversation extends Usecase {
             ),
             filesGetContent: this.sub(FilesGetContent),
           },
-          this.javascriptSandbox,
+          this.typescriptSandbox,
           this.typescriptCompiler,
           {
             create: () => this.repos.createSavepoint(),

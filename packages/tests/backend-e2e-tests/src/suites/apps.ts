@@ -28,7 +28,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "name".repeat(100),
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
 
       // Verify
@@ -60,7 +62,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [collectionId],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
 
       // Verify
@@ -98,18 +102,17 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
 
       // Exercise
-      const files = { "/main.tsx": { source: "", compiled: "" } };
+      const files = {
+        "/main.tsx": "export default function App() { return null; }",
+      };
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
         name: "name",
@@ -132,7 +135,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
                 versionId: createCollectionResult.data.latestVersion.id,
               },
             ],
-            files,
+            files: { ...files, "/main.js": expect.any(String) },
             createdAt: expect.dateCloseToNow(),
           },
           createdAt: expect.dateCloseToNow(),
@@ -190,7 +193,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createAppResult.success);
 
@@ -226,7 +231,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createResult.success);
 
@@ -281,7 +288,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const appId = Id.generate.app();
       const result = await backend.apps.createNewVersion(appId, [], {
-        "/main.tsx": { source: "", compiled: "" },
+        "/main.tsx": "export default function App() { return null; }",
       });
 
       // Verify
@@ -302,7 +309,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createResult.success);
 
@@ -311,7 +320,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const createNewVersionResult = await backend.apps.createNewVersion(
         createResult.data.id,
         [collectionId],
-        { "/main.tsx": { source: "", compiled: "" } },
+        { "/main.tsx": "export default function App() { return null; }" },
       );
 
       // Verify
@@ -349,17 +358,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
       assert.isTrue(createCollectionResult.success);
       const initialFiles = {
-        "/main.tsx": { source: "initial", compiled: "initial" },
+        "/main.tsx": "export default function App() { return 'initial'; }",
       };
       const createAppResult = await backend.apps.create({
         type: AppType.CollectionView,
@@ -371,7 +377,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const updatedFiles = {
-        "/main.tsx": { source: "updated", compiled: "updated" },
+        "/main.tsx": "export default function App() { return 'updated'; }",
       };
       const createNewAppVersionResult = await backend.apps.createNewVersion(
         createAppResult.data.id,
@@ -394,7 +400,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
                 versionId: createCollectionResult.data.latestVersion.id,
               },
             ],
-            files: updatedFiles,
+            files: { ...updatedFiles, "/main.js": expect.any(String) },
             createdAt: expect.dateCloseToNow(),
           },
           createdAt: createAppResult.data.createdAt,
@@ -477,7 +483,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createResult.success);
 
@@ -525,11 +533,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -538,7 +543,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "default-app",
         targetCollectionIds: [createCollectionResult.data.id],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createAppResult.success);
       const updateCollectionSettingsResult =
@@ -596,14 +603,18 @@ export default rd<GetDependencies>("Apps", (deps) => {
         type: AppType.CollectionView,
         name: "zeta",
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createResultZeta.success);
       const createResultAlpha = await backend.apps.create({
         type: AppType.CollectionView,
         name: "alpha",
         targetCollectionIds: [],
-        files: { "/main.tsx": { source: "", compiled: "" } },
+        files: {
+          "/main.tsx": "export default function App() { return null; }",
+        },
       });
       assert.isTrue(createResultAlpha.success);
 

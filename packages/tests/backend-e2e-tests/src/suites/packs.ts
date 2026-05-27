@@ -87,11 +87,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -154,11 +151,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -230,11 +224,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -280,7 +271,9 @@ export default rd<GetDependencies>("Packs", (deps) => {
             type: AppType.CollectionView,
             name: "Test App",
             targetCollectionIds: [Id.generate.protoCollection(99)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
+            files: {
+              "/main.tsx": "export default function App() { return null; }",
+            },
           },
         ],
         documents: [],
@@ -387,11 +380,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: {
                 fullWidth: false,
                 alwaysCollapsePrimarySidebar: false,
@@ -452,11 +442,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -579,11 +566,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -641,11 +625,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -655,7 +636,9 @@ export default rd<GetDependencies>("Packs", (deps) => {
             type: AppType.CollectionView,
             name: "My App",
             targetCollectionIds: [Id.generate.protoCollection(0)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
+            files: {
+              "/main.tsx": "export default function App() { return null; }",
+            },
           },
         ],
         documents: [],
@@ -711,11 +694,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -786,11 +766,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -800,7 +777,9 @@ export default rd<GetDependencies>("Packs", (deps) => {
             type: AppType.CollectionView,
             name: "App",
             targetCollectionIds: [Id.generate.protoCollection(0)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
+            files: {
+              "/main.tsx": "export default function App() { return null; }",
+            },
           },
         ],
         documents: [
@@ -914,11 +893,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -958,11 +934,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -998,11 +971,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },
@@ -1247,11 +1217,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
             },
             versionSettings: {
               contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
-              },
+              contentSummaryGetter:
+                "export default function getContentSummary() { return {}; }",
               defaultDocumentViewUiOptions: null,
             },
           },

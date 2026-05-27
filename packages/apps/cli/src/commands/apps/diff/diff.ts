@@ -32,7 +32,7 @@ export default useMarkdownHelp(
             (targetCollection) => targetCollection.id,
           ),
         };
-        const remoteSource = app.latestVersion.files["/main.tsx"].source;
+        const remoteSource = app.latestVersion.files["/main.tsx"];
         const name = makeFieldDiff(manifest.name, remoteManifest.name);
         const type = makeFieldDiff(manifest.type, remoteManifest.type);
         const targetCollectionIds = makeArrayFieldDiff(

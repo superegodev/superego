@@ -5,8 +5,7 @@ export default function collectionViewAppFiles(
   targetCollections: Collection[],
 ): RHFAppVersionFiles {
   return {
-    "/main__DOT__tsx": {
-      source: `
+    "/main__DOT__tsx": `
 import React from "react";
 import { DefaultApp } from "@superego/app-sandbox/components";
 ${targetCollections.map(makeCollectionImport).join("\n")}
@@ -21,16 +20,7 @@ export default function App(props: Props): React.ReactElement | null {
   // final version of the app.
   return <DefaultApp {...props} />;
 }
-      `.trim(),
-      compiled: `
-import React from "react";
-import { DefaultApp } from "@superego/app-sandbox/components";
-
-export default function App(props) {
-  return React.createElement(DefaultApp, props);
-}
-      `.trim(),
-    },
+    `.trim(),
   };
 }
 

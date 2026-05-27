@@ -3,7 +3,7 @@ import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
-import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
+import { QuickjsTypescriptSandbox } from "@superego/quickjs-typescript-sandbox/browser";
 import { QueryClient } from "@tanstack/react-query";
 import { renderBrowserApp } from "../src/index.js";
 import monaco from "../src/monaco.js";
@@ -28,7 +28,7 @@ const backend = new ExecutingBackend(
       },
     },
   }),
-  new QuickjsJavascriptSandbox(),
+  new QuickjsTypescriptSandbox(),
   new MonacoTypescriptCompiler(
     async () => (await import("../src/monaco.js")).default,
   ),

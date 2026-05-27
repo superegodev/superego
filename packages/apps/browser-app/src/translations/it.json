@@ -1628,15 +1628,6 @@
   "openFileWithNativeApp.ts_Blh3UZ": {
     "defaultMessage": "Apertura del file non riuscita"
   },
-  "typescriptModule.ts_MZNYNj": {
-    "defaultMessage": "È necessaria la compilazione TypeScript"
-  },
-  "typescriptModule.ts_lRjJvq": {
-    "defaultMessage": "Compilazione TypeScript in corso"
-  },
-  "typescriptModule.ts_yZ+w+N": {
-    "defaultMessage": "Compilazione TypeScript non riuscita"
-  },
   "Explainer.tsx_2ouWR4": {
     "defaultMessage": "<p> Qui nella Boutique puoi trovare collezioni e app già pronte, raggruppate in <b>pack</b> tematici che puoi installare con un click. </p>"
   }

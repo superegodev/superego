@@ -25,6 +25,7 @@ export function appVersion(): v.GenericSchema<unknown, AppVersion> {
     ),
     files: v.strictObject({
       "/main.tsx": typescriptModule(),
+      "/main.js": v.string(),
     }),
     createdAt: v.date(),
   });

@@ -113,22 +113,22 @@ export default function CreateCollectionForm() {
   // whether the field is registered, so we pair it with a ref to track whether
   // the user has customized the source.
   const lastDefaultContentBlockingKeysGetterSourceRef = useRef(
-    defaultContentBlockingKeysGetter?.source,
+    defaultContentBlockingKeysGetter,
   );
   const lastDefaultContentSummaryGetterSourceRef = useRef(
-    defaultContentSummaryGetter.source,
+    defaultContentSummaryGetter,
   );
 
   // When schema changes, if it's valid:
   // - Update contentSummaryGetter and contentBlockingKeysGetter, if they are
-  //   still the default ones, and in any case require recompilation.
+  //   still the default ones.
   useEffect(() => {
     if (!isSchemaValid) {
       return;
     }
 
     const currentContentBlockingKeysGetterSource = getValues(
-      "contentBlockingKeysGetter.source",
+      "contentBlockingKeysGetter",
     );
     if (
       currentContentBlockingKeysGetterSource ===
@@ -136,29 +136,17 @@ export default function CreateCollectionForm() {
     ) {
       const newDefault = forms.defaults.contentBlockingKeysGetter(schema);
       setValue("contentBlockingKeysGetter", newDefault);
-      lastDefaultContentBlockingKeysGetterSourceRef.current = newDefault.source;
-    } else {
-      setValue(
-        "contentBlockingKeysGetter.compiled",
-        forms.constants.COMPILATION_REQUIRED,
-      );
+      lastDefaultContentBlockingKeysGetterSourceRef.current = newDefault;
     }
 
-    const currentContentSummaryGetterSource = getValues(
-      "contentSummaryGetter.source",
-    );
+    const currentContentSummaryGetterSource = getValues("contentSummaryGetter");
     if (
       currentContentSummaryGetterSource ===
       lastDefaultContentSummaryGetterSourceRef.current
     ) {
       const newDefault = forms.defaults.contentSummaryGetter(schema);
       setValue("contentSummaryGetter", newDefault);
-      lastDefaultContentSummaryGetterSourceRef.current = newDefault.source;
-    } else {
-      setValue(
-        "contentSummaryGetter.compiled",
-        forms.constants.COMPILATION_REQUIRED,
-      );
+      lastDefaultContentSummaryGetterSourceRef.current = newDefault;
     }
   }, [schema, setValue, getValues, isSchemaValid]);
 

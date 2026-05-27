@@ -29,7 +29,7 @@ export async function compileApp(
     }
     throw new Error(JSON.stringify(result.error.details));
   }
-  return { source, compiled: result.data };
+  return source;
 }
 
 export function getCollectionTypescriptLibs(

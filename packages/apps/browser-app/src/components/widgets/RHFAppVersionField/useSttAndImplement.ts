@@ -110,11 +110,11 @@ ${targetCollectionsSnippet}
         template:
           forms.defaults.collectionViewAppFiles(targetCollections)[
             "/main__DOT__tsx"
-          ].source,
+          ],
         libs: typescriptLibs,
         startingPoint: {
           path: "/main.tsx",
-          source: mainTsx.source,
+          source: mainTsx,
         },
         userRequest: userRequest,
       },

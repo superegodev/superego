@@ -1,5 +1,4 @@
 import { type AppDefinition, AppType } from "@superego/backend";
-import portfolioDashboardAppCompiled from "./portfolioDashboard.appCompiled.js?raw";
 import portfolioDashboardAppSource from "./portfolioDashboard.appSource.tsx?raw";
 
 export default {
@@ -11,9 +10,6 @@ export default {
     "ProtoCollection_3",
   ],
   files: {
-    "/main.tsx": {
-      source: portfolioDashboardAppSource,
-      compiled: portfolioDashboardAppCompiled,
-    },
+    "/main.tsx": portfolioDashboardAppSource,
   },
 } as const satisfies AppDefinition<true>;

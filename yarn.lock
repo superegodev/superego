@@ -6664,10 +6664,10 @@ __metadata:
     "@superego/backend": "workspace:*"
     "@superego/boutique": "workspace:*"
     "@superego/executing-backend": "workspace:*"
-    "@superego/fake-javascript-sandbox": "workspace:*"
+    "@superego/fake-typescript-sandbox": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/monaco-typescript-compiler": "workspace:*"
-    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/quickjs-typescript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
@@ -6737,13 +6737,13 @@ __metadata:
     "@superego/echarts": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
-    "@superego/javascript-sandbox-global-utils": "workspace:*"
     "@superego/monaco-typescript-compiler": "workspace:*"
     "@superego/multi-driver-inference-service": "workspace:*"
-    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/quickjs-typescript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/themes": "workspace:*"
+    "@superego/typescript-sandbox-global-utils": "workspace:*"
     "@tanstack/react-query": "npm:^5.100.14"
     "@testing-library/dom": "npm:^10.4.1"
     "@testing-library/jest-dom": "npm:^6.9.1"
@@ -6806,7 +6806,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/multi-driver-inference-service": "workspace:*"
-    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/quickjs-typescript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
     "@superego/tsc-typescript-compiler": "workspace:*"
@@ -6824,7 +6824,7 @@ __metadata:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/multi-driver-inference-service": "workspace:*"
-    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/quickjs-typescript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
@@ -6850,7 +6850,7 @@ __metadata:
     "@superego/browser-app": "workspace:*"
     "@superego/demo-data-repositories": "workspace:*"
     "@superego/executing-backend": "workspace:*"
-    "@superego/fake-javascript-sandbox": "workspace:*"
+    "@superego/fake-typescript-sandbox": "workspace:*"
     "@superego/monaco-typescript-compiler": "workspace:*"
     "@superego/multi-driver-inference-service": "workspace:*"
     "@superego/schema": "workspace:*"
@@ -6912,7 +6912,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/multi-driver-inference-service": "workspace:*"
-    "@superego/quickjs-javascript-sandbox": "workspace:*"
+    "@superego/quickjs-typescript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@superego/sqlite-data-repositories": "workspace:*"
@@ -6932,12 +6932,13 @@ __metadata:
   resolution: "@superego/executing-backend@workspace:packages/core/executing-backend"
   dependencies:
     "@fast-check/vitest": "npm:^0.4.1"
+    "@superego/app-sandbox": "workspace:*"
     "@superego/backend": "workspace:*"
     "@superego/boutique": "workspace:*"
     "@superego/global-types": "workspace:*"
-    "@superego/javascript-sandbox-global-utils": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
+    "@superego/typescript-sandbox-global-utils": "workspace:*"
     "@superego/vitest-registered": "workspace:*"
     "@types/json-schema": "npm:^7.0.15"
     "@types/luxon": "npm:^3.7.1"
@@ -6950,14 +6951,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/fake-javascript-sandbox@workspace:*, @superego/fake-javascript-sandbox@workspace:packages/code-execution/fake-javascript-sandbox":
+"@superego/fake-typescript-sandbox@workspace:*, @superego/fake-typescript-sandbox@workspace:packages/code-execution/fake-typescript-sandbox":
   version: 0.0.0-use.local
-  resolution: "@superego/fake-javascript-sandbox@workspace:packages/code-execution/fake-javascript-sandbox"
+  resolution: "@superego/fake-typescript-sandbox@workspace:packages/code-execution/fake-typescript-sandbox"
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
-    "@superego/javascript-sandbox-global-utils": "workspace:*"
+    "@superego/typescript-sandbox-global-utils": "workspace:*"
     "@vitest/browser": "npm:^4.1.7"
     "@vitest/browser-playwright": "npm:^4.1.7"
     playwright: "npm:^1.60.0"
@@ -6971,19 +6972,6 @@ __metadata:
   resolution: "@superego/global-types@workspace:packages/core/global-types"
   dependencies:
     typescript: "npm:^6.0.3"
-  languageName: unknown
-  linkType: soft
-
-"@superego/javascript-sandbox-global-utils@workspace:*, @superego/javascript-sandbox-global-utils@workspace:packages/code-execution/javascript-sandbox-global-utils":
-  version: 0.0.0-use.local
-  resolution: "@superego/javascript-sandbox-global-utils@workspace:packages/code-execution/javascript-sandbox-global-utils"
-  dependencies:
-    "@superego/schema": "workspace:*"
-    "@types/luxon": "npm:^3.7.1"
-    luxon: "npm:^3.7.2"
-    typescript: "npm:^6.0.3"
-    vitest: "npm:^4.1.7"
-    zx: "npm:8.8.5-lite"
   languageName: unknown
   linkType: soft
 
@@ -7017,16 +7005,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/quickjs-javascript-sandbox@workspace:*, @superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox":
+"@superego/quickjs-typescript-sandbox@workspace:*, @superego/quickjs-typescript-sandbox@workspace:packages/code-execution/quickjs-typescript-sandbox":
   version: 0.0.0-use.local
-  resolution: "@superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox"
+  resolution: "@superego/quickjs-typescript-sandbox@workspace:packages/code-execution/quickjs-typescript-sandbox"
   dependencies:
     "@jitl/quickjs-wasmfile-debug-sync": "npm:^0.32.0"
     "@jitl/quickjs-wasmfile-release-sync": "npm:^0.32.0"
     "@superego/backend": "workspace:*"
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
-    "@superego/javascript-sandbox-global-utils": "workspace:*"
+    "@superego/typescript-sandbox-global-utils": "workspace:*"
     quickjs-emscripten: "npm:^0.32.0"
     typescript: "npm:^6.0.3"
     vitest: "npm:^4.1.7"
@@ -7131,6 +7119,19 @@ __metadata:
     "@typescript/vfs": "npm:^1.6.4"
     typescript: "npm:^6.0.3"
     vitest: "npm:^4.1.7"
+  languageName: unknown
+  linkType: soft
+
+"@superego/typescript-sandbox-global-utils@workspace:*, @superego/typescript-sandbox-global-utils@workspace:packages/code-execution/typescript-sandbox-global-utils":
+  version: 0.0.0-use.local
+  resolution: "@superego/typescript-sandbox-global-utils@workspace:packages/code-execution/typescript-sandbox-global-utils"
+  dependencies:
+    "@superego/schema": "workspace:*"
+    "@types/luxon": "npm:^3.7.1"
+    luxon: "npm:^3.7.2"
+    typescript: "npm:^6.0.3"
+    vitest: "npm:^4.1.7"
+    zx: "npm:8.8.5-lite"
   languageName: unknown
   linkType: soft
 

@@ -2,14 +2,14 @@ import type { ExecutingTypescriptFunctionFailed } from "@superego/backend";
 import type { Result } from "@superego/global-types";
 import { Id } from "@superego/shared-utils";
 import { expect, it, vi } from "vitest";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import type TypescriptSandbox from "../requirements/TypescriptSandbox.js";
 import makeContentSummary from "./makeContentSummary.js";
 
 it("ExecutingTypescriptFunctionFailed result on getter execution failed", async () => {
   // Setup mocks
   const mockFailedExecutionResult: Result<
     null,
-    JavascriptSandbox.ExecutingFunctionFailed
+    TypescriptSandbox.ExecutingFunctionFailed
   > = {
     success: false,
     data: null,
@@ -29,7 +29,7 @@ it("ExecutingTypescriptFunctionFailed result on getter execution failed", async 
       details: { message: "message" },
     },
   };
-  const mockJavascriptSandbox = {
+  const mockTypescriptSandbox = {
     executeSyncFunction: vi.fn().mockResolvedValue(mockFailedExecutionResult),
   };
 
@@ -38,7 +38,8 @@ it("ExecutingTypescriptFunctionFailed result on getter execution failed", async 
     id: Id.generate.collectionVersion(),
     collectionId: Id.generate.collection(),
     settings: {
-      contentSummaryGetter: { source: "", compiled: "" },
+      contentSummaryGetter:
+        "export default function getContentSummary() { return {}; }",
     },
   };
   const documentVersionInfo = {
@@ -49,7 +50,7 @@ it("ExecutingTypescriptFunctionFailed result on getter execution failed", async 
 
   // Exercise
   const result = await makeContentSummary(
-    mockJavascriptSandbox as any,
+    mockTypescriptSandbox as any,
     collectionVersion as any,
     documentVersionInfo as any,
   );
@@ -66,7 +67,7 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
     data: mockInvalidContentSummary,
     error: null,
   };
-  const mockJavascriptSandbox = {
+  const mockTypescriptSandbox = {
     executeSyncFunction: vi
       .fn()
       .mockResolvedValue(mockSuccessfulExecutionResult),
@@ -77,7 +78,8 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
     id: Id.generate.collectionVersion(),
     collectionId: Id.generate.collection(),
     settings: {
-      contentSummaryGetter: { source: "", compiled: "" },
+      contentSummaryGetter:
+        "export default function getContentSummary() { return {}; }",
     },
   };
   const documentVersionInfo = {
@@ -88,7 +90,7 @@ it("ContentSummaryNotValid result on non-valid content summary", async () => {
 
   // Exercise
   const result = await makeContentSummary(
-    mockJavascriptSandbox as any,
+    mockTypescriptSandbox as any,
     collectionVersion as any,
     documentVersionInfo as any,
   );
@@ -129,7 +131,7 @@ it("successful result on valid content summary", async () => {
     data: mockValidContentSummary,
     error: null,
   };
-  const mockJavascriptSandbox = {
+  const mockTypescriptSandbox = {
     executeSyncFunction: vi
       .fn()
       .mockResolvedValue(mockSuccessfulExecutionResult),
@@ -140,7 +142,8 @@ it("successful result on valid content summary", async () => {
     id: Id.generate.collectionVersion(),
     collectionId: Id.generate.collection(),
     settings: {
-      contentSummaryGetter: { source: "", compiled: "" },
+      contentSummaryGetter:
+        "export default function getContentSummary() { return {}; }",
     },
   };
   const documentVersionInfo = {
@@ -151,7 +154,7 @@ it("successful result on valid content summary", async () => {
 
   // Exercise
   const result = await makeContentSummary(
-    mockJavascriptSandbox as any,
+    mockTypescriptSandbox as any,
     collectionVersion as any,
     documentVersionInfo as any,
   );

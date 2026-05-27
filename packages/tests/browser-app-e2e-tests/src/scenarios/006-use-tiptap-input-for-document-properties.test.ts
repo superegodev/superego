@@ -36,11 +36,8 @@ test("006. Use TipTap input for document properties", async ({ page }) => {
       },
       versionSettings: {
         contentBlockingKeysGetter: null,
-        contentSummaryGetter: {
-          source: "",
-          compiled:
-            "export default function getContentSummary() { return {}; }",
-        },
+        contentSummaryGetter:
+          "export default function getContentSummary() { return {}; }",
         defaultDocumentViewUiOptions: null,
       },
     });

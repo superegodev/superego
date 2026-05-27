@@ -15,8 +15,7 @@ Use 100g as serving size if not specified.
   },
   schema: foodsSchema,
   versionSettings: {
-    contentBlockingKeysGetter: {
-      source: `
+    contentBlockingKeysGetter: `
 import type { Food } from "./CollectionSchema.js";
 
 function normalizeName(name: string): string {
@@ -34,25 +33,7 @@ export default function getContentBlockingKeys(food: Food): string[] {
   ];
 }
       `.trim(),
-      compiled: `
-function normalizeName(name) {
-  return name
-    .normalize("NFD")
-    .replace(/[\\u0300-\\u036f]/g, "")
-    .toLowerCase()
-    .replace(/\\s+/g, " ")
-    .trim();
-}
-
-export default function getContentBlockingKeys(food) {
-  return [
-    \`name:\${normalizeName(food.name)}\`,
-  ];
-}
-      `.trim(),
-    },
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Food } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -73,24 +54,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(food) {
-  return {
-    "{position:0,sortable:true,default-sort:asc} Name": food.name,
-    "{position:1,sortable:true} Category": food.category,
-    "{position:2,sortable:true} Calories": food.foodFacts.calories
-      ? \`\${food.foodFacts.calories.amount} kcal\`
-      : null,
-    "{position:3,sortable:true} Protein": food.foodFacts.protein
-      ? \`\${food.foodFacts.protein.amount} g\`
-      : null,
-    "{position:4,sortable:true} Carbs": food.foodFacts.totalCarbohydrate
-      ? \`\${food.foodFacts.totalCarbohydrate.amount} g\`
-      : null,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

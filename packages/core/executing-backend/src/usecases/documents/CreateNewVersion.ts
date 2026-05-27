@@ -199,7 +199,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     let contentBlockingKeys: string[] | null = null;
     if (latestCollectionVersion.settings.contentBlockingKeysGetter !== null) {
       const makeContentBlockingKeysResult = await makeContentBlockingKeys(
-        this.javascriptSandbox,
+        this.typescriptSandbox,
         latestCollectionVersion,
         id,
         contentValidationResult.output,
@@ -218,7 +218,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
       );
     const documentVersionId = Id.generate.documentVersion();
     const contentSummary = await makeContentSummary(
-      this.javascriptSandbox,
+      this.typescriptSandbox,
       latestCollectionVersion,
       { id: documentVersionId, documentId: id, content: convertedContent },
     );

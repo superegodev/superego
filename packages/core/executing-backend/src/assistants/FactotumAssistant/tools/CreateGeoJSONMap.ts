@@ -5,19 +5,19 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
-import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { codegen } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import LocalInstantTypeDeclaration from "@superego/typescript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeExecutingTypescriptFunctionFailed from "../../../makers/makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
+import type TypescriptSandbox from "../../../requirements/TypescriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import type AssistantDocument from "../utils/AssistantDocument.js";
@@ -32,7 +32,7 @@ export default {
     toolCall: ToolCall.CreateGeoJSONMap,
     collections: Collection[],
     documentsList: DocumentsList,
-    javascriptSandbox: JavascriptSandbox,
+    typescriptSandbox: TypescriptSandbox,
     typescriptCompiler: TypescriptCompiler,
   ): Promise<ToolResult.CreateGeoJSONMap> {
     const { collectionIds, getGeoJSON: getGeoJSONTs } = toolCall.input;
@@ -63,17 +63,16 @@ export default {
       };
     });
 
-    const { data: getGeoJSONJs, error: compileError } =
-      await typescriptCompiler.compile(
-        { path: "/getGeoJSON.ts", source: getGeoJSONTs },
-        [
-          ...typeDeclarations,
-          {
-            path: "/LocalInstant.d.ts",
-            source: LocalInstantTypeDeclaration,
-          },
-        ],
-      );
+    const { error: compileError } = await typescriptCompiler.compile(
+      { path: "/getGeoJSON.ts", source: getGeoJSONTs },
+      [
+        ...typeDeclarations,
+        {
+          path: "/LocalInstant.d.ts",
+          source: LocalInstantTypeDeclaration,
+        },
+      ],
+    );
     if (compileError) {
       if (compileError.name === "UnexpectedError") {
         throw new UnexpectedAssistantError(
@@ -115,10 +114,9 @@ export default {
       );
     }
 
-    const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getGeoJSONJs },
-      [documentsByCollection],
-    );
+    const result = await typescriptSandbox.executeSyncFunction(getGeoJSONTs, [
+      documentsByCollection,
+    ]);
 
     if (!result.success) {
       return {

@@ -281,17 +281,14 @@ describeWithAgent("CLI agent evals", () => {
       name: "Expenses Dashboard",
       targetCollectionIds: [collection.id],
       files: {
-        "/main.tsx": {
-          source: [
-            'import React from "react";',
-            "",
-            "export default function App(): React.ReactElement | null {",
-            "  return null;",
-            "}",
-            "",
-          ].join("\n"),
-          compiled: "export default function App() { return null; }",
-        },
+        "/main.tsx": [
+          'import React from "react";',
+          "",
+          "export default function App(): React.ReactElement | null {",
+          "  return null;",
+          "}",
+          "",
+        ].join("\n"),
       },
     });
     assert.isTrue(createAppResult.success);
@@ -312,8 +309,6 @@ describeWithAgent("CLI agent evals", () => {
     expect(app.latestVersion.id).not.toBe(
       createAppResult.data.latestVersion.id,
     );
-    expect(app.latestVersion.files["/main.tsx"].source).toContain(
-      "Expense Review",
-    );
+    expect(app.latestVersion.files["/main.tsx"]).toContain("Expense Review");
   });
 });

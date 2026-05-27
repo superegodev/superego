@@ -12,7 +12,7 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
-    "@superego/quickjs-javascript-sandbox": "workspace:*",
+    "@superego/quickjs-typescript-sandbox": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",

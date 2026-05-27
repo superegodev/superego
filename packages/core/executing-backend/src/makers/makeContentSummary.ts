@@ -8,12 +8,12 @@ import type {
 import type { Result } from "@superego/global-types";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import type TypescriptSandbox from "../requirements/TypescriptSandbox.js";
 import makeContentSummaryResult from "./makeContentSummaryResult.js";
 import makeExecutingTypescriptFunctionFailed from "./makeExecutingTypescriptFunctionFailed.js";
 
 export default async function makeContentSummary(
-  javascriptSandbox: JavascriptSandbox,
+  typescriptSandbox: TypescriptSandbox,
   collectionVersion: CollectionVersionEntity,
   documentVersionInfo: {
     id: DocumentVersionId;
@@ -26,7 +26,7 @@ export default async function makeContentSummary(
     ExecutingTypescriptFunctionFailed | ContentSummaryNotValid
   >
 > {
-  const result = await javascriptSandbox.executeSyncFunction(
+  const result = await typescriptSandbox.executeSyncFunction(
     collectionVersion.settings.contentSummaryGetter,
     [documentVersionInfo.content],
   );

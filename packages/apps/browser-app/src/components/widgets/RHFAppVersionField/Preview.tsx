@@ -4,18 +4,15 @@ import {
   type Collection,
   type TypescriptModule,
 } from "@superego/backend";
+import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { Id } from "@superego/shared-utils";
+import { useEffect, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import forms from "../../../business-logic/forms/forms.js";
+import monaco from "../../../monaco.js";
 import classnames from "../../../utils/classnames.js";
 import AppRenderer from "../AppRenderer/AppRenderer.js";
 import * as cs from "./RHFAppVersionField.css.js";
-
-const invalidCompiledValues = new Set([
-  forms.constants.COMPILATION_FAILED,
-  forms.constants.COMPILATION_IN_PROGRESS,
-  forms.constants.COMPILATION_REQUIRED,
-]);
+import useTypescriptLibs from "./useTypescriptLibs.js";
 
 interface Props {
   mainTsx: TypescriptModule;
@@ -27,9 +24,35 @@ export default function Preview({
   targetCollections,
   className,
 }: Props) {
-  const appCompilationFailed =
-    mainTsx.compiled === forms.constants.COMPILATION_FAILED;
-  const app = getApp(mainTsx, targetCollections);
+  const typescriptLibs = useTypescriptLibs(targetCollections);
+  const [mainJs, setMainJs] = useState<string | null>(null);
+  const [appCompilationFailed, setAppCompilationFailed] = useState(false);
+  const compiler = useMemo(
+    () => new MonacoTypescriptCompiler(async () => monaco),
+    [],
+  );
+  useEffect(() => {
+    let shouldIgnore = false;
+    compiler
+      .compile({ path: "/main.tsx", source: mainTsx }, typescriptLibs)
+      .then((result) => {
+        if (shouldIgnore) {
+          return;
+        }
+        if (result.success) {
+          setMainJs(result.data);
+          setAppCompilationFailed(false);
+        } else {
+          setMainJs(null);
+          setAppCompilationFailed(true);
+        }
+      });
+    return () => {
+      shouldIgnore = true;
+    };
+  }, [compiler, mainTsx, typescriptLibs]);
+
+  const app = mainJs ? getApp(mainTsx, mainJs, targetCollections) : null;
   return (
     <div
       className={classnames(
@@ -52,25 +75,25 @@ export default function Preview({
 
 function getApp(
   mainTsx: TypescriptModule,
+  mainJs: string,
   targetCollections: Collection[],
 ): App | null {
-  return !invalidCompiledValues.has(mainTsx.compiled)
-    ? {
-        id: Id.generate.app(),
-        type: AppType.CollectionView,
-        name: "New App Preview",
-        latestVersion: {
-          id: Id.generate.appVersion(),
-          targetCollections: targetCollections.map((collection) => ({
-            id: collection.id,
-            versionId: collection.latestVersion.id,
-          })),
-          files: {
-            "/main.tsx": mainTsx,
-          },
-          createdAt: new Date(),
-        },
-        createdAt: new Date(),
-      }
-    : null;
+  return {
+    id: Id.generate.app(),
+    type: AppType.CollectionView,
+    name: "New App Preview",
+    latestVersion: {
+      id: Id.generate.appVersion(),
+      targetCollections: targetCollections.map((collection) => ({
+        id: collection.id,
+        versionId: collection.latestVersion.id,
+      })),
+      files: {
+        "/main.tsx": mainTsx,
+        "/main.js": mainJs,
+      },
+      createdAt: new Date(),
+    },
+    createdAt: new Date(),
+  };
 }

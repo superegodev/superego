@@ -1630,14 +1630,5 @@
   },
   "openFileWithNativeApp.ts_Blh3UZ": {
     "defaultMessage": "Opening file failed"
-  },
-  "typescriptModule.ts_MZNYNj": {
-    "defaultMessage": "TypeScript compilation required"
-  },
-  "typescriptModule.ts_lRjJvq": {
-    "defaultMessage": "TypeScript compilation in progress"
-  },
-  "typescriptModule.ts_yZ+w+N": {
-    "defaultMessage": "TypeScript compilation failed"
   }
 }

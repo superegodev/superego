@@ -6,8 +6,8 @@ import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
 import type LiveConversationStore from "../LiveConversationStore.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
 import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../requirements/TypescriptCompiler.js";
+import type TypescriptSandbox from "../requirements/TypescriptSandbox.js";
 
 /**
  * Base class for all usecases. Holds the common constructor and helper methods.
@@ -25,7 +25,7 @@ export default abstract class Usecase<
 > {
   constructor(
     protected repos: DataRepositories,
-    protected javascriptSandbox: JavascriptSandbox,
+    protected typescriptSandbox: TypescriptSandbox,
     protected typescriptCompiler: TypescriptCompiler,
     protected inferenceServiceFactory: InferenceServiceFactory,
     protected liveConversationStore: LiveConversationStore,
@@ -37,7 +37,7 @@ export default abstract class Usecase<
   protected sub<
     SubUsecase extends new (
       repos: DataRepositories,
-      javascriptSandbox: JavascriptSandbox,
+      typescriptSandbox: TypescriptSandbox,
       typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       liveConversationStore: LiveConversationStore,
@@ -46,7 +46,7 @@ export default abstract class Usecase<
   >(UsecaseClass: SubUsecase): InstanceType<SubUsecase> {
     return new UsecaseClass(
       this.repos,
-      this.javascriptSandbox,
+      this.typescriptSandbox,
       this.typescriptCompiler,
       this.inferenceServiceFactory,
       this.liveConversationStore,

@@ -1,7 +1,7 @@
 import { AssistantName, type CollectionId, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
-import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
+import { QuickjsTypescriptSandbox } from "@superego/quickjs-typescript-sandbox/nodejs";
 import { DataType, FormatId, type Schema } from "@superego/schema";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
@@ -33,7 +33,7 @@ export function createEvalBackend(databaseFile: string): ExecutingBackend {
   dataRepositoriesManager.runMigrations();
   return new ExecutingBackend(
     dataRepositoriesManager,
-    new QuickjsJavascriptSandbox(),
+    new QuickjsTypescriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
   );
@@ -157,19 +157,8 @@ export async function seedLegacyExpenseDocuments(
 
 export const defaultVersionSettings = {
   contentBlockingKeysGetter: null,
-  contentSummaryGetter: {
-    source: "",
-    compiled: [
-      "export default function getContentSummary(content) {",
-      "  return {",
-      "    Date: content.date,",
-      "    Merchant: content.merchant,",
-      "    Amount: content.amount,",
-      "    Category: content.category",
-      "  };",
-      "}",
-    ].join("\n"),
-  },
+  contentSummaryGetter:
+    "export default function getContentSummary() { return {}; }",
   defaultDocumentViewUiOptions: null,
 };
 

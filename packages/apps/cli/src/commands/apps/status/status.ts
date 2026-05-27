@@ -36,7 +36,7 @@ export default useMarkdownHelp(
         ) {
           status.push("metadata changed");
         }
-        if (source !== app.latestVersion.files["/main.tsx"].source) {
+        if (source !== app.latestVersion.files["/main.tsx"]) {
           status.push("source changed");
         }
         if (lock.latestAppVersionId !== app.latestVersion.id) {

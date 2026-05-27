@@ -5,10 +5,8 @@ import { describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 const appVersionFiles: AppVersionEntity["files"] = {
-  "/main.tsx": {
-    source: "export default function App() { return null; }",
-    compiled: "export default function App() { return null; }",
-  },
+  "/main.tsx": "export default function App() { return null; }",
+  "/main.js": "export default function App() { return null; }",
 };
 
 const targetCollections: AppVersionEntity["targetCollections"] = [

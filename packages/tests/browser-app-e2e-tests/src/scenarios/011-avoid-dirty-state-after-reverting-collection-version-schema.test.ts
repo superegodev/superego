@@ -24,11 +24,8 @@ test("011. Avoid dirty state after reverting collection version schema", async (
       schema: originalSchema,
       versionSettings: {
         contentBlockingKeysGetter: null,
-        contentSummaryGetter: {
-          source: "",
-          compiled:
-            "export default function getContentSummary() { return {}; }",
-        },
+        contentSummaryGetter:
+          "export default function getContentSummary() { return {}; }",
         defaultDocumentViewUiOptions: null,
       },
     });

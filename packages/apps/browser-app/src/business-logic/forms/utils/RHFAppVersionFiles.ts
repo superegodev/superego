@@ -1,4 +1,4 @@
-import type { AppVersion } from "@superego/backend";
+import type { AppDefinition, AppVersion } from "@superego/backend";
 
 const dotReplacement = "__DOT__" as const;
 
@@ -8,31 +8,30 @@ type DotsToUnderscores<S extends string> =
     : S;
 
 export type RHFAppVersionFiles = {
-  [K in keyof AppVersion["files"] as K extends string
+  [K in keyof AppDefinition["files"] as K extends string
     ? DotsToUnderscores<K>
-    : K]: AppVersion["files"][K];
+    : K]: AppDefinition["files"][K];
 };
 
 export default {
   fromRhfAppVersionFiles(
     rhfAppVersionFiles: RHFAppVersionFiles,
-  ): AppVersion["files"] {
+  ): AppDefinition["files"] {
     return Object.fromEntries(
       Object.entries(rhfAppVersionFiles).map(([key, value]) => [
         key.replaceAll(dotReplacement, "."),
         value,
       ]),
-    ) as AppVersion["files"];
+    ) as AppDefinition["files"];
   },
 
   toRhfAppVersionFiles(
     appVersionFiles: AppVersion["files"],
   ): RHFAppVersionFiles {
     return Object.fromEntries(
-      Object.entries(appVersionFiles).map(([key, value]) => [
-        key.replaceAll(".", dotReplacement),
-        value,
-      ]),
+      Object.entries({ "/main.tsx": appVersionFiles["/main.tsx"] }).map(
+        ([key, value]) => [key.replaceAll(".", dotReplacement), value],
+      ),
     ) as RHFAppVersionFiles;
   },
 };

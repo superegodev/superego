@@ -17,8 +17,7 @@ export default {
   },
   schema: fuelLogsSchema,
   versionSettings: {
-    contentBlockingKeysGetter: {
-      source: `
+    contentBlockingKeysGetter: `
 import type { FuelLog } from "./CollectionSchema.js";
 
 export default function getContentBlockingKeys(fuelLog: FuelLog): string[] {
@@ -31,20 +30,7 @@ export default function getContentBlockingKeys(fuelLog: FuelLog): string[] {
   ];
 }
       `.trim(),
-      compiled: `
-export default function getContentBlockingKeys(fuelLog) {
-  return [
-    [
-      \`odometer:\${fuelLog.odometer}\`,
-      \`liters:\${fuelLog.liters}\`,
-      \`cost:\${fuelLog.totalCost}\`
-    ].join(",")
-  ];
-}
-      `.trim(),
-    },
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { FuelLog } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -60,19 +46,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(fuelLog) {
-  return {
-    "{position:0,sortable:true,default-sort:desc} Date": fuelLog.timestamp,
-    "{position:1,sortable:true} Liters": fuelLog.liters,
-    "{position:2,sortable:true} Total Cost (€)": fuelLog.totalCost,
-    "{position:3,sortable:true} Price":
-      Math.round((fuelLog.totalCost / fuelLog.liters) * 1_000) / 1_000,
-    "{position:4,sortable:true} Odometer (km)": fuelLog.odometer,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

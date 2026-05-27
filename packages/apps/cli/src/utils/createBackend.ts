@@ -9,8 +9,8 @@ import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 export default async function createBackend(): Promise<ExecutingBackend> {
   // Keep backend-only runtime deps lazy so help and non-backend commands do not
   // eagerly load Node SQLite or QuickJS wasm.
-  const { QuickjsJavascriptSandbox } =
-    await import("@superego/quickjs-javascript-sandbox/nodejs");
+  const { QuickjsTypescriptSandbox } =
+    await import("@superego/quickjs-typescript-sandbox/nodejs");
   const { SqliteDataRepositoriesManager } =
     await import("@superego/sqlite-data-repositories");
   const databaseFile = getDatabaseFile();
@@ -40,7 +40,7 @@ export default async function createBackend(): Promise<ExecutingBackend> {
   dataRepositoriesManager.runMigrations();
   return new ExecutingBackend(
     dataRepositoriesManager,
-    new QuickjsJavascriptSandbox(),
+    new QuickjsTypescriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
   );

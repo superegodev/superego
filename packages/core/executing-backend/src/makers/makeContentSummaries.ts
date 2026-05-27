@@ -8,12 +8,12 @@ import type {
 import type { Result } from "@superego/global-types";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import type TypescriptSandbox from "../requirements/TypescriptSandbox.js";
 import makeContentSummaryResult from "./makeContentSummaryResult.js";
 import makeExecutingTypescriptFunctionFailed from "./makeExecutingTypescriptFunctionFailed.js";
 
 export default async function makeContentSummaries(
-  javascriptSandbox: JavascriptSandbox,
+  typescriptSandbox: TypescriptSandbox,
   collectionVersion: CollectionVersionEntity,
   documentVersionInfos: {
     id: DocumentVersionId;
@@ -26,20 +26,17 @@ export default async function makeContentSummaries(
     ExecutingTypescriptFunctionFailed | ContentSummaryNotValid
   >[]
 > {
-  const contentSummariesGetter = {
-    source: "",
-    compiled: [
-      collectionVersion.settings.contentSummaryGetter.compiled.replace(
-        "export default",
-        `const ${vars.getContentSummary} =`,
-      ),
-      `export default function ${vars.getContentSummaries}(${vars.documents}) {`,
-      `  return ${vars.documents}.map(${vars.document} => ${vars.getContentSummary}(${vars.document}));`,
-      "}",
-      "",
-    ].join("\n"),
-  };
-  const result = await javascriptSandbox.executeSyncFunction(
+  const contentSummariesGetter = [
+    collectionVersion.settings.contentSummaryGetter.replace(
+      "export default",
+      `const ${vars.getContentSummary} =`,
+    ),
+    `export default function ${vars.getContentSummaries}(${vars.documents}) {`,
+    `  return ${vars.documents}.map(${vars.document} => ${vars.getContentSummary}(${vars.document}));`,
+    "}",
+    "",
+  ].join("\n");
+  const result = await typescriptSandbox.executeSyncFunction(
     contentSummariesGetter,
     [documentVersionInfos.map((documentVersion) => documentVersion.content)],
   );

@@ -1,5 +1,4 @@
 import { type AppDefinition, AppType } from "@superego/backend";
-import cycleDayLogsAppCompiled from "./cycleDayLogs.appCompiled.js?raw";
 import cycleDayLogsAppSource from "./cycleDayLogs.appSource.tsx?raw";
 
 export default {
@@ -7,9 +6,6 @@ export default {
   name: "Cycle Calendar",
   targetCollectionIds: ["ProtoCollection_0"],
   files: {
-    "/main.tsx": {
-      source: cycleDayLogsAppSource,
-      compiled: cycleDayLogsAppCompiled,
-    },
+    "/main.tsx": cycleDayLogsAppSource,
   },
 } as const satisfies AppDefinition<true>;

@@ -1,0 +1,7 @@
+/// <reference types="vite/client" />
+import getQuickJS from "./getQuickJS.nodejs.js";
+import QuickjsTypescriptSandbox from "./QuickjsTypescriptSandbox.js";
+
+QuickjsTypescriptSandbox.getQuickJS = getQuickJS;
+
+export { default as QuickjsTypescriptSandbox } from "./QuickjsTypescriptSandbox.js";

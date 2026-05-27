@@ -113,7 +113,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   // content. setValue, on the other hand, always updates _formValues regardless
   // of whether the field is registered, so we pair it with a ref to track
   // whether the user has customized the source.
-  const lastDefaultMigrationSourceRef = useRef(defaultMigration?.source);
+  const lastDefaultMigrationSourceRef = useRef(defaultMigration);
 
   const schema = watch("schema");
   const isSchemaDirty =
@@ -123,33 +123,21 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
     typeof schema === "string" || formState.errors.schema
   );
 
-  // When schema changes, if it's valid, require recompilation of the typed
-  // modules and update the migration default when it has not been customized.
+  // When schema changes, if it's valid, update the migration default when it
+  // has not been customized.
   useEffect(() => {
     if (!isSchemaValid) {
       return;
     }
 
-    setValue(
-      "contentSummaryGetter.compiled",
-      forms.constants.COMPILATION_REQUIRED,
-    );
-    if (getValues("contentBlockingKeysGetter") !== null) {
-      setValue(
-        "contentBlockingKeysGetter.compiled",
-        forms.constants.COMPILATION_REQUIRED,
-      );
-    }
-    const currentMigrationSource = getValues("migration.source");
+    const currentMigrationSource = getValues("migration");
     if (currentMigrationSource === lastDefaultMigrationSourceRef.current) {
       const newDefault = forms.defaults.migration(
         collection.latestVersion.schema,
         schema,
       );
       setValue("migration", newDefault);
-      lastDefaultMigrationSourceRef.current = newDefault.source;
-    } else {
-      setValue("migration.compiled", forms.constants.COMPILATION_REQUIRED);
+      lastDefaultMigrationSourceRef.current = newDefault;
     }
   }, [
     collection.latestVersion.schema,

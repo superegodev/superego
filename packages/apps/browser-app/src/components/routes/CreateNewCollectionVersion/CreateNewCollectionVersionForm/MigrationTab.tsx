@@ -81,7 +81,7 @@ next schema.
           template: forms.defaults.migration(
             collection.latestVersion.schema,
             schema,
-          ).source,
+          ),
           userRequest: "Complete the implementation.",
         }}
       />

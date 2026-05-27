@@ -60,12 +60,8 @@ class FactotumObject {
       schema: definition.schema,
       versionSettings: {
         contentBlockingKeysGetter: null,
-        contentSummaryGetter: {
-          source:
-            'export default function getValue() { return { name: "name" }; }',
-          compiled:
-            'export default function getValue() { return { name: "name" }; }',
-        },
+        contentSummaryGetter:
+          'export default function getValue() { return { name: "name" }; }',
         defaultDocumentViewUiOptions: null,
       },
     });

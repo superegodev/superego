@@ -14,8 +14,7 @@ export default {
   schema: notesSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Note } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -28,16 +27,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(note) {
-  return {
-    "{position:0,sortable:true,default-sort:asc} Title": note.title,
-    "{position:1,sortable:true} Date": note.date,
-    "{position:2} Tags": note.tags.join(", ") || null,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: {
       fullWidth: true,
       alwaysCollapsePrimarySidebar: false,

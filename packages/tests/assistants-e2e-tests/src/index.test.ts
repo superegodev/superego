@@ -10,7 +10,7 @@ import {
 } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
-import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
+import { QuickjsTypescriptSandbox } from "@superego/quickjs-typescript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { afterAll, assert, beforeAll, describe } from "vitest";
@@ -31,7 +31,7 @@ afterAll(() => {
 });
 
 // Javascript sandbox
-const javascriptSandbox = new QuickjsJavascriptSandbox();
+const typescriptSandbox = new QuickjsTypescriptSandbox();
 
 // Typescript compiler
 const typescriptCompiler = new TscTypescriptCompiler();
@@ -138,7 +138,7 @@ describe.concurrent.each(assistantsModels)(
       // Backend
       const backend = new ExecutingBackend(
         dataRepositoriesManager,
-        javascriptSandbox,
+        typescriptSandbox,
         typescriptCompiler,
         inferenceServiceFactory,
       );

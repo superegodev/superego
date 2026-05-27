@@ -1,0 +1,31 @@
+{
+  "name": "@superego/fake-typescript-sandbox",
+  "version": "2026.5.2",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./browser": {
+      "import": "./src/index.browser.ts"
+    },
+    "./nodejs": {
+      "import": "./src/index.nodejs.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/executing-backend": "workspace:*",
+    "@superego/global-types": "workspace:*",
+    "@superego/typescript-sandbox-global-utils": "workspace:*",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@vitest/browser": "^4.1.7",
+    "@vitest/browser-playwright": "^4.1.7",
+    "playwright": "^1.60.0",
+    "vitest": "^4.1.7"
+  }
+}

@@ -51,7 +51,7 @@ export default useMarkdownHelp(
             (targetCollection) => targetCollection.id,
           ),
         },
-        app.latestVersion.files["/main.tsx"].source,
+        app.latestVersion.files["/main.tsx"],
         targetCollections,
         buildLock(app),
       );

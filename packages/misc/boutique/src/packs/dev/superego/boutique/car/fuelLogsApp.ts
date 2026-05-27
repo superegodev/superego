@@ -1,5 +1,4 @@
 import { type AppDefinition, AppType } from "@superego/backend";
-import fuelLogsAppCompiled from "./fuelLogs.appCompiled.js?raw";
 import fuelLogsAppSource from "./fuelLogs.appSource.tsx?raw";
 
 export default {
@@ -7,9 +6,6 @@ export default {
   name: "Fuel Stats",
   targetCollectionIds: ["ProtoCollection_0"],
   files: {
-    "/main.tsx": {
-      source: fuelLogsAppSource,
-      compiled: fuelLogsAppCompiled,
-    },
+    "/main.tsx": fuelLogsAppSource,
   },
 } as const satisfies AppDefinition<true>;

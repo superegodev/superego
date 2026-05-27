@@ -14,8 +14,7 @@ export default {
   schema: tasksSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Task } from "../generated/ProtoCollection_0.js";
 
 export default function getContentSummary(
@@ -30,20 +29,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(
-  task
-) {
-  return {
-    "{position:0,sortable:true} Title": task.title,
-    "{position:1,sortable:true} Stage": task.stage,
-    "{position:2,sortable:true} Due Date": task.dueDate,
-    "{position:3,sortable:true,default-sort:asc} Priority": task.priority,
-    "{position:4} Archived": task.archived,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: {
       fullWidth: true,
       alwaysCollapsePrimarySidebar: false,

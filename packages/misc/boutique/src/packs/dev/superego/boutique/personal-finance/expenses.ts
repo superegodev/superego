@@ -18,8 +18,7 @@ export default {
   schema: expensesSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Expense } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -34,18 +33,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(expense) {
-  return {
-    "{position:0,sortable:true} Title": expense.title,
-    "{position:1,sortable:true,default-sort:desc} Date": expense.date,
-    "{position:2,sortable:true} Amount": expense.amount,
-    "{position:3,sortable:true} Currency": expense.currency,
-    "{position:4,sortable:true} Category": expense.category,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

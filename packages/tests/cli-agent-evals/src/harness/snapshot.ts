@@ -67,7 +67,7 @@ export function stableSnapshot(snapshot: DatabaseSnapshot): string {
         id: app.id,
         name: app.name,
         targetCollections: app.latestVersion.targetCollections,
-        source: app.latestVersion.files["/main.tsx"].source,
+        source: app.latestVersion.files["/main.tsx"],
       })),
     },
     null,

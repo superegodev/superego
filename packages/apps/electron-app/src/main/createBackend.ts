@@ -2,7 +2,7 @@ import { join } from "node:path";
 import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
-import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
+import { QuickjsTypescriptSandbox } from "@superego/quickjs-typescript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { app } from "electron";
@@ -36,7 +36,7 @@ export default function createBackend() {
 
   return new ExecutingBackend(
     dataRepositoriesManager,
-    new QuickjsJavascriptSandbox(),
+    new QuickjsTypescriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
   );

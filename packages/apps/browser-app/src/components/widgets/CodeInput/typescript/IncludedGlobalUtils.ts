@@ -1,5 +1,5 @@
 import type { TypescriptFile } from "@superego/backend";
-import LocalInstantDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
+import LocalInstantDeclaration from "@superego/typescript-sandbox-global-utils/LocalInstant.d.ts?raw";
 
 export default interface IncludedGlobalUtils {
   LocalInstant: boolean;

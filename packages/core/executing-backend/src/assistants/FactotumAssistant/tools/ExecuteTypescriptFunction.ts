@@ -1,5 +1,5 @@
 import { type ToolCall, ToolName, type ToolResult } from "@superego/backend";
-import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
+import LocalInstantTypeDeclaration from "@superego/typescript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
 import type DocumentsExecuteTypescriptFunction from "../../../usecases/documents/ExecuteTypescriptFunction.js";

@@ -2,10 +2,7 @@ import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import * as v from "valibot";
 
 export function typescriptModule(): v.GenericSchema<unknown, TypescriptModule> {
-  return v.strictObject({
-    source: v.string(),
-    compiled: v.string(),
-  });
+  return v.string();
 }
 
 export function typescriptFile(): v.GenericSchema<unknown, TypescriptFile> {

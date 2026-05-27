@@ -21,10 +21,8 @@ import type InferenceImplementTypescriptModule from "../../../usecases/inference
 import getImplementContentBlockingKeysGetterSpec from "../utils/getImplementContentBlockingKeysGetterSpec.js";
 import getImplementContentSummaryGetterSpec from "../utils/getImplementContentSummaryGetterSpec.js";
 
-const stubContentSummaryGetter = {
-  source: "export default function stub() { return {}; }",
-  compiled: "export default function stub() { return {}; }",
-};
+const stubContentSummaryGetter =
+  "export default function stub() { return {}; }";
 
 export default {
   is(toolCall: ToolCall): toolCall is ToolCall.SuggestCollectionsDefinitions {

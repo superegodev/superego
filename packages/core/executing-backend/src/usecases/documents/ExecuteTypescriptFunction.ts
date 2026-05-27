@@ -8,7 +8,6 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import {
   type AnyTypeDefinition,
   DataType,
@@ -18,6 +17,7 @@ import {
   utils as schemaUtils,
 } from "@superego/schema";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
+import LocalInstantTypeDeclaration from "@superego/typescript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { uniq } from "es-toolkit";
 import { DateTime } from "luxon";
 import * as v from "valibot";
@@ -108,8 +108,8 @@ export default class DocumentsExecuteTypescriptFunction extends BackendUsecase<
       );
     }
 
-    const executionResult = await this.javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: compileResult.data },
+    const executionResult = await this.typescriptSandbox.executeSyncFunction(
+      typescriptFunction,
       [documentsByCollection],
     );
     return executionResult.success

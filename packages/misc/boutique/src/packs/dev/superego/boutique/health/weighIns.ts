@@ -17,8 +17,7 @@ export default {
   schema: weighInsSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { WeighIn } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -31,16 +30,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(weighIn) {
-  return {
-    "{position:0,sortable:true,default-sort:desc} Date": weighIn.timestamp,
-    "{position:1,sortable:true} Weight (kg)": weighIn.weightKg,
-    "{position:2,sortable:true} Scale": weighIn.scale,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

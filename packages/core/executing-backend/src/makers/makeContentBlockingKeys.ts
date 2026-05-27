@@ -8,12 +8,12 @@ import {
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import type CollectionVersionEntity from "../entities/CollectionVersionEntity.js";
-import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
+import type TypescriptSandbox from "../requirements/TypescriptSandbox.js";
 import makeExecutingTypescriptFunctionFailed from "./makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "./makeResultError.js";
 
 export default async function makeContentBlockingKeys(
-  javascriptSandbox: JavascriptSandbox,
+  typescriptSandbox: TypescriptSandbox,
   collectionVersion: CollectionVersionEntity,
   documentId: DocumentId | null,
   content: any,
@@ -22,7 +22,7 @@ export default async function makeContentBlockingKeys(
     collectionVersion.settings.contentBlockingKeysGetter!;
 
   const { data: contentBlockingKeys, error } =
-    await javascriptSandbox.executeSyncFunction(contentBlockingKeysGetter, [
+    await typescriptSandbox.executeSyncFunction(contentBlockingKeysGetter, [
       content,
     ]);
 

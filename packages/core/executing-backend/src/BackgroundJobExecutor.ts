@@ -6,14 +6,14 @@ import type LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
-import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
+import type TypescriptSandbox from "./requirements/TypescriptSandbox.js";
 import AssistantsProcessConversation from "./usecases/assistants/ProcessConversation.js";
 
 export default class BackgroundJobExecutor {
   constructor(
     private dataRepositoriesManager: DataRepositoriesManager,
-    private javascriptSandbox: JavascriptSandbox,
+    private typescriptSandbox: TypescriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
     private liveConversationStore: LiveConversationStore,
@@ -34,7 +34,7 @@ export default class BackgroundJobExecutor {
       .runInSerializableTransaction(async (repos) => {
         const usecase = new UsecaseClass(
           repos,
-          this.javascriptSandbox,
+          this.typescriptSandbox,
           this.typescriptCompiler,
           this.inferenceServiceFactory,
           this.liveConversationStore,

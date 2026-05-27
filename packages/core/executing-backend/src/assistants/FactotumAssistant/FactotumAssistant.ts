@@ -11,8 +11,8 @@ import { inferenceOptionsHas } from "@superego/shared-utils";
 import { compact } from "es-toolkit";
 import { DateTime } from "luxon";
 import type InferenceService from "../../requirements/InferenceService.js";
-import type JavascriptSandbox from "../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../requirements/TypescriptCompiler.js";
+import type TypescriptSandbox from "../../requirements/TypescriptSandbox.js";
 import type CollectionsGetTypescriptSchema from "../../usecases/collections/GetTypescriptSchema.js";
 import type DocumentsCreateMany from "../../usecases/documents/CreateMany.js";
 import type DocumentsCreateNewVersion from "../../usecases/documents/CreateNewVersion.js";
@@ -50,7 +50,7 @@ export default class FactotumAssistant extends Assistant {
       collectionsGetTypescriptSchema: CollectionsGetTypescriptSchema;
       filesGetContent: FilesGetContent;
     },
-    private javascriptSandbox: JavascriptSandbox,
+    private typescriptSandbox: TypescriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private savepoint: {
       create: () => Promise<string>;
@@ -177,7 +177,7 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.collections,
         this.usecases.documentsList,
-        this.javascriptSandbox,
+        this.typescriptSandbox,
         this.typescriptCompiler,
       );
     }
@@ -186,7 +186,7 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.collections,
         this.usecases.documentsList,
-        this.javascriptSandbox,
+        this.typescriptSandbox,
         this.typescriptCompiler,
       );
     }
@@ -195,7 +195,7 @@ export default class FactotumAssistant extends Assistant {
         toolCall,
         this.collections,
         this.usecases.documentsList,
-        this.javascriptSandbox,
+        this.typescriptSandbox,
         this.typescriptCompiler,
       );
     }

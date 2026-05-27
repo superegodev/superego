@@ -23,7 +23,7 @@ export default async function getAppChanges({
 }): Promise<AppChanges> {
   const targetCollectionIds = getTargetCollectionIds(app);
   const source = readMainSource(path);
-  const sourceChanged = source !== app.latestVersion.files["/main.tsx"].source;
+  const sourceChanged = source !== app.latestVersion.files["/main.tsx"];
   const targetCollectionsChanged = !sameArray(
     manifest.targetCollectionIds,
     targetCollectionIds,

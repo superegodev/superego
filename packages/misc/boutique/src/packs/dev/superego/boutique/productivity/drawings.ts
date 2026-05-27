@@ -14,8 +14,7 @@ export default {
   schema: drawingsSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Drawing } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -26,14 +25,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(drawing) {
-  return {
-    "{position:0,sortable:true,default-sort:asc} Title": drawing.title,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: {
       fullWidth: true,
       alwaysCollapsePrimarySidebar: true,

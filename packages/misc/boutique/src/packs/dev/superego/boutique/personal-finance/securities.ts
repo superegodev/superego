@@ -13,8 +13,7 @@ export default {
   },
   schema: securitiesSchema,
   versionSettings: {
-    contentBlockingKeysGetter: {
-      source: `
+    contentBlockingKeysGetter: `
 import type { Security } from "./CollectionSchema.js";
 
 export default function getContentBlockingKeys(security: Security): string[] {
@@ -26,19 +25,7 @@ export default function getContentBlockingKeys(security: Security): string[] {
   return keys;
 }
       `.trim(),
-      compiled: `
-export default function getContentBlockingKeys(security) {
-  const keys = [];
-  keys.push(\`ticker:\${security.ticker.trim().toLowerCase()}:\${security.currency.trim().toLowerCase()}:\${(security.exchange ?? "").trim().toLowerCase()}\`);
-  if (security.isin !== null) {
-    keys.push(\`isin:\${security.isin.trim().toLowerCase()}\`);
-  }
-  return keys;
-}
-      `.trim(),
-    },
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Security } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -61,26 +48,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(security) {
-  const latestPrice =
-    security.priceHistory.length > 0
-      ? security.priceHistory
-          .slice()
-          .sort((a, b) => a.instant.localeCompare(b.instant))
-          .at(-1).price
-      : null;
-  return {
-    "{position:0,sortable:true,default-sort:asc} Ticker": security.ticker,
-    "{position:1,sortable:true} Name": security.name,
-    "{position:2,sortable:true} Type": security.type,
-    "{position:3} Currency": security.currency,
-    "{position:4,sortable:true} Latest Price":
-      latestPrice !== null ? Math.round(latestPrice * 100) / 100 : null,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

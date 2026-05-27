@@ -6,7 +6,7 @@ import {
 } from "@superego/backend";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { FakeJavascriptSandbox } from "@superego/fake-javascript-sandbox/browser";
+import { FakeTypescriptSandbox } from "@superego/fake-typescript-sandbox/browser";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import registerTests from "./registerTests.js";
 import MockInferenceServiceFactory from "./utils/MockInferenceServiceFactory.js";
@@ -66,7 +66,7 @@ registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
         effectiveGlobalSettings,
         crypto.randomUUID(),
       ),
-      new FakeJavascriptSandbox(),
+      new FakeTypescriptSandbox(),
       new MonacoTypescriptCompiler(() => import("monaco-editor")),
       inferenceService
         ? { create: () => inferenceService }

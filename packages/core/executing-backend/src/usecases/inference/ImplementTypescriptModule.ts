@@ -219,13 +219,9 @@ export default class InferenceImplementTypescriptModule extends BackendUsecase<
             );
     }
 
-    return makeSuccessfulResult({
-      source: toolCall.input.source.replace(
-        `// filename: ${startingPoint.path}\n`,
-        "",
-      ),
-      compiled: compileResult.data,
-    });
+    return makeSuccessfulResult(
+      toolCall.input.source.replace(`// filename: ${startingPoint.path}\n`, ""),
+    );
   }
 
   private static getDeveloperMessage(

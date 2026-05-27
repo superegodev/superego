@@ -16,8 +16,7 @@ export default {
   },
   schema: cycleDayLogsSchema,
   versionSettings: {
-    contentBlockingKeysGetter: {
-      source: `
+    contentBlockingKeysGetter: `
 import type { CycleDayLog } from "./CollectionSchema.js";
 
 export default function getContentBlockingKeys(
@@ -26,14 +25,7 @@ export default function getContentBlockingKeys(
   return [\`date:\${cycleDayLog.date}\`];
 }
       `.trim(),
-      compiled: `
-export default function getContentBlockingKeys(cycleDayLog) {
-  return [\`date:\${cycleDayLog.date}\`];
-}
-      `.trim(),
-    },
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { CycleDayLog } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -47,17 +39,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(cycleDayLog) {
-  return {
-    "{position:0,sortable:true,default-sort:desc} Date": cycleDayLog.date,
-    "{position:1,sortable:true} Flow": cycleDayLog.flow,
-    "{position:2,sortable:true} Symptoms":
-      cycleDayLog.symptoms?.join(", ") ?? null,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

@@ -116,7 +116,7 @@ export default function AppRenderer({ app }: Props) {
               "http://app-sandbox.localhost:5173/app-sandbox.html"
             }
             appName={app.name}
-            appCode={app.latestVersion.files["/main.tsx"].compiled}
+            appCode={app.latestVersion.files["/main.js"]}
             appProps={{
               collections: Object.fromEntries(
                 targetCollections.map((collection, index) => [

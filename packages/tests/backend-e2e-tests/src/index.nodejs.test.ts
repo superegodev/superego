@@ -8,7 +8,7 @@ import {
   Theme,
 } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
+import { QuickjsTypescriptSandbox } from "@superego/quickjs-typescript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { afterAll, beforeAll } from "vitest";
@@ -82,7 +82,7 @@ registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
   return {
     backend: new ExecutingBackend(
       dataRepositoriesManager,
-      new QuickjsJavascriptSandbox(),
+      new QuickjsTypescriptSandbox(),
       new TscTypescriptCompiler(),
       inferenceService
         ? { create: () => inferenceService }

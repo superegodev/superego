@@ -1,5 +1,4 @@
 import { type AppDefinition, AppType } from "@superego/backend";
-import tasksAppCompiled from "./tasks.appCompiled.js?raw";
 import tasksAppSource from "./tasks.appSource.tsx?raw";
 
 export default {
@@ -7,9 +6,6 @@ export default {
   name: "Kanban Board",
   targetCollectionIds: ["ProtoCollection_2"],
   files: {
-    "/main.tsx": {
-      source: tasksAppSource,
-      compiled: tasksAppCompiled,
-    },
+    "/main.tsx": tasksAppSource,
   },
 } as const satisfies AppDefinition<true>;

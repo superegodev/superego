@@ -43,6 +43,11 @@ import assertCollectionVersionExists from "../../utils/assertCollectionVersionEx
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import isEmpty from "../../utils/isEmpty.js";
+import {
+  getCollectionGetterTypescriptLibs,
+  getCollectionMigrationTypescriptLibs,
+  validateTypescriptModuleDefaultExportsFunction,
+} from "../../utils/typescriptModules.js";
 import DocumentsCreateNewVersion from "../documents/CreateNewVersion.js";
 
 export default class CollectionsCreateNewVersion extends BackendUsecase<
@@ -156,44 +161,50 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
 
     // Validate settings.contentBlockingKeysGetter.
     if (settings.contentBlockingKeysGetter !== null) {
-      const isContentBlockingKeysGetterValid =
-        await this.javascriptSandbox.moduleDefaultExportsFunction(
+      const validationResult =
+        await validateTypescriptModuleDefaultExportsFunction(
+          this.typescriptCompiler,
+          this.typescriptSandbox,
           settings.contentBlockingKeysGetter,
+          "/contentBlockingKeysGetter.ts",
+          getCollectionGetterTypescriptLibs(resolvedSchema),
+          "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
         );
-      if (!isContentBlockingKeysGetterValid) {
+      if ("issues" in validationResult) {
         return makeUnsuccessfulResult(
           makeResultError("ContentBlockingKeysGetterNotValid", {
             collectionId: id,
             collectionVersionId: latestVersion.id,
-            issues: [
-              {
-                message:
-                  "The default export of the contentBlockingKeysGetter TypescriptModule is not a function",
-              },
-            ],
+            issues: validationResult.issues,
           }),
         );
+      }
+      if (!validationResult.success) {
+        return makeUnsuccessfulResult(validationResult.error);
       }
     }
 
     // Validate settings.contentSummaryGetter.
-    const isContentSummaryGetterValid =
-      await this.javascriptSandbox.moduleDefaultExportsFunction(
+    const contentSummaryGetterValidationResult =
+      await validateTypescriptModuleDefaultExportsFunction(
+        this.typescriptCompiler,
+        this.typescriptSandbox,
         settings.contentSummaryGetter,
+        "/contentSummaryGetter.ts",
+        getCollectionGetterTypescriptLibs(resolvedSchema),
+        "The default export of the contentSummaryGetter TypescriptModule is not a function",
       );
-    if (!isContentSummaryGetterValid) {
+    if ("issues" in contentSummaryGetterValidationResult) {
       return makeUnsuccessfulResult(
         makeResultError("ContentSummaryGetterNotValid", {
           collectionId: id,
           collectionVersionId: latestVersion.id,
-          issues: [
-            {
-              message:
-                "The default export of the contentSummaryGetter TypescriptModule is not a function",
-            },
-          ],
+          issues: contentSummaryGetterValidationResult.issues,
         }),
       );
+    }
+    if (!contentSummaryGetterValidationResult.success) {
+      return makeUnsuccessfulResult(contentSummaryGetterValidationResult.error);
     }
 
     // Validate settings.defaultDocumentViewUiOptions.
@@ -214,20 +225,28 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
     }
 
     // Validate migration.
-    if (
-      !(await this.javascriptSandbox.moduleDefaultExportsFunction(migration))
-    ) {
+    const migrationValidationResult =
+      await validateTypescriptModuleDefaultExportsFunction(
+        this.typescriptCompiler,
+        this.typescriptSandbox,
+        migration,
+        "/migration.ts",
+        getCollectionMigrationTypescriptLibs(
+          latestVersion.schema,
+          resolvedSchema,
+        ),
+        "The default export of the migration TypescriptModule is not a function",
+      );
+    if ("issues" in migrationValidationResult) {
       return makeUnsuccessfulResult(
         makeResultError("CollectionMigrationNotValid", {
           collectionId: id,
-          issues: [
-            {
-              message:
-                "The default export of the migration TypescriptModule is not a function",
-            },
-          ],
+          issues: migrationValidationResult.issues,
         }),
       );
+    }
+    if (!migrationValidationResult.success) {
+      return makeUnsuccessfulResult(migrationValidationResult.error);
     }
 
     // Create new collection version.
@@ -288,7 +307,7 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
         latestDocumentVersion,
       );
 
-      const executionResult = await this.javascriptSandbox.executeSyncFunction(
+      const executionResult = await this.typescriptSandbox.executeSyncFunction(
         migration,
         [latestDocumentVersion.content],
       );

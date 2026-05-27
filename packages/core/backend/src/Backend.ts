@@ -59,7 +59,6 @@ import type FileId from "./ids/FileId.js";
 import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
 import type AppDefinition from "./types/AppDefinition.js";
-import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
 import type Collection from "./types/Collection.js";
@@ -530,7 +529,11 @@ export default interface Backend {
       definition: AppDefinition,
     ): ResultPromise<
       App,
-      AppNameNotValid | CollectionNotFound | ArgumentsNotValid | UnexpectedError
+      | AppNameNotValid
+      | CollectionNotFound
+      | TypescriptCompilationFailed
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
 
     updateName(
@@ -544,10 +547,14 @@ export default interface Backend {
     createNewVersion(
       id: AppId,
       targetCollectionIds: CollectionId[],
-      files: AppVersion["files"],
+      files: AppDefinition["files"],
     ): ResultPromise<
       App,
-      AppNotFound | CollectionNotFound | ArgumentsNotValid | UnexpectedError
+      | AppNotFound
+      | CollectionNotFound
+      | TypescriptCompilationFailed
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
 
     delete(
@@ -585,6 +592,7 @@ export default interface Backend {
       | ContentSummaryGetterNotValid
       | DefaultDocumentViewUiOptionsNotValid
       | AppNameNotValid
+      | TypescriptCompilationFailed
       | CollectionNotFound
       | DocumentContentNotValid
       | FilesNotFound

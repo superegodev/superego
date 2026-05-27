@@ -17,8 +17,7 @@ Default serving sizes come from the Foods collection if not specified.
   schema: mealsSchema,
   versionSettings: {
     contentBlockingKeysGetter: null,
-    contentSummaryGetter: {
-      source: `
+    contentSummaryGetter: `
 import type { Meal } from "./CollectionSchema.js";
 
 export default function getContentSummary(
@@ -34,19 +33,6 @@ export default function getContentSummary(
   };
 }
       `.trim(),
-      compiled: `
-export default function getContentSummary(meal) {
-  const foodCount = meal.foods.length;
-  const tagList = meal.tags.length > 0 ? meal.tags.join(", ") : null;
-  return {
-    "{position:0,sortable:true,default-sort:desc} Date": meal.dateTime,
-    "{position:1,sortable:true} Type": meal.type,
-    "{position:2} Foods": \`\${foodCount} item\${foodCount !== 1 ? "s" : ""}\`,
-    "{position:3} Tags": tagList,
-  };
-}
-      `.trim(),
-    },
     defaultDocumentViewUiOptions: null,
   },
 } as const satisfies CollectionDefinition<true, true>;

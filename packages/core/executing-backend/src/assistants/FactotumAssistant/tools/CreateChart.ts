@@ -5,19 +5,19 @@ import {
   ToolName,
   type ToolResult,
 } from "@superego/backend";
-import LocalInstantTypeDeclaration from "@superego/javascript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { codegen } from "@superego/schema";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import LocalInstantTypeDeclaration from "@superego/typescript-sandbox-global-utils/LocalInstant.d.ts?raw";
 import { DateTime } from "luxon";
 import UnexpectedAssistantError from "../../../errors/UnexpectedAssistantError.js";
 import makeExecutingTypescriptFunctionFailed from "../../../makers/makeExecutingTypescriptFunctionFailed.js";
 import makeResultError from "../../../makers/makeResultError.js";
 import InferenceService from "../../../requirements/InferenceService.js";
-import type JavascriptSandbox from "../../../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../../../requirements/TypescriptCompiler.js";
+import type TypescriptSandbox from "../../../requirements/TypescriptSandbox.js";
 import type DocumentsList from "../../../usecases/documents/List.js";
 import createMarkdownElementId from "../../utils/createMarkdownElementId.js";
 import type AssistantDocument from "../utils/AssistantDocument.js";
@@ -32,7 +32,7 @@ export default {
     toolCall: ToolCall.CreateChart,
     collections: Collection[],
     documentsList: DocumentsList,
-    javascriptSandbox: JavascriptSandbox,
+    typescriptSandbox: TypescriptSandbox,
     typescriptCompiler: TypescriptCompiler,
   ): Promise<ToolResult.CreateChart> {
     const { collectionIds, getEChartsOption: getEChartsOptionTs } =
@@ -64,25 +64,24 @@ export default {
       };
     });
 
-    const { data: getEChartsOptionJs, error: compileError } =
-      await typescriptCompiler.compile(
-        { path: "/getEChartsOption.ts", source: getEChartsOptionTs },
-        [
-          ...typeDeclarations,
-          {
-            path: "/LocalInstant.d.ts",
-            source: LocalInstantTypeDeclaration,
-          },
-          {
-            path: "/node_modules/echarts/index.d.ts",
-            source: `
+    const { error: compileError } = await typescriptCompiler.compile(
+      { path: "/getEChartsOption.ts", source: getEChartsOptionTs },
+      [
+        ...typeDeclarations,
+        {
+          path: "/LocalInstant.d.ts",
+          source: LocalInstantTypeDeclaration,
+        },
+        {
+          path: "/node_modules/echarts/index.d.ts",
+          source: `
               declare module "echarts" {
                 export type EChartsOption = any;
               }
             `,
-          },
-        ],
-      );
+        },
+      ],
+    );
     if (compileError) {
       if (compileError.name === "UnexpectedError") {
         throw new UnexpectedAssistantError(
@@ -124,8 +123,8 @@ export default {
       );
     }
 
-    const result = await javascriptSandbox.executeSyncFunction(
-      { source: "", compiled: getEChartsOptionJs },
+    const result = await typescriptSandbox.executeSyncFunction(
+      getEChartsOptionTs,
       [documentsByCollection],
     );
 
