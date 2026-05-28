@@ -50,7 +50,14 @@ export default useMarkdownHelp(
         const absoluteOutputPath = isAbsolute(args.outputPath)
           ? args.outputPath
           : resolve(dirname(resolve(options.args)), args.outputPath);
-        writeFileSync(absoluteOutputPath, result.data);
+        try {
+          writeFileSync(absoluteOutputPath, result.data);
+        } catch (error) {
+          return unsuccessfulResult("OutputPathNotWritable", {
+            outputPath: absoluteOutputPath,
+            cause: error instanceof Error ? error.message : String(error),
+          });
+        }
         return successfulResult({
           id: args.id,
           outputPath: args.outputPath,
