@@ -1,6 +1,6 @@
 {
   "name": "@superego/electron-app",
-  "version": "2026.5.2",
+  "version": "2026.5.3",
   "private": true,
   "description": "A personal database you can extend with apps",
   "license": "AGPL-3.0-only",
