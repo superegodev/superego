@@ -132,10 +132,7 @@ export default function App(props: Props): React.ReactElement | null {
     };
   });
 
-  const handlePeriodTypeChange = (newType: string | null) => {
-    if (newType === null) {
-      return;
-    }
+  const handlePeriodTypeChange = (newType: string) => {
     const periodType = newType as PeriodType;
     const today = new Date();
     const { startDate, endDate } = getPeriodDates(periodType, today);
