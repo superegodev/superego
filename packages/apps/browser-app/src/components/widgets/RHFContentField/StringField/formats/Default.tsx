@@ -26,7 +26,9 @@ export default function Default({
       id={field.name}
       name={field.name}
       value={field.value ?? ""}
-      onChange={(value) => field.onChange(value !== "" ? value : null)}
+      onChange={(value) =>
+        field.onChange(value === "" && isNullable ? null : value)
+      }
       onBlur={field.onBlur}
       validationBehavior="aria"
       autoComplete="off"

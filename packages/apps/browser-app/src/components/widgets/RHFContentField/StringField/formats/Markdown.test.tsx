@@ -10,6 +10,10 @@ import {
 } from "../../../../../test-utils.js";
 import Markdown from "./Markdown.js";
 
+interface FormValues {
+  markdown: string | null;
+}
+
 function MarkdownWithForm({
   defaultValue,
   isNullable = true,
@@ -19,7 +23,7 @@ function MarkdownWithForm({
   isNullable?: boolean;
   onValue?: (value: string | null) => void;
 }) {
-  const { control } = useForm({
+  const { control } = useForm<FormValues>({
     defaultValues: { markdown: defaultValue ?? null },
   });
   return (
@@ -45,7 +49,7 @@ function ValueProbe({
   control,
   onValue,
 }: {
-  control: ReturnType<typeof useForm>["control"];
+  control: Control<FormValues>;
   onValue: (value: string | null) => void;
 }) {
   const value = useWatch({ control, name: "markdown" }) as string | null;
