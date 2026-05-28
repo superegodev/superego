@@ -1,4 +1,3 @@
-import { chmodSync, copyFileSync, mkdirSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 import formatjs from "@formatjs/unplugin/rollup";
 import browserAppViteConfig from "@superego/browser-app/vite.config.js";
@@ -26,29 +25,6 @@ export default defineConfig({
           const writableConfig = config as WritableResolvedConfig;
           writableConfig.plugins = writableConfig.plugins.filter(
             (plugin) => plugin.name !== "vite:esm-shim",
-          );
-        },
-      },
-      {
-        name: "build-cli-resources",
-        closeBundle() {
-          const cliDistDir = resolve(import.meta.dirname, "dist/cli");
-
-          rmSync(cliDistDir, { recursive: true, force: true });
-          mkdirSync(cliDistDir, { recursive: true });
-
-          copyFileSync(
-            resolve(import.meta.dirname, "src/cli/launcher.sh"),
-            resolve(cliDistDir, "superego"),
-          );
-          chmodSync(resolve(cliDistDir, "superego"), 0o755);
-
-          copyFileSync(
-            resolve(
-              import.meta.dirname,
-              "../../../node_modules/@jitl/quickjs-wasmfile-release-sync/dist/emscripten-module.wasm",
-            ),
-            resolve(cliDistDir, "emscripten-module.wasm"),
           );
         },
       },

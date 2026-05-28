@@ -36,11 +36,16 @@ export default {
     ignore: [
       "^/scripts",
       "^/src",
+      "cli.vite.config.ts",
       "electron.vite.config.ts",
       "forge.config.ts",
       "tsconfig.json",
     ],
-    extraResource: ["./dist/cli/superego", "./dist/cli/emscripten-module.wasm"],
+    extraResource: [
+      "./dist/cli/superego",
+      "./dist/cli/superego.js",
+      "./dist/cli/emscripten-module.wasm",
+    ],
     icon: "./assets/icon",
     osxSign: isTag ? {} : undefined,
     extendInfo: {
@@ -77,7 +82,7 @@ export default {
   plugins: [
     new FusesPlugin({
       version: FuseVersion.V1,
-      [FuseV1Options.RunAsNode]: false,
+      [FuseV1Options.RunAsNode]: true,
       [FuseV1Options.EnableCookieEncryption]: true,
       [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
       [FuseV1Options.EnableNodeCliInspectArguments]: false,

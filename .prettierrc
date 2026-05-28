@@ -7,7 +7,15 @@
     {
       "files": "*.astro",
       "options": { "parser": "astro" }
+    },
+    {
+      "files": "*.sh",
+      "options": { "parser": "sh" }
     }
   ],
-  "plugins": ["prettier-plugin-sql-cst", "prettier-plugin-astro"]
+  "plugins": [
+    "prettier-plugin-sql-cst",
+    "prettier-plugin-astro",
+    "prettier-plugin-sh"
+  ]
 }
