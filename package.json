@@ -12,8 +12,8 @@
     "check-translations": "yarn workspaces foreach --all --topological-dev --verbose run check-translations",
     "check-linting": "oxlint",
     "fix-linting": "oxlint --fix",
-    "check-formatting": "oxfmt --check && prettier --list-different \"**/*.(sql|astro)\"",
-    "fix-formatting": "oxfmt && prettier --write \"**/*.(sql|astro)\"",
+    "check-formatting": "oxfmt --check && prettier --list-different \"**/*.(sql|astro|sh)\"",
+    "fix-formatting": "oxfmt && prettier --write \"**/*.(sql|astro|sh)\"",
     "build-website": "yarn workspace @superego/website build",
     "deploy-website:production": "yarn workspace @superego/website deploy:production",
     "deploy-website:preview": "yarn workspace @superego/website deploy:preview",
@@ -32,6 +32,7 @@
     "playwright": "^1.60.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-sh": "^0.18.1",
     "prettier-plugin-sql-cst": "^0.22.1",
     "typescript": "^6.0.3",
     "zx": "8.8.5-lite"

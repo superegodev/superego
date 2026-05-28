@@ -25,5 +25,7 @@ export default function cli(options: {
     .addCommand(agents)
     .addCommand(apps);
   useMarkdownHelp(program, { additionalNotes });
-  return program.parseAsync(options.argv).then(() => undefined);
+  return program
+    .parseAsync(options.argv ?? process.argv, { from: "node" })
+    .then(() => undefined);
 }

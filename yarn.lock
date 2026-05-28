@@ -5927,6 +5927,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@reteps/dockerfmt@npm:^0.5.1":
+  version: 0.5.2
+  resolution: "@reteps/dockerfmt@npm:0.5.2"
+  checksum: 10c0/c0af5dcc9c8c9d51c9eec4cfb454c85f31c760373288b9254054709b29a4accc1df10bd765712128dd173e53bfb8b880a94b0aa8b6c2d4294866d800dbdd14e1
+  languageName: node
+  linkType: hard
+
 "@rolldown/binding-android-arm64@npm:1.0.0-rc.10":
   version: 1.0.0-rc.10
   resolution: "@rolldown/binding-android-arm64@npm:1.0.0-rc.10"
@@ -7042,6 +7049,7 @@ __metadata:
     playwright: "npm:^1.60.0"
     prettier: "npm:^3.8.3"
     prettier-plugin-astro: "npm:^0.14.1"
+    prettier-plugin-sh: "npm:^0.18.1"
     prettier-plugin-sql-cst: "npm:^0.22.1"
     typescript: "npm:^6.0.3"
     zx: "npm:8.8.5-lite"
@@ -16832,6 +16840,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier-plugin-sh@npm:^0.18.1":
+  version: 0.18.1
+  resolution: "prettier-plugin-sh@npm:0.18.1"
+  dependencies:
+    "@reteps/dockerfmt": "npm:^0.5.1"
+    sh-syntax: "npm:^0.5.8"
+  peerDependencies:
+    prettier: ^3.6.0
+  checksum: 10c0/e79a8dab1b9cd966bf078b1ca4ec412d190fb905ca6bfb89f841d309ed39ecb7136901b64919e3d8e52e9233d658b64bc69203ff81384914ec90dedbcbe804da
+  languageName: node
+  linkType: hard
+
 "prettier-plugin-sql-cst@npm:^0.22.1":
   version: 0.22.1
   resolution: "prettier-plugin-sql-cst@npm:0.22.1"
@@ -18508,6 +18528,15 @@ __metadata:
     gopd: "npm:^1.0.1"
     has-property-descriptors: "npm:^1.0.2"
   checksum: 10c0/82850e62f412a258b71e123d4ed3873fa9377c216809551192bb6769329340176f109c2eeae8c22a8d386c76739855f78e8716515c818bcaef384b51110f0f3c
+  languageName: node
+  linkType: hard
+
+"sh-syntax@npm:^0.5.8":
+  version: 0.5.8
+  resolution: "sh-syntax@npm:0.5.8"
+  dependencies:
+    tslib: "npm:^2.8.1"
+  checksum: 10c0/2d2609fc8760ef97175c852be26ee3eeb196078c5aec282c8b96a59ee362be4f470d3e0df4e372da6c7a7b44ccc42910cbdcb0915271b3cb6a6212d00dde116f
   languageName: node
   linkType: hard
 
