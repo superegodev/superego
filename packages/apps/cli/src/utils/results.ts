@@ -22,12 +22,12 @@ export async function runCommand(
 ): Promise<void> {
   try {
     const result = await run();
-    printJson(result);
+    await printJson(result);
     if (!result.success) {
       process.exitCode = 1;
     }
   } catch (error) {
-    printJson(
+    await printJson(
       unsuccessfulResult("UnexpectedError", {
         cause: error instanceof Error ? error.message : String(error),
       }),
