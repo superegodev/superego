@@ -1498,6 +1498,210 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: DocumentContentNotValid when patch removes a required field", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "remove", path: "/title" }],
+          },
+        );
+
+      // Verify
+      assert.isFalse(createNewDocumentVersionResult.success);
+      expect(createNewDocumentVersionResult.error.name).toBe(
+        "DocumentContentNotValid",
+      );
+      expect(createNewDocumentVersionResult.error.details).toEqual(
+        expect.objectContaining({
+          collectionId: createCollectionResult.data.id,
+          collectionVersionId: createCollectionResult.data.latestVersion.id,
+          documentId: createDocumentResult.data.id,
+        }),
+      );
+    });
+
+    it("error: DocumentContentPatchNotValid when patch path is missing", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "replace", path: "/missing", value: "value" }],
+          },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentContentPatchNotValid",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentResult.data.id,
+            latestVersionId: createDocumentResult.data.latestVersion.id,
+            operationIndex: 0,
+            path: "/missing",
+            cause: expect.stringContaining(
+              "Cannot perform the operation at a path that does not exist",
+            ),
+          },
+        },
+      });
+    });
+
+    it("error: DocumentContentPatchNotValid when patch test fails", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "test", path: "/title", value: "other" }],
+          },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentContentPatchNotValid",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentResult.data.id,
+            latestVersionId: createDocumentResult.data.latestVersion.id,
+            operationIndex: 0,
+            path: "/title",
+            cause: expect.stringContaining("Test operation failed"),
+          },
+        },
+      });
+    });
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1708,211 +1912,6 @@ export default rd<GetDependencies>("Documents", (deps) => {
           attachment,
         },
       );
-    });
-
-    it("error: DocumentContentNotValid when patch removes a required field", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create({
-        settings: {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-          redirectToCollectionAfterDocumentCreation: false,
-        },
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        versionSettings: {
-          contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-          defaultDocumentViewUiOptions: null,
-        },
-      });
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create({
-        collectionId: createCollectionResult.data.id,
-        content: { title: "title" },
-      });
-      assert.isTrue(createDocumentResult.success);
-
-      // Exercise
-      const createNewDocumentVersionResult =
-        await backend.documents.createNewVersion(
-          createCollectionResult.data.id,
-          createDocumentResult.data.id,
-          createDocumentResult.data.latestVersion.id,
-          {
-            type: DocumentContentChangeType.Patch,
-            patch: [{ op: "remove", path: "/title" }],
-          },
-        );
-
-      // Verify
-      assert.isFalse(createNewDocumentVersionResult.success);
-      expect(createNewDocumentVersionResult.error.name).toBe(
-        "DocumentContentNotValid",
-      );
-      expect(createNewDocumentVersionResult.error.details).toEqual(
-        expect.objectContaining({
-          collectionId: createCollectionResult.data.id,
-          collectionVersionId: createCollectionResult.data.latestVersion.id,
-          documentId: createDocumentResult.data.id,
-        }),
-      );
-    });
-
-    it("error: DocumentContentPatchNotValid when patch path is missing", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create({
-        settings: {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-          redirectToCollectionAfterDocumentCreation: false,
-        },
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        versionSettings: {
-          contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-          defaultDocumentViewUiOptions: null,
-        },
-      });
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create({
-        collectionId: createCollectionResult.data.id,
-        content: { title: "title" },
-      });
-      assert.isTrue(createDocumentResult.success);
-
-      // Exercise
-      const createNewDocumentVersionResult =
-        await backend.documents.createNewVersion(
-          createCollectionResult.data.id,
-          createDocumentResult.data.id,
-          createDocumentResult.data.latestVersion.id,
-          {
-            type: DocumentContentChangeType.Patch,
-            patch: [{ op: "replace", path: "/missing", value: "value" }],
-          },
-        );
-
-      // Verify
-      expect(createNewDocumentVersionResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "DocumentContentPatchNotValid",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            documentId: createDocumentResult.data.id,
-            latestVersionId: createDocumentResult.data.latestVersion.id,
-            operationIndex: 0,
-            path: "/missing",
-            cause: expect.stringContaining(
-              "Cannot perform the operation at a path that does not exist",
-            ),
-          },
-        },
-      });
-    });
-
-    it("error: DocumentContentPatchNotValid when patch test fails", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const createCollectionResult = await backend.collections.create({
-        settings: {
-          name: "name",
-          icon: null,
-          collectionCategoryId: null,
-          defaultCollectionViewAppId: null,
-          description: null,
-          assistantInstructions: null,
-          redirectToCollectionAfterDocumentCreation: false,
-        },
-        schema: {
-          types: {
-            Root: {
-              dataType: DataType.Struct,
-              properties: { title: { dataType: DataType.String } },
-            },
-          },
-          rootType: "Root",
-        },
-        versionSettings: {
-          contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
-          defaultDocumentViewUiOptions: null,
-        },
-      });
-      assert.isTrue(createCollectionResult.success);
-      const createDocumentResult = await backend.documents.create({
-        collectionId: createCollectionResult.data.id,
-        content: { title: "title" },
-      });
-      assert.isTrue(createDocumentResult.success);
-
-      // Exercise
-      const createNewDocumentVersionResult =
-        await backend.documents.createNewVersion(
-          createCollectionResult.data.id,
-          createDocumentResult.data.id,
-          createDocumentResult.data.latestVersion.id,
-          {
-            type: DocumentContentChangeType.Patch,
-            patch: [{ op: "test", path: "/title", value: "other" }],
-          },
-        );
-
-      // Verify
-      expect(createNewDocumentVersionResult).toEqual({
-        success: false,
-        data: null,
-        error: {
-          name: "DocumentContentPatchNotValid",
-          details: {
-            collectionId: createCollectionResult.data.id,
-            documentId: createDocumentResult.data.id,
-            latestVersionId: createDocumentResult.data.latestVersion.id,
-            operationIndex: 0,
-            path: "/title",
-            cause: expect.stringContaining("Test operation failed"),
-          },
-        },
-      });
     });
   });
 
