@@ -25,7 +25,7 @@ export default class AssistantsListConversations extends BackendUsecase<
   async exec(): ResultPromise<LiteConversation[], UnexpectedError> {
     const conversations = await this.repos.conversation.findAll();
 
-    const { data: collections } = await this.sub(CollectionsList).exec();
+    const { data: collections } = await this.sub(CollectionsList).exec(false);
     if (!collections) {
       throw new UnexpectedAssistantError("Getting collections failed.");
     }

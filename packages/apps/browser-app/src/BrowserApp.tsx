@@ -9,7 +9,7 @@ import {
   getGlobalSettingsQuery,
   listAppsQuery,
   listCollectionCategoriesQuery,
-  listCollectionsQuery,
+  listFullCollectionsQuery,
 } from "./business-logic/backend/hooks.js";
 import { BackendProvider } from "./business-logic/backend/useBackend.js";
 import { fromHref } from "./business-logic/navigation/RouteUtils.js";
@@ -37,7 +37,7 @@ export default function BrowserApp({ backend, queryClient }: Props) {
               <DataLoader
                 queries={[
                   listCollectionCategoriesQuery([]),
-                  listCollectionsQuery([]),
+                  listFullCollectionsQuery(),
                   listAppsQuery([]),
                   getGlobalSettingsQuery([]),
                   getDeveloperPromptsQuery([]),

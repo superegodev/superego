@@ -121,6 +121,8 @@ export type { default as InferenceProviderModelRef } from "./types/InferenceProv
 export type { default as InferenceSettings } from "./types/InferenceSettings.js";
 export type { default as JsonPatchOperation } from "./types/JsonPatchOperation.js";
 export type { default as LiteBackgroundJob } from "./types/LiteBackgroundJob.js";
+export type { default as LiteCollection } from "./types/LiteCollection.js";
+export type { default as LiteCollectionVersion } from "./types/LiteCollectionVersion.js";
 export type { default as LiteConversation } from "./types/LiteConversation.js";
 export type { default as LiteDocument } from "./types/LiteDocument.js";
 export type { default as LiteDocumentVersion } from "./types/LiteDocumentVersion.js";

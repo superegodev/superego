@@ -79,6 +79,7 @@ import type DocumentVersion from "./types/DocumentVersion.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type InferenceOptions from "./types/InferenceOptions.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
+import type LiteCollection from "./types/LiteCollection.js";
 import type LiteConversation from "./types/LiteConversation.js";
 import type LiteDocument from "./types/LiteDocument.js";
 import type LitePack from "./types/LitePack.js";
@@ -237,7 +238,26 @@ export default interface Backend {
       | UnexpectedError
     >;
 
-    list(): ResultPromise<Collection[], ArgumentsNotValid | UnexpectedError>;
+    list(): ResultPromise<
+      LiteCollection[],
+      ArgumentsNotValid | UnexpectedError
+    >;
+    list(
+      lite: false,
+    ): ResultPromise<Collection[], ArgumentsNotValid | UnexpectedError>;
+    list(
+      lite?: false,
+    ): ResultPromise<
+      (LiteCollection | Collection)[],
+      ArgumentsNotValid | UnexpectedError
+    >;
+
+    get(
+      id: CollectionId,
+    ): ResultPromise<
+      Collection,
+      CollectionNotFound | ArgumentsNotValid | UnexpectedError
+    >;
 
     getVersion(
       collectionId: CollectionId,

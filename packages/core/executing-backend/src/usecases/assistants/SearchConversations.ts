@@ -42,7 +42,7 @@ export default class AssistantsSearchConversations extends BackendUsecase<
       return makeSuccessfulResult([]);
     }
 
-    const collectionsListResult = await this.sub(CollectionsList).exec();
+    const collectionsListResult = await this.sub(CollectionsList).exec(false);
     if (!collectionsListResult.success) {
       return collectionsListResult;
     }

@@ -560,7 +560,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         data: null,
         error: null,
       });
-      const listCollectionsResult = await backend.collections.list();
+      const listCollectionsResult = await backend.collections.list(false);
       expect(listCollectionsResult).toEqual({
         success: true,
         data: [

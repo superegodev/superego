@@ -1,4 +1,12 @@
+import type {
+  ArgumentsNotValid,
+  Collection,
+  UnexpectedError,
+} from "@superego/backend";
+import type { Result } from "@superego/global-types";
+import type BackendQuery from "./BackendQuery.js";
 import { makeBackendQueryGetter } from "./BackendQuery.js";
+import { ResultErrorWrapper } from "./BackendQuery.js";
 import type { SuccessfulResultOf } from "./typeUtils.js";
 import { makeUseBackendMutation } from "./UseBackendMutation.js";
 
@@ -37,8 +45,23 @@ export const useDeleteCollectionCategory = makeUseBackendMutation(
 export const listCollectionsQuery = makeBackendQueryGetter(
   "collections",
   "list",
-  () => ["listCollections"],
+  (lite) => ["listCollections", String(lite ?? true)],
 );
+
+export function listFullCollectionsQuery(): BackendQuery<
+  Result<Collection[], ArgumentsNotValid | UnexpectedError>
+> {
+  return (backend) => ({
+    queryKey: ["listCollections", "false"],
+    queryFn: async () => {
+      const result = await backend.collections.list(false);
+      if (!result.success) {
+        throw new ResultErrorWrapper(result);
+      }
+      return result;
+    },
+  });
+}
 
 export const getCollectionVersionQuery = makeBackendQueryGetter(
   "collections",
