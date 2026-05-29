@@ -18,9 +18,9 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "base-x": "^5.0.1",
-    "es-toolkit": "^1.46.1",
+    "es-toolkit": "^1.47.0",
     "uuid": "^14.0.0",
-    "valibot": "^1.4.0"
+    "valibot": "^1.4.1"
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",

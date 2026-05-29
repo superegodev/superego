@@ -19,7 +19,7 @@
     "@superego/global-types": "workspace:*",
     "luxon": "^3.7.2",
     "remove-markdown": "^0.6.4",
-    "valibot": "^1.4.0"
+    "valibot": "^1.4.1"
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",

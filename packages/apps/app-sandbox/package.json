@@ -45,7 +45,7 @@
     "@vanilla-extract/dynamic": "^2.1.5",
     "clsx": "^2.1.1",
     "debounce": "^3.0.0",
-    "es-toolkit": "^1.46.1",
+    "es-toolkit": "^1.47.0",
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
     "maplibre-gl": "^5.24.0",
