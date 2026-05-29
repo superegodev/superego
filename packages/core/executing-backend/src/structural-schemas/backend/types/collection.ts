@@ -87,7 +87,7 @@ export function liteCollection(): v.GenericSchema<unknown, LiteCollection> {
     latestVersion: liteCollectionVersion(),
     settings: collectionSettings(),
     createdAt: v.date(),
-  }) as v.GenericSchema<unknown, LiteCollection>;
+  });
 }
 
 export function collectionDefinition(): v.GenericSchema<

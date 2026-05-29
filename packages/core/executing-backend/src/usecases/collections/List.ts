@@ -50,13 +50,13 @@ export default class CollectionsList extends BackendUsecase<
     });
 
     return makeSuccessfulResult(
-      collections.map((collection) => {
-        const latestVersion = latestVersionsByCollectionId.get(collection.id);
-        assertCollectionVersionExists(collection.id, latestVersion);
-        const hydratedCollection = makeCollection(collection, latestVersion);
-        return lite
-          ? makeLiteCollection(hydratedCollection)
-          : hydratedCollection;
+      collections.map((collectionEntity) => {
+        const latestVersion = latestVersionsByCollectionId.get(
+          collectionEntity.id,
+        );
+        assertCollectionVersionExists(collectionEntity.id, latestVersion);
+        const collection = makeCollection(collectionEntity, latestVersion);
+        return lite ? makeLiteCollection(collection) : collection;
       }),
     );
   }
