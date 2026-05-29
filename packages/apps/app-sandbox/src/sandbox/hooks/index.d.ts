@@ -48,10 +48,8 @@ export declare function useCreateNewDocumentVersion(): {
      * concurrency check.
      */
     latestVersionId: string,
-    /** Full content or RFC 6902 patch for the new version. */
-    contentChange:
-      | { type: "full"; content: any }
-      | { type: "patch"; patch: any[] },
+    /** Full content of the new version. */
+    content: any,
   ) => void;
   isIdle: boolean;
   isPending: boolean;
@@ -62,7 +60,6 @@ export declare function useCreateNewDocumentVersion(): {
       | "CollectionNotFound"
       | "DocumentNotFound"
       | "DocumentVersionIdNotMatching"
-      | "DocumentContentPatchNotValid"
       | "DocumentContentNotValid"
       | "FilesNotFound"
       | "UnexpectedError";
