@@ -26,7 +26,7 @@ import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotV
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DefaultDocumentViewUiOptionsNotValid from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
-import type DocumentContentPatchNotApplicable from "./errors/DocumentContentPatchNotApplicable.js";
+import type DocumentContentPatchNotValid from "./errors/DocumentContentPatchNotValid.js";
 import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
@@ -295,7 +295,7 @@ export default interface Backend {
       | CollectionNotFound
       | DocumentNotFound
       | DocumentVersionIdNotMatching
-      | DocumentContentPatchNotApplicable
+      | DocumentContentPatchNotValid
       | DocumentContentNotValid
       | MakingContentBlockingKeysFailed
       | FilesNotFound

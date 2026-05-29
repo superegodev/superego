@@ -1754,7 +1754,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       );
     });
 
-    it("error: DocumentContentPatchNotApplicable when patch path is missing", async () => {
+    it("error: DocumentContentPatchNotValid when patch path is missing", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create({
@@ -1810,7 +1810,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "DocumentContentPatchNotApplicable",
+          name: "DocumentContentPatchNotValid",
           details: {
             collectionId: createCollectionResult.data.id,
             documentId: createDocumentResult.data.id,
@@ -1825,7 +1825,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("error: DocumentContentPatchNotApplicable when patch test fails", async () => {
+    it("error: DocumentContentPatchNotValid when patch test fails", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create({
@@ -1881,7 +1881,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         success: false,
         data: null,
         error: {
-          name: "DocumentContentPatchNotApplicable",
+          name: "DocumentContentPatchNotValid",
           details: {
             collectionId: createCollectionResult.data.id,
             documentId: createDocumentResult.data.id,

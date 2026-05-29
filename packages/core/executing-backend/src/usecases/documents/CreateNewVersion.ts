@@ -4,7 +4,7 @@ import {
   type CollectionNotFound,
   type ConversationId,
   type Document,
-  type DocumentContentPatchNotApplicable,
+  type DocumentContentPatchNotValid,
   type DocumentContentNotValid,
   type DocumentId,
   type DocumentNotFound,
@@ -47,7 +47,7 @@ type ExecReturnValue = ResultPromise<
   | CollectionNotFound
   | DocumentNotFound
   | DocumentVersionIdNotMatching
-  | DocumentContentPatchNotApplicable
+  | DocumentContentPatchNotValid
   | DocumentContentNotValid
   | MakingContentBlockingKeysFailed
   | FilesNotFound
@@ -68,7 +68,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     [
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.documentContentNotValid(),
-      structuralSchemas.backend.errors.documentContentPatchNotApplicable(),
+      structuralSchemas.backend.errors.documentContentPatchNotValid(),
       structuralSchemas.backend.errors.documentNotFound(),
       structuralSchemas.backend.errors.documentVersionIdNotMatching(),
       structuralSchemas.backend.errors.filesNotFound(),

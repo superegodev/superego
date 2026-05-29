@@ -1,7 +1,7 @@
 import type {
   CollectionId,
   CollectionNotFound,
-  DocumentContentPatchNotApplicable,
+  DocumentContentPatchNotValid,
   DocumentContentNotValid,
   DocumentId,
   DocumentNotFound,
@@ -29,7 +29,7 @@ interface UseCreateNewDocumentVersion {
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
-    | DocumentContentPatchNotApplicable
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError
@@ -43,7 +43,7 @@ export default function useCreateNewDocumentVersion(): UseCreateNewDocumentVersi
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
-    | DocumentContentPatchNotApplicable
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError,

@@ -60,7 +60,7 @@ export declare function useCreateNewDocumentVersion(): {
       | "CollectionNotFound"
       | "DocumentNotFound"
       | "DocumentVersionIdNotMatching"
-      | "DocumentContentPatchNotApplicable"
+      | "DocumentContentPatchNotValid"
       | "DocumentContentNotValid"
       | "FilesNotFound"
       | "UnexpectedError";

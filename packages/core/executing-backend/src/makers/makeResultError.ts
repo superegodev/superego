@@ -25,7 +25,7 @@ import type {
   ConversationNotFound,
   ConversationStatusNotProcessing,
   DefaultDocumentViewUiOptionsNotValid,
-  DocumentContentPatchNotApplicable,
+  DocumentContentPatchNotValid,
   DocumentContentNotValid,
   DocumentIsReferenced,
   DocumentNotFound,
@@ -75,7 +75,7 @@ type KnownResultError =
   | ContentSummaryGetterNotValid
   | ContentSummaryNotValid
   | DefaultDocumentViewUiOptionsNotValid
-  | DocumentContentPatchNotApplicable
+  | DocumentContentPatchNotValid
   | ConversationNotFound
   | ConversationStatusNotProcessing
   | DocumentContentNotValid

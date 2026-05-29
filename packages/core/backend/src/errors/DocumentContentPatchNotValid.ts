@@ -3,8 +3,8 @@ import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
 
-type DocumentContentPatchNotApplicable = ResultError<
-  "DocumentContentPatchNotApplicable",
+type DocumentContentPatchNotValid = ResultError<
+  "DocumentContentPatchNotValid",
   {
     collectionId: CollectionId;
     documentId: DocumentId;
@@ -15,4 +15,4 @@ type DocumentContentPatchNotApplicable = ResultError<
   }
 >;
 
-export default DocumentContentPatchNotApplicable;
+export default DocumentContentPatchNotValid;

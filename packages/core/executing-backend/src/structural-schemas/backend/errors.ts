@@ -252,9 +252,9 @@ export const documentContentNotValid = () =>
     }),
   );
 
-export const documentContentPatchNotApplicable = () =>
+export const documentContentPatchNotValid = () =>
   resultError(
-    "DocumentContentPatchNotApplicable",
+    "DocumentContentPatchNotValid",
     v.strictObject({
       collectionId: collectionId(),
       documentId: documentId(),

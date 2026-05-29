@@ -2,7 +2,7 @@ import type {
   CollectionId,
   CollectionNotFound,
   Document,
-  DocumentContentPatchNotApplicable,
+  DocumentContentPatchNotValid,
   DocumentContentNotValid,
   DocumentDefinition,
   DocumentId,
@@ -58,7 +58,7 @@ export default class Backend {
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
-    | DocumentContentPatchNotApplicable
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError

@@ -1,6 +1,6 @@
 import type {
   CollectionId,
-  DocumentContentPatchNotApplicable,
+  DocumentContentPatchNotValid,
   DocumentId,
   DocumentVersionId,
   JsonPatchOperation,
@@ -21,7 +21,7 @@ export default function applyDocumentContentPatch(
   latestVersionId: DocumentVersionId,
   content: unknown,
   patch: JsonPatchOperation[],
-): Result<unknown, DocumentContentPatchNotApplicable> {
+): Result<unknown, DocumentContentPatchNotValid> {
   try {
     const result = applyPatch(
       structuredClone(content),
@@ -32,7 +32,7 @@ export default function applyDocumentContentPatch(
     return makeSuccessfulResult(result.newDocument);
   } catch (error) {
     return makeUnsuccessfulResult(
-      makeResultError("DocumentContentPatchNotApplicable", {
+      makeResultError("DocumentContentPatchNotValid", {
         collectionId,
         documentId,
         latestVersionId,

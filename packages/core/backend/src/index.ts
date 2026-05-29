@@ -48,7 +48,7 @@ export type { default as ConversationNotFound } from "./errors/ConversationNotFo
 export type { default as ConversationStatusNotProcessing } from "./errors/ConversationStatusNotProcessing.js";
 export type { default as DefaultDocumentViewUiOptionsNotValid } from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 export type { default as DocumentContentNotValid } from "./errors/DocumentContentNotValid.js";
-export type { default as DocumentContentPatchNotApplicable } from "./errors/DocumentContentPatchNotApplicable.js";
+export type { default as DocumentContentPatchNotValid } from "./errors/DocumentContentPatchNotValid.js";
 export type { default as DocumentIsReferenced } from "./errors/DocumentIsReferenced.js";
 export type { default as DocumentNotFound } from "./errors/DocumentNotFound.js";
 export type { default as DocumentVersionIdNotMatching } from "./errors/DocumentVersionIdNotMatching.js";
