@@ -41,10 +41,14 @@ export default function createBackendCommand({
   let command = new Command(name).description(description);
 
   if (hasInputArguments(commandArguments)) {
-    command = command.requiredOption(
-      "--args <file>",
-      "Path to JSON args file.",
-    );
+    if (hasRequiredInputArguments(commandArguments)) {
+      command = command.requiredOption(
+        "--args <file>",
+        "Path to JSON args file.",
+      );
+    } else {
+      command = command.option("--args <file>", "Path to JSON args file.");
+    }
   }
 
   command.action(async (options: { args?: string }) => {
@@ -135,6 +139,14 @@ function hasInputArguments(
   commandArguments: BackendCommandArgument[],
 ): boolean {
   return commandArguments.some((argument) => !("fixedValue" in argument));
+}
+
+function hasRequiredInputArguments(
+  commandArguments: BackendCommandArgument[],
+): boolean {
+  return commandArguments.some(
+    (argument) => !("fixedValue" in argument) && argument.required !== false,
+  );
 }
 
 function toOptionPropertyName(name: string): string {

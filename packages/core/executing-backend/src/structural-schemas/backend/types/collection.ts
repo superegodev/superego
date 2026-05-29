@@ -4,6 +4,8 @@ import type {
   CollectionSettings,
   CollectionVersion,
   CollectionVersionSettings,
+  LiteCollection,
+  LiteCollectionVersion,
 } from "@superego/backend";
 import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import * as v from "valibot";
@@ -59,10 +61,30 @@ export function collectionVersion(): v.GenericSchema<
   });
 }
 
+export function liteCollectionVersion(): v.GenericSchema<
+  unknown,
+  LiteCollectionVersion
+> {
+  return v.strictObject({
+    id: collectionVersionId(),
+    previousVersionId: v.nullable(collectionVersionId()),
+    createdAt: v.date(),
+  });
+}
+
 export function collection(): v.GenericSchema<unknown, Collection> {
   return v.strictObject({
     id: collectionId(),
     latestVersion: collectionVersion(),
+    settings: collectionSettings(),
+    createdAt: v.date(),
+  });
+}
+
+export function liteCollection(): v.GenericSchema<unknown, LiteCollection> {
+  return v.strictObject({
+    id: collectionId(),
+    latestVersion: liteCollectionVersion(),
     settings: collectionSettings(),
     createdAt: v.date(),
   });

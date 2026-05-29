@@ -37,7 +37,7 @@ export default function BrowserApp({ backend, queryClient }: Props) {
               <DataLoader
                 queries={[
                   listCollectionCategoriesQuery([]),
-                  listCollectionsQuery([]),
+                  listCollectionsQuery([false]),
                   listAppsQuery([]),
                   getGlobalSettingsQuery([]),
                   getDeveloperPromptsQuery([]),

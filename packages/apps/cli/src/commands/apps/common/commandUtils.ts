@@ -35,20 +35,15 @@ export async function resolveLatestTargetCollections(
   backend: CliBackend,
   collectionIds: CollectionId[],
 ): Promise<TargetCollection[]> {
-  const result = await backend.collections.list();
-  if (!result.success) {
-    throw new Error(JSON.stringify(result.error));
-  }
-  const collectionsById = new Map(
-    result.data.map((collection) => [collection.id, collection]),
-  );
-  return collectionIds.map((collectionId) => {
-    const collection = collectionsById.get(collectionId);
-    if (!collection) {
-      throw new Error(`Collection ${collectionId} not found.`);
+  const resolved: TargetCollection[] = [];
+  for (const collectionId of collectionIds) {
+    const result = await backend.collections.get(collectionId);
+    if (!result.success) {
+      throw new Error(JSON.stringify(result.error));
     }
-    return targetFromCollection(collection);
-  });
+    resolved.push(targetFromCollection(result.data));
+  }
+  return resolved;
 }
 
 export async function resolveLockedTargetCollections(

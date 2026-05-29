@@ -19,7 +19,7 @@ export async function readDatabaseSnapshot(
 ): Promise<DatabaseSnapshot> {
   const categoriesResult = await backend.collectionCategories.list();
   assert.isTrue(categoriesResult.success);
-  const collectionsResult = await backend.collections.list();
+  const collectionsResult = await backend.collections.list(false);
   assert.isTrue(collectionsResult.success);
   const appsResult = await backend.apps.list();
   assert.isTrue(appsResult.success);

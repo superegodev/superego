@@ -41,6 +41,7 @@ import CollectionsCreate from "./usecases/collections/Create.js";
 import CollectionsCreateMany from "./usecases/collections/CreateMany.js";
 import CollectionsCreateNewVersion from "./usecases/collections/CreateNewVersion.js";
 import CollectionsDelete from "./usecases/collections/Delete.js";
+import CollectionsGet from "./usecases/collections/Get.js";
 import CollectionsGetTypescriptSchema from "./usecases/collections/GetTypescriptSchema.js";
 import CollectionsGetVersion from "./usecases/collections/GetVersion.js";
 import CollectionsList from "./usecases/collections/List.js";
@@ -114,6 +115,7 @@ export default class ExecutingBackend implements Backend {
       ),
       delete: this.makeUsecase(CollectionsDelete, true),
       list: this.makeUsecase(CollectionsList, false),
+      get: this.makeUsecase(CollectionsGet, false),
       getVersion: this.makeUsecase(CollectionsGetVersion, false),
       getTypescriptSchema: this.makeUsecase(
         CollectionsGetTypescriptSchema,
