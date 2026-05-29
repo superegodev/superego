@@ -136,24 +136,67 @@ How to create the new version.
                   patch: {
                     type: "array",
                     items: {
-                      type: "object",
-                      properties: {
-                        op: {
-                          enum: [
-                            "add",
-                            "remove",
-                            "replace",
-                            "move",
-                            "copy",
-                            "test",
-                          ],
+                      oneOf: [
+                        {
+                          type: "object",
+                          properties: {
+                            op: { const: "add" },
+                            path: { type: "string" },
+                            value: {},
+                          },
+                          required: ["op", "path", "value"],
+                          additionalProperties: false,
                         },
-                        path: { type: "string" },
-                        from: { type: "string" },
-                        value: {},
-                      },
-                      required: ["op", "path"],
-                      additionalProperties: false,
+                        {
+                          type: "object",
+                          properties: {
+                            op: { const: "remove" },
+                            path: { type: "string" },
+                          },
+                          required: ["op", "path"],
+                          additionalProperties: false,
+                        },
+                        {
+                          type: "object",
+                          properties: {
+                            op: { const: "replace" },
+                            path: { type: "string" },
+                            value: {},
+                          },
+                          required: ["op", "path", "value"],
+                          additionalProperties: false,
+                        },
+                        {
+                          type: "object",
+                          properties: {
+                            op: { const: "move" },
+                            path: { type: "string" },
+                            from: { type: "string" },
+                          },
+                          required: ["op", "path", "from"],
+                          additionalProperties: false,
+                        },
+                        {
+                          type: "object",
+                          properties: {
+                            op: { const: "copy" },
+                            path: { type: "string" },
+                            from: { type: "string" },
+                          },
+                          required: ["op", "path", "from"],
+                          additionalProperties: false,
+                        },
+                        {
+                          type: "object",
+                          properties: {
+                            op: { const: "test" },
+                            path: { type: "string" },
+                            value: {},
+                          },
+                          required: ["op", "path", "value"],
+                          additionalProperties: false,
+                        },
+                      ],
                     },
                   },
                 },
