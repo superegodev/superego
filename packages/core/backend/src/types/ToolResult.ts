@@ -5,6 +5,7 @@ import type CollectionNotFound from "../errors/CollectionNotFound.js";
 import type CollectionSchemaNotValid from "../errors/CollectionSchemaNotValid.js";
 import type CollectionSettingsNotValid from "../errors/CollectionSettingsNotValid.js";
 import type DocumentContentNotValid from "../errors/DocumentContentNotValid.js";
+import type DocumentContentPatchNotApplicable from "../errors/DocumentContentPatchNotApplicable.js";
 import type DocumentNotFound from "../errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "../errors/DocumentVersionIdNotMatching.js";
 import type DuplicateDocumentDetected from "../errors/DuplicateDocumentDetected.js";
@@ -86,6 +87,7 @@ namespace ToolResult {
       | CollectionNotFound
       | DocumentNotFound
       | DocumentVersionIdNotMatching
+      | DocumentContentPatchNotApplicable
       | DocumentContentNotValid
       | FilesNotFound
       | ReferencedDocumentsNotFound

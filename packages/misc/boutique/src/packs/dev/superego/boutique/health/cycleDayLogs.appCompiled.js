@@ -811,7 +811,7 @@ export default function App(props) {
           COLLECTION_ID,
           existingLog.id,
           existingLog.versionId,
-          next,
+          { type: "full", content: next },
         );
       } else {
         createDocument.mutate({ collectionId: COLLECTION_ID, content: next });

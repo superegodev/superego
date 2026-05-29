@@ -1072,7 +1072,7 @@ export default function App(props: Props): React.ReactElement | null {
           COLLECTION_ID,
           existingLog.id,
           existingLog.versionId,
-          next,
+          { type: "full", content: next },
         );
       } else {
         createDocument.mutate({ collectionId: COLLECTION_ID, content: next });

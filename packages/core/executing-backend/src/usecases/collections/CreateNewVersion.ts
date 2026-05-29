@@ -307,7 +307,7 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
         document.collectionId,
         document.id,
         latestDocumentVersion.id,
-        executionResult.data,
+        { type: "full", content: executionResult.data },
         {
           createdBy: DocumentVersionCreator.Migration,
         },

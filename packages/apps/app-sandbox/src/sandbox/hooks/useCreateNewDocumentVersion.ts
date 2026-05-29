@@ -1,11 +1,13 @@
 import type {
   CollectionId,
   CollectionNotFound,
+  DocumentContentPatchNotApplicable,
   DocumentContentNotValid,
   DocumentId,
   DocumentNotFound,
   DocumentVersionId,
   DocumentVersionIdNotMatching,
+  DocumentVersionInput,
   FilesNotFound,
   UnexpectedError,
 } from "@superego/backend";
@@ -17,7 +19,7 @@ interface UseCreateNewDocumentVersion {
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    content: any,
+    input: DocumentVersionInput,
   ) => void;
   isIdle: boolean;
   isPending: boolean;
@@ -27,6 +29,7 @@ interface UseCreateNewDocumentVersion {
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotApplicable
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError
@@ -40,6 +43,7 @@ export default function useCreateNewDocumentVersion(): UseCreateNewDocumentVersi
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotApplicable
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError,
@@ -47,7 +51,7 @@ export default function useCreateNewDocumentVersion(): UseCreateNewDocumentVersi
       collectionId: CollectionId,
       id: DocumentId,
       latestVersionId: DocumentVersionId,
-      content: any,
+      input: DocumentVersionInput,
     ]
   >({
     mutationFn: async (args) => {
@@ -63,8 +67,8 @@ export default function useCreateNewDocumentVersion(): UseCreateNewDocumentVersi
       collectionId: CollectionId,
       id: DocumentId,
       latestVersionId: DocumentVersionId,
-      content: any,
-    ) => mutate([collectionId, id, latestVersionId, content]),
+      input: DocumentVersionInput,
+    ) => mutate([collectionId, id, latestVersionId, input]),
     isIdle,
     isPending,
     isError,

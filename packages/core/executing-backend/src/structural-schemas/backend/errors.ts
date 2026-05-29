@@ -252,6 +252,19 @@ export const documentContentNotValid = () =>
     }),
   );
 
+export const documentContentPatchNotApplicable = () =>
+  resultError(
+    "DocumentContentPatchNotApplicable",
+    v.strictObject({
+      collectionId: collectionId(),
+      documentId: documentId(),
+      latestVersionId: documentVersionId(),
+      operationIndex: v.nullable(v.number()),
+      path: v.nullable(v.string()),
+      cause: v.string(),
+    }),
+  );
+
 const documentRefSchema = () =>
   v.strictObject({
     collectionId: v.string(),

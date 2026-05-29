@@ -11,7 +11,7 @@ export default createBackendCommand({
     { name: "collection-id", description: "Collection id" },
     { name: "id", description: "Document id" },
     { name: "latest-version-id", description: "Latest document version id" },
-    { name: "content", description: "Document content" },
+    { name: "input", description: "Document version input" },
   ],
   additionalNotes,
 });

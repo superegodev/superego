@@ -124,9 +124,12 @@ export default function App(props) {
       }
     }
     createVersion.mutate("ProtoCollection_2", doc.id, doc.versionId, {
-      ...doc.content,
-      stage: toStage,
-      priority: newPriority,
+      type: "full",
+      content: {
+        ...doc.content,
+        stage: toStage,
+        priority: newPriority,
+      },
     });
   }
   function handleAddTask(stage) {
@@ -149,8 +152,11 @@ export default function App(props) {
   }
   function handleArchive(doc) {
     createVersion.mutate("ProtoCollection_2", doc.id, doc.versionId, {
-      ...doc.content,
-      archived: !doc.content.archived,
+      type: "full",
+      content: {
+        ...doc.content,
+        archived: !doc.content.archived,
+      },
     });
   }
   function handleDelete(doc) {

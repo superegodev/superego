@@ -4,11 +4,13 @@ import {
   type CollectionNotFound,
   type ConversationId,
   type Document,
+  type DocumentContentPatchNotApplicable,
   type DocumentContentNotValid,
   type DocumentId,
   type DocumentNotFound,
   DocumentVersionCreator,
   type DocumentVersionId,
+  type DocumentVersionInput,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
   type MakingContentBlockingKeysFailed,
@@ -31,6 +33,7 @@ import makeDocument from "../../makers/makeDocument.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
+import applyDocumentContentPatch from "../../utils/applyDocumentContentPatch.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import assertDocumentVersionExists from "../../utils/assertDocumentVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
@@ -44,6 +47,7 @@ type ExecReturnValue = ResultPromise<
   | CollectionNotFound
   | DocumentNotFound
   | DocumentVersionIdNotMatching
+  | DocumentContentPatchNotApplicable
   | DocumentContentNotValid
   | MakingContentBlockingKeysFailed
   | FilesNotFound
@@ -57,13 +61,14 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     structuralSchemas.backend.ids.collectionId(),
     structuralSchemas.backend.ids.documentId(),
     structuralSchemas.backend.ids.documentVersionId(),
-    v.any(),
+    structuralSchemas.backend.types.documentVersionInput(),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.document(),
     [
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.documentContentNotValid(),
+      structuralSchemas.backend.errors.documentContentPatchNotApplicable(),
       structuralSchemas.backend.errors.documentNotFound(),
       structuralSchemas.backend.errors.documentVersionIdNotMatching(),
       structuralSchemas.backend.errors.filesNotFound(),
@@ -77,13 +82,13 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    content: any,
+    input: DocumentVersionInput,
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    content: any,
+    input: DocumentVersionInput,
     options:
       | {
           createdBy: DocumentVersionCreator.Assistant;
@@ -97,7 +102,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    content: any,
+    input: DocumentVersionInput,
     options?: {
       createdBy:
         | DocumentVersionCreator.Assistant
@@ -142,9 +147,26 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
       latestCollectionVersion,
     );
 
+    let contentToValidate: unknown;
+    if (input.type === "full") {
+      contentToValidate = input.content;
+    } else {
+      const applyPatchResult = applyDocumentContentPatch(
+        collectionId,
+        id,
+        latestVersionId,
+        latestVersion.content,
+        input.patch,
+      );
+      if (!applyPatchResult.success) {
+        return applyPatchResult;
+      }
+      contentToValidate = applyPatchResult.data;
+    }
+
     const contentValidationResult = v.safeParse(
       valibotSchemas.content(latestCollectionVersion.schema),
-      content,
+      contentToValidate,
     );
     if (!contentValidationResult.success) {
       return makeUnsuccessfulResult(

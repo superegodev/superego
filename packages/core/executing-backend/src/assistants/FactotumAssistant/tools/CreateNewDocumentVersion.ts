@@ -27,7 +27,7 @@ export default {
     collections: Collection[],
     documentsCreateNewVersion: DocumentsCreateNewVersion,
   ): Promise<ToolResult.CreateNewDocumentVersion> {
-    const { collectionId, id, latestVersionId, content } = toolCall.input;
+    const { collectionId, id, latestVersionId, input } = toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -48,7 +48,7 @@ export default {
       collectionId,
       id,
       latestVersionId,
-      content,
+      input,
       {
         createdBy: DocumentVersionCreator.Assistant,
         conversationId: conversationId,
@@ -107,22 +107,62 @@ Then re-read the document and try again.
             `.trim(),
             type: "string",
           },
-          // EVOLUTION: consider either using patches or even a js function that
-          // modifies the document, as for complex documents this won't really
-          // work.
-          content: {
+          input: {
             description: `
-Full content for the new version (complete replace, not a patch).
+How to create the new version.
 
 ### Notes
 
-- Never drop fields accidentally; start from the current content and edit only
-  what changed.
+- Prefer \`{ type: "patch", patch: [...] }\` for small edits.
+- Use RFC 6902 JSON Patch paths, for example \`/status\` or \`/items/0/name\`.
+- Use \`{ type: "full", content: ... }\` only when replacing the full document
+  intentionally.
             `.trim(),
-            type: "object",
+            oneOf: [
+              {
+                type: "object",
+                properties: {
+                  type: { const: "full" },
+                  content: { type: "object" },
+                },
+                required: ["type", "content"],
+                additionalProperties: false,
+              },
+              {
+                type: "object",
+                properties: {
+                  type: { const: "patch" },
+                  patch: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        op: {
+                          enum: [
+                            "add",
+                            "remove",
+                            "replace",
+                            "move",
+                            "copy",
+                            "test",
+                          ],
+                        },
+                        path: { type: "string" },
+                        from: { type: "string" },
+                        value: {},
+                      },
+                      required: ["op", "path"],
+                      additionalProperties: false,
+                    },
+                  },
+                },
+                required: ["type", "patch"],
+                additionalProperties: false,
+              },
+            ],
           },
         },
-        required: ["collectionId", "id", "latestVersionId", "content"],
+        required: ["collectionId", "id", "latestVersionId", "input"],
         additionalProperties: false,
       },
     };

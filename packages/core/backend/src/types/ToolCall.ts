@@ -4,6 +4,7 @@ import type CollectionCategoryId from "../ids/CollectionCategoryId.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type DocumentId from "../ids/DocumentId.js";
 import type DocumentVersionId from "../ids/DocumentVersionId.js";
+import type DocumentVersionInput from "./DocumentVersionInput.js";
 
 interface ToolCall<Tool extends ToolName | string = string, Input = any> {
   id: string;
@@ -35,7 +36,7 @@ namespace ToolCall {
       collectionId: CollectionId;
       id: DocumentId;
       latestVersionId: DocumentVersionId;
-      content: any;
+      input: DocumentVersionInput;
     }
   >;
   export type ExecuteTypescriptFunction = ToolCall<

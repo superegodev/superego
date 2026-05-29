@@ -2,12 +2,14 @@ import type {
   CollectionId,
   CollectionNotFound,
   Document,
+  DocumentContentPatchNotApplicable,
   DocumentContentNotValid,
   DocumentDefinition,
   DocumentId,
   DocumentNotFound,
   DocumentVersionId,
   DocumentVersionIdNotMatching,
+  DocumentVersionInput,
   FileId,
   FileNotFound,
   FilesNotFound,
@@ -50,12 +52,13 @@ export default class Backend {
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    content: any,
+    input: DocumentVersionInput,
   ): ResultPromise<
     Document,
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotApplicable
     | DocumentContentNotValid
     | FilesNotFound
     | UnexpectedError
@@ -64,7 +67,7 @@ export default class Backend {
       collectionId,
       id,
       latestVersionId,
-      content,
+      input,
     ]);
   }
 

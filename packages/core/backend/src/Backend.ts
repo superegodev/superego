@@ -26,6 +26,7 @@ import type ContentSummaryGetterNotValid from "./errors/ContentSummaryGetterNotV
 import type ConversationNotFound from "./errors/ConversationNotFound.js";
 import type DefaultDocumentViewUiOptionsNotValid from "./errors/DefaultDocumentViewUiOptionsNotValid.js";
 import type DocumentContentNotValid from "./errors/DocumentContentNotValid.js";
+import type DocumentContentPatchNotApplicable from "./errors/DocumentContentPatchNotApplicable.js";
 import type DocumentIsReferenced from "./errors/DocumentIsReferenced.js";
 import type DocumentNotFound from "./errors/DocumentNotFound.js";
 import type DocumentVersionIdNotMatching from "./errors/DocumentVersionIdNotMatching.js";
@@ -74,6 +75,7 @@ import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
 import type DocumentDefinition from "./types/DocumentDefinition.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
+import type DocumentVersionInput from "./types/DocumentVersionInput.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type InferenceOptions from "./types/InferenceOptions.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
@@ -287,12 +289,13 @@ export default interface Backend {
       collectionId: CollectionId,
       id: DocumentId,
       latestVersionId: DocumentVersionId,
-      content: any,
+      input: DocumentVersionInput,
     ): ResultPromise<
       Document,
       | CollectionNotFound
       | DocumentNotFound
       | DocumentVersionIdNotMatching
+      | DocumentContentPatchNotApplicable
       | DocumentContentNotValid
       | MakingContentBlockingKeysFailed
       | FilesNotFound

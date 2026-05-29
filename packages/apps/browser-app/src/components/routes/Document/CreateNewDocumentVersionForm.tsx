@@ -87,10 +87,13 @@ export default function CreateNewDocumentVersionForm({
       collection.id,
       document.id,
       document.latestVersion.id,
-      await forms.utils.RHFContent.fromRHFContent(
-        contentData,
-        collectionSchema,
-      ),
+      {
+        type: "full",
+        content: await forms.utils.RHFContent.fromRHFContent(
+          contentData,
+          collectionSchema,
+        ),
+      },
     );
     if (success) {
       reset(

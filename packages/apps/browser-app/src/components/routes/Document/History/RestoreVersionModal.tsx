@@ -38,7 +38,7 @@ export default function RestoreVersionModal({
       collection.id,
       document.id,
       document.latestVersion.id,
-      content,
+      { type: "full", content },
     );
     if (success) {
       navigateTo({
