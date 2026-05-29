@@ -1,5 +1,6 @@
 import { CollectionCategoriesCreate } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
+import { summarizeCollectionCategory } from "../../../utils/successSummaries.js";
 
 export default createBackendCommand({
   name: "create",
@@ -9,4 +10,5 @@ export default createBackendCommand({
   arguments: [
     { name: "definition", description: "Collection category definition" },
   ],
+  summarizeSuccessData: summarizeCollectionCategory,
 });

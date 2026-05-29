@@ -9,7 +9,8 @@
     }
   },
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
   },
   "dependencies": {
     "@superego/app-sandbox": "workspace:*",
@@ -28,6 +29,7 @@
     "valibot": "^1.4.1"
   },
   "devDependencies": {
-    "@types/mime-types": "^3.0.1"
+    "@types/mime-types": "^3.0.1",
+    "vitest": "^4.1.7"
   }
 }

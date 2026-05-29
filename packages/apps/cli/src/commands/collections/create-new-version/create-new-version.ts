@@ -1,5 +1,6 @@
 import { CollectionsCreateNewVersion } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
+import { summarizeCollection } from "../../../utils/successSummaries.js";
 import additionalNotes from "./additional-notes.md?raw";
 
 export default createBackendCommand({
@@ -16,4 +17,5 @@ export default createBackendCommand({
     { name: "migration", description: "Collection migration module" },
   ],
   additionalNotes,
+  summarizeSuccessData: summarizeCollection,
 });

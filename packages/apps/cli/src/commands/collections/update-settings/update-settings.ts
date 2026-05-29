@@ -1,5 +1,6 @@
 import { CollectionsUpdateSettings } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
+import { summarizeCollection } from "../../../utils/successSummaries.js";
 
 export default createBackendCommand({
   name: "update-settings",
@@ -10,4 +11,5 @@ export default createBackendCommand({
     { name: "id", description: "Collection id" },
     { name: "settings-patch", description: "Collection settings patch" },
   ],
+  summarizeSuccessData: summarizeCollection,
 });

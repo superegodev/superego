@@ -1,5 +1,6 @@
 import { DocumentsCreateMany } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
+import { summarizeDocuments } from "../../../utils/successSummaries.js";
 import additionalNotes from "./additional-notes.md?raw";
 
 export default createBackendCommand({
@@ -11,4 +12,5 @@ export default createBackendCommand({
     { name: "definitions", description: "Document definitions array" },
   ],
   additionalNotes,
+  summarizeSuccessData: summarizeDocuments,
 });

@@ -140,3 +140,10 @@ a JSON object keyed by camelCase argument names.
   database.
 - Use `collections get-typescript-schema` before writing document content or
   TypeScript functions for a collection.
+
+#### JSON Outputs
+
+Commands print a JSON result envelope with `success`, `data`, and `error`.
+Successful object write commands return compact identity/version summaries. Use
+read commands such as `documents get` and `collections get` when you need the
+full object.
