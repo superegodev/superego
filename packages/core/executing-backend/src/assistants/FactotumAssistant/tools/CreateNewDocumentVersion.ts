@@ -1,6 +1,7 @@
 import {
   type Collection,
   type ConversationId,
+  DocumentContentChangeType,
   DocumentVersionCreator,
   type ToolCall,
   ToolName,
@@ -122,7 +123,7 @@ How to create the new version.
               {
                 type: "object",
                 properties: {
-                  type: { const: "full" },
+                  type: { const: DocumentContentChangeType.Full },
                   content: { type: "object" },
                 },
                 required: ["type", "content"],
@@ -131,7 +132,7 @@ How to create the new version.
               {
                 type: "object",
                 properties: {
-                  type: { const: "patch" },
+                  type: { const: DocumentContentChangeType.Patch },
                   patch: {
                     type: "array",
                     items: {

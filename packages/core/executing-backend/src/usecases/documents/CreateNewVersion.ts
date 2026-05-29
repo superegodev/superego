@@ -11,6 +11,7 @@ import {
   DocumentVersionCreator,
   type DocumentVersionId,
   type DocumentContentChange,
+  DocumentContentChangeType,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
   type MakingContentBlockingKeysFailed,
@@ -148,7 +149,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     );
 
     let contentToValidate: unknown;
-    if (contentChange.type === "full") {
+    if (contentChange.type === DocumentContentChangeType.Full) {
       contentToValidate = contentChange.content;
     } else {
       const applyPatchResult = applyDocumentContentPatch(

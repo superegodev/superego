@@ -1,4 +1,7 @@
-import { DocumentVersionCreator } from "@superego/backend";
+import {
+  DocumentContentChangeType,
+  DocumentVersionCreator,
+} from "@superego/backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -1056,7 +1059,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           collectionId,
           documentId,
           latestVersionId,
-          { type: "full", content: { title: "updated" } },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated" },
+          },
         );
 
       // Verify
@@ -1112,7 +1118,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           documentId,
           latestVersionId,
-          { type: "full", content: { title: "updated" } },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated" },
+          },
         );
 
       // Verify
@@ -1172,7 +1181,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           wrongVersionId,
-          { type: "full", content: { title: "updated title" } },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
 
       // Verify
@@ -1235,7 +1247,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { type: "full", content: { title: 123 } },
+          { type: DocumentContentChangeType.Full, content: { title: 123 } },
         );
 
       // Verify
@@ -1307,7 +1319,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
           {
-            type: "full",
+            type: DocumentContentChangeType.Full,
             content: {
               attachment: {
                 id: fileId,
@@ -1378,7 +1390,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createDocumentResult.data.id,
         createDocumentResult.data.latestVersion.id,
         {
-          type: "full",
+          type: DocumentContentChangeType.Full,
           content: {
             documentRef: {
               collectionId: createCollectionResult.data.id,
@@ -1461,7 +1473,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { type: "full", content: { title: "updated title" } },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
 
       // Verify
@@ -1530,7 +1545,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { type: "full", content: { title: "updated title" } },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
 
       // Verify
@@ -1607,7 +1625,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
           {
-            type: "patch",
+            type: DocumentContentChangeType.Patch,
             patch: [{ op: "replace", path: "/title", value: "updated title" }],
           },
         );
@@ -1677,7 +1695,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
           {
-            type: "patch",
+            type: DocumentContentChangeType.Patch,
             patch: [{ op: "replace", path: "/title", value: "updated title" }],
           },
         );
@@ -1737,7 +1755,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { type: "patch", patch: [{ op: "remove", path: "/title" }] },
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "remove", path: "/title" }],
+          },
         );
 
       // Verify
@@ -1800,7 +1821,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
           {
-            type: "patch",
+            type: DocumentContentChangeType.Patch,
             patch: [{ op: "replace", path: "/missing", value: "value" }],
           },
         );
@@ -1871,7 +1892,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
           {
-            type: "patch",
+            type: DocumentContentChangeType.Patch,
             patch: [{ op: "test", path: "/title", value: "other" }],
           },
         );
@@ -2460,14 +2481,20 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createCollectionResult.data.id,
         createDocumentResult.data.id,
         createDocumentResult.data.latestVersion.id,
-        { type: "full", content: { title: "version 2" } },
+        {
+          type: DocumentContentChangeType.Full,
+          content: { title: "version 2" },
+        },
       );
       assert.isTrue(createNewVersionResult1.success);
       const createNewVersionResult2 = await backend.documents.createNewVersion(
         createCollectionResult.data.id,
         createDocumentResult.data.id,
         createNewVersionResult1.data.latestVersion.id,
-        { type: "full", content: { title: "version 3" } },
+        {
+          type: DocumentContentChangeType.Full,
+          content: { title: "version 3" },
+        },
       );
       assert.isTrue(createNewVersionResult2.success);
 
@@ -2555,7 +2582,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createCollectionResult.data.id,
         createDocument2Result.data.id,
         createDocument2Result.data.latestVersion.id,
-        { type: "full", content: { title: "document 2 updated" } },
+        {
+          type: DocumentContentChangeType.Full,
+          content: { title: "document 2 updated" },
+        },
       );
       assert.isTrue(createNewVersionResult.success);
 
@@ -2816,7 +2846,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { type: "full", content: { title: "updated title" } },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
       assert.isTrue(createNewDocumentVersionResult.success);
 

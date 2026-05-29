@@ -1,3 +1,4 @@
+import { DocumentContentChangeType } from "@superego/backend";
 import type {
   Collection,
   Document,
@@ -38,7 +39,7 @@ export default function RestoreVersionModal({
       collection.id,
       document.id,
       document.latestVersion.id,
-      { type: "full", content },
+      { type: DocumentContentChangeType.Full, content },
     );
     if (success) {
       navigateTo({

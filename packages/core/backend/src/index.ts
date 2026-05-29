@@ -10,6 +10,7 @@ export { default as AssistantName } from "./enums/AssistantName.js";
 export { default as BackgroundJobName } from "./enums/BackgroundJobName.js";
 export { default as BackgroundJobStatus } from "./enums/BackgroundJobStatus.js";
 export { default as ConversationStatus } from "./enums/ConversationStatus.js";
+export { default as DocumentContentChangeType } from "./enums/DocumentContentChangeType.js";
 export { default as DocumentVersionCreator } from "./enums/DocumentVersionCreator.js";
 export { default as InferenceProviderDriver } from "./enums/InferenceProviderDriver.js";
 export { default as MessageContentPartType } from "./enums/MessageContentPartType.js";

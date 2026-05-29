@@ -3,6 +3,7 @@ import {
   type DocumentDefinition,
   type DocumentVersion,
   type DocumentContentChange,
+  DocumentContentChangeType,
   type JsonPatchOperation,
   DocumentVersionCreator,
   type LiteDocument,
@@ -130,11 +131,11 @@ export function documentContentChange(): v.GenericSchema<
 > {
   return v.union([
     v.strictObject({
-      type: v.literal("full"),
+      type: v.literal(DocumentContentChangeType.Full),
       content: v.any(),
     }),
     v.strictObject({
-      type: v.literal("patch"),
+      type: v.literal(DocumentContentChangeType.Patch),
       patch: v.array(jsonPatchOperation()),
     }),
   ]);
