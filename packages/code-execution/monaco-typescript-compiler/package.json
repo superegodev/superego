@@ -1,6 +1,6 @@
 {
   "name": "@superego/monaco-typescript-compiler",
-  "version": "2026.5.4",
+  "version": "2026.5.5",
   "private": true,
   "type": "module",
   "exports": {
