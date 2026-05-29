@@ -2,7 +2,7 @@ import {
   type Document,
   type DocumentDefinition,
   type DocumentVersion,
-  type DocumentVersionInput,
+  type DocumentContentChange,
   type JsonPatchOperation,
   DocumentVersionCreator,
   type LiteDocument,
@@ -124,9 +124,9 @@ export function documentDefinition(): v.GenericSchema<
   });
 }
 
-export function documentVersionInput(): v.GenericSchema<
+export function documentContentChange(): v.GenericSchema<
   unknown,
-  DocumentVersionInput
+  DocumentContentChange
 > {
   return v.union([
     v.strictObject({

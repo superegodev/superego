@@ -9,7 +9,7 @@ import type {
   DocumentNotFound,
   DocumentVersionId,
   DocumentVersionIdNotMatching,
-  DocumentVersionInput,
+  DocumentContentChange,
   FileId,
   FileNotFound,
   FilesNotFound,
@@ -52,7 +52,7 @@ export default class Backend {
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    input: DocumentVersionInput,
+    contentChange: DocumentContentChange,
   ): ResultPromise<
     Document,
     | CollectionNotFound
@@ -67,7 +67,7 @@ export default class Backend {
       collectionId,
       id,
       latestVersionId,
-      input,
+      contentChange,
     ]);
   }
 

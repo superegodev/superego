@@ -27,7 +27,7 @@ export default {
     collections: Collection[],
     documentsCreateNewVersion: DocumentsCreateNewVersion,
   ): Promise<ToolResult.CreateNewDocumentVersion> {
-    const { collectionId, id, latestVersionId, input } = toolCall.input;
+    const { collectionId, id, latestVersionId, contentChange } = toolCall.input;
 
     const collection = collections.find(({ id }) => id === collectionId);
     if (!collection) {
@@ -48,7 +48,7 @@ export default {
       collectionId,
       id,
       latestVersionId,
-      input,
+      contentChange,
       {
         createdBy: DocumentVersionCreator.Assistant,
         conversationId: conversationId,
@@ -107,7 +107,7 @@ Then re-read the document and try again.
             `.trim(),
             type: "string",
           },
-          input: {
+          contentChange: {
             description: `
 How to create the new version.
 
@@ -162,7 +162,7 @@ How to create the new version.
             ],
           },
         },
-        required: ["collectionId", "id", "latestVersionId", "input"],
+        required: ["collectionId", "id", "latestVersionId", "contentChange"],
         additionalProperties: false,
       },
     };

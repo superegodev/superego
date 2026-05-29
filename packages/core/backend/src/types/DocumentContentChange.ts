@@ -1,6 +1,6 @@
 import type JsonPatchOperation from "./JsonPatchOperation.js";
 
-type DocumentVersionInput =
+type DocumentContentChange =
   | {
       type: "full";
       content: unknown;
@@ -10,4 +10,4 @@ type DocumentVersionInput =
       patch: JsonPatchOperation[];
     };
 
-export default DocumentVersionInput;
+export default DocumentContentChange;

@@ -49,7 +49,9 @@ export declare function useCreateNewDocumentVersion(): {
      */
     latestVersionId: string,
     /** Full content or RFC 6902 patch for the new version. */
-    input: { type: "full"; content: any } | { type: "patch"; patch: any[] },
+    contentChange:
+      | { type: "full"; content: any }
+      | { type: "patch"; patch: any[] },
   ) => void;
   isIdle: boolean;
   isPending: boolean;

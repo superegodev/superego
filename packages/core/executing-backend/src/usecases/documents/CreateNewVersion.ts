@@ -10,7 +10,7 @@ import {
   type DocumentNotFound,
   DocumentVersionCreator,
   type DocumentVersionId,
-  type DocumentVersionInput,
+  type DocumentContentChange,
   type DocumentVersionIdNotMatching,
   type FilesNotFound,
   type MakingContentBlockingKeysFailed,
@@ -61,7 +61,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     structuralSchemas.backend.ids.collectionId(),
     structuralSchemas.backend.ids.documentId(),
     structuralSchemas.backend.ids.documentVersionId(),
-    structuralSchemas.backend.types.documentVersionInput(),
+    structuralSchemas.backend.types.documentContentChange(),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.document(),
@@ -82,13 +82,13 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    input: DocumentVersionInput,
+    contentChange: DocumentContentChange,
   ): ExecReturnValue;
   async exec(
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    input: DocumentVersionInput,
+    contentChange: DocumentContentChange,
     options:
       | {
           createdBy: DocumentVersionCreator.Assistant;
@@ -102,7 +102,7 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     collectionId: CollectionId,
     id: DocumentId,
     latestVersionId: DocumentVersionId,
-    input: DocumentVersionInput,
+    contentChange: DocumentContentChange,
     options?: {
       createdBy:
         | DocumentVersionCreator.Assistant
@@ -148,15 +148,15 @@ export default class DocumentsCreateNewVersion extends BackendUsecase<
     );
 
     let contentToValidate: unknown;
-    if (input.type === "full") {
-      contentToValidate = input.content;
+    if (contentChange.type === "full") {
+      contentToValidate = contentChange.content;
     } else {
       const applyPatchResult = applyDocumentContentPatch(
         collectionId,
         id,
         latestVersionId,
         latestVersion.content,
-        input.patch,
+        contentChange.patch,
       );
       if (!applyPatchResult.success) {
         return applyPatchResult;

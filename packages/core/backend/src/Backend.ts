@@ -73,9 +73,9 @@ import type CollectionVersionSettings from "./types/CollectionVersionSettings.js
 import type Conversation from "./types/Conversation.js";
 import type DeveloperPrompts from "./types/DeveloperPrompts.js";
 import type Document from "./types/Document.js";
+import type DocumentContentChange from "./types/DocumentContentChange.js";
 import type DocumentDefinition from "./types/DocumentDefinition.js";
 import type DocumentVersion from "./types/DocumentVersion.js";
-import type DocumentVersionInput from "./types/DocumentVersionInput.js";
 import type GlobalSettings from "./types/GlobalSettings.js";
 import type InferenceOptions from "./types/InferenceOptions.js";
 import type LiteBackgroundJob from "./types/LiteBackgroundJob.js";
@@ -289,7 +289,7 @@ export default interface Backend {
       collectionId: CollectionId,
       id: DocumentId,
       latestVersionId: DocumentVersionId,
-      input: DocumentVersionInput,
+      contentChange: DocumentContentChange,
     ): ResultPromise<
       Document,
       | CollectionNotFound
