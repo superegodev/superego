@@ -6876,6 +6876,7 @@ __metadata:
     mime-types: "npm:^3.0.2"
     typescript: "npm:^6.0.3"
     valibot: "npm:^1.4.1"
+    vitest: "npm:^4.1.7"
   languageName: unknown
   linkType: soft
 
