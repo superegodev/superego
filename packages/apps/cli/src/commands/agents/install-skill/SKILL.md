@@ -1,3 +1,9 @@
+---
+name: superego-cli
+description:
+  Use when working with the local Superego database through the `superego` CLI.
+---
+
 # Superego CLI
 
 Superego is a local-first personal database. It stores collections, documents,

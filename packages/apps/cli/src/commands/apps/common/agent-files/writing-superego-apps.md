@@ -1,3 +1,10 @@
+---
+name: writing-superego-apps
+description:
+  Use when writing Superego collection-view apps in generated app project
+  checkouts.
+---
+
 # Writing Superego Apps
 
 Superego apps are single-entrypoint collection-view apps.
