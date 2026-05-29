@@ -1,12 +1,7 @@
-import type {
-  ArgumentsNotValid,
-  Collection,
-  UnexpectedError,
-} from "@superego/backend";
+import type { Collection, LiteCollection } from "@superego/backend";
 import type { Result } from "@superego/global-types";
 import type BackendQuery from "./BackendQuery.js";
 import { makeBackendQueryGetter } from "./BackendQuery.js";
-import { ResultErrorWrapper } from "./BackendQuery.js";
 import type { SuccessfulResultOf } from "./typeUtils.js";
 import { makeUseBackendMutation } from "./UseBackendMutation.js";
 
@@ -42,25 +37,26 @@ export const useDeleteCollectionCategory = makeUseBackendMutation(
  * Collections
  */
 
-export const listCollectionsQuery = makeBackendQueryGetter(
+const getListCollectionsQuery = makeBackendQueryGetter(
   "collections",
   "list",
   (lite) => ["listCollections", String(lite ?? true)],
 );
 
-export function listFullCollectionsQuery(): BackendQuery<
-  Result<Collection[], ArgumentsNotValid | UnexpectedError>
-> {
-  return (backend) => ({
-    queryKey: ["listCollections", "false"],
-    queryFn: async () => {
-      const result = await backend.collections.list(false);
-      if (!result.success) {
-        throw new ResultErrorWrapper(result);
-      }
-      return result;
-    },
-  });
+export function listCollectionsQuery(
+  args: [],
+): BackendQuery<Result<LiteCollection[], any>>;
+export function listCollectionsQuery(
+  args: [false],
+): BackendQuery<Result<Collection[], any>>;
+export function listCollectionsQuery(
+  args: [] | [false],
+):
+  | BackendQuery<Result<LiteCollection[], any>>
+  | BackendQuery<Result<Collection[], any>> {
+  return getListCollectionsQuery(args) as
+    | BackendQuery<Result<LiteCollection[], any>>
+    | BackendQuery<Result<Collection[], any>>;
 }
 
 export const getCollectionVersionQuery = makeBackendQueryGetter(

@@ -1,9 +1,13 @@
-### Lite and Full Output
+### Input Rules
 
-Omit `lite` to return lightweight documents. Lightweight documents include
-document id, collection id, createdAt, latest version metadata, and
-contentSummary. They do not include `latestVersion.content`.
+If `--args` is omitted, this command returns lightweight documents. Lightweight
+documents include document id, collection id, createdAt, latest version
+metadata, and contentSummary. They do not include `latestVersion.content`.
 
-Pass `{ "lite": false }` to include full document content.
+To include full document content, pass an args file with:
+
+```json
+{ "lite": false }
+```
 
 `{ "lite": true }` is not accepted. Omission is the lite mode.
