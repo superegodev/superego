@@ -1,5 +1,6 @@
 import { CollectionCategoriesUpdate } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
+import { summarizeCollectionCategory } from "../../../utils/successSummaries.js";
 
 export default createBackendCommand({
   name: "update",
@@ -10,4 +11,5 @@ export default createBackendCommand({
     { name: "id", description: "Collection category id" },
     { name: "patch", description: "Collection category patch" },
   ],
+  summarizeSuccessData: summarizeCollectionCategory,
 });
