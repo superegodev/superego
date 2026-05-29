@@ -177,12 +177,9 @@ export default function App(props: Props): React.ReactElement | null {
     }
 
     createVersion.mutate("ProtoCollection_2", doc.id, doc.versionId, {
-      type: "full",
-      content: {
-        ...doc.content,
-        stage: toStage,
-        priority: newPriority,
-      },
+      ...doc.content,
+      stage: toStage,
+      priority: newPriority,
     });
   }
 
@@ -208,11 +205,8 @@ export default function App(props: Props): React.ReactElement | null {
 
   function handleArchive(doc: Document) {
     createVersion.mutate("ProtoCollection_2", doc.id, doc.versionId, {
-      type: "full",
-      content: {
-        ...doc.content,
-        archived: !doc.content.archived,
-      },
+      ...doc.content,
+      archived: !doc.content.archived,
     });
   }
 
