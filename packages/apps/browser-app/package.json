@@ -54,7 +54,7 @@
     "@vanilla-extract/vite-plugin": "^5.2.2",
     "@vitejs/plugin-react": "^6.0.2",
     "debounce": "^3.0.0",
-    "es-toolkit": "^1.46.1",
+    "es-toolkit": "^1.47.0",
     "frimousse": "^0.3.0",
     "lowlight": "^3.3.0",
     "luxon": "^3.7.2",
@@ -73,7 +73,7 @@
     "react-intl": "^10.1.9",
     "react-stately": "^3.46.0",
     "react-zoom-pan-pinch": "^4.0.3",
-    "valibot": "^1.4.0",
+    "valibot": "^1.4.1",
     "zustand": "^5.0.13"
   },
   "devDependencies": {

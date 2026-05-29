@@ -1,4 +1,7 @@
-import { DocumentVersionCreator } from "@superego/backend";
+import {
+  DocumentContentChangeType,
+  DocumentVersionCreator,
+} from "@superego/backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -1032,10 +1035,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
 
       // Exercise
       const result = await backend.documents.createNewVersion(
-        "not-a-valid-id" as any,
+        Id.generate.collection(),
         Id.generate.document(),
         Id.generate.documentVersion(),
-        {},
+        {} as any,
       );
 
       // Verify
@@ -1056,7 +1059,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           collectionId,
           documentId,
           latestVersionId,
-          { title: "updated" },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated" },
+          },
         );
 
       // Verify
@@ -1112,7 +1118,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           documentId,
           latestVersionId,
-          { title: "updated" },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated" },
+          },
         );
 
       // Verify
@@ -1172,7 +1181,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           wrongVersionId,
-          { title: "updated title" },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
 
       // Verify
@@ -1235,7 +1247,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { title: 123 },
+          { type: DocumentContentChangeType.Full, content: { title: 123 } },
         );
 
       // Verify
@@ -1307,10 +1319,13 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
           {
-            attachment: {
-              id: fileId,
-              name: "file.txt",
-              mimeType: "text/plain",
+            type: DocumentContentChangeType.Full,
+            content: {
+              attachment: {
+                id: fileId,
+                name: "file.txt",
+                mimeType: "text/plain",
+              },
             },
           },
         );
@@ -1375,9 +1390,12 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createDocumentResult.data.id,
         createDocumentResult.data.latestVersion.id,
         {
-          documentRef: {
-            collectionId: createCollectionResult.data.id,
-            documentId: nonExistentDocumentId,
+          type: DocumentContentChangeType.Full,
+          content: {
+            documentRef: {
+              collectionId: createCollectionResult.data.id,
+              documentId: nonExistentDocumentId,
+            },
           },
         },
       );
@@ -1455,7 +1473,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { title: "updated title" },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
 
       // Verify
@@ -1477,6 +1498,210 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
+    it("error: DocumentContentNotValid when patch removes a required field", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "remove", path: "/title" }],
+          },
+        );
+
+      // Verify
+      assert.isFalse(createNewDocumentVersionResult.success);
+      expect(createNewDocumentVersionResult.error.name).toBe(
+        "DocumentContentNotValid",
+      );
+      expect(createNewDocumentVersionResult.error.details).toEqual(
+        expect.objectContaining({
+          collectionId: createCollectionResult.data.id,
+          collectionVersionId: createCollectionResult.data.latestVersion.id,
+          documentId: createDocumentResult.data.id,
+        }),
+      );
+    });
+
+    it("error: DocumentContentPatchNotValid when patch path is missing", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "replace", path: "/missing", value: "value" }],
+          },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentContentPatchNotValid",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentResult.data.id,
+            latestVersionId: createDocumentResult.data.latestVersion.id,
+            operationIndex: 0,
+            path: "/missing",
+            cause: expect.stringContaining(
+              "Cannot perform the operation at a path that does not exist",
+            ),
+          },
+        },
+      });
+    });
+
+    it("error: DocumentContentPatchNotValid when patch test fails", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "test", path: "/title", value: "other" }],
+          },
+        );
+
+      // Verify
+      expect(createNewDocumentVersionResult).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "DocumentContentPatchNotValid",
+          details: {
+            collectionId: createCollectionResult.data.id,
+            documentId: createDocumentResult.data.id,
+            latestVersionId: createDocumentResult.data.latestVersion.id,
+            operationIndex: 0,
+            path: "/title",
+            cause: expect.stringContaining("Test operation failed"),
+          },
+        },
+      });
+    });
     it("success: creates new version", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1524,7 +1749,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { title: "updated title" },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
 
       // Verify
@@ -1550,6 +1778,140 @@ export default rd<GetDependencies>("Documents", (deps) => {
         data: createNewDocumentVersionResult.data.latestVersion,
         error: null,
       });
+    });
+
+    it("success: creates new version from patch", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                notes: { dataType: DataType.String },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: { title: "title", notes: "keep" },
+      });
+      assert.isTrue(createDocumentResult.success);
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "replace", path: "/title", value: "updated title" }],
+          },
+        );
+
+      // Verify
+      assert.isTrue(createNewDocumentVersionResult.success);
+      expect(createNewDocumentVersionResult.data.latestVersion.content).toEqual(
+        { title: "updated title", notes: "keep" },
+      );
+    });
+
+    it("success: patch preserves omitted file refs", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createCollectionResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: {
+                title: { dataType: DataType.String },
+                attachment: { dataType: DataType.File },
+              },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createCollectionResult.success);
+      const createDocumentResult = await backend.documents.create({
+        collectionId: createCollectionResult.data.id,
+        content: {
+          title: "title",
+          attachment: {
+            name: "file.txt",
+            mimeType: "text/plain",
+            content: Uint8Array.from([1, 2, 3]),
+          },
+        },
+      });
+      assert.isTrue(createDocumentResult.success);
+      const attachment =
+        createDocumentResult.data.latestVersion.content.attachment;
+
+      // Exercise
+      const createNewDocumentVersionResult =
+        await backend.documents.createNewVersion(
+          createCollectionResult.data.id,
+          createDocumentResult.data.id,
+          createDocumentResult.data.latestVersion.id,
+          {
+            type: DocumentContentChangeType.Patch,
+            patch: [{ op: "replace", path: "/title", value: "updated title" }],
+          },
+        );
+
+      // Verify
+      assert.isTrue(createNewDocumentVersionResult.success);
+      expect(createNewDocumentVersionResult.data.latestVersion.content).toEqual(
+        {
+          title: "updated title",
+          attachment,
+        },
+      );
     });
   });
 
@@ -2118,14 +2480,20 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createCollectionResult.data.id,
         createDocumentResult.data.id,
         createDocumentResult.data.latestVersion.id,
-        { title: "version 2" },
+        {
+          type: DocumentContentChangeType.Full,
+          content: { title: "version 2" },
+        },
       );
       assert.isTrue(createNewVersionResult1.success);
       const createNewVersionResult2 = await backend.documents.createNewVersion(
         createCollectionResult.data.id,
         createDocumentResult.data.id,
         createNewVersionResult1.data.latestVersion.id,
-        { title: "version 3" },
+        {
+          type: DocumentContentChangeType.Full,
+          content: { title: "version 3" },
+        },
       );
       assert.isTrue(createNewVersionResult2.success);
 
@@ -2213,7 +2581,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
         createCollectionResult.data.id,
         createDocument2Result.data.id,
         createDocument2Result.data.latestVersion.id,
-        { title: "document 2 updated" },
+        {
+          type: DocumentContentChangeType.Full,
+          content: { title: "document 2 updated" },
+        },
       );
       assert.isTrue(createNewVersionResult.success);
 
@@ -2474,7 +2845,10 @@ export default rd<GetDependencies>("Documents", (deps) => {
           createCollectionResult.data.id,
           createDocumentResult.data.id,
           createDocumentResult.data.latestVersion.id,
-          { title: "updated title" },
+          {
+            type: DocumentContentChangeType.Full,
+            content: { title: "updated title" },
+          },
         );
       assert.isTrue(createNewDocumentVersionResult.success);
 

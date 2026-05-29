@@ -1,4 +1,9 @@
-import type { Backend, CollectionId, DocumentId } from "@superego/backend";
+import type {
+  Backend,
+  CollectionId,
+  DocumentId,
+  DocumentVersionId,
+} from "@superego/backend";
 import type { Result } from "@superego/global-types";
 import { useEffect, useRef, useState } from "react";
 import HostIpc from "../ipc/HostIpc.js";
@@ -8,11 +13,16 @@ import type IntlMessages from "../types/IntlMessages.js";
 import type Settings from "../types/Settings.js";
 
 interface Props {
-  /** Subset of the Backend interface. */
+  /** Backend methods exposed to sandboxed apps. */
   backend: {
     documents: {
       create: Backend["documents"]["create"];
-      createNewVersion: Backend["documents"]["createNewVersion"];
+      createNewVersion: (
+        collectionId: CollectionId,
+        documentId: DocumentId,
+        latestVersionId: DocumentVersionId,
+        content: any,
+      ) => ReturnType<Backend["documents"]["createNewVersion"]>;
       delete: (
         collectionId: CollectionId,
         documentId: DocumentId,

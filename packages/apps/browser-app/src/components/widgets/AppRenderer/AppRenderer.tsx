@@ -9,7 +9,9 @@ import type {
   CollectionId,
   Document,
   DocumentId,
+  DocumentVersionId,
 } from "@superego/backend";
+import { DocumentContentChangeType } from "@superego/backend";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -48,12 +50,24 @@ export default function AppRenderer({ app }: Props) {
     collectionId: CollectionId;
     documentId: DocumentId;
   } | null>(null);
+  const createNewDocumentVersionMutation = useCreateNewDocumentVersion();
 
   const backend = {
     // Pass these as mutation so the query cache is automatically invalidated.
     documents: {
       create: useCreateDocument().mutate,
-      createNewVersion: useCreateNewDocumentVersion().mutate,
+      createNewVersion: (
+        collectionId: CollectionId,
+        documentId: DocumentId,
+        latestVersionId: DocumentVersionId,
+        content: any,
+      ) =>
+        createNewDocumentVersionMutation.mutate(
+          collectionId,
+          documentId,
+          latestVersionId,
+          { type: DocumentContentChangeType.Full, content },
+        ),
       delete: (collectionId: CollectionId, documentId: DocumentId) => {
         setDeleteModalState({ collectionId, documentId });
         return makeSuccessfulResult(null);
