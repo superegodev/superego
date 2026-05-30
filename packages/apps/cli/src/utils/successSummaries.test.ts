@@ -165,7 +165,7 @@ function makeCollection(
       previousVersionId: "CollectionVersion_1",
       schema: { types: {}, rootType: "Root" },
       settings: {
-        contentSummaryGetter: { source: "", compiled: "" },
+        contentSummaryGetter: "",
         contentBlockingKeysGetter: null,
         defaultDocumentViewUiOptions: null,
       },

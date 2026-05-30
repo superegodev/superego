@@ -6897,6 +6897,7 @@ __metadata:
     "@superego/multi-driver-inference-service": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
+    "@superego/tsc-typescript-compiler": "workspace:*"
     "@tanstack/react-query": "npm:^5.100.14"
     typescript: "npm:^6.0.3"
     urlpattern-polyfill: "npm:^10.1.0"

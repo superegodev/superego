@@ -18,6 +18,7 @@ lerna-debug.log*
 # Build artifacts
 dist
 dist-ssr
+packages/apps/demo-app/src/demoData/demoDataSnapshot.generated.json
 *.local
 .vite
 out

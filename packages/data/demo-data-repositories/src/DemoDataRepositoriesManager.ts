@@ -29,6 +29,25 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
     private inMemory = false,
   ) {}
 
+  async exportDataSnapshot(): Promise<Data | null> {
+    return this.readData();
+  }
+
+  async importDataSnapshot(
+    data: Data,
+    options: { preserveGlobalSettings?: boolean } = {},
+  ): Promise<void> {
+    const dataToWrite = clone(data);
+    if (options.preserveGlobalSettings) {
+      dataToWrite.globalSettings = { value: this.defaultGlobalSettings };
+    }
+    this.searchTextIndexStates = {
+      conversation: DemoConversationTextSearchIndex.getSearchTextIndexState(),
+      document: DemoDocumentTextSearchIndex.getSearchTextIndexState(),
+    };
+    await this.writeData(dataToWrite, OVERWRITE);
+  }
+
   async runInSerializableTransaction<ReturnValue>(
     fn: (
       repos: DataRepositories,

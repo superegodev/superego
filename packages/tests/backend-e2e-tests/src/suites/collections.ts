@@ -3527,11 +3527,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -3578,11 +3575,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });
@@ -3656,11 +3650,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         versionSettings: {
           contentBlockingKeysGetter: null,
-          contentSummaryGetter: {
-            source: "",
-            compiled:
-              "export default function getContentSummary() { return {}; }",
-          },
+          contentSummaryGetter:
+            "export default function getContentSummary() { return {}; }",
           defaultDocumentViewUiOptions: null,
         },
       });

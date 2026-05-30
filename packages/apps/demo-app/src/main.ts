@@ -13,7 +13,8 @@ import { FakeTypescriptSandbox } from "@superego/fake-typescript-sandbox/browser
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QueryClient } from "@tanstack/react-query";
-import loadDemoData from "./demoData/loadDemoData.js";
+import { deserializeDataSnapshot } from "./demoData/dataSnapshot.js";
+import demoDataSnapshot from "./demoData/demoDataSnapshot.generated.json" with { type: "json" };
 
 const isProduction = import.meta.env["VITE_DEPLOY_ENVIRONMENT"];
 const commitSha = import.meta.env["VITE_COMMIT_SHA"]?.slice(0, 7);
@@ -107,7 +108,10 @@ const queryClient = new QueryClient({
 
 const collectionsResult = await backend.collections.list();
 if (collectionsResult.success && collectionsResult.data.length === 0) {
-  await loadDemoData(backend);
+  await dataRepositoriesManager.importDataSnapshot(
+    deserializeDataSnapshot(demoDataSnapshot),
+    { preserveGlobalSettings: true },
+  );
 }
 renderBrowserApp(backend, queryClient);
 

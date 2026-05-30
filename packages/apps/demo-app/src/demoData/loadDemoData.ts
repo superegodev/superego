@@ -1,5 +1,4 @@
 import type {
-  Backend,
   DocumentDefinition,
   Pack,
   ProtoCollectionId,
@@ -16,7 +15,7 @@ import mealsData from "./mealsData.js";
 import securitiesData from "./securitiesData.js";
 import weighInsData from "./weighInsData.js";
 
-const packsWithDocuments = [
+export const packsWithDocuments = [
   {
     ...packs[0]!,
     documents: [
@@ -53,19 +52,6 @@ const packsWithDocuments = [
     ],
   },
 ] as const satisfies Pack[];
-
-export default async function loadDemoData(backend: Backend): Promise<void> {
-  for (const pack of packsWithDocuments) {
-    const installPackResult = await backend.packs.install(pack);
-    if (!installPackResult.success) {
-      // Just log the error and move on.
-      console.error(
-        `Failed to install pack ${pack.id}`,
-        installPackResult.error,
-      );
-    }
-  }
-}
 
 function makeDocuments(
   collectionId: ProtoCollectionId,

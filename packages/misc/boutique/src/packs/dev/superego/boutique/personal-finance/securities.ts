@@ -31,20 +31,17 @@ import type { Security } from "./CollectionSchema.js";
 export default function getContentSummary(
   security: Security
 ): Record<string, string | number | boolean | null> {
-  const latestPrice =
-    security.priceHistory.length > 0
-      ? security.priceHistory
-          .slice()
-          .sort((a, b) => a.instant.localeCompare(b.instant))
-          .at(-1).price
-      : null;
+  const latestPriceEntry = security.priceHistory
+    .slice()
+    .sort((a, b) => a.instant.localeCompare(b.instant))
+    .at(-1);
   return {
     "{position:0,sortable:true,default-sort:asc} Ticker": security.ticker,
     "{position:1,sortable:true} Name": security.name,
     "{position:2,sortable:true} Type": security.type,
     "{position:3} Currency": security.currency,
     "{position:4,sortable:true} Latest Price":
-      latestPrice !== null ? Math.round(latestPrice * 100) / 100 : null,
+      latestPriceEntry ? Math.round(latestPriceEntry.price * 100) / 100 : null,
   };
 }
       `.trim(),
