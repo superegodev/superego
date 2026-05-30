@@ -1,5 +1,5 @@
 {
-  "name": "@superego/fake-javascript-sandbox",
+  "name": "@superego/fake-typescript-sandbox",
   "version": "2026.5.5",
   "private": true,
   "type": "module",
