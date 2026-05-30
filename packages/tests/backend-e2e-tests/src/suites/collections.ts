@@ -1,9 +1,24 @@
-import { AppType } from "@superego/backend";
+import {
+  AppType,
+  type Collection,
+  type LiteCollection,
+} from "@superego/backend";
 import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
+
+function toLiteCollection(collection: Collection): LiteCollection {
+  return {
+    ...collection,
+    latestVersion: {
+      id: collection.latestVersion.id,
+      previousVersionId: collection.latestVersion.previousVersionId,
+      createdAt: collection.latestVersion.createdAt,
+    },
+  };
+}
 
 export default rd<GetDependencies>("Collections", (deps) => {
   describe("create", () => {
@@ -151,7 +166,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       // Verify
       expect(result.success).toBe(false);
       expect(result.error?.name).toBe("CollectionSettingsNotValid");
-      const listResult = await backend.collections.list();
+      const listResult = await backend.collections.list(false);
       assert.isTrue(listResult.success);
       expect(listResult.data).toHaveLength(0);
     });
@@ -553,7 +568,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         error: null,
       });
-      const listResult = await backend.collections.list();
+      const listResult = await backend.collections.list(false);
       expect(listResult).toEqual({
         success: true,
         data: [createResult.data],
@@ -1216,7 +1231,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         error: null,
       });
-      const listResult = await backend.collections.list();
+      const listResult = await backend.collections.list(false);
       expect(listResult).toEqual({
         success: true,
         data: result.data,
@@ -1339,7 +1354,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         ],
         error: null,
       });
-      const listResult = await backend.collections.list();
+      const listResult = await backend.collections.list(false);
       expect(listResult).toEqual({
         success: true,
         data: result.data,
@@ -1714,7 +1729,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         error: null,
       });
-      const listResult = await backend.collections.list();
+      const listResult = await backend.collections.list(false);
       expect(listResult).toEqual({
         success: true,
         data: [updateResult.data],
@@ -2425,7 +2440,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         error: null,
       });
       assert.isTrue(createNewCollectionVersionResult.success);
-      const listCollectionsResult = await backend.collections.list();
+      const listCollectionsResult = await backend.collections.list(false);
       expect(listCollectionsResult).toEqual({
         success: true,
         data: [createNewCollectionVersionResult.data],
@@ -2862,7 +2877,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         },
         error: null,
       });
-      const listResult = await backend.collections.list();
+      const listResult = await backend.collections.list(false);
       expect(listResult).toEqual({
         success: true,
         data: [updateLatestVersionSettingsResult.data],
@@ -3480,10 +3495,184 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(listResult).toEqual({
         success: true,
         data: [
-          alphaCreateResult.data,
-          betaCreateResult.data,
-          zetaCreateResult.data,
+          toLiteCollection(alphaCreateResult.data),
+          toLiteCollection(betaCreateResult.data),
+          toLiteCollection(zetaCreateResult.data),
         ],
+        error: null,
+      });
+    });
+
+    it("success: default list returns lite collections", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const result = await backend.collections.list();
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: [toLiteCollection(createResult.data)],
+        error: null,
+      });
+      assert.isTrue(result.success);
+      const collection = result.data[0];
+      assert.isDefined(collection);
+      expect(collection.latestVersion).not.toHaveProperty("schema");
+      expect(collection.latestVersion).not.toHaveProperty("settings");
+      expect(collection.latestVersion).not.toHaveProperty("migration");
+    });
+
+    it("success: lite false returns full collections", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const result = await backend.collections.list(false);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: [createResult.data],
+        error: null,
+      });
+    });
+  });
+
+  describe("get", () => {
+    it("error: ArgumentsNotValid", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.get("not-a-valid-id" as any);
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("error: CollectionNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const collectionId = Id.generate.collection();
+      const result = await backend.collections.get(collectionId);
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "CollectionNotFound",
+          details: { collectionId },
+        },
+      });
+    });
+
+    it("success", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.collections.create({
+        settings: {
+          name: "name",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: {
+            Root: {
+              dataType: DataType.Struct,
+              properties: { title: { dataType: DataType.String } },
+            },
+          },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert.isTrue(createResult.success);
+
+      // Exercise
+      const result = await backend.collections.get(createResult.data.id);
+
+      // Verify
+      expect(result).toEqual({
+        success: true,
+        data: createResult.data,
         error: null,
       });
     });

@@ -5,6 +5,7 @@ import createNewVersion from "./create-new-version/create-new-version.js";
 import create from "./create/create.js";
 import deleteCommand from "./delete/delete.js";
 import getTypescriptSchema from "./get-typescript-schema/get-typescript-schema.js";
+import get from "./get/get.js";
 import list from "./list/list.js";
 import updateLatestVersionSettings from "./update-latest-version-settings/update-latest-version-settings.js";
 import updateSettings from "./update-settings/update-settings.js";
@@ -19,5 +20,6 @@ export default useMarkdownHelp(
     .addCommand(updateLatestVersionSettings)
     .addCommand(deleteCommand)
     .addCommand(list)
+    .addCommand(get)
     .addCommand(getTypescriptSchema),
 );

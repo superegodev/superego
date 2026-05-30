@@ -2,6 +2,9 @@ import {
   type Document,
   type DocumentDefinition,
   type DocumentVersion,
+  type DocumentContentChange,
+  DocumentContentChangeType,
+  type JsonPatchOperation,
   DocumentVersionCreator,
   type LiteDocument,
   type LiteDocumentVersion,
@@ -120,6 +123,56 @@ export function documentDefinition(): v.GenericSchema<
     content: v.any(),
     options: v.optional(v.strictObject({ skipDuplicateCheck: v.boolean() })),
   });
+}
+
+export function documentContentChange(): v.GenericSchema<
+  unknown,
+  DocumentContentChange
+> {
+  return v.union([
+    v.strictObject({
+      type: v.literal(DocumentContentChangeType.Full),
+      content: v.any(),
+    }),
+    v.strictObject({
+      type: v.literal(DocumentContentChangeType.Patch),
+      patch: v.array(jsonPatchOperation()),
+    }),
+  ]);
+}
+
+function jsonPatchOperation(): v.GenericSchema<unknown, JsonPatchOperation> {
+  return v.union([
+    v.strictObject({
+      op: v.literal("add"),
+      path: v.string(),
+      value: v.any(),
+    }),
+    v.strictObject({
+      op: v.literal("remove"),
+      path: v.string(),
+    }),
+    v.strictObject({
+      op: v.literal("replace"),
+      path: v.string(),
+      value: v.any(),
+    }),
+    v.strictObject({
+      op: v.literal("move"),
+      path: v.string(),
+      from: v.string(),
+    }),
+    v.strictObject({
+      op: v.literal("copy"),
+      path: v.string(),
+      from: v.string(),
+    }),
+    v.strictObject({
+      op: v.literal("test"),
+      path: v.string(),
+      value: v.any(),
+    }),
+  ]) as v.GenericSchema<unknown, JsonPatchOperation>;
 }
 
 export function protoDocumentDefinition(): v.GenericSchema<

@@ -1,6 +1,6 @@
 {
   "name": "@superego/cli",
-  "version": "2026.5.2",
+  "version": "2026.5.5",
   "private": true,
   "type": "module",
   "exports": {
@@ -9,7 +9,8 @@
     }
   },
   "scripts": {
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
   },
   "dependencies": {
     "@superego/app-sandbox": "workspace:*",
@@ -25,9 +26,10 @@
     "commander": "^14.0.3",
     "mime-types": "^3.0.2",
     "typescript": "^6.0.3",
-    "valibot": "^1.4.0"
+    "valibot": "^1.4.1"
   },
   "devDependencies": {
-    "@types/mime-types": "^3.0.1"
+    "@types/mime-types": "^3.0.1",
+    "vitest": "^4.1.7"
   }
 }

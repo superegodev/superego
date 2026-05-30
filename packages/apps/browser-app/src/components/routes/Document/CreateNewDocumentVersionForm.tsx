@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { DocumentContentChangeType } from "@superego/backend";
 import type {
   Collection,
   DefaultDocumentViewUiOptions,
@@ -87,10 +88,13 @@ export default function CreateNewDocumentVersionForm({
       collection.id,
       document.id,
       document.latestVersion.id,
-      await forms.utils.RHFContent.fromRHFContent(
-        contentData,
-        collectionSchema,
-      ),
+      {
+        type: DocumentContentChangeType.Full,
+        content: await forms.utils.RHFContent.fromRHFContent(
+          contentData,
+          collectionSchema,
+        ),
+      },
     );
     if (success) {
       reset(

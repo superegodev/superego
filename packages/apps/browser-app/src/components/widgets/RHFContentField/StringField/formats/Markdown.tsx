@@ -24,8 +24,9 @@ export default function Markdown({
   const { field, fieldState } = useController({ control, name });
   const fieldOnChange = field.onChange;
   const onChange = useCallback(
-    (newValue: string) => fieldOnChange(newValue !== "" ? newValue : null),
-    [fieldOnChange],
+    (newValue: string) =>
+      fieldOnChange(newValue === "" && isNullable ? null : newValue),
+    [fieldOnChange, isNullable],
   );
   return (
     <div

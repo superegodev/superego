@@ -7,5 +7,12 @@ export default createBackendCommand({
   description: "List collections.",
   UsecaseClass: CollectionsList,
   getCall: (backend) => backend.collections.list,
+  arguments: [
+    {
+      name: "lite",
+      description: "Pass false to include full latest collection versions",
+      required: false,
+    },
+  ],
   additionalNotes,
 });

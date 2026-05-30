@@ -38,6 +38,7 @@ export default class BackendIPCProxyClient implements Backend {
       ),
       delete: this.makeMainIpcCall("collections.delete"),
       list: this.makeMainIpcCall("collections.list"),
+      get: this.makeMainIpcCall("collections.get"),
       getVersion: this.makeMainIpcCall("collections.getVersion"),
       getTypescriptSchema: this.makeMainIpcCall(
         "collections.getTypescriptSchema",

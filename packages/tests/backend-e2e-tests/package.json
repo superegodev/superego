@@ -1,6 +1,6 @@
 {
   "name": "@superego/backend-e2e-tests",
-  "version": "2026.5.2",
+  "version": "2026.5.5",
   "private": true,
   "type": "module",
   "scripts": {
@@ -22,7 +22,7 @@
     "@superego/vitest-registered": "workspace:*",
     "@vitest/browser": "^4.1.7",
     "@vitest/browser-playwright": "^4.1.7",
-    "es-toolkit": "^1.46.1",
+    "es-toolkit": "^1.47.0",
     "monaco-editor": "^0.55.1",
     "playwright": "^1.60.0",
     "vitest": "^4.1.7"

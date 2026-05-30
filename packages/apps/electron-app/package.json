@@ -1,6 +1,6 @@
 {
   "name": "@superego/electron-app",
-  "version": "2026.5.2",
+  "version": "2026.5.5",
   "private": true,
   "description": "A personal database you can extend with apps",
   "license": "AGPL-3.0-only",
@@ -19,9 +19,10 @@
     "translations:compile": "formatjs compile-folder --ast src/main/translations/ src/main/translations/compiled",
     "translations:verify": "formatjs verify --missing-keys --structural-equality --source-locale en 'src/main/translations/*.json'",
     "translations:extract-and-compile": "yarn translations:extract && yarn translations:compile",
+    "build:cli": "vite --config=cli.vite.config.ts build",
     "build:electron-vite": "electron-vite --outDir=dist build",
     "build:forge": "electron-forge publish --dry-run",
-    "build": "yarn build:electron-vite && yarn build:forge",
+    "build": "yarn build:cli && yarn build:electron-vite && yarn build:forge",
     "deploy": "electron-forge publish --from-dry-run"
   },
   "dependencies": {
@@ -39,7 +40,7 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@typescript/vfs": "^1.6.4",
-    "es-toolkit": "^1.46.1",
+    "es-toolkit": "^1.47.0",
     "filenamify": "^7.0.1",
     "typescript": "^6.0.3"
   },

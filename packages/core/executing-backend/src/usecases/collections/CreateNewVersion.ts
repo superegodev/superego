@@ -12,6 +12,7 @@ import {
   type ContentBlockingKeysGetterNotValid,
   type ContentSummaryGetterNotValid,
   type DefaultDocumentViewUiOptionsNotValid,
+  DocumentContentChangeType,
   DocumentVersionCreator,
   type ReferencedCollectionsNotFound,
   type TypescriptModule,
@@ -326,7 +327,10 @@ export default class CollectionsCreateNewVersion extends BackendUsecase<
         document.collectionId,
         document.id,
         latestDocumentVersion.id,
-        executionResult.data,
+        {
+          type: DocumentContentChangeType.Full,
+          content: executionResult.data,
+        },
         {
           createdBy: DocumentVersionCreator.Migration,
         },

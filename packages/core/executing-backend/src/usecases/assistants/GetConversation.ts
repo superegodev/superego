@@ -41,7 +41,7 @@ export default class AssistantsGetConversation extends BackendUsecase<
       );
     }
 
-    const { data: collections } = await this.sub(CollectionsList).exec();
+    const { data: collections } = await this.sub(CollectionsList).exec(false);
     if (!collections) {
       throw new UnexpectedAssistantError("Getting collections failed.");
     }

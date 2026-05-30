@@ -64,7 +64,7 @@ export default class AssistantsProcessConversation extends Usecase {
     | InferenceOptionsNotValid
     | UnexpectedError
   > {
-    const collectionsListResult = await this.sub(CollectionsList).exec();
+    const collectionsListResult = await this.sub(CollectionsList).exec(false);
     if (!collectionsListResult.success) {
       return collectionsListResult;
     }

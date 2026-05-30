@@ -1,5 +1,6 @@
 import { DocumentsCreateNewVersion } from "@superego/executing-backend";
 import createBackendCommand from "../../../utils/createBackendCommand.js";
+import { summarizeDocument } from "../../../utils/successSummaries.js";
 import additionalNotes from "./additional-notes.md?raw";
 
 export default createBackendCommand({
@@ -11,7 +12,8 @@ export default createBackendCommand({
     { name: "collection-id", description: "Collection id" },
     { name: "id", description: "Document id" },
     { name: "latest-version-id", description: "Latest document version id" },
-    { name: "content", description: "Document content" },
+    { name: "content-change", description: "Document content change" },
   ],
   additionalNotes,
+  summarizeSuccessData: summarizeDocument,
 });

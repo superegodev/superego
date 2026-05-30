@@ -48,7 +48,7 @@ export declare function useCreateNewDocumentVersion(): {
      * concurrency check.
      */
     latestVersionId: string,
-    /** Full content for the new version (complete replace, not a patch). */
+    /** Full content of the new version. */
     content: any,
   ) => void;
   isIdle: boolean;

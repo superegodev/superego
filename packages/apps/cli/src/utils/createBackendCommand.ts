@@ -6,10 +6,18 @@ import { useMarkdownHelp } from "./markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "./results.js";
 
 type CliBackend = Awaited<ReturnType<typeof createBackend>>;
-type BackendCall = (...args: any[]) => Promise<{ success: boolean }>;
 type BackendUsecaseClass = new (...args: any[]) => {
   argumentsSchema: v.GenericSchema<unknown, any[]>;
+  exec: (...args: any[]) => Promise<{ success: boolean; data: unknown }>;
 };
+type SuccessData<UsecaseClass extends BackendUsecaseClass> = Extract<
+  Awaited<ReturnType<InstanceType<UsecaseClass>["exec"]>>,
+  { success: true }
+>["data"];
+type BackendCall = (...args: any[]) => Promise<{
+  success: boolean;
+  data?: unknown;
+}>;
 type TupleSchemaWithItems = v.GenericSchema<unknown, any[]> & {
   items?: v.GenericSchema<unknown, unknown>[];
 };
@@ -21,30 +29,38 @@ interface BackendCommandArgument {
   fixedValue?: unknown;
 }
 
-interface BackendCommandOptions {
+interface BackendCommandOptions<UsecaseClass extends BackendUsecaseClass> {
   name: string;
   description: string;
-  UsecaseClass: BackendUsecaseClass;
+  UsecaseClass: UsecaseClass;
   getCall: (backend: CliBackend) => BackendCall;
   arguments?: BackendCommandArgument[];
   additionalNotes?: string;
+  summarizeSuccessData?: (data: SuccessData<UsecaseClass>) => unknown;
 }
 
-export default function createBackendCommand({
+export default function createBackendCommand<
+  UsecaseClass extends BackendUsecaseClass,
+>({
   name,
   description,
   UsecaseClass,
   getCall,
   arguments: commandArguments = [],
   additionalNotes,
-}: BackendCommandOptions): Command {
+  summarizeSuccessData,
+}: BackendCommandOptions<UsecaseClass>): Command {
   let command = new Command(name).description(description);
 
   if (hasInputArguments(commandArguments)) {
-    command = command.requiredOption(
-      "--args <file>",
-      "Path to JSON args file.",
-    );
+    if (hasRequiredInputArguments(commandArguments)) {
+      command = command.requiredOption(
+        "--args <file>",
+        "Path to JSON args file.",
+      );
+    } else {
+      command = command.option("--args <file>", "Path to JSON args file.");
+    }
   }
 
   command.action(async (options: { args?: string }) => {
@@ -74,7 +90,17 @@ export default function createBackendCommand({
         });
       }
 
-      return getCall(await createBackend())(...validationResult.output);
+      const result = await getCall(await createBackend())(
+        ...validationResult.output,
+      );
+      return result.success && summarizeSuccessData
+        ? {
+            ...result,
+            data: summarizeSuccessData(
+              result.data as SuccessData<UsecaseClass>,
+            ),
+          }
+        : result;
     });
   });
 
@@ -135,6 +161,14 @@ function hasInputArguments(
   commandArguments: BackendCommandArgument[],
 ): boolean {
   return commandArguments.some((argument) => !("fixedValue" in argument));
+}
+
+function hasRequiredInputArguments(
+  commandArguments: BackendCommandArgument[],
+): boolean {
+  return commandArguments.some(
+    (argument) => !("fixedValue" in argument) && argument.required !== false,
+  );
 }
 
 function toOptionPropertyName(name: string): string {

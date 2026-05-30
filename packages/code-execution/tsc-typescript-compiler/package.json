@@ -1,6 +1,6 @@
 {
   "name": "@superego/tsc-typescript-compiler",
-  "version": "2026.5.2",
+  "version": "2026.5.5",
   "private": true,
   "type": "module",
   "exports": {
