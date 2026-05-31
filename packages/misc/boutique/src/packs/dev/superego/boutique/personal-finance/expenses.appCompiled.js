@@ -148,7 +148,7 @@ export default function App(props) {
         { span: { sm: 12 } },
         React.createElement(
           Tile,
-          null,
+          { fillHeight: true },
           React.createElement(
             Text,
             { element: "p", color: "secondary" },
@@ -178,7 +178,7 @@ export default function App(props) {
       { span: { sm: 6 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           {
@@ -214,7 +214,7 @@ export default function App(props) {
       { span: { sm: 6 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           {
@@ -249,7 +249,7 @@ export default function App(props) {
       { span: { sm: 12, md: 6 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           {
@@ -272,7 +272,7 @@ export default function App(props) {
       { span: { sm: 12, md: 6 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           {
@@ -295,7 +295,7 @@ export default function App(props) {
       { span: { sm: 12 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           {

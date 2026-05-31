@@ -133,7 +133,7 @@ function SummaryStats({ rows }) {
       { span: { sm: 12, md: 6 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { color: "secondary", size: "sm" },
@@ -166,7 +166,7 @@ function SummaryStats({ rows }) {
       { span: { sm: 12, md: 6 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { color: "secondary", size: "sm" },
@@ -233,7 +233,7 @@ function TopGainers({ rows }) {
 
   return React.createElement(
     Tile,
-    null,
+    { fillHeight: true },
     React.createElement(
       Text,
       {
@@ -304,7 +304,7 @@ function TopLosers({ rows }) {
 
   return React.createElement(
     Tile,
-    null,
+    { fillHeight: true },
     React.createElement(
       Text,
       {
@@ -413,7 +413,7 @@ function AllocationChart({ rows, groupBy, onGroupByChange }) {
 
   return React.createElement(
     Tile,
-    null,
+    { fillHeight: true },
     React.createElement(
       "div",
       {
@@ -519,7 +519,7 @@ function PortfolioValueChart({ props }) {
 
   return React.createElement(
     Tile,
-    null,
+    { fillHeight: true },
     React.createElement(
       Text,
       {
@@ -537,7 +537,7 @@ function PortfolioValueChart({ props }) {
 function HoldingsTable({ rows }) {
   return React.createElement(
     Tile,
-    null,
+    { fillHeight: true },
     React.createElement(
       Text,
       { element: "h2", size: "lg", weight: "semibold" },
