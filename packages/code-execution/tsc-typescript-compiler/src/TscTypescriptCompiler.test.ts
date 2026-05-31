@@ -15,7 +15,7 @@ registerTypescriptCompilerTests(() => {
 
 describe("compile in packaged Electron", () => {
   it("passes the packaged TypeScript lib directory to the VFS", async () => {
-    // Setup
+    // Setup mocks
     const resourcesPath = mkdtempSync(join(tmpdir(), "superego-resources-"));
     const packagedTypescriptDirectory = join(
       resourcesPath,
@@ -41,6 +41,7 @@ describe("compile in packaged Electron", () => {
     });
 
     try {
+      // Setup SUT
       const typescriptCompiler = new TscTypescriptCompiler();
 
       // Exercise
