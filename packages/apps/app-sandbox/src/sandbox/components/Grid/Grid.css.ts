@@ -23,6 +23,7 @@ export const Grid = {
     columnGap: vars.spacing._2,
     rowGap: vars.spacing._2,
     width: "100%",
+    alignSelf: "start",
   }),
 };
 
