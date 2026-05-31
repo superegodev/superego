@@ -1,68 +1,77 @@
-import { mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, symlinkSync } from "node:fs";
+import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { registerTypescriptCompilerTests } from "@superego/executing-backend/tests";
-import { afterEach, describe, expect, it } from "vitest";
-import TscTypescriptCompiler, {
-  getPackagedElectronTypescriptLibDirectory,
-} from "./TscTypescriptCompiler.js";
+import * as tsvfs from "@typescript/vfs";
+import ts from "typescript";
+import { describe, expect, it, vi } from "vitest";
+import TscTypescriptCompiler from "./TscTypescriptCompiler.js";
 
 registerTypescriptCompilerTests(() => {
   const typescriptCompiler = new TscTypescriptCompiler();
   return { typescriptCompiler };
 });
 
-describe("getPackagedElectronTypescriptLibDirectory", () => {
-  const testDirectories: string[] = [];
-
-  afterEach(() => {
-    for (const testDirectory of testDirectories) {
-      rmSync(testDirectory, { recursive: true, force: true });
-    }
-    testDirectories.length = 0;
-  });
-
-  it("returns undefined when resourcesPath is missing", () => {
-    // Exercise
-    const result = getPackagedElectronTypescriptLibDirectory(undefined);
-
-    // Verify
-    expect(result).toBeUndefined();
-  });
-
-  it("returns undefined when packaged TypeScript lib directory is missing", () => {
+describe("compile in packaged Electron", () => {
+  it("passes the packaged TypeScript lib directory to the VFS", async () => {
     // Setup
-    const resourcesPath = mkdtempSync(
-      join(tmpdir(), "superego-test-resources-missing-"),
-    );
-    testDirectories.push(resourcesPath);
-
-    // Exercise
-    const result = getPackagedElectronTypescriptLibDirectory(resourcesPath);
-
-    // Verify
-    expect(result).toBeUndefined();
-  });
-
-  it("returns packaged TypeScript lib directory when it exists", () => {
-    // Setup
-    const resourcesPath = mkdtempSync(
-      join(tmpdir(), "superego-test-resources-existing-"),
+    const resourcesPath = mkdtempSync(join(tmpdir(), "superego-resources-"));
+    const packagedTypescriptDirectory = join(
+      resourcesPath,
+      "app.asar/node_modules/typescript",
     );
     const typescriptLibDirectory = join(
-      resourcesPath,
-      "app.asar",
-      "node_modules",
-      "typescript",
+      packagedTypescriptDirectory,
       "lib",
     );
-    testDirectories.push(resourcesPath);
-    mkdirSync(typescriptLibDirectory, { recursive: true });
+    const realTypescriptLibDirectory = dirname(
+      createRequire(import.meta.url).resolve("typescript"),
+    );
+    mkdirSync(packagedTypescriptDirectory, { recursive: true });
+    symlinkSync(realTypescriptLibDirectory, typescriptLibDirectory, "dir");
+    const createDefaultMapFromNodeModulesSpy = vi.spyOn(
+      tsvfs,
+      "createDefaultMapFromNodeModules",
+    );
+    const processResourcesPathDescriptor = Object.getOwnPropertyDescriptor(
+      process,
+      "resourcesPath",
+    );
+    Object.defineProperty(process, "resourcesPath", {
+      configurable: true,
+      value: resourcesPath,
+    });
 
-    // Exercise
-    const result = getPackagedElectronTypescriptLibDirectory(resourcesPath);
+    try {
+      const typescriptCompiler = new TscTypescriptCompiler();
 
-    // Verify
-    expect(result).toBe(typescriptLibDirectory);
+      // Exercise
+      const result = await typescriptCompiler.compile(
+        { path: "/main.ts", source: "export default 1;" },
+        [],
+      );
+
+      // Verify
+      expect(result.success).toBe(true);
+      expect(createDefaultMapFromNodeModulesSpy).toHaveBeenCalledWith(
+        { target: ts.ScriptTarget.ESNext },
+        ts,
+        typescriptLibDirectory,
+      );
+    } finally {
+      createDefaultMapFromNodeModulesSpy.mockRestore();
+      if (processResourcesPathDescriptor) {
+        Object.defineProperty(
+          process,
+          "resourcesPath",
+          processResourcesPathDescriptor,
+        );
+      } else {
+        delete (process as typeof process & { resourcesPath?: string })
+          .resourcesPath;
+      }
+      rmSync(resourcesPath, { recursive: true, force: true });
+    }
   });
 });
