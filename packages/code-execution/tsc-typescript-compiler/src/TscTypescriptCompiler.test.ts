@@ -21,10 +21,7 @@ describe("compile in packaged Electron", () => {
       resourcesPath,
       "app.asar/node_modules/typescript",
     );
-    const typescriptLibDirectory = join(
-      packagedTypescriptDirectory,
-      "lib",
-    );
+    const typescriptLibDirectory = join(packagedTypescriptDirectory, "lib");
     const realTypescriptLibDirectory = dirname(
       createRequire(import.meta.url).resolve("typescript"),
     );
