@@ -7161,6 +7161,7 @@ __metadata:
     "@superego/executing-backend": "workspace:*"
     "@superego/global-types": "workspace:*"
     "@superego/shared-utils": "workspace:*"
+    "@types/node": "npm:^25.9.1"
     "@typescript/vfs": "npm:^1.6.4"
     typescript: "npm:^6.0.3"
     vitest: "npm:^4.1.7"
