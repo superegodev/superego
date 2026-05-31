@@ -9,4 +9,7 @@ export const Tile = {
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
     borderRadius: vars.borders.radius.md,
   }),
+  fillHeight: style({
+    minHeight: "100%",
+  }),
 };
