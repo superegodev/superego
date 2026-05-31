@@ -4,7 +4,6 @@ import { vars } from "../../themes.css.js";
 export const Tile = {
   root: style({
     minWidth: "100%",
-    minHeight: "100%",
     padding: vars.spacing._4,
     background: vars.colors.background.subtleSurface,
     border: `${vars.borders.width.thin} solid ${vars.colors.border.default}`,
