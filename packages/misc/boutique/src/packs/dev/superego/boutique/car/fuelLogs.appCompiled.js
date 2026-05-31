@@ -153,7 +153,7 @@ export default function App(props) {
         { span: { sm: 12, md: 12, lg: 12 } },
         React.createElement(
           Tile,
-          null,
+          { fillHeight: true },
           React.createElement(
             "div",
             {
@@ -271,7 +271,7 @@ export default function App(props) {
       { span: { sm: 12, md: 12, lg: 12 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           "div",
           {
@@ -324,7 +324,7 @@ export default function App(props) {
       { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },
@@ -350,7 +350,7 @@ export default function App(props) {
       { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },
@@ -376,7 +376,7 @@ export default function App(props) {
       { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },
@@ -400,7 +400,7 @@ export default function App(props) {
       { span: { sm: 6, md: 6, lg: 3 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },
@@ -424,7 +424,7 @@ export default function App(props) {
       { span: { sm: 12, md: 12, lg: 12 } },
       React.createElement(
         Tile,
-        { style: { height: "400px" } },
+        { fillHeight: true, style: { height: "400px" } },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },
@@ -466,7 +466,7 @@ export default function App(props) {
         { span: { sm: 12, md: 12, lg: 6 } },
         React.createElement(
           Tile,
-          null,
+          { fillHeight: true },
           React.createElement(
             Text,
             { element: "h3", size: "lg", weight: "semibold" },
@@ -508,7 +508,7 @@ export default function App(props) {
       { span: { sm: 12, md: 12, lg: efficiencyData.length > 0 ? 6 : 12 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },
@@ -548,7 +548,7 @@ export default function App(props) {
       { span: { sm: 12, md: 12, lg: 12 } },
       React.createElement(
         Tile,
-        null,
+        { fillHeight: true },
         React.createElement(
           Text,
           { element: "h3", size: "lg", weight: "semibold" },

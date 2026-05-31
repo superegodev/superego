@@ -536,6 +536,8 @@ export declare namespace KanbanBoard {
  * imposing structure (no header/body/footer) or layout semantics.
  */
 export declare function Tile(props: {
+  /** Whether the tile should fill the available height. */
+  fillHeight?: boolean;
   style?: CSSProperties;
   children: ReactNode;
 }): JSX.Element;
