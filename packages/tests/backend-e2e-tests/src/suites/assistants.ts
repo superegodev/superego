@@ -1,8 +1,11 @@
 import {
   AssistantName,
   BackgroundJobStatus,
+  type Conversation,
+  type ConversationNodeId,
   ConversationStatus,
   InferenceProviderDriver,
+  type Message,
   MessageContentPartType,
   MessageRole,
   ReasoningEffort,
@@ -27,6 +30,28 @@ export default rd<GetDependencies>("Assistants", (deps) => {
     },
     transcription: null,
     fileInspection: null,
+  };
+
+  const getActiveBranchMessages = (conversation: Conversation) => {
+    if (conversation.activeNodeId === null) {
+      return [];
+    }
+    const nodesById = new Map(
+      conversation.nodes.map((node) => [node.id, node]),
+    );
+    const messages: Message[] = [];
+    let currentNodeId: ConversationNodeId | null = conversation.activeNodeId;
+    while (currentNodeId !== null) {
+      const node = nodesById.get(currentNodeId);
+      if (!node) {
+        break;
+      }
+      if (node.type === "Message") {
+        messages.push(node.message);
+      }
+      currentNodeId = node.previousNodeId;
+    }
+    return messages.reverse();
   };
 
   const inferenceSettings = {
@@ -170,8 +195,9 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           status: ConversationStatus.Processing,
         }),
       );
-      expect(result.data.messages).toHaveLength(1);
-      expect(result.data.messages[0]).toEqual(
+      const messages = getActiveBranchMessages(result.data);
+      expect(messages).toHaveLength(1);
+      expect(messages[0]).toEqual(
         expect.objectContaining({
           role: MessageRole.User,
           content: [{ type: MessageContentPartType.Text, text: "Hello" }],
@@ -1214,7 +1240,9 @@ export default rd<GetDependencies>("Assistants", (deps) => {
           status: ConversationStatus.Idle,
         }),
       );
-      expect(result.data.messages.length).toBeGreaterThanOrEqual(1);
+      expect(
+        getActiveBranchMessages(result.data).length,
+      ).toBeGreaterThanOrEqual(1);
     });
 
     it("success: gets conversation with tool result artifacts", async () => {
@@ -1319,7 +1347,7 @@ export default rd<GetDependencies>("Assistants", (deps) => {
 
       // Verify
       assert.isTrue(result.success);
-      const toolMessage = result.data.messages.find(
+      const toolMessage = getActiveBranchMessages(result.data).find(
         (message) => message.role === MessageRole.Tool,
       );
       assert.isDefined(toolMessage);

@@ -6,6 +6,7 @@ import { useRetryLastResponse } from "../../../../business-logic/backend/hooks.j
 import useDefaultInferenceOptions from "../../../../business-logic/inference/useDefaultInferenceOptions.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";
+import ConversationUtils from "../../../../utils/ConversationUtils.js";
 import isEmpty from "../../../../utils/isEmpty.js";
 import last from "../../../../utils/last.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
@@ -33,7 +34,9 @@ export default function RetryButton({
     message.inferenceOptions.completion.providerModelRef,
   );
 
-  const lastMessage = last(conversation.messages);
+  const lastMessage = last(
+    ConversationUtils.getActiveBranchMessages(conversation),
+  );
   return conversation.canRetryLastResponse &&
     lastMessage !== null &&
     "id" in lastMessage &&

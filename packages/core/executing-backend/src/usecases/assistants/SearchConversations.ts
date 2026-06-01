@@ -57,7 +57,7 @@ export default class AssistantsSearchConversations extends BackendUsecase<
       if (!conversation) {
         continue;
       }
-      const { messages, ...liteConversation } = makeConversation(
+      const { nodes, ...liteConversation } = makeConversation(
         conversation,
         contextFingerprint,
       );

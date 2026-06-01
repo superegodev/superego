@@ -29,10 +29,8 @@ export default function AssistantContentMessage({
 }: Props) {
   const [textPart] = message.content;
   const overrides = useOverrides(conversation);
-  const generationStats = aggregateGenerationStats(
-    conversation.messages,
-    message,
-  );
+  const messages = ConversationUtils.getActiveBranchMessages(conversation);
+  const generationStats = aggregateGenerationStats(messages, message);
   return (
     <div className={cs.AssistantContentMessage.root}>
       <Markdown text={textPart.text} overrides={overrides} />
@@ -55,8 +53,9 @@ export default function AssistantContentMessage({
 
 function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
   return useMemo(() => {
+    const messages = ConversationUtils.getActiveBranchMessages(conversation);
     const Chart = ({ id }: { id: string }) => {
-      const toolResult = conversation.messages
+      const toolResult = messages
         .filter((message) => message.role === MessageRole.Tool)
         .flatMap((message) => message.toolResults)
         .filter(ConversationUtils.isSuccessfulCreateChartToolResult)
@@ -71,7 +70,7 @@ function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
     const DocumentsTable = ({ id }: { id: string }) => {
       let collectionId: CollectionId | null = null;
       let documents: LiteDocument[] | null = null;
-      conversation.messages
+      messages
         .filter((message) => message.role === MessageRole.Tool)
         .flatMap((message) => message.toolResults)
         .filter(ConversationUtils.isSuccessfulCreateDocumentsTablesToolResult)
@@ -97,7 +96,7 @@ function useOverrides(conversation: Conversation): MarkdownToJSX.Overrides {
     };
 
     const GeoJSONMap = ({ id }: { id: string }) => {
-      const toolResult = conversation.messages
+      const toolResult = messages
         .filter((message) => message.role === MessageRole.Tool)
         .flatMap((message) => message.toolResults)
         .filter(ConversationUtils.isSuccessfulCreateGeoJSONMapToolResult)

@@ -23,7 +23,6 @@ import {
   validateInferenceOptions,
 } from "@superego/shared-utils";
 import * as v from "valibot";
-import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
@@ -134,12 +133,6 @@ export default class AssistantsContinueConversation extends BackendUsecase<
       content: convertedMessageContent as NonEmptyArray<MessageContentPart>,
       createdAt: now,
     };
-    const updatedConversation: ConversationEntity = {
-      ...conversation,
-      messages: [...conversation.messages, userMessage],
-      status: ConversationStatus.Processing,
-      processingStartedAt: now,
-    };
     const conversationReference: FileEntity.ConversationReference = {
       conversationId: conversation.id,
     };
@@ -152,7 +145,16 @@ export default class AssistantsContinueConversation extends BackendUsecase<
       content: protoFileWithId.content,
     }));
 
-    await this.repos.conversation.upsert(updatedConversation);
+    const userMessageNodeId = await this.repos.conversation.appendMessage(
+      id,
+      conversation.activeNodeId,
+      userMessage,
+    );
+    await this.repos.conversation.markProcessingStarted(
+      id,
+      userMessageNodeId,
+      now,
+    );
     await this.repos.file.insertAll(filesWithContent);
     await this.repos.file.addReferenceToAll(
       referencedFileIds,
@@ -164,6 +166,10 @@ export default class AssistantsContinueConversation extends BackendUsecase<
       input: { id, inferenceOptions },
     });
 
+    const updatedConversation = await this.repos.conversation.find(id);
+    if (!updatedConversation) {
+      throw new UnexpectedAssistantError("Updated conversation not found.");
+    }
     return makeSuccessfulResult(
       makeConversation(updatedConversation, contextFingerprint),
     );

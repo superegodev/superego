@@ -3,7 +3,9 @@ import {
   type CannotTranscribeAudioMessage,
   type Collection,
   type CollectionCategory,
+  type Conversation,
   type ConversationId,
+  type ConversationNodeId,
   type ConversationNotFound,
   ConversationStatus,
   type ConversationStatusNotProcessing,
@@ -29,7 +31,6 @@ import pMap from "p-map";
 import type Assistant from "../../assistants/Assistant.js";
 import CollectionCreatorAssistant from "../../assistants/CollectionCreatorAssistant/CollectionCreatorAssistant.js";
 import FactotumAssistant from "../../assistants/FactotumAssistant/FactotumAssistant.js";
-import type ConversationEntity from "../../entities/ConversationEntity.js";
 import makeResultError from "../../makers/makeResultError.js";
 import type InferenceService from "../../requirements/InferenceService.js";
 import ConversationTextUtils from "../../utils/ConversationTextUtils.js";
@@ -95,24 +96,23 @@ export default class AssistantsProcessConversation extends Usecase {
 
     const globalSettings = await this.repos.globalSettings.get();
 
+    const activeBranchMessages = ConversationUtils.getActiveBranchMessages(
+      conversation.nodes,
+      conversation.activeNodeId,
+    );
     const onMessagesUpdated = (messages: Message[]) =>
       this.liveConversationStore.set(id, {
-        id: conversation.id,
-        assistant: conversation.assistant,
-        title: conversation.title,
+        ...this.makeLiveConversation(conversation, messages),
         hasOutdatedContext: false,
         canRetryLastResponse: false,
-        messages: messages,
         status: ConversationStatus.Processing,
         processingStartedAt: conversation.processingStartedAt,
         error: null,
-        createdAt: conversation.createdAt,
       });
 
     // Set initial live state with the current messages (before generation).
-    onMessagesUpdated(conversation.messages);
+    onMessagesUpdated(activeBranchMessages);
 
-    let updatedConversation: ConversationEntity;
     const beforeGenerateAndProcessSavepoint =
       await this.repos.createSavepoint();
     try {
@@ -147,11 +147,28 @@ export default class AssistantsProcessConversation extends Usecase {
       const { data: transcribedMessages, error: cannotTranscribeAudioMessage } =
         await this.transcribeLastUserMessage(
           inferenceService,
-          conversation,
+          conversation.id,
+          activeBranchMessages,
           inferenceOptions,
         );
       if (cannotTranscribeAudioMessage) {
         throw cannotTranscribeAudioMessage;
+      }
+      if (transcribedMessages !== activeBranchMessages) {
+        const lastUserNode = ConversationUtils.findLastUserNode(
+          conversation.nodes,
+          conversation.activeNodeId,
+        );
+        const transcribedLastUserMessage = transcribedMessages.findLast(
+          (message) => message.role === MessageRole.User,
+        );
+        if (lastUserNode && transcribedLastUserMessage) {
+          await this.repos.conversation.updateMessage(
+            conversation.id,
+            lastUserNode.id,
+            transcribedLastUserMessage,
+          );
+        }
       }
 
       const [messages, title] = await Promise.all([
@@ -172,34 +189,45 @@ export default class AssistantsProcessConversation extends Usecase {
           : conversation.title,
       ]);
 
-      updatedConversation = {
-        ...conversation,
-        title: title,
-        status: ConversationStatus.Idle,
-        processingStartedAt: null,
-        messages: messages,
-      };
+      let previousNodeId = conversation.activeNodeId;
+      for (const message of messages.slice(transcribedMessages.length)) {
+        previousNodeId = await this.repos.conversation.appendMessage(
+          conversation.id,
+          previousNodeId,
+          message,
+        );
+      }
+      if (title !== null && title !== conversation.title) {
+        await this.repos.conversation.setTitle(conversation.id, title);
+      }
+      await this.repos.conversation.markProcessingCompleted(conversation.id);
     } catch (error) {
       await this.repos.rollbackToSavepoint(beforeGenerateAndProcessSavepoint);
-      updatedConversation = {
-        ...conversation,
-        status: ConversationStatus.Error,
-        processingStartedAt: null,
-        error: makeResultError("UnexpectedError", {
+      await this.repos.conversation.markProcessingFailed(
+        conversation.id,
+        conversation.activeNodeId,
+        makeResultError("UnexpectedError", {
           cause: extractErrorDetails(error),
         }),
-      };
+      );
     } finally {
       this.liveConversationStore.delete(id);
     }
 
-    await this.repos.conversation.upsert(updatedConversation);
+    const updatedConversation = await this.repos.conversation.find(id);
+    if (!updatedConversation) {
+      return makeUnsuccessfulResult(
+        makeResultError("ConversationNotFound", { conversationId: id }),
+      );
+    }
 
     // Index Factotum conversations for search.
     if (updatedConversation.assistant === AssistantName.Factotum) {
       const textChunks = ConversationTextUtils.extractTextChunks(
         updatedConversation.title,
-        updatedConversation.messages,
+        updatedConversation.nodes.flatMap((node) =>
+          node.type === "Message" ? [node.message] : [],
+        ),
       );
       await this.repos.conversationTextSearchIndex.upsert(
         updatedConversation.id,
@@ -265,10 +293,11 @@ export default class AssistantsProcessConversation extends Usecase {
 
   private async transcribeLastUserMessage(
     inferenceService: InferenceService,
-    conversation: ConversationEntity,
+    conversationId: ConversationId,
+    messages: Message[],
     inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<Message[], CannotTranscribeAudioMessage> {
-    const otherMessages = [...conversation.messages];
+    const otherMessages = [...messages];
     const lastMessage = otherMessages.pop();
 
     // Skip transcription if:
@@ -285,13 +314,13 @@ export default class AssistantsProcessConversation extends Usecase {
         (part) => part.type === MessageContentPartType.Audio,
       )
     ) {
-      return makeSuccessfulResult(conversation.messages);
+      return makeSuccessfulResult(messages);
     }
 
     if (!inferenceOptionsHas(inferenceOptions, "transcription")) {
       return makeUnsuccessfulResult(
         makeResultError("CannotTranscribeAudioMessage", {
-          conversationId: conversation.id,
+          conversationId,
         }),
       );
     }
@@ -311,5 +340,40 @@ export default class AssistantsProcessConversation extends Usecase {
         )) as NonEmptyArray<MessageContentPart>,
       },
     ]);
+  }
+
+  private makeLiveConversation(
+    conversation: {
+      id: ConversationId;
+      assistant: AssistantName;
+      title: string | null;
+      createdAt: Date;
+    },
+    messages: Message[],
+  ): Pick<
+    Conversation,
+    "id" | "assistant" | "title" | "nodes" | "activeNodeId" | "createdAt"
+  > {
+    let previousNodeId: ConversationNodeId | null = null;
+    const nodes = messages.map((message, index) => {
+      const id = `${conversation.id}:${index + 1}` as ConversationNodeId;
+      const node = {
+        type: "Message" as const,
+        id,
+        previousNodeId,
+        message,
+        createdAt: "createdAt" in message ? message.createdAt : new Date(),
+      };
+      previousNodeId = id;
+      return node;
+    });
+    return {
+      id: conversation.id,
+      assistant: conversation.assistant,
+      title: conversation.title,
+      nodes,
+      activeNodeId: previousNodeId,
+      createdAt: conversation.createdAt,
+    };
   }
 }

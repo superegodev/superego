@@ -8,12 +8,16 @@ export default function makeConversation(
 ): Conversation {
   const { contextFingerprint, ...rest } = conversation;
   const hasOutdatedContext = contextFingerprint !== currentContextFingerprint;
+  const activeBranchMessages = ConversationUtils.getActiveBranchMessages(
+    rest.nodes,
+    rest.activeNodeId,
+  );
   return {
     ...rest,
     hasOutdatedContext: hasOutdatedContext,
     canRetryLastResponse:
       rest.status === ConversationStatus.Idle &&
       !hasOutdatedContext &&
-      !ConversationUtils.lastResponseHadSideEffects(rest.messages),
+      !ConversationUtils.lastResponseHadSideEffects(activeBranchMessages),
   };
 }

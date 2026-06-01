@@ -25,22 +25,21 @@ export default function ConversationMessages({
 }: Props) {
   const { isRecovering, setIsRecovering } =
     useRecoveringConversation(conversation);
+  const messages = ConversationUtils.getActiveBranchMessages(conversation);
 
-  const lastUserMessageIndex = conversation.messages.findLastIndex(
+  const lastUserMessageIndex = messages.findLastIndex(
     (message) => message.role === MessageRole.User,
   );
 
   const { tailMinHeight, lastUserMessageRef, tailRef } = useTailMinHeight([
-    conversation.messages.length,
+    messages.length,
     conversation.status,
   ]);
 
-  const headMessages = conversation.messages.slice(0, lastUserMessageIndex);
+  const headMessages = messages.slice(0, lastUserMessageIndex);
   const lastUserMessage =
-    lastUserMessageIndex >= 0
-      ? conversation.messages[lastUserMessageIndex]
-      : null;
-  const tailMessages = conversation.messages.slice(lastUserMessageIndex + 1);
+    lastUserMessageIndex >= 0 ? messages[lastUserMessageIndex] : null;
+  const tailMessages = messages.slice(lastUserMessageIndex + 1);
 
   const tailContent = (
     <>

@@ -6,6 +6,7 @@ import type {
   CollectionId,
   CollectionVersionId,
   ConversationId,
+  ConversationNodeId,
   DocumentId,
   DocumentVersionId,
   FileId,
@@ -45,6 +46,15 @@ export function collectionVersionId(): v.GenericSchema<
 }
 export function conversationId(): v.GenericSchema<unknown, ConversationId> {
   return v.custom<ConversationId>(Id.is.conversation);
+}
+export function conversationNodeId(): v.GenericSchema<
+  unknown,
+  ConversationNodeId
+> {
+  return v.pipe(
+    v.string(),
+    v.regex(/^Conversation_[1-9A-HJ-NP-Za-km-z]{21}:\d+$/),
+  ) as unknown as v.GenericSchema<unknown, ConversationNodeId>;
 }
 export function documentId(): v.GenericSchema<unknown, DocumentId> {
   return v.custom<DocumentId>(Id.is.document);

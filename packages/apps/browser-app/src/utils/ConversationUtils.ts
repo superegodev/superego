@@ -1,5 +1,8 @@
 import {
   type Conversation,
+  type ConversationNode,
+  type ConversationNodeId,
+  type Message,
   type ToolCall,
   ToolName,
   type ToolResult,
@@ -29,19 +32,19 @@ export default {
   },
 
   findToolResult(
-    { messages }: Conversation,
+    conversation: Conversation,
     { id }: ToolCall,
   ): ToolResult | null {
     return (
-      messages
+      this.getActiveBranchMessages(conversation)
         .filter((message) => "toolResults" in message)
         .flatMap(({ toolResults }) => toolResults)
         .find(({ toolCallId }) => toolCallId === id) ?? null
     );
   },
 
-  findToolCall({ messages }: Conversation, toolResult: ToolResult): ToolCall {
-    const toolCall = messages
+  findToolCall(conversation: Conversation, toolResult: ToolResult): ToolCall {
+    const toolCall = this.getActiveBranchMessages(conversation)
       .filter((message) => "toolCalls" in message)
       .flatMap(({ toolCalls }) => toolCalls)
       .find(
@@ -187,5 +190,32 @@ export default {
       );
     }
     return false;
+  },
+
+  getActiveBranchNodes({
+    nodes,
+    activeNodeId,
+  }: Conversation): ConversationNode[] {
+    if (activeNodeId === null) {
+      return [];
+    }
+    const nodesById = new Map(nodes.map((node) => [node.id, node]));
+    const branch: ConversationNode[] = [];
+    let currentNodeId: ConversationNodeId | null = activeNodeId;
+    while (currentNodeId !== null) {
+      const node = nodesById.get(currentNodeId);
+      if (!node) {
+        break;
+      }
+      branch.push(node);
+      currentNodeId = node.previousNodeId;
+    }
+    return branch.reverse();
+  },
+
+  getActiveBranchMessages(conversation: Conversation): Message[] {
+    return this.getActiveBranchNodes(conversation).flatMap((node) =>
+      node.type === "Message" ? [node.message] : [],
+    );
   },
 };

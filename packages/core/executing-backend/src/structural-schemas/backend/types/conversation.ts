@@ -1,6 +1,7 @@
 import {
   AssistantName,
   type Conversation,
+  type ConversationNode,
   ConversationStatus,
   type DeveloperPrompts,
   type LiteConversation,
@@ -15,7 +16,7 @@ import {
 } from "@superego/backend";
 import * as v from "valibot";
 import unknownResultError from "../../global/unknownResultError.js";
-import { conversationId, messageId } from "../ids.js";
+import { conversationId, conversationNodeId, messageId } from "../ids.js";
 import { audioContent } from "./audioContent.js";
 import { inferenceOptions } from "./inference.js";
 
@@ -177,6 +178,31 @@ export function message(): v.GenericSchema<unknown, Message> {
   ]) as v.GenericSchema<unknown, Message>;
 }
 
+const messageNode = () =>
+  v.strictObject({
+    type: v.literal("Message"),
+    id: conversationNodeId(),
+    previousNodeId: v.nullable(conversationNodeId()),
+    message: message(),
+    createdAt: v.date(),
+  }) as v.GenericSchema<unknown, ConversationNode.MessageNode>;
+
+const errorNode = () =>
+  v.strictObject({
+    type: v.literal("Error"),
+    id: conversationNodeId(),
+    previousNodeId: v.nullable(conversationNodeId()),
+    error: unknownResultError(),
+    createdAt: v.date(),
+  }) as v.GenericSchema<unknown, ConversationNode.ErrorNode>;
+
+export function conversationNode(): v.GenericSchema<unknown, ConversationNode> {
+  return v.union([messageNode(), errorNode()]) as v.GenericSchema<
+    unknown,
+    ConversationNode
+  >;
+}
+
 export function conversation(): v.GenericSchema<unknown, Conversation> {
   return v.union([
     v.strictObject({
@@ -185,7 +211,8 @@ export function conversation(): v.GenericSchema<unknown, Conversation> {
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
-      messages: v.array(message()),
+      nodes: v.array(conversationNode()),
+      activeNodeId: v.nullable(conversationNodeId()),
       createdAt: v.date(),
       status: v.literal(ConversationStatus.Idle),
       processingStartedAt: v.null(),
@@ -197,7 +224,8 @@ export function conversation(): v.GenericSchema<unknown, Conversation> {
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
-      messages: v.array(message()),
+      nodes: v.array(conversationNode()),
+      activeNodeId: v.nullable(conversationNodeId()),
       createdAt: v.date(),
       status: v.literal(ConversationStatus.Processing),
       processingStartedAt: v.date(),
@@ -209,7 +237,8 @@ export function conversation(): v.GenericSchema<unknown, Conversation> {
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
-      messages: v.array(message()),
+      nodes: v.array(conversationNode()),
+      activeNodeId: v.nullable(conversationNodeId()),
       createdAt: v.date(),
       status: v.literal(ConversationStatus.Error),
       processingStartedAt: v.null(),
@@ -226,6 +255,7 @@ export function liteConversation(): v.GenericSchema<unknown, LiteConversation> {
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
+      activeNodeId: v.nullable(conversationNodeId()),
       createdAt: v.date(),
       status: v.literal(ConversationStatus.Idle),
       processingStartedAt: v.null(),
@@ -237,6 +267,7 @@ export function liteConversation(): v.GenericSchema<unknown, LiteConversation> {
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
+      activeNodeId: v.nullable(conversationNodeId()),
       createdAt: v.date(),
       status: v.literal(ConversationStatus.Processing),
       processingStartedAt: v.date(),
@@ -248,6 +279,7 @@ export function liteConversation(): v.GenericSchema<unknown, LiteConversation> {
       title: v.nullable(v.string()),
       hasOutdatedContext: v.boolean(),
       canRetryLastResponse: v.boolean(),
+      activeNodeId: v.nullable(conversationNodeId()),
       createdAt: v.date(),
       status: v.literal(ConversationStatus.Error),
       processingStartedAt: v.null(),

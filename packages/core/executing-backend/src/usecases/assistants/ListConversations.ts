@@ -37,7 +37,7 @@ export default class AssistantsListConversations extends BackendUsecase<
         .map((conversation) =>
           makeConversation(conversation, contextFingerprint),
         )
-        .map(({ messages, ...conversation }) => conversation),
+        .map(({ nodes, ...conversation }) => conversation),
     );
   }
 }

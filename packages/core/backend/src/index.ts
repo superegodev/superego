@@ -80,6 +80,7 @@ export type { default as CollectionCategoryId } from "./ids/CollectionCategoryId
 export type { default as CollectionId } from "./ids/CollectionId.js";
 export type { default as CollectionVersionId } from "./ids/CollectionVersionId.js";
 export type { default as ConversationId } from "./ids/ConversationId.js";
+export type { default as ConversationNodeId } from "./ids/ConversationNodeId.js";
 export type { default as DocumentId } from "./ids/DocumentId.js";
 export type { default as DocumentVersionId } from "./ids/DocumentVersionId.js";
 export type { default as FileId } from "./ids/FileId.js";
@@ -106,7 +107,10 @@ export type { default as CollectionSettings } from "./types/CollectionSettings.j
 export type { default as CollectionVersion } from "./types/CollectionVersion.js";
 export type { default as CollectionVersionSettings } from "./types/CollectionVersionSettings.js";
 export type { default as ContentSummary } from "./types/ContentSummary.js";
-export type { default as Conversation } from "./types/Conversation.js";
+export type {
+  ConversationNode,
+  default as Conversation,
+} from "./types/Conversation.js";
 export type { default as DefaultDocumentViewUiOptions } from "./types/DefaultDocumentViewUiOptions.js";
 export type { default as DeveloperPrompts } from "./types/DeveloperPrompts.js";
 export type { default as Document } from "./types/Document.js";

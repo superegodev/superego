@@ -1,11 +1,13 @@
 import { type Conversation, MessageRole, ToolName } from "@superego/backend";
 import type { IntlShape } from "react-intl";
+import ConversationUtils from "../../../../utils/ConversationUtils.js";
 
 export default function getStatusText(
   intl: IntlShape,
   conversation: Conversation,
 ): string {
-  const lastMessage = conversation.messages.at(-1);
+  const messages = ConversationUtils.getActiveBranchMessages(conversation);
+  const lastMessage = messages.at(-1);
 
   let tools: string[] = [];
   if (
@@ -51,8 +53,9 @@ function countToolCallsSinceLastUserMessage(
   conversation: Conversation,
 ): Map<string, number> {
   const counts = new Map<string, number>();
-  for (let i = conversation.messages.length - 1; i >= 0; i--) {
-    const message = conversation.messages[i]!;
+  const messages = ConversationUtils.getActiveBranchMessages(conversation);
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i]!;
     if (message.role === MessageRole.User) {
       break;
     }

@@ -17,7 +17,6 @@ import {
   validateInferenceOptions,
 } from "@superego/shared-utils";
 import * as v from "valibot";
-import type ConversationEntity from "../../entities/ConversationEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
 import makeResultError from "../../makers/makeResultError.js";
@@ -81,9 +80,12 @@ export default class AssistantsRetryLastResponse extends BackendUsecase<
     }
     const contextFingerprint =
       await ConversationUtils.getContextFingerprint(collections);
-    const hadSideEffects = ConversationUtils.lastResponseHadSideEffects(
-      conversation.messages,
+    const activeBranchMessages = ConversationUtils.getActiveBranchMessages(
+      conversation.nodes,
+      conversation.activeNodeId,
     );
+    const hadSideEffects =
+      ConversationUtils.lastResponseHadSideEffects(activeBranchMessages);
     const canBeRetried =
       conversation.status === ConversationStatus.Idle &&
       conversation.contextFingerprint === contextFingerprint &&
@@ -103,20 +105,25 @@ export default class AssistantsRetryLastResponse extends BackendUsecase<
       );
     }
 
-    const updatedConversation: ConversationEntity = {
-      ...conversation,
-      messages: ConversationUtils.sliceOffLastResponse(conversation.messages),
-      status: ConversationStatus.Processing,
-      processingStartedAt: new Date(),
-      error: null,
-    };
-    await this.repos.conversation.upsert(updatedConversation);
+    const lastUserNode = ConversationUtils.findLastUserNode(
+      conversation.nodes,
+      conversation.activeNodeId,
+    );
+    await this.repos.conversation.markProcessingStarted(
+      id,
+      lastUserNode?.id ?? null,
+      new Date(),
+    );
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
       input: { id, inferenceOptions },
     });
 
+    const updatedConversation = await this.repos.conversation.find(id);
+    if (!updatedConversation) {
+      throw new UnexpectedAssistantError("Updated conversation not found.");
+    }
     return makeSuccessfulResult(
       makeConversation(updatedConversation, contextFingerprint),
     );

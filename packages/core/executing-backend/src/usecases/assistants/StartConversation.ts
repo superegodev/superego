@@ -4,7 +4,6 @@ import {
   type Backend,
   BackgroundJobName,
   type Conversation,
-  ConversationStatus,
   type FilesNotFound,
   type InferenceOptions,
   type InferenceOptionsNotValid,
@@ -22,7 +21,6 @@ import {
   validateInferenceOptions,
 } from "@superego/shared-utils";
 import * as v from "valibot";
-import type ConversationEntity from "../../entities/ConversationEntity.js";
 import type FileEntity from "../../entities/FileEntity.js";
 import UnexpectedAssistantError from "../../errors/UnexpectedAssistantError.js";
 import makeConversation from "../../makers/makeConversation.js";
@@ -104,19 +102,9 @@ export default class AssistantsStartConversation extends BackendUsecase<
       content: convertedMessageContent as NonEmptyArray<MessageContentPart>,
       createdAt: now,
     };
-    const conversation: ConversationEntity = {
-      id: Id.generate.conversation(),
-      assistant: assistant,
-      title: null,
-      contextFingerprint: contextFingerprint,
-      messages: [userMessage],
-      status: ConversationStatus.Processing,
-      processingStartedAt: now,
-      error: null,
-      createdAt: now,
-    };
+    const conversationId = Id.generate.conversation();
     const conversationReference: FileEntity.ConversationReference = {
-      conversationId: conversation.id,
+      conversationId,
     };
     const filesWithContent: (FileEntity & {
       content: Uint8Array<ArrayBuffer>;
@@ -127,7 +115,22 @@ export default class AssistantsStartConversation extends BackendUsecase<
       content: protoFileWithId.content,
     }));
 
-    await this.repos.conversation.upsert(conversation);
+    await this.repos.conversation.create({
+      id: conversationId,
+      assistant,
+      contextFingerprint,
+      createdAt: now,
+    });
+    const userMessageNodeId = await this.repos.conversation.appendMessage(
+      conversationId,
+      null,
+      userMessage,
+    );
+    await this.repos.conversation.markProcessingStarted(
+      conversationId,
+      userMessageNodeId,
+      now,
+    );
     await this.repos.file.insertAll(filesWithContent);
     await this.repos.file.addReferenceToAll(
       referencedFileIds,
@@ -136,9 +139,13 @@ export default class AssistantsStartConversation extends BackendUsecase<
 
     await this.enqueueBackgroundJob({
       name: BackgroundJobName.ProcessConversation,
-      input: { id: conversation.id, inferenceOptions },
+      input: { id: conversationId, inferenceOptions },
     });
 
+    const conversation = await this.repos.conversation.find(conversationId);
+    if (!conversation) {
+      throw new UnexpectedAssistantError("Created conversation not found.");
+    }
     return makeSuccessfulResult(
       makeConversation(conversation, contextFingerprint),
     );

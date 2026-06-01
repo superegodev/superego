@@ -11,6 +11,7 @@ import m0008 from "./0008.sql?raw";
 import m0009 from "./0009.sql?raw";
 import m0010 from "./0010.sql?raw";
 import m0011 from "./0011.sql?raw";
+import m0012 from "./0012.js";
 
 const migrationFiles = {
   "0000.sql": m0000,
@@ -25,6 +26,7 @@ const migrationFiles = {
   "0009.sql": m0009,
   "0010.sql": m0010,
   "0011.sql": m0011,
+  "0012.ts": m0012,
 };
 const table = "migrations";
 
@@ -60,7 +62,12 @@ export default function migrate(db: DatabaseSync) {
     if (appliedMigrations.some(({ file_name }) => file_name === fileName)) {
       continue;
     }
-    db.exec(migrationFiles[fileName]);
+    const migration = migrationFiles[fileName];
+    if (typeof migration === "string") {
+      db.exec(migration);
+    } else {
+      migration(db);
+    }
     insertMigration.run(fileName, new Date().toISOString());
   }
   db.exec("COMMIT");

@@ -1,8 +1,9 @@
 import type {
   AssistantName,
   ConversationId,
+  ConversationNode,
+  ConversationNodeId,
   ConversationStatus,
-  Message,
 } from "@superego/backend";
 
 type ConversationEntity = {
@@ -10,7 +11,8 @@ type ConversationEntity = {
   assistant: AssistantName;
   title: string | null;
   contextFingerprint: string;
-  messages: Message[];
+  nodes: ConversationNode[];
+  activeNodeId: ConversationNodeId | null;
   status: ConversationStatus;
   processingStartedAt: Date | null;
   error: { name: string; details: any } | null;

@@ -2,21 +2,21 @@ import {
   AssistantName,
   type AudioContent,
   ConversationStatus,
+  type Message,
   MessageContentPartType,
   MessageRole,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
-import type ConversationEntity from "../../../entities/ConversationEntity.js";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Conversations", (deps) => {
-  it("inserting (via upsert)", async () => {
+  it("creating and appending a message", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
-
-    // Exercise
+    const conversationId = Id.generate.conversation();
+    const createdAt = new Date();
     const audio: AudioContent = {
       // Smallest possible WAV.
       content: new Uint8Array([
@@ -27,31 +27,31 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       ]),
       contentType: "audio/wav",
     };
-    const conversation: ConversationEntity = {
-      id: Id.generate.conversation(),
-      assistant: AssistantName.Factotum,
-      title: "title",
-      contextFingerprint: "contextFingerprint",
-      messages: [
-        {
-          id: Id.generate.message(),
-          role: MessageRole.User,
-          content: [
-            { type: MessageContentPartType.Text, text: "text", audio },
-            { type: MessageContentPartType.Audio, audio },
-          ],
-          createdAt: new Date(),
-        },
+    const message = {
+      id: Id.generate.message(),
+      role: MessageRole.User,
+      content: [
+        { type: MessageContentPartType.Text, text: "text", audio },
+        { type: MessageContentPartType.Audio, audio },
       ],
-      status: ConversationStatus.Idle,
-      processingStartedAt: null,
-      error: null,
-      createdAt: new Date(),
-    };
-    await dataRepositoriesManager.runInSerializableTransaction(
+      createdAt,
+    } satisfies Message.User;
+
+    // Exercise
+    const nodeId = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
-        await repos.conversation.upsert(conversation);
-        return { action: "commit", returnValue: null };
+        await repos.conversation.create({
+          id: conversationId,
+          assistant: AssistantName.Factotum,
+          contextFingerprint: "contextFingerprint",
+          createdAt,
+        });
+        const appendedNodeId = await repos.conversation.appendMessage(
+          conversationId,
+          null,
+          message,
+        );
+        return { action: "commit", returnValue: appendedNodeId };
       },
     );
 
@@ -59,41 +59,72 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     const found = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => ({
         action: "commit",
-        returnValue: await repos.conversation.find(conversation.id),
+        returnValue: await repos.conversation.find(conversationId),
       }),
     );
-    expect(found).toEqual(conversation);
-  });
-
-  it("updating (via upsert)", async () => {
-    // Setup SUT
-    const { dataRepositoriesManager } = deps();
-    const conversation: ConversationEntity = {
-      id: Id.generate.conversation(),
+    expect(found).toEqual({
+      id: conversationId,
       assistant: AssistantName.Factotum,
-      title: "original title",
+      title: null,
       contextFingerprint: "contextFingerprint",
-      messages: [],
+      nodes: [
+        {
+          type: "Message",
+          id: nodeId,
+          previousNodeId: null,
+          message,
+          createdAt,
+        },
+      ],
+      activeNodeId: nodeId,
       status: ConversationStatus.Idle,
       processingStartedAt: null,
       error: null,
-      createdAt: new Date(),
-    };
-    await dataRepositoriesManager.runInSerializableTransaction(
+      createdAt,
+    });
+  });
+
+  it("updating a message and setting a title", async () => {
+    // Setup SUT
+    const { dataRepositoriesManager } = deps();
+    const conversationId = Id.generate.conversation();
+    const createdAt = new Date();
+    const message = {
+      id: Id.generate.message(),
+      role: MessageRole.User,
+      content: [{ type: MessageContentPartType.Text, text: "original" }],
+      createdAt,
+    } satisfies Message.User;
+    const updatedMessage = {
+      ...message,
+      content: [{ type: MessageContentPartType.Text, text: "updated" }],
+    } satisfies Message.User;
+    const nodeId = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
-        await repos.conversation.upsert(conversation);
-        return { action: "commit", returnValue: null };
+        await repos.conversation.create({
+          id: conversationId,
+          assistant: AssistantName.Factotum,
+          contextFingerprint: "contextFingerprint",
+          createdAt,
+        });
+        const appendedNodeId = await repos.conversation.appendMessage(
+          conversationId,
+          null,
+          message,
+        );
+        return { action: "commit", returnValue: appendedNodeId };
       },
     );
 
     // Exercise
-    const updatedConversation: ConversationEntity = {
-      ...conversation,
-      title: "updated title",
-    };
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
-        await repos.conversation.upsert(updatedConversation);
+        await repos.conversation.updateMessage(
+          conversationId,
+          nodeId,
+          updatedMessage,
+        );
+        await repos.conversation.setTitle(conversationId, "updated title");
         return { action: "commit", returnValue: null };
       },
     );
@@ -102,29 +133,200 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     const found = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => ({
         action: "commit",
-        returnValue: await repos.conversation.find(conversation.id),
+        returnValue: await repos.conversation.find(conversationId),
       }),
     );
-    expect(found).toEqual(updatedConversation);
+    expect(found?.title).toEqual("updated title");
+    expect(found?.nodes).toMatchObject([
+      { id: nodeId, message: updatedMessage },
+    ]);
   });
 
-  it("deleting", async () => {
+  it("branching from an earlier node", async () => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
-    const conversation: ConversationEntity = {
-      id: Id.generate.conversation(),
-      assistant: AssistantName.Factotum,
-      title: "title",
-      contextFingerprint: "contextFingerprint",
-      messages: [],
-      status: ConversationStatus.Idle,
+    const conversationId = Id.generate.conversation();
+    const createdAt = new Date();
+    const messages = ["U1", "A1", "U2", "A2", "A2 retry"].map(
+      (text, index) =>
+        ({
+          id: Id.generate.message(),
+          role:
+            index === 1 || index >= 3
+              ? MessageRole.Assistant
+              : MessageRole.User,
+          content: [{ type: MessageContentPartType.Text, text }],
+          reasoning: {},
+          inferenceOptions: {
+            completion: {
+              providerModelRef: { providerName: "p", modelName: "m" },
+              reasoningEffort: "Medium",
+            },
+            transcription: null,
+            fileInspection: null,
+          },
+          generationStats: {
+            timeTaken: 0,
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
+          },
+          createdAt: new Date(index),
+        }) as any,
+    );
+
+    // Exercise
+    const nodeIds = await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => {
+        await repos.conversation.create({
+          id: conversationId,
+          assistant: AssistantName.Factotum,
+          contextFingerprint: "contextFingerprint",
+          createdAt,
+        });
+        const node1 = await repos.conversation.appendMessage(
+          conversationId,
+          null,
+          messages[0]!,
+        );
+        const node2 = await repos.conversation.appendMessage(
+          conversationId,
+          node1,
+          messages[1]!,
+        );
+        const node3 = await repos.conversation.appendMessage(
+          conversationId,
+          node2,
+          messages[2]!,
+        );
+        const node4 = await repos.conversation.appendMessage(
+          conversationId,
+          node3,
+          messages[3]!,
+        );
+        const node5 = await repos.conversation.appendMessage(
+          conversationId,
+          node3,
+          messages[4]!,
+        );
+        return {
+          action: "commit",
+          returnValue: [node1, node2, node3, node4, node5],
+        };
+      },
+    );
+
+    // Verify
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => ({
+        action: "commit",
+        returnValue: await repos.conversation.find(conversationId),
+      }),
+    );
+    expect(found?.nodes).toHaveLength(5);
+    expect(found?.nodes.find((node) => node.id === nodeIds[3])).toMatchObject({
+      previousNodeId: nodeIds[2],
+    });
+    expect(found?.nodes.find((node) => node.id === nodeIds[4])).toMatchObject({
+      previousNodeId: nodeIds[2],
+    });
+    expect(found?.activeNodeId).toEqual(nodeIds[4]);
+  });
+
+  it("processing transitions and branch-local errors", async () => {
+    // Setup SUT
+    const { dataRepositoriesManager } = deps();
+    const conversationId = Id.generate.conversation();
+    const createdAt = new Date();
+    const message = {
+      id: Id.generate.message(),
+      role: MessageRole.User,
+      content: [{ type: MessageContentPartType.Text, text: "text" }],
+      createdAt,
+    } satisfies Message.User;
+    const error = { name: "UnexpectedError", details: { cause: "test" } };
+
+    // Exercise
+    const { nodeId, errorNodeId, processingStartedAt } =
+      await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.conversation.create({
+            id: conversationId,
+            assistant: AssistantName.Factotum,
+            contextFingerprint: "contextFingerprint",
+            createdAt,
+          });
+          const appendedNodeId = await repos.conversation.appendMessage(
+            conversationId,
+            null,
+            message,
+          );
+          const startedAt = new Date();
+          await repos.conversation.markProcessingStarted(
+            conversationId,
+            appendedNodeId,
+            startedAt,
+          );
+          await repos.conversation.markProcessingCompleted(conversationId);
+          await repos.conversation.markProcessingStarted(
+            conversationId,
+            appendedNodeId,
+            startedAt,
+          );
+          const appendedErrorNodeId =
+            await repos.conversation.markProcessingFailed(
+              conversationId,
+              appendedNodeId,
+              error,
+            );
+          return {
+            action: "commit",
+            returnValue: {
+              nodeId: appendedNodeId,
+              errorNodeId: appendedErrorNodeId,
+              processingStartedAt: startedAt,
+            },
+          };
+        },
+      );
+
+    // Verify
+    const found = await dataRepositoriesManager.runInSerializableTransaction(
+      async (repos) => ({
+        action: "commit",
+        returnValue: await repos.conversation.find(conversationId),
+      }),
+    );
+    expect(processingStartedAt).toBeInstanceOf(Date);
+    expect(found).toMatchObject({
+      status: ConversationStatus.Error,
+      activeNodeId: errorNodeId,
+      error,
       processingStartedAt: null,
-      error: null,
-      createdAt: new Date(),
-    };
+    });
+    expect(found?.nodes).toEqual([
+      expect.objectContaining({ id: nodeId, type: "Message" }),
+      expect.objectContaining({
+        id: errorNodeId,
+        type: "Error",
+        previousNodeId: nodeId,
+        error,
+      }),
+    ]);
+  });
+
+  it("deleting hides the conversation", async () => {
+    // Setup SUT
+    const { dataRepositoriesManager } = deps();
+    const conversationId = Id.generate.conversation();
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
-        await repos.conversation.upsert(conversation);
+        await repos.conversation.create({
+          id: conversationId,
+          assistant: AssistantName.Factotum,
+          contextFingerprint: "contextFingerprint",
+          createdAt: new Date(),
+        });
         return { action: "commit", returnValue: null };
       },
     );
@@ -134,16 +336,16 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
-          returnValue: await repos.conversation.delete(conversation.id),
+          returnValue: await repos.conversation.delete(conversationId),
         }),
       );
 
     // Verify
-    expect(deletedId).toEqual(conversation.id);
+    expect(deletedId).toEqual(conversationId);
     const found = await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => ({
         action: "commit",
-        returnValue: await repos.conversation.find(conversation.id),
+        returnValue: await repos.conversation.find(conversationId),
       }),
     );
     expect(found).toEqual(null);
@@ -153,20 +355,15 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     it("case: exists", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
-      const conversation: ConversationEntity = {
-        id: Id.generate.conversation(),
-        assistant: AssistantName.Factotum,
-        title: "title",
-        contextFingerprint: "contextFingerprint",
-        messages: [],
-        status: ConversationStatus.Idle,
-        processingStartedAt: null,
-        error: null,
-        createdAt: new Date(),
-      };
+      const conversationId = Id.generate.conversation();
       await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => {
-          await repos.conversation.upsert(conversation);
+          await repos.conversation.create({
+            id: conversationId,
+            assistant: AssistantName.Factotum,
+            contextFingerprint: "contextFingerprint",
+            createdAt: new Date(),
+          });
           return { action: "commit", returnValue: null };
         },
       );
@@ -175,7 +372,7 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       const exists = await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
-          returnValue: await repos.conversation.exists(conversation.id),
+          returnValue: await repos.conversation.exists(conversationId),
         }),
       );
 
@@ -202,59 +399,6 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     });
   });
 
-  describe("finding one", () => {
-    it("case: exists => returns it", async () => {
-      // Setup SUT
-      const { dataRepositoriesManager } = deps();
-      const conversation: ConversationEntity = {
-        id: Id.generate.conversation(),
-        assistant: AssistantName.Factotum,
-        title: "title",
-        contextFingerprint: "contextFingerprint",
-        messages: [],
-        status: ConversationStatus.Idle,
-        processingStartedAt: null,
-        error: null,
-        createdAt: new Date(),
-      };
-      await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => {
-          await repos.conversation.upsert(conversation);
-          return { action: "commit", returnValue: null };
-        },
-      );
-
-      // Exercise
-      const found = await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => ({
-          action: "commit",
-          returnValue: await repos.conversation.find(conversation.id),
-        }),
-      );
-
-      // Verify
-      expect(found).toEqual(conversation);
-    });
-
-    it("case: doesn't exist => returns null", async () => {
-      // Setup SUT
-      const { dataRepositoriesManager } = deps();
-
-      // Exercise
-      const found = await dataRepositoriesManager.runInSerializableTransaction(
-        async (repos) => ({
-          action: "commit",
-          returnValue: await repos.conversation.find(
-            Id.generate.conversation(),
-          ),
-        }),
-      );
-
-      // Verify
-      expect(found).toEqual(null);
-    });
-  });
-
   describe("finding all", () => {
     it("case: no conversations => returns empty array", async () => {
       // Setup SUT
@@ -275,32 +419,22 @@ export default rd<GetDependencies>("Conversations", (deps) => {
     it("case: some conversations => returns them (ordered by createdAt, desc)", async () => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
-      const conversation1: ConversationEntity = {
-        id: Id.generate.conversation(),
-        assistant: AssistantName.Factotum,
-        title: "title 1",
-        contextFingerprint: "contextFingerprint",
-        messages: [],
-        status: ConversationStatus.Idle,
-        processingStartedAt: null,
-        error: null,
-        createdAt: new Date(1),
-      };
-      const conversation2: ConversationEntity = {
-        id: Id.generate.conversation(),
-        assistant: AssistantName.Factotum,
-        title: "title 2",
-        contextFingerprint: "contextFingerprint",
-        messages: [],
-        status: ConversationStatus.Idle,
-        processingStartedAt: null,
-        error: null,
-        createdAt: new Date(2),
-      };
+      const conversation1Id = Id.generate.conversation();
+      const conversation2Id = Id.generate.conversation();
       await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => {
-          await repos.conversation.upsert(conversation1);
-          await repos.conversation.upsert(conversation2);
+          await repos.conversation.create({
+            id: conversation1Id,
+            assistant: AssistantName.Factotum,
+            contextFingerprint: "contextFingerprint",
+            createdAt: new Date(1),
+          });
+          await repos.conversation.create({
+            id: conversation2Id,
+            assistant: AssistantName.Factotum,
+            contextFingerprint: "contextFingerprint",
+            createdAt: new Date(2),
+          });
           return { action: "commit", returnValue: null };
         },
       );
@@ -314,7 +448,10 @@ export default rd<GetDependencies>("Conversations", (deps) => {
       );
 
       // Verify
-      expect(found).toEqual([conversation2, conversation1]);
+      expect(found.map(({ id }) => id)).toEqual([
+        conversation2Id,
+        conversation1Id,
+      ]);
     });
   });
 });

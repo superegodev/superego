@@ -11,6 +11,7 @@ import { useRecoverConversation } from "../../../business-logic/backend/hooks.js
 import useDefaultInferenceOptions from "../../../business-logic/inference/useDefaultInferenceOptions.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
+import ConversationUtils from "../../../utils/ConversationUtils.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import CodeBlock from "../../design-system/CodeBlock/CodeBlock.js";
 import Disclosure from "../../design-system/Disclosure/Disclosure.js";
@@ -30,9 +31,9 @@ export default function ErrorMessage({ conversation }: Props) {
   const { mutate } = useRecoverConversation();
   const { cause } = conversation.error.details;
 
-  const lastAssistantMessage = conversation.messages.findLast(
-    (message) => message.role === MessageRole.Assistant,
-  );
+  const lastAssistantMessage = ConversationUtils.getActiveBranchMessages(
+    conversation,
+  ).findLast((message) => message.role === MessageRole.Assistant);
   const models = makeModelActionMenuItems(
     globalSettings.inference.providers,
     lastAssistantMessage?.inferenceOptions.completion.providerModelRef ?? null,

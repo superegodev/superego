@@ -4,10 +4,12 @@ import {
   type Collection,
   type CollectionId,
   type Conversation,
+  type ConversationNodeId,
   ConversationStatus,
   type Document,
   type DocumentId,
   type InferenceOptions,
+  type Message,
   MessageContentPartType,
 } from "@superego/backend";
 import type { Schema } from "@superego/schema";
@@ -251,8 +253,8 @@ class FactotumObject {
       this.conversation,
       "You must say something before expecting a reply",
     );
-    const lastMessage =
-      this.conversation.messages[this.conversation.messages.length - 1];
+    const messages = this.getActiveBranchMessages(this.conversation);
+    const lastMessage = messages[messages.length - 1];
     assertIsContentAssistantMessage(lastMessage);
 
     const reply = lastMessage.content[0].text;
@@ -298,6 +300,28 @@ Give a score from 0 to 1 by calling the ${Evaluator.ToolName.GiveScore} tool.
 
   getConversation() {
     return this.conversation;
+  }
+
+  private getActiveBranchMessages(conversation: Conversation): Message[] {
+    if (conversation.activeNodeId === null) {
+      return [];
+    }
+    const nodesById = new Map(
+      conversation.nodes.map((node) => [node.id, node]),
+    );
+    const messages: Message[] = [];
+    let currentNodeId: ConversationNodeId | null = conversation.activeNodeId;
+    while (currentNodeId !== null) {
+      const node = nodesById.get(currentNodeId);
+      if (!node) {
+        break;
+      }
+      if (node.type === "Message") {
+        messages.push(node.message);
+      }
+      currentNodeId = node.previousNodeId;
+    }
+    return messages.reverse();
   }
 }
 

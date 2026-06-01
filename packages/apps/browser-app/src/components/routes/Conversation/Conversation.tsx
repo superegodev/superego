@@ -152,7 +152,8 @@ const MemoizedConversation = memo(
     prev.screenSize === next.screenSize &&
     prev.conversation.id === next.conversation.id &&
     prev.conversation.status === next.conversation.status &&
-    prev.conversation.messages.length === next.conversation.messages.length &&
+    prev.conversation.nodes.length === next.conversation.nodes.length &&
+    prev.conversation.activeNodeId === next.conversation.activeNodeId &&
     prev.conversation.hasOutdatedContext ===
       next.conversation.hasOutdatedContext,
 );

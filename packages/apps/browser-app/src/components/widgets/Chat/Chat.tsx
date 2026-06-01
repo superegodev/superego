@@ -10,6 +10,7 @@ import { useContinueConversation } from "../../../business-logic/backend/hooks.j
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import classnames from "../../../utils/classnames.js";
+import ConversationUtils from "../../../utils/ConversationUtils.js";
 import last from "../../../utils/last.js";
 import ConversationMessages from "../ConversationMessages/ConversationMessages.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
@@ -32,7 +33,8 @@ export default function Chat({
 
   // When messages change, scroll to bottom and - if the last message is an
   // assistant message - focus the input.
-  const lastMessage = last(conversation.messages);
+  const messages = ConversationUtils.getActiveBranchMessages(conversation);
+  const lastMessage = last(messages);
   const lastMessageId =
     lastMessage && "id" in lastMessage ? lastMessage.id : null;
   const lastMessageCreatedAtTime =
