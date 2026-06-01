@@ -196,7 +196,7 @@ function SummaryStats({ rows }: { rows: HoldingRow[] }) {
     <Grid>
       <style>{`.summary-grid { --cols: 1; } .summary-grid p { margin: 8px 0 0 0; } @media (min-width: 768px) { .summary-grid { --cols: 2; } }`}</style>
       <Grid.Col span={{ sm: 12, md: 6 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text color="secondary" size="sm">
             Total Value
           </Text>
@@ -217,7 +217,7 @@ function SummaryStats({ rows }: { rows: HoldingRow[] }) {
         </Tile>
       </Grid.Col>
       <Grid.Col span={{ sm: 12, md: 6 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text color="secondary" size="sm">
             Total Gain/Loss
           </Text>
@@ -273,7 +273,7 @@ function TopGainers({ rows }: { rows: HoldingRow[] }) {
   const gainers = sorted.slice(0, 5);
 
   return (
-    <Tile>
+    <Tile fillHeight={true}>
       <Text
         element="h2"
         size="lg"
@@ -325,7 +325,7 @@ function TopLosers({ rows }: { rows: HoldingRow[] }) {
   const losers = sorted.slice(0, 5);
 
   return (
-    <Tile>
+    <Tile fillHeight={true}>
       <Text
         element="h2"
         size="lg"
@@ -421,7 +421,7 @@ function AllocationChart({
   };
 
   return (
-    <Tile>
+    <Tile fillHeight={true}>
       <div
         style={{
           display: "flex",
@@ -527,7 +527,7 @@ function PortfolioValueChart({ props }: { props: Props }) {
   };
 
   return (
-    <Tile>
+    <Tile fillHeight={true}>
       <Text
         element="h2"
         size="lg"
@@ -543,7 +543,7 @@ function PortfolioValueChart({ props }: { props: Props }) {
 
 function HoldingsTable({ rows }: { rows: HoldingRow[] }) {
   return (
-    <Tile>
+    <Tile fillHeight={true}>
       <Text element="h2" size="lg" weight="semibold">
         Holdings
       </Text>

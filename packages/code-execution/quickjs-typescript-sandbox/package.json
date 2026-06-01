@@ -1,6 +1,6 @@
 {
   "name": "@superego/quickjs-typescript-sandbox",
-  "version": "2026.5.5",
+  "version": "2026.5.7",
   "private": true,
   "type": "module",
   "exports": {

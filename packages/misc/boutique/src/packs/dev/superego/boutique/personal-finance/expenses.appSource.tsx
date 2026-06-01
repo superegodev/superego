@@ -175,7 +175,7 @@ export default function App(props: Props): React.ReactElement | null {
     return (
       <Grid>
         <Grid.Col span={{ sm: 12 }}>
-          <Tile>
+          <Tile fillHeight={true}>
             <Text element="p" color="secondary">
               No expense data available.
             </Text>
@@ -201,7 +201,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 6 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text
             element="h3"
             size="lg"
@@ -226,7 +226,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 6 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text
             element="h3"
             size="lg"
@@ -251,7 +251,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 12, md: 6 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text
             element="h3"
             size="lg"
@@ -265,7 +265,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 12, md: 6 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text
             element="h3"
             size="lg"
@@ -279,7 +279,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 12 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text
             element="h3"
             size="lg"

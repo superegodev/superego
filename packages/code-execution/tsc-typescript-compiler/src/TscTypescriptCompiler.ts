@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type {
   TypescriptCompilationFailed,
   TypescriptFile,
@@ -21,9 +23,11 @@ export default class TscTypescriptCompiler implements TypescriptCompiler {
     libs: TypescriptFile[],
   ): ResultPromise<string, TypescriptCompilationFailed | UnexpectedError> {
     try {
-      const fs = tsvfs.createDefaultMapFromNodeModules({
-        target: ts.ScriptTarget.ESNext,
-      });
+      const fs = tsvfs.createDefaultMapFromNodeModules(
+        { target: ts.ScriptTarget.ESNext },
+        ts,
+        this.getPackagedElectronTypescriptLibDirectory(),
+      );
       fs.set(main.path, main.source);
       for (const lib of libs) {
         fs.set(lib.path, lib.source);
@@ -72,5 +76,22 @@ export default class TscTypescriptCompiler implements TypescriptCompiler {
         details: { cause: extractErrorDetails(error) },
       });
     }
+  }
+
+  private getPackagedElectronTypescriptLibDirectory(): string | undefined {
+    const resourcesPath = (
+      process as typeof process & { resourcesPath?: string }
+    ).resourcesPath;
+    if (!resourcesPath) {
+      return undefined;
+    }
+
+    const typescriptLibDirectory = join(
+      resourcesPath,
+      "app.asar/node_modules/typescript/lib",
+    );
+    return existsSync(typescriptLibDirectory)
+      ? typescriptLibDirectory
+      : undefined;
   }
 }

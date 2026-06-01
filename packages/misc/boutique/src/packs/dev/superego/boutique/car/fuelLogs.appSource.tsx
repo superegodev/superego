@@ -193,7 +193,7 @@ export default function App(props: Props): React.ReactElement | null {
     return (
       <Grid>
         <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
-          <Tile>
+          <Tile fillHeight={true}>
             <div
               style={{
                 display: "flex",
@@ -297,7 +297,7 @@ export default function App(props: Props): React.ReactElement | null {
     <Grid>
       {/* Period Controls */}
       <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <div
             style={{
               display: "flex",
@@ -337,7 +337,7 @@ export default function App(props: Props): React.ReactElement | null {
 
       {/* Statistics Cards */}
       <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text element="h3" size="lg" weight="semibold">
             Total Fuel
           </Text>
@@ -351,7 +351,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text element="h3" size="lg" weight="semibold">
             Total Cost
           </Text>
@@ -365,7 +365,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text element="h3" size="lg" weight="semibold">
             Distance
           </Text>
@@ -379,7 +379,7 @@ export default function App(props: Props): React.ReactElement | null {
       </Grid.Col>
 
       <Grid.Col span={{ sm: 6, md: 6, lg: 3 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text element="h3" size="lg" weight="semibold">
             Avg Efficiency
           </Text>
@@ -394,7 +394,7 @@ export default function App(props: Props): React.ReactElement | null {
 
       {/* Cost per Liter Over Time */}
       <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
-        <Tile style={{ height: "400px" }}>
+        <Tile fillHeight style={{ height: "400px" }}>
           <Text element="h3" size="lg" weight="semibold">
             Cost per Liter Over Time
           </Text>
@@ -432,7 +432,7 @@ export default function App(props: Props): React.ReactElement | null {
       {/* Fuel Efficiency Trend */}
       {efficiencyData.length > 0 && (
         <Grid.Col span={{ sm: 12, md: 12, lg: 6 }}>
-          <Tile>
+          <Tile fillHeight={true}>
             <Text element="h3" size="lg" weight="semibold">
               Fuel Efficiency Trend
             </Text>
@@ -476,7 +476,7 @@ export default function App(props: Props): React.ReactElement | null {
       <Grid.Col
         span={{ sm: 12, md: 12, lg: efficiencyData.length > 0 ? 6 : 12 }}
       >
-        <Tile>
+        <Tile fillHeight={true}>
           <Text element="h3" size="lg" weight="semibold">
             Fuel Volume Over Time
           </Text>
@@ -512,7 +512,7 @@ export default function App(props: Props): React.ReactElement | null {
 
       {/* Recent Fuel Logs Table */}
       <Grid.Col span={{ sm: 12, md: 12, lg: 12 }}>
-        <Tile>
+        <Tile fillHeight={true}>
           <Text element="h3" size="lg" weight="semibold">
             Fuel Logs in Selected Period
           </Text>
