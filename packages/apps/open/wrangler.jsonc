@@ -1,7 +1,7 @@
 {
   "$schema": "../../../node_modules/wrangler/config-schema.json",
   "name": "opensuperegodev",
-  "compatibility_date": "2026-06-04",
+  "compatibility_date": "2026-06-03",
   "main": "./src/worker.ts",
   "routes": [{ "pattern": "open.superego.dev", "custom_domain": true }],
   "observability": {
