@@ -14,8 +14,8 @@ if (!gotSingleInstanceLock) {
 
   app
     .on("ready", () => {
-      onReady();
-      deepLinks.navigateToPendingDeepLink();
+      const window = onReady();
+      deepLinks.navigateToPendingDeepLink(window);
     })
     .on("window-all-closed", () => {
       if (process.platform !== "darwin") {

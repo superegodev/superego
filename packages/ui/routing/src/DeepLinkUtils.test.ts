@@ -40,14 +40,12 @@ describe("toDeepLink", () => {
 
 describe("fromDeepLink", () => {
   it("parses a document deep link", () => {
-    // Setup
+    // Exercise
     const route = {
       name: RouteName.Document,
       collectionId: Id.generate.collection(),
       documentId: Id.generate.document(),
     } as const;
-
-    // Exercise
     const parsedRoute = fromDeepLink(toDeepLink(route));
 
     // Verify
@@ -55,15 +53,13 @@ describe("fromDeepLink", () => {
   });
 
   it("parses an app view deep link", () => {
-    // Setup
+    // Exercise
     const route = {
       name: RouteName.Collection,
       collectionId: Id.generate.collection(),
       view: CollectionRouteView.App,
       appId: Id.generate.app(),
     } as const;
-
-    // Exercise
     const parsedRoute = fromDeepLink(toDeepLink(route));
 
     // Verify

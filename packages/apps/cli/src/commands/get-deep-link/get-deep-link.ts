@@ -1,3 +1,4 @@
+import { CollectionRouteView, RouteName, toDeepLink } from "@superego/routing";
 import { valibotSchemas } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
@@ -8,7 +9,6 @@ import {
   successfulResult,
   unsuccessfulResult,
 } from "../../utils/results.js";
-import getDeepLink, { type GetDeepLinkArgs } from "./getDeepLink.js";
 
 const argsSchema = v.strictObject({
   resource: v.variant("type", [
@@ -30,6 +30,7 @@ const argsSchema = v.strictObject({
     }),
   ]),
 });
+type GetDeepLinkArgs = v.InferOutput<typeof argsSchema>;
 
 export default useMarkdownHelp(
   new Command("get-deep-link")
@@ -50,9 +51,41 @@ export default useMarkdownHelp(
         }
 
         return successfulResult({
-          deepLink: getDeepLink(validationResult.output as GetDeepLinkArgs),
+          deepLink: getDeepLink(validationResult.output),
         });
       });
     }),
   { argsSchema },
 );
+
+function getDeepLink({ resource }: GetDeepLinkArgs): string {
+  switch (resource.type) {
+    case "document":
+      return toDeepLink({
+        name: RouteName.Document,
+        collectionId: resource.collectionId,
+        documentId: resource.documentId,
+      });
+    case "documentVersion":
+      return toDeepLink({
+        name: RouteName.Document,
+        collectionId: resource.collectionId,
+        documentId: resource.documentId,
+        documentVersionId: resource.documentVersionId,
+      });
+    case "collection":
+      return toDeepLink(
+        resource.appId
+          ? {
+              name: RouteName.Collection,
+              collectionId: resource.collectionId,
+              view: CollectionRouteView.App,
+              appId: resource.appId,
+            }
+          : {
+              name: RouteName.Collection,
+              collectionId: resource.collectionId,
+            },
+      );
+  }
+}

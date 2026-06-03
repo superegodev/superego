@@ -1,11 +1,10 @@
 import { resolve } from "node:path";
 import { deepLinkProtocol, fromDeepLink, toHref } from "@superego/routing";
 import { app, BrowserWindow } from "electron";
-import createWindow from "../createWindow.js";
 import navigateWindowToHref from "../navigateWindowToHref.js";
 
 export default function registerDeepLinks(): {
-  navigateToPendingDeepLink(): void;
+  navigateToPendingDeepLink(window: BrowserWindow): void;
 } {
   registerDeepLinkProtocol();
   let pendingDeepLink = findDeepLink(process.argv);
@@ -15,7 +14,9 @@ export default function registerDeepLinks(): {
       const deepLink = findDeepLink(commandLine);
       if (deepLink) {
         handleDeepLink(deepLink);
+        return;
       }
+      focusWindow(getNavigableWindow());
     })
     .on("open-url", (event, deepLink) => {
       event.preventDefault();
@@ -23,9 +24,9 @@ export default function registerDeepLinks(): {
     });
 
   return {
-    navigateToPendingDeepLink() {
+    navigateToPendingDeepLink(window) {
       if (pendingDeepLink) {
-        navigateToDeepLink(pendingDeepLink);
+        navigateToDeepLink(pendingDeepLink, window);
         pendingDeepLink = undefined;
       }
     },
@@ -36,7 +37,7 @@ export default function registerDeepLinks(): {
       pendingDeepLink = deepLink;
       return;
     }
-    navigateToDeepLink(deepLink);
+    navigateToDeepLink(deepLink, getNavigableWindow());
   }
 }
 
@@ -56,15 +57,29 @@ function findDeepLink(arguments_: string[]): string | undefined {
   );
 }
 
-function navigateToDeepLink(deepLink: string): void {
-  const route = fromDeepLink(deepLink);
-  if (route === null) {
+function getNavigableWindow(): BrowserWindow | undefined {
+  return BrowserWindow.getFocusedWindow() ?? BrowserWindow.getAllWindows()[0];
+}
+
+function focusWindow(window: BrowserWindow | undefined): void {
+  if (!window) {
     return;
   }
-  const window = BrowserWindow.getFocusedWindow() ?? createWindow();
+
   if (window.isMinimized()) {
     window.restore();
   }
   window.focus();
+}
+
+function navigateToDeepLink(
+  deepLink: string,
+  window: BrowserWindow | undefined,
+): void {
+  const route = fromDeepLink(deepLink);
+  if (route === null || !window) {
+    return;
+  }
+  focusWindow(window);
   navigateWindowToHref(window, toHref(route));
 }
