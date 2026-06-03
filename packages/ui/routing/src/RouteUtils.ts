@@ -89,7 +89,10 @@ export function fromHref(href: string): Route {
       }
     }
   } catch (error) {
-    console.error(error);
+    console.error(
+      `Href ${href} cannot be converted into a Route object`,
+      error,
+    );
   }
 
   return {
