@@ -9,6 +9,7 @@ export const NotFound = {
     gap: vars.spacing._4,
     maxWidth: "40rem",
   }),
+
   message: style({
     margin: 0,
     color: vars.colors.text.secondary,

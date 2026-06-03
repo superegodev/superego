@@ -29,5 +29,6 @@ export function toHrefFromDeepLink(deepLink: string): string | null {
   if (!href.startsWith("/") || href.startsWith("//")) {
     return null;
   }
+
   return href;
 }

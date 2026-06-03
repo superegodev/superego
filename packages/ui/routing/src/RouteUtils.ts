@@ -87,9 +87,10 @@ export function fromHref(href: string): Route {
         return matcher.toRoute(match);
       }
     }
-  } catch {
-    return { name: RouteName.NotFound };
+  } catch (error) {
+    console.error(error);
   }
+
   return { name: RouteName.NotFound };
 }
 
