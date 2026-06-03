@@ -6,6 +6,7 @@ import collectionCategories from "./commands/collection-categories/index.js";
 import collections from "./commands/collections/index.js";
 import documents from "./commands/documents/index.js";
 import files from "./commands/files/index.js";
+import getDeepLink from "./commands/get-deep-link/get-deep-link.js";
 import { useMarkdownHelp } from "./utils/markdownHelp.js";
 
 export default function cli(options: {
@@ -22,6 +23,7 @@ export default function cli(options: {
     .addCommand(collections)
     .addCommand(documents)
     .addCommand(files)
+    .addCommand(getDeepLink)
     .addCommand(agents)
     .addCommand(apps);
   useMarkdownHelp(program, { additionalNotes });

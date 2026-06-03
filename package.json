@@ -17,6 +17,7 @@
     "build-website": "yarn workspace @superego/website build",
     "deploy-website:production": "yarn workspace @superego/website deploy:production",
     "deploy-website:preview": "yarn workspace @superego/website deploy:preview",
+    "deploy-open:production": "yarn workspace @superego/open deploy:production",
     "build-demo:preview": "yarn workspace @superego/demo-app build:preview",
     "build-demo:production": "yarn workspace @superego/demo-app build:production",
     "deploy-demo:preview": "yarn workspace @superego/demo-app deploy:preview",

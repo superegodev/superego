@@ -3,6 +3,7 @@ import type {
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { useState } from "react";
 import {
   PiClockCountdown,
@@ -19,7 +20,6 @@ import {
   listDocumentVersionsQuery,
 } from "../../../business-logic/backend/hooks.js";
 import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useApplyAlwaysCollapsePrimarySidebar from "../../../business-logic/navigation/useApplyAlwaysCollapsePrimarySidebar.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import classnames from "../../../utils/classnames.js";

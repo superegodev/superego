@@ -1,7 +1,6 @@
 import type { LiteBackgroundJob } from "@superego/backend";
+import { RouteName, toHref } from "@superego/routing";
 import { FormattedDate, FormattedMessage } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import BackgroundJobStatus from "../../design-system/BackgroundJobStatus/BackgroundJobStatus.js";
 import Table from "../../design-system/Table/Table.js";

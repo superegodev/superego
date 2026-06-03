@@ -1,11 +1,11 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { App } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useDeleteApp } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";

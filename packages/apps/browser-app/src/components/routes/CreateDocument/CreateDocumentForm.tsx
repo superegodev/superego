@@ -1,12 +1,12 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection, DuplicateDocumentDetected } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { valibotSchemas } from "@superego/schema";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { useForm, useFormState } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { useCreateDocument } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useExitWarning from "../../../business-logic/navigation/useExitWarning.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import toasts from "../../../business-logic/toasts/toasts.js";

@@ -8,6 +8,7 @@ import { PublisherGithub } from "@electron-forge/publisher-github";
 import type { ForgeConfig } from "@electron-forge/shared-types";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 import { MakerAppImage } from "@reforged/maker-appimage";
+import { deepLinkProtocol } from "@superego/routing";
 
 const { GITHUB_REF: githubRef } = process.env;
 const isTag = githubRef !== undefined && githubRef.startsWith("refs/tags/v");
@@ -51,6 +52,12 @@ export default {
     extendInfo: {
       CFBundleName: "Superego",
     },
+    protocols: [
+      {
+        name: "Superego",
+        schemes: [deepLinkProtocol],
+      },
+    ],
   },
   makers: [
     new MakerZIP({}, ["darwin"]),
@@ -60,6 +67,7 @@ export default {
         bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
+        mimeType: [`x-scheme-handler/${deepLinkProtocol}`],
       },
     }),
     new MakerDeb({
@@ -68,6 +76,7 @@ export default {
         bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
+        mimeType: [`x-scheme-handler/${deepLinkProtocol}`],
       },
     }),
     new MakerAppImage({
@@ -76,6 +85,7 @@ export default {
         bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
+        mimeType: [`x-scheme-handler/${deepLinkProtocol}`],
       },
     }),
   ],

@@ -1,0 +1,23 @@
+{
+  "name": "@superego/routing",
+  "version": "2026.5.7",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest --reporter=verbose"
+  },
+  "dependencies": {
+    "@superego/backend": "workspace:*",
+    "@superego/shared-utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
+  }
+}

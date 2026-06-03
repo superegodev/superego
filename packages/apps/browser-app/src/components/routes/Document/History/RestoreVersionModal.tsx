@@ -4,13 +4,13 @@ import type {
   Document,
   MinimalDocumentVersion,
 } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
 import {
   getDocumentVersionQuery,
   useCreateNewDocumentVersion,
 } from "../../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import Button from "../../../design-system/Button/Button.js";
 import ModalDialog from "../../../design-system/ModalDialog/ModalDialog.js";

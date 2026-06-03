@@ -1,5 +1,5 @@
 import { Id } from "@superego/shared-utils";
-import { expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import type Route from "./Route.js";
 import { CollectionRouteView, RouteName } from "./Route.js";
 import { fromHref, toHref } from "./RouteUtils.js";
@@ -130,6 +130,10 @@ const testRoutes: Route[] = [
   {
     name: RouteName.GlobalSettings,
   },
+  {
+    name: RouteName.NotFound,
+    route: "/unknown",
+  },
 ];
 
 for (const testRoute of testRoutes) {
@@ -138,6 +142,21 @@ for (const testRoute of testRoutes) {
       ? `route ${testRoute.name}, view ${testRoute.view}`
       : `route ${testRoute.name}`;
   it(`fromHref(toHref(${routeDisplayName})) = ${routeDisplayName}`, () => {
-    expect(fromHref(toHref(testRoute))).toEqual(testRoute);
+    // Exercise
+    const href = toHref(testRoute);
+    const route = fromHref(href);
+
+    // Verify
+    expect(route).toEqual(testRoute);
   });
 }
+
+describe("fromHref", () => {
+  it("returns not found when the href is unknown", () => {
+    // Exercise
+    const route = fromHref("/unknown");
+
+    // Verify
+    expect(route).toEqual({ name: RouteName.NotFound, route: "/unknown" });
+  });
+});

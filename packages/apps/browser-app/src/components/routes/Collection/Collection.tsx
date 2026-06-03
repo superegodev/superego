@@ -1,4 +1,5 @@
 import type { AppId, CollectionId } from "@superego/backend";
+import { CollectionRouteView, RouteName, type Route } from "@superego/routing";
 import { useState } from "react";
 import {
   PiCode,
@@ -19,11 +20,6 @@ import {
   listDocumentsQuery,
   useUpdateCollectionSettings,
 } from "../../../business-logic/backend/hooks.js";
-import type Route from "../../../business-logic/navigation/Route.js";
-import {
-  CollectionRouteView,
-  RouteName,
-} from "../../../business-logic/navigation/Route.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import useScreenSize from "../../../business-logic/screen-size/useScreenSize.js";
 import toasts from "../../../business-logic/toasts/toasts.js";

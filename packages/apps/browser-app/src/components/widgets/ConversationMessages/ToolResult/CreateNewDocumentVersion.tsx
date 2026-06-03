@@ -1,7 +1,7 @@
 import type { ToolResult } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { FormattedMessage } from "react-intl";
 import { useGlobalData } from "../../../../business-logic/backend/GlobalData.js";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import ContentSummary from "../../../design-system/ContentSummary/ContentSummary.js";
 import Link from "../../../design-system/Link/Link.js";

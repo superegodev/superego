@@ -1,7 +1,7 @@
+import { RouteName } from "@superego/routing";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { listBoutiquePacksQuery } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import PackCard from "../../design-system/PackCard/PackCard.js";
 import RouteLevelErrors from "../../design-system/RouteLevelErrors/RouteLevelErrors.js";
 import Shell from "../../design-system/Shell/Shell.js";

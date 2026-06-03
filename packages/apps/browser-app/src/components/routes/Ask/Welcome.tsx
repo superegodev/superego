@@ -1,9 +1,9 @@
+import { RouteName } from "@superego/routing";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { electronMainWorld } from "../../../business-logic/electron/electron.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import InlineCode from "../../design-system/InlineCode/InlineCode.js";
 import Link from "../../design-system/Link/Link.js";

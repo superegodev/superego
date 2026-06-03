@@ -1,7 +1,7 @@
 import type { Pack } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { FormattedMessage } from "react-intl";
 import { useInstallPack } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Button from "../../design-system/Button/Button.js";
 import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";

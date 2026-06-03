@@ -37,6 +37,7 @@ Command map:
 - `documents`: `create`, `create-many`, `create-new-version`, `delete`, `list`,
   `list-versions`, `get`, `get-version`, `search`, `execute-typescript-function`
 - `files`: `get-content`
+- `get-deep-link`: create a `superego://...` desktop link for a resource
 - `agents`: `install-skill`
 - `apps`: `init`, `checkout`, `check`, `status`, `diff`, `commit`,
   `add-collection`, `remove-collection`, `delete`, `list`
@@ -45,6 +46,7 @@ Common workflows:
 
 - Inspect command docs: `superego <domain> <command> --help`
 - Create/list/update backend objects with `--args ./args.json`.
+- Link to a created resource: `superego get-deep-link --args ./args.json`
 - Create an app project: `superego apps init --args ./args.json`
 - Validate an app project: `superego apps check`
 - Commit an app project: `superego apps commit`

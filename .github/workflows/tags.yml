@@ -43,7 +43,7 @@ jobs:
           if-no-files-found: ignore
           compression-level: 0
 
-  build-deploy-demo-and-website:
+  build-deploy-demo-website-and-open:
     needs: qa
     runs-on: ubuntu-latest
     environment: production
@@ -73,6 +73,11 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: yarn deploy-demo:production
+      - name: Deploy open worker to production environment
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: yarn deploy-open:production
 
   build-deploy-electron:
     needs: qa

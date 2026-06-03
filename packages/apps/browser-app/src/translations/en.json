@@ -974,6 +974,15 @@
   "ModelSelect.tsx_rhSI1/": {
     "defaultMessage": "Model"
   },
+  "NotFound.tsx_WG5jPT": {
+    "defaultMessage": "Route {route} does not exist."
+  },
+  "NotFound.tsx_ejEGdx": {
+    "defaultMessage": "Home"
+  },
+  "NotFound.tsx_gc051n": {
+    "defaultMessage": "Route not found"
+  },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Set {fieldLabel} to null"
   },

@@ -18,6 +18,7 @@
     "@superego/executing-backend": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
+    "@superego/routing": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",

@@ -8,6 +8,7 @@ import type {
   PackId,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
+import decodePathSegment from "./decodePathSegment.js";
 import type Route from "./Route.js";
 import { CollectionRouteView, RouteName } from "./Route.js";
 
@@ -71,12 +72,15 @@ export function toHref(route: Route): string {
       return `/background-jobs/${route.backgroundJobId}`;
     case RouteName.GlobalSettings:
       return "/settings";
+    case RouteName.NotFound:
+      return `/not-found?route=${encodeURIComponent(route.route)}`;
   }
 }
 
 export function fromHref(href: string): Route {
+  let url: URL | undefined;
   try {
-    const url = new URL(href, location.origin);
+    url = parseHref(href);
     const pathname = url.pathname || "/";
     for (const matcher of routeMatchers) {
       const match = matcher.pattern.exec({ pathname, search: url.search });
@@ -90,7 +94,19 @@ export function fromHref(href: string): Route {
       error,
     );
   }
-  return { name: RouteName.Ask };
+
+  return {
+    name: RouteName.NotFound,
+    route: typeof url === "undefined" ? href : `${url.pathname}${url.search}`,
+  };
+}
+
+function parseHref(href: string): URL {
+  try {
+    return new URL(href);
+  } catch {
+    return new URL(href, "http://localhost");
+  }
 }
 
 interface RouteMatcher {
@@ -257,6 +273,14 @@ const routeMatchers: RouteMatcher[] = [
     toRoute: () => ({ name: RouteName.GlobalSettings }),
   },
   {
+    pattern: new URLPattern({ pathname: "/not-found{/}?" }),
+    toRoute: (match) => ({
+      name: RouteName.NotFound,
+      route:
+        new URLSearchParams(match.search.input).get("route") ?? "/not-found",
+    }),
+  },
+  {
     pattern: new URLPattern({ pathname: "/apps/new{/}?" }),
     toRoute: (match) => ({
       name: RouteName.CreateApp,
@@ -284,16 +308,3 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
 ];
-
-function decodePathSegment<Segment extends string>(
-  value: string | undefined,
-): Segment {
-  if (value === undefined) {
-    throw new Error("Missing path segment");
-  }
-  try {
-    return decodeURIComponent(value) as Segment;
-  } catch {
-    return value as Segment;
-  }
-}

@@ -1,5 +1,5 @@
+import type { Route } from "@superego/routing";
 import type { ReactNode } from "react";
-import type Route from "../../../business-logic/navigation/Route.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";
 import Button from "../../design-system/Button/Button.js";

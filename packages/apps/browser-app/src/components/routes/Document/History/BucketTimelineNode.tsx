@@ -1,8 +1,8 @@
 import type { Document, MinimalDocumentVersion } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { DateTime } from "luxon";
 import { Disclosure, DisclosurePanel } from "react-aria-components";
 import { FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import Button from "../../../design-system/Button/Button.js";
 import type Bucket from "./Bucket.js";

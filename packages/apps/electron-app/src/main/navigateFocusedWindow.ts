@@ -1,8 +1,9 @@
 import { BrowserWindow } from "electron";
+import navigateWindowToHref from "./navigateWindowToHref.js";
 
 export default function navigateFocusedWindow(href: string) {
-  BrowserWindow.getFocusedWindow()?.webContents.postMessage(
-    "NavigationRequested",
-    { type: "NavigationRequested", href },
-  );
+  const window = BrowserWindow.getFocusedWindow();
+  if (window) {
+    navigateWindowToHref(window, href);
+  }
 }

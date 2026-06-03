@@ -1,5 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import { AppType, type Collection, type CollectionId } from "@superego/backend";
+import { CollectionRouteView, RouteName } from "@superego/routing";
 import { valibotSchemas } from "@superego/shared-utils";
 import { useId } from "react";
 import { Form } from "react-aria-components";
@@ -10,10 +11,6 @@ import { useCreateApp } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
-import {
-  CollectionRouteView,
-  RouteName,
-} from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";

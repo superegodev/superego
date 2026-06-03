@@ -1,7 +1,6 @@
+import { toHref, type Route } from "@superego/routing";
 import { type ReactNode, useId } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-aria-components";
-import type Route from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import * as cs from "./FullPageTabs.css.js";
 
 interface Props {

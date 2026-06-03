@@ -1,3 +1,4 @@
+import { RouteName } from "@superego/routing";
 import {
   PiArrowLeft,
   PiGear,
@@ -8,7 +9,6 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { electronMainWorld } from "../../../business-logic/electron/electron.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useSearchModalState from "../../../business-logic/search/useSearchModalState.js";
 import isEmpty from "../../../utils/isEmpty.js";
