@@ -1,8 +1,10 @@
-import { fromHref, toHref, type Route } from "@superego/routing";
+import { toHref, type Route } from "@superego/routing";
 import { create } from "zustand";
-import getInitialRoute from "./getInitialRoute.js";
+import { electronMainWorld } from "../electron/electron.js";
+import { fromBrowserLocation, toBrowserHref } from "./RouteLocationUtils.js";
 
-const initialRoute = getInitialRoute(window.location);
+const useHashRouting = electronMainWorld.isElectron;
+const initialRoute = fromBrowserLocation(window.location, useHashRouting);
 
 export const useNavigationStateStore = create<UseNavigationState>(
   (set, get) => ({
@@ -47,7 +49,7 @@ export const useNavigationStateStore = create<UseNavigationState>(
       window.history[stateChangeType === "push" ? "pushState" : "replaceState"](
         {},
         "",
-        toHref(route),
+        toBrowserHref(route, useHashRouting),
       );
     },
     goBack() {
@@ -81,11 +83,15 @@ window.addEventListener("popstate", () => {
 
   if (exitWarningMessage && !window.confirm(exitWarningMessage)) {
     // Re-push current URL to cancel navigation.
-    window.history.pushState({}, "", toHref(activeRoute));
+    window.history.pushState(
+      {},
+      "",
+      toBrowserHref(activeRoute, useHashRouting),
+    );
     return;
   }
 
-  const route = fromHref(window.location.href);
+  const route = fromBrowserLocation(window.location, useHashRouting);
   const previousRoute = historyStack[currentHistoryPosition - 1];
   const nextRoute = historyStack[currentHistoryPosition + 1];
 
