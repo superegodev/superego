@@ -22,11 +22,7 @@ type DeepLinkResource =
   | {
       type: "collection";
       collectionId: CollectionId;
-    }
-  | {
-      type: "app";
-      collectionId: CollectionId;
-      appId: AppId;
+      appId?: AppId;
     };
 
 export interface GetDeepLinkArgs {
@@ -48,8 +44,8 @@ function toHref(resource: DeepLinkResource): string {
     case "documentVersion":
       return `/collections/${resource.collectionId}/documents/${resource.documentId}/documentVersions/${resource.documentVersionId}`;
     case "collection":
-      return `/collections/${resource.collectionId}`;
-    case "app":
-      return `/collections/${resource.collectionId}?view=App&appId=${resource.appId}`;
+      return resource.appId
+        ? `/collections/${resource.collectionId}?view=App&appId=${resource.appId}`
+        : `/collections/${resource.collectionId}`;
   }
 }
