@@ -16,6 +16,7 @@ import CreateNewCollectionVersion from "../CreateNewCollectionVersion/CreateNewC
 import Document from "../Document/Document.js";
 import EditApp from "../EditApp/EditApp.js";
 import GlobalSettings from "../GlobalSettings/GlobalSettings.js";
+import NotFound from "../NotFound/NotFound.js";
 import Pack from "../Pack/Pack.js";
 
 export default function MainPanel() {
@@ -69,5 +70,7 @@ export default function MainPanel() {
       return <BackgroundJob backgroundJobId={activeRoute.backgroundJobId} />;
     case RouteName.GlobalSettings:
       return <GlobalSettings />;
+    case RouteName.NotFound:
+      return <NotFound />;
   }
 }

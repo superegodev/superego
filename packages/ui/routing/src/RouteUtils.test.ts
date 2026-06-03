@@ -130,6 +130,9 @@ const testRoutes: Route[] = [
   {
     name: RouteName.GlobalSettings,
   },
+  {
+    name: RouteName.NotFound,
+  },
 ];
 
 for (const testRoute of testRoutes) {
@@ -148,6 +151,14 @@ for (const testRoute of testRoutes) {
 }
 
 describe("fromHref", () => {
+  it("returns not found when the href is unknown", () => {
+    // Exercise
+    const route = fromHref("/unknown");
+
+    // Verify
+    expect(route).toEqual({ name: RouteName.NotFound });
+  });
+
   it("returns the default route when the href is unknown", () => {
     // Exercise
     const route = fromHref("/unknown", null);

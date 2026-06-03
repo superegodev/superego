@@ -26,6 +26,7 @@ export enum RouteName {
   BackgroundJobs = "BackgroundJobs",
   BackgroundJob = "BackgroundJob",
   GlobalSettings = "Settings",
+  NotFound = "NotFound",
 }
 
 export enum CollectionRouteView {
@@ -109,6 +110,9 @@ type Route =
     }
   | {
       name: RouteName.GlobalSettings;
+    }
+  | {
+      name: RouteName.NotFound;
     };
 
 export default Route;

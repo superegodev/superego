@@ -68,3 +68,11 @@ it("rejects malformed links", () => {
   // Verify
   expect(route).toBeNull();
 });
+
+it("parses unknown routes as not found", () => {
+  // Exercise
+  const route = fromDeepLink("superego:///unknown");
+
+  // Verify
+  expect(route).toEqual({ name: RouteName.NotFound });
+});

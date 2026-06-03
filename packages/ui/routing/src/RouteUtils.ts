@@ -12,8 +12,6 @@ import decodePathSegment from "./decodePathSegment.js";
 import type Route from "./Route.js";
 import { CollectionRouteView, RouteName } from "./Route.js";
 
-const HREF_PARSE_ORIGIN = "http://superego.localhost";
-
 export function toHref(route: Route): string {
   switch (route.name) {
     case RouteName.Ask:
@@ -74,6 +72,8 @@ export function toHref(route: Route): string {
       return `/background-jobs/${route.backgroundJobId}`;
     case RouteName.GlobalSettings:
       return "/settings";
+    case RouteName.NotFound:
+      return "/not-found";
   }
 }
 
@@ -88,10 +88,10 @@ export function fromHref<DefaultRoute extends Route | null>(
 ): Route | DefaultRoute {
   const fallbackRoute =
     defaultRoute === undefined
-      ? ({ name: RouteName.Ask } satisfies Route)
+      ? ({ name: RouteName.NotFound } satisfies Route)
       : defaultRoute;
   try {
-    const url = new URL(href, HREF_PARSE_ORIGIN);
+    const url = parseHref(href);
     const pathname = url.pathname || "/";
     for (const matcher of routeMatchers) {
       const match = matcher.pattern.exec({ pathname, search: url.search });
@@ -103,6 +103,14 @@ export function fromHref<DefaultRoute extends Route | null>(
     return fallbackRoute;
   }
   return fallbackRoute;
+}
+
+function parseHref(href: string): URL {
+  try {
+    return new URL(href);
+  } catch {
+    return new URL(href, "http://localhost");
+  }
 }
 
 interface RouteMatcher {
@@ -267,6 +275,10 @@ const routeMatchers: RouteMatcher[] = [
   {
     pattern: new URLPattern({ pathname: "/settings{/}?" }),
     toRoute: () => ({ name: RouteName.GlobalSettings }),
+  },
+  {
+    pattern: new URLPattern({ pathname: "/not-found{/}?" }),
+    toRoute: () => ({ name: RouteName.NotFound }),
   },
   {
     pattern: new URLPattern({ pathname: "/apps/new{/}?" }),

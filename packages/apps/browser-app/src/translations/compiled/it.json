@@ -2454,6 +2454,24 @@
       "value": "Modello"
     }
   ],
+  "NotFound.tsx_+aVFxr": [
+    {
+      "type": 0,
+      "value": "La route non esiste."
+    }
+  ],
+  "NotFound.tsx_gc051n": [
+    {
+      "type": 0,
+      "value": "Route non trovata"
+    }
+  ],
+  "NotFound.tsx_rUEEc2": [
+    {
+      "type": 0,
+      "value": "Vai ad Ask"
+    }
+  ],
   "NullifyFieldAction.tsx_MLa9CL": [
     {
       "type": 0,

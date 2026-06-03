@@ -1,10 +1,8 @@
 import { resolve } from "node:path";
-import { fromDeepLink, toHref } from "@superego/routing";
+import { deepLinkProtocol, fromDeepLink, toHref } from "@superego/routing";
 import { app, BrowserWindow } from "electron";
 import createWindow from "../createWindow.js";
-import { navigateWindowToHref } from "../navigateFocusedWindow.js";
-
-const DEEP_LINK_PROTOCOL = "superego";
+import navigateWindowToHref from "../navigateWindowToHref.js";
 
 export default function registerDeepLinks(): {
   navigateToPendingDeepLink(): void;
@@ -44,17 +42,17 @@ export default function registerDeepLinks(): {
 
 function registerDeepLinkProtocol(): void {
   if (process.defaultApp && process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient(DEEP_LINK_PROTOCOL, process.execPath, [
+    app.setAsDefaultProtocolClient(deepLinkProtocol, process.execPath, [
       resolve(process.argv[1]!),
     ]);
   } else {
-    app.setAsDefaultProtocolClient(DEEP_LINK_PROTOCOL);
+    app.setAsDefaultProtocolClient(deepLinkProtocol);
   }
 }
 
 function findDeepLink(arguments_: string[]): string | undefined {
   return arguments_.find((argument) =>
-    argument.startsWith(`${DEEP_LINK_PROTOCOL}://`),
+    argument.startsWith(`${deepLinkProtocol}://`),
   );
 }
 

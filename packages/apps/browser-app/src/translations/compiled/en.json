@@ -2462,6 +2462,24 @@
       "value": "Model"
     }
   ],
+  "NotFound.tsx_+aVFxr": [
+    {
+      "type": 0,
+      "value": "The route does not exist."
+    }
+  ],
+  "NotFound.tsx_gc051n": [
+    {
+      "type": 0,
+      "value": "Route not found"
+    }
+  ],
+  "NotFound.tsx_rUEEc2": [
+    {
+      "type": 0,
+      "value": "Go to Ask"
+    }
+  ],
   "NullifyFieldAction.tsx_MLa9CL": [
     {
       "type": 0,
