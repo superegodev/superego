@@ -7063,6 +7063,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@superego/open@workspace:packages/apps/open":
+  version: 0.0.0-use.local
+  resolution: "@superego/open@workspace:packages/apps/open"
+  dependencies:
+    "@cloudflare/workers-types": "npm:4.20260526.1"
+    "@superego/routing": "workspace:*"
+    typescript: "npm:^6.0.3"
+    vitest: "npm:^4.1.7"
+    wrangler: "npm:^4.94.0"
+  languageName: unknown
+  linkType: soft
+
 "@superego/quickjs-javascript-sandbox@workspace:*, @superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox":
   version: 0.0.0-use.local
   resolution: "@superego/quickjs-javascript-sandbox@workspace:packages/code-execution/quickjs-javascript-sandbox"

@@ -1,4 +1,10 @@
-import { CollectionRouteView, RouteName, toDeepLink } from "@superego/routing";
+import {
+  CollectionRouteView,
+  RouteName,
+  toDeepLink,
+  toOpenDeepLink,
+  type Route,
+} from "@superego/routing";
 import { valibotSchemas } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
@@ -9,8 +15,10 @@ import {
   successfulResult,
   unsuccessfulResult,
 } from "../../utils/results.js";
+import additionalNotes from "./additional-notes.md?raw";
 
 const argsSchema = v.strictObject({
+  linkFormat: v.optional(v.picklist(["desktop", "web"])),
   resource: v.variant("type", [
     v.strictObject({
       type: v.literal("document"),
@@ -34,7 +42,7 @@ type GetDeepLinkArgs = v.InferOutput<typeof argsSchema>;
 
 export default useMarkdownHelp(
   new Command("get-deep-link")
-    .description("Create a Superego desktop deep link for a resource.")
+    .description("Create a Superego link for a resource.")
     .requiredOption("--args <file>", "Path to JSON args file.")
     .action(async (options: { args: string }) => {
       await runCommand(async () => {
@@ -55,37 +63,47 @@ export default useMarkdownHelp(
         });
       });
     }),
-  { argsSchema },
+  { argsSchema, additionalNotes },
 );
 
-function getDeepLink({ resource }: GetDeepLinkArgs): string {
+function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
+  const route = getRoute(resource);
+  return routeToDeepLink(route, linkFormat);
+}
+
+function routeToDeepLink(
+  route: Route,
+  linkFormat: GetDeepLinkArgs["linkFormat"],
+): string {
+  return linkFormat === "web" ? toOpenDeepLink(route) : toDeepLink(route);
+}
+
+function getRoute(resource: GetDeepLinkArgs["resource"]): Route {
   switch (resource.type) {
     case "document":
-      return toDeepLink({
+      return {
         name: RouteName.Document,
         collectionId: resource.collectionId,
         documentId: resource.documentId,
-      });
+      };
     case "documentVersion":
-      return toDeepLink({
+      return {
         name: RouteName.Document,
         collectionId: resource.collectionId,
         documentId: resource.documentId,
         documentVersionId: resource.documentVersionId,
-      });
+      };
     case "collection":
-      return toDeepLink(
-        resource.appId
-          ? {
-              name: RouteName.Collection,
-              collectionId: resource.collectionId,
-              view: CollectionRouteView.App,
-              appId: resource.appId,
-            }
-          : {
-              name: RouteName.Collection,
-              collectionId: resource.collectionId,
-            },
-      );
+      return resource.appId
+        ? {
+            name: RouteName.Collection,
+            collectionId: resource.collectionId,
+            view: CollectionRouteView.App,
+            appId: resource.appId,
+          }
+        : {
+            name: RouteName.Collection,
+            collectionId: resource.collectionId,
+          };
   }
 }
