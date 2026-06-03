@@ -9,6 +9,8 @@ import {
   useUpdateCollectionCategory,
   useUpdateCollectionSettings,
 } from "../../../business-logic/backend/hooks.js";
+import useLocalStorageItem from "../../../business-logic/local-storage/useLocalStorageItem.js";
+import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import classnames from "../../../utils/classnames.js";
 import CollectionCategoryTreeItem from "./CollectionCategoryTreeItem.js";
 import * as cs from "./CollectionsTree.css.js";
@@ -28,6 +30,17 @@ export default function CollectionsTree({ className }: Props) {
   const { mutate: deleteCollectionCategory } = useDeleteCollectionCategory();
   const { mutate: updateCollectionCategory } = useUpdateCollectionCategory();
   const { mutate: updateCollectionSettings } = useUpdateCollectionSettings();
+  const [collapsedCollectionCategoryIds, setCollapsedCollectionCategoryIds] =
+    useLocalStorageItem<CollectionCategoryId[]>(
+      WellKnownKey.CollectionsTreeCollapsedCollectionCategoryIds,
+      [],
+    );
+  const collapsedCollectionCategoryIdSet = new Set(
+    collapsedCollectionCategoryIds,
+  );
+  const expandedCollectionCategoryIds = collectionCategories
+    .map(({ id }) => id)
+    .filter((id) => !collapsedCollectionCategoryIdSet.has(id));
   const onItemDropped = (
     droppedItemId: CollectionCategoryId | CollectionId,
     droppedOn: CollectionCategoryId | CollectionId | null,
@@ -61,7 +74,14 @@ export default function CollectionsTree({ className }: Props) {
           })}
           selectionMode="none"
           items={collectionsTree.children}
-          defaultExpandedKeys={collectionCategories.map(({ id }) => id)}
+          expandedKeys={expandedCollectionCategoryIds}
+          onExpandedChange={(expandedKeys) =>
+            setCollapsedCollectionCategoryIds(
+              collectionCategories
+                .map(({ id }) => id)
+                .filter((id) => !expandedKeys.has(id)),
+            )
+          }
           className={cs.CollectionsTree.tree}
         >
           {function renderItem(item) {
