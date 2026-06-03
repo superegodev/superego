@@ -76,10 +76,14 @@ function navigateToDeepLink(
   deepLink: string,
   window: BrowserWindow | undefined,
 ): void {
-  const route = fromDeepLink(deepLink);
-  if (route === null || !window) {
+  if (!window) {
     return;
   }
   focusWindow(window);
+
+  const route = fromDeepLink(deepLink);
+  if (route === null) {
+    return;
+  }
   navigateWindowToHref(window, toHref(route));
 }
