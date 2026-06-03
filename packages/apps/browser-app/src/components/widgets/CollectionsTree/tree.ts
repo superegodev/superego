@@ -55,6 +55,23 @@ export function makeTree(
   };
 }
 
+export function getExpandableCollectionCategoryIds(
+  items: TreeItem[],
+): CollectionCategoryId[] {
+  const collectionCategoryIds: CollectionCategoryId[] = [];
+  for (const item of items) {
+    if (item.type === TreeItemType.CollectionCategory) {
+      if (item.children.length > 0) {
+        collectionCategoryIds.push(item.id);
+      }
+      collectionCategoryIds.push(
+        ...getExpandableCollectionCategoryIds(item.children),
+      );
+    }
+  }
+  return collectionCategoryIds;
+}
+
 function makeCollectionCategoryTreeItem(
   collectionCategory: CollectionCategory,
   collectionCategoriesByParent: Record<string, CollectionCategory[]>,

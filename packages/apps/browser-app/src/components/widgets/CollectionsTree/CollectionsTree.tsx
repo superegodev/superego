@@ -40,9 +40,8 @@ export default function CollectionsTree({ className }: Props) {
     collections,
     collator,
   );
-  const expandableCollectionCategoryIds = getExpandableCollectionCategoryIds(
-    collectionsTree.children,
-  );
+  const expandableCollectionCategoryIds =
+    tree.getExpandableCollectionCategoryIds(collectionsTree.children);
   const collapsedCollectionCategoryIdSet = new Set(
     collapsedCollectionCategoryIds,
   );
@@ -108,21 +107,4 @@ export default function CollectionsTree({ className }: Props) {
       </div>
     </IsParentDropDisabledProvider>
   );
-}
-
-function getExpandableCollectionCategoryIds(
-  items: tree.TreeItem[],
-): CollectionCategoryId[] {
-  const collectionCategoryIds: CollectionCategoryId[] = [];
-  for (const item of items) {
-    if (item.type === tree.TreeItemType.CollectionCategory) {
-      if (item.children.length > 0) {
-        collectionCategoryIds.push(item.id);
-      }
-      collectionCategoryIds.push(
-        ...getExpandableCollectionCategoryIds(item.children),
-      );
-    }
-  }
-  return collectionCategoryIds;
 }
