@@ -51,6 +51,12 @@ export default {
     extendInfo: {
       CFBundleName: "Superego",
     },
+    protocols: [
+      {
+        name: "Superego",
+        schemes: ["superego"],
+      },
+    ],
   },
   makers: [
     new MakerZIP({}, ["darwin"]),
@@ -60,6 +66,7 @@ export default {
         bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
+        mimeType: ["x-scheme-handler/superego"],
       },
     }),
     new MakerDeb({
@@ -68,6 +75,7 @@ export default {
         bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
+        mimeType: ["x-scheme-handler/superego"],
       },
     }),
     new MakerAppImage({
@@ -76,6 +84,7 @@ export default {
         bin: "superego-app",
         icon: "./assets/icon.png",
         categories: ["Office"],
+        mimeType: ["x-scheme-handler/superego"],
       },
     }),
   ],
