@@ -132,6 +132,7 @@ const testRoutes: Route[] = [
   },
   {
     name: RouteName.NotFound,
+    route: "/unknown",
   },
 ];
 
@@ -156,6 +157,6 @@ describe("fromHref", () => {
     const route = fromHref("/unknown");
 
     // Verify
-    expect(route).toEqual({ name: RouteName.NotFound });
+    expect(route).toEqual({ name: RouteName.NotFound, route: "/unknown" });
   });
 });

@@ -995,14 +995,14 @@
   "MigrationTab.tsx_i8zErH": {
     "defaultMessage": "Scrivi una funzione di migrazione per convertire i documenti dallo schema precedente a quello aggiornato."
   },
-  "NotFound.tsx_+aVFxr": {
-    "defaultMessage": "La route non esiste."
+  "NotFound.tsx_WG5jPT": {
+    "defaultMessage": "La route {route} non esiste."
+  },
+  "NotFound.tsx_ejEGdx": {
+    "defaultMessage": "Home"
   },
   "NotFound.tsx_gc051n": {
     "defaultMessage": "Route non trovata"
-  },
-  "NotFound.tsx_rUEEc2": {
-    "defaultMessage": "Vai ad Ask"
   },
   "NullifyFieldAction.tsx_MLa9CL": {
     "defaultMessage": "Imposta {fieldLabel} su null"

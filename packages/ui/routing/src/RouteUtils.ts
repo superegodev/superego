@@ -73,13 +73,14 @@ export function toHref(route: Route): string {
     case RouteName.GlobalSettings:
       return "/settings";
     case RouteName.NotFound:
-      return "/not-found";
+      return `/not-found?route=${encodeURIComponent(route.route)}`;
   }
 }
 
 export function fromHref(href: string): Route {
+  let url: URL | undefined;
   try {
-    const url = parseHref(href);
+    url = parseHref(href);
     const pathname = url.pathname || "/";
     for (const matcher of routeMatchers) {
       const match = matcher.pattern.exec({ pathname, search: url.search });
@@ -91,7 +92,10 @@ export function fromHref(href: string): Route {
     console.error(error);
   }
 
-  return { name: RouteName.NotFound };
+  return {
+    name: RouteName.NotFound,
+    route: typeof url === "undefined" ? href : `${url.pathname}${url.search}`,
+  };
 }
 
 function parseHref(href: string): URL {
@@ -267,7 +271,11 @@ const routeMatchers: RouteMatcher[] = [
   },
   {
     pattern: new URLPattern({ pathname: "/not-found{/}?" }),
-    toRoute: () => ({ name: RouteName.NotFound }),
+    toRoute: (match) => ({
+      name: RouteName.NotFound,
+      route:
+        new URLSearchParams(match.search.input).get("route") ?? "/not-found",
+    }),
   },
   {
     pattern: new URLPattern({ pathname: "/apps/new{/}?" }),

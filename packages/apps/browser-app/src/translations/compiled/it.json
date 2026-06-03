@@ -2454,22 +2454,30 @@
       "value": "Modello"
     }
   ],
-  "NotFound.tsx_+aVFxr": [
+  "NotFound.tsx_WG5jPT": [
     {
       "type": 0,
-      "value": "La route non esiste."
+      "value": "La route "
+    },
+    {
+      "type": 1,
+      "value": "route"
+    },
+    {
+      "type": 0,
+      "value": " non esiste."
+    }
+  ],
+  "NotFound.tsx_ejEGdx": [
+    {
+      "type": 0,
+      "value": "Home"
     }
   ],
   "NotFound.tsx_gc051n": [
     {
       "type": 0,
       "value": "Route non trovata"
-    }
-  ],
-  "NotFound.tsx_rUEEc2": [
-    {
-      "type": 0,
-      "value": "Vai ad Ask"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [

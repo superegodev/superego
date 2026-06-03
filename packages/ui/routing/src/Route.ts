@@ -113,6 +113,7 @@ type Route =
     }
   | {
       name: RouteName.NotFound;
+      route: string;
     };
 
 export default Route;

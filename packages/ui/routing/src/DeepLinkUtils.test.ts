@@ -93,7 +93,7 @@ describe("fromDeepLink", () => {
     const route = fromDeepLink("superego:///unknown");
 
     // Verify
-    expect(route).toEqual({ name: RouteName.NotFound });
+    expect(route).toEqual({ name: RouteName.NotFound, route: "/unknown" });
   });
 });
 

@@ -2462,22 +2462,30 @@
       "value": "Model"
     }
   ],
-  "NotFound.tsx_+aVFxr": [
+  "NotFound.tsx_WG5jPT": [
     {
       "type": 0,
-      "value": "The route does not exist."
+      "value": "Route "
+    },
+    {
+      "type": 1,
+      "value": "route"
+    },
+    {
+      "type": 0,
+      "value": " does not exist."
+    }
+  ],
+  "NotFound.tsx_ejEGdx": [
+    {
+      "type": 0,
+      "value": "Home"
     }
   ],
   "NotFound.tsx_gc051n": [
     {
       "type": 0,
       "value": "Route not found"
-    }
-  ],
-  "NotFound.tsx_rUEEc2": [
-    {
-      "type": 0,
-      "value": "Go to Ask"
     }
   ],
   "NullifyFieldAction.tsx_MLa9CL": [

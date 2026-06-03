@@ -71,6 +71,6 @@ export default function MainPanel() {
     case RouteName.GlobalSettings:
       return <GlobalSettings />;
     case RouteName.NotFound:
-      return <NotFound />;
+      return <NotFound route={activeRoute.route} />;
   }
 }
