@@ -69,6 +69,8 @@ function focusWindow(window: BrowserWindow | undefined): void {
   if (window.isMinimized()) {
     window.restore();
   }
+  window.show();
+  app.focus({ steal: true });
   window.focus();
 }
 
