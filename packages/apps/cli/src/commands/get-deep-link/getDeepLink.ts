@@ -4,8 +4,7 @@ import type {
   DocumentId,
   DocumentVersionId,
 } from "@superego/backend";
-
-const PROTOCOL = "superego";
+import { CollectionRouteView, RouteName, toDeepLink } from "@superego/routing";
 
 type DeepLinkResource =
   | {
@@ -30,22 +29,33 @@ export interface GetDeepLinkArgs {
 }
 
 export default function getDeepLink({ resource }: GetDeepLinkArgs): string {
-  return toDeepLink(toHref(resource));
-}
-
-function toDeepLink(href: string): string {
-  return `${PROTOCOL}://${href}`;
-}
-
-function toHref(resource: DeepLinkResource): string {
   switch (resource.type) {
     case "document":
-      return `/collections/${resource.collectionId}/documents/${resource.documentId}`;
+      return toDeepLink({
+        name: RouteName.Document,
+        collectionId: resource.collectionId,
+        documentId: resource.documentId,
+      });
     case "documentVersion":
-      return `/collections/${resource.collectionId}/documents/${resource.documentId}/documentVersions/${resource.documentVersionId}`;
+      return toDeepLink({
+        name: RouteName.Document,
+        collectionId: resource.collectionId,
+        documentId: resource.documentId,
+        documentVersionId: resource.documentVersionId,
+      });
     case "collection":
-      return resource.appId
-        ? `/collections/${resource.collectionId}?view=App&appId=${resource.appId}`
-        : `/collections/${resource.collectionId}`;
+      return toDeepLink(
+        resource.appId
+          ? {
+              name: RouteName.Collection,
+              collectionId: resource.collectionId,
+              view: CollectionRouteView.App,
+              appId: resource.appId,
+            }
+          : {
+              name: RouteName.Collection,
+              collectionId: resource.collectionId,
+            },
+      );
   }
 }

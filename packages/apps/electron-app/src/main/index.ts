@@ -1,18 +1,18 @@
+import { resolve } from "node:path";
+import { fromDeepLink, toHref } from "@superego/routing";
 import { app, BrowserWindow } from "electron";
 import createWindow from "./createWindow.js";
-import {
-  registerDeepLinkProtocol,
-  toHrefFromDeepLink,
-} from "./deep-links/deepLinks.js";
 import { navigateWindowToHref } from "./navigateFocusedWindow.js";
 import onReady from "./onReady.js";
 import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
+
+const DEEP_LINK_PROTOCOL = "superego";
 
 registerAppSandboxProtocol();
 registerDeepLinkProtocol();
 
 let pendingDeepLink = process.argv.find((argument) =>
-  argument.startsWith("superego://"),
+  argument.startsWith(`${DEEP_LINK_PROTOCOL}://`),
 );
 
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
@@ -29,7 +29,7 @@ if (!gotSingleInstanceLock) {
     })
     .on("second-instance", (_event, commandLine) => {
       const deepLink = commandLine.find((argument) =>
-        argument.startsWith("superego://"),
+        argument.startsWith(`${DEEP_LINK_PROTOCOL}://`),
       );
       if (deepLink) {
         handleDeepLink(deepLink);
@@ -59,6 +59,16 @@ if (!gotSingleInstanceLock) {
     });
 }
 
+function registerDeepLinkProtocol(): void {
+  if (process.defaultApp && process.argv.length >= 2) {
+    app.setAsDefaultProtocolClient(DEEP_LINK_PROTOCOL, process.execPath, [
+      resolve(process.argv[1]!),
+    ]);
+  } else {
+    app.setAsDefaultProtocolClient(DEEP_LINK_PROTOCOL);
+  }
+}
+
 function handleDeepLink(deepLink: string): void {
   if (!app.isReady()) {
     pendingDeepLink = deepLink;
@@ -68,8 +78,8 @@ function handleDeepLink(deepLink: string): void {
 }
 
 function navigateToDeepLink(deepLink: string): void {
-  const href = toHrefFromDeepLink(deepLink);
-  if (href === null) {
+  const route = fromDeepLink(deepLink);
+  if (route === null) {
     return;
   }
   const window = BrowserWindow.getFocusedWindow() ?? createWindow();
@@ -77,5 +87,5 @@ function navigateToDeepLink(deepLink: string): void {
     window.restore();
   }
   window.focus();
-  navigateWindowToHref(window, href);
+  navigateWindowToHref(window, toHref(route));
 }

@@ -2,7 +2,7 @@ import { Id } from "@superego/shared-utils";
 import { expect, it } from "vitest";
 import type Route from "./Route.js";
 import { CollectionRouteView, RouteName } from "./Route.js";
-import { fromHref, toHref } from "./RouteUtils.js";
+import { fromHref, toHref, tryFromHref } from "./RouteUtils.js";
 
 const testRoutes: Route[] = [
   {
@@ -138,6 +138,24 @@ for (const testRoute of testRoutes) {
       ? `route ${testRoute.name}, view ${testRoute.view}`
       : `route ${testRoute.name}`;
   it(`fromHref(toHref(${routeDisplayName})) = ${routeDisplayName}`, () => {
-    expect(fromHref(toHref(testRoute))).toEqual(testRoute);
+    // Setup
+    const href = toHref(testRoute);
+
+    // Exercise
+    const route = fromHref(href);
+
+    // Verify
+    expect(route).toEqual(testRoute);
   });
 }
+
+it("returns null when trying to parse an unknown href", () => {
+  // Setup
+  const href = "/unknown";
+
+  // Exercise
+  const route = tryFromHref(href);
+
+  // Verify
+  expect(route).toBeNull();
+});
