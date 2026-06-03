@@ -1,4 +1,4 @@
-import { Id } from "@superego/shared-utils";
+import { valibotSchemas } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
 import { readArgsFile } from "../../utils/argsFile.js";
@@ -14,22 +14,19 @@ const argsSchema = v.strictObject({
   resource: v.variant("type", [
     v.strictObject({
       type: v.literal("document"),
-      collectionId: idSchema(Id.is.collection, "Must be a CollectionId"),
-      documentId: idSchema(Id.is.document, "Must be a DocumentId"),
+      collectionId: valibotSchemas.id.collection(),
+      documentId: valibotSchemas.id.document(),
     }),
     v.strictObject({
       type: v.literal("documentVersion"),
-      collectionId: idSchema(Id.is.collection, "Must be a CollectionId"),
-      documentId: idSchema(Id.is.document, "Must be a DocumentId"),
-      documentVersionId: idSchema(
-        Id.is.documentVersion,
-        "Must be a DocumentVersionId",
-      ),
+      collectionId: valibotSchemas.id.collection(),
+      documentId: valibotSchemas.id.document(),
+      documentVersionId: valibotSchemas.id.documentVersion(),
     }),
     v.strictObject({
       type: v.literal("collection"),
-      collectionId: idSchema(Id.is.collection, "Must be a CollectionId"),
-      appId: v.optional(idSchema(Id.is.app, "Must be an AppId")),
+      collectionId: valibotSchemas.id.collection(),
+      appId: v.optional(valibotSchemas.id.app()),
     }),
   ]),
 });
@@ -59,13 +56,3 @@ export default useMarkdownHelp(
     }),
   { argsSchema },
 );
-
-function idSchema<Id extends string>(
-  isId: (value: string) => value is Id,
-  message: string,
-) {
-  return v.pipe(
-    v.string(),
-    v.check((value): value is Id => isId(value), message),
-  );
-}
