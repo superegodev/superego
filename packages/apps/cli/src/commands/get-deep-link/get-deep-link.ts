@@ -8,7 +8,6 @@ import {
   successfulResult,
   unsuccessfulResult,
 } from "../../utils/results.js";
-import additionalNotes from "./additional-notes.md?raw";
 import getDeepLink, { type GetDeepLinkArgs } from "./getDeepLink.js";
 
 const argsSchema = v.strictObject({
@@ -61,7 +60,7 @@ export default useMarkdownHelp(
         });
       });
     }),
-  { argsSchema, additionalNotes },
+  { argsSchema },
 );
 
 function idSchema<Id extends string>(
