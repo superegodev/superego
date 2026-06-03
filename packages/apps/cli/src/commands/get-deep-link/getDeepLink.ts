@@ -25,6 +25,7 @@ type DeepLinkResource =
     }
   | {
       type: "app";
+      collectionId: CollectionId;
       appId: AppId;
     };
 
@@ -49,6 +50,6 @@ function toHref(resource: DeepLinkResource): string {
     case "collection":
       return `/collections/${resource.collectionId}`;
     case "app":
-      return `/apps/${resource.appId}/edit`;
+      return `/collections/${resource.collectionId}?view=App&appId=${resource.appId}`;
   }
 }

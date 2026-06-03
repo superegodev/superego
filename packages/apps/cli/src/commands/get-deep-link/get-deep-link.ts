@@ -32,6 +32,7 @@ const argsSchema = v.strictObject({
     }),
     v.strictObject({
       type: v.literal("app"),
+      collectionId: idSchema(Id.is.collection, "Must be a CollectionId"),
       appId: idSchema(Id.is.app, "Must be an AppId"),
     }),
   ]),

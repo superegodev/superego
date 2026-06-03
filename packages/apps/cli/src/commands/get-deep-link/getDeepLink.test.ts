@@ -56,12 +56,17 @@ describe("getDeepLink", () => {
 
   it("creates an app deep link", () => {
     // Setup
+    const collectionId = Id.generate.collection();
     const appId = Id.generate.app();
 
     // Exercise
-    const deepLink = getDeepLink({ resource: { type: "app", appId } });
+    const deepLink = getDeepLink({
+      resource: { type: "app", collectionId, appId },
+    });
 
     // Verify
-    expect(deepLink).toEqual(`superego:///apps/${appId}/edit`);
+    expect(deepLink).toEqual(
+      `superego:///collections/${collectionId}?view=App&appId=${appId}`,
+    );
   });
 });
