@@ -35,12 +35,21 @@ export default function CollectionsTree({ className }: Props) {
       WellKnownKey.CollectionsTreeCollapsedCollectionCategoryIds,
       [],
     );
+  const collectionsTree = tree.makeTree(
+    collectionCategories,
+    collections,
+    collator,
+  );
+  const expandableCollectionCategoryIds = getExpandableCollectionCategoryIds(
+    collectionsTree.children,
+  );
   const collapsedCollectionCategoryIdSet = new Set(
     collapsedCollectionCategoryIds,
   );
-  const expandedCollectionCategoryIds = collectionCategories
-    .map(({ id }) => id)
-    .filter((id) => !collapsedCollectionCategoryIdSet.has(id));
+  const expandedCollectionCategoryIds = expandableCollectionCategoryIds.filter(
+    (collectionCategoryId) =>
+      !collapsedCollectionCategoryIdSet.has(collectionCategoryId),
+  );
   const onItemDropped = (
     droppedItemId: CollectionCategoryId | CollectionId,
     droppedOn: CollectionCategoryId | CollectionId | null,
@@ -59,11 +68,6 @@ export default function CollectionsTree({ className }: Props) {
       updateCollectionSettings(droppedItemId, { collectionCategoryId: target });
     }
   };
-  const collectionsTree = tree.makeTree(
-    collectionCategories,
-    collections,
-    collator,
-  );
   return (
     <IsParentDropDisabledProvider value={false}>
       <div className={classnames(cs.CollectionsTree.root, className)}>
@@ -77,9 +81,10 @@ export default function CollectionsTree({ className }: Props) {
           expandedKeys={expandedCollectionCategoryIds}
           onExpandedChange={(expandedKeys) =>
             setCollapsedCollectionCategoryIds(
-              collectionCategories
-                .map(({ id }) => id)
-                .filter((id) => !expandedKeys.has(id)),
+              expandableCollectionCategoryIds.filter(
+                (collectionCategoryId) =>
+                  !expandedKeys.has(collectionCategoryId),
+              ),
             )
           }
           className={cs.CollectionsTree.tree}
@@ -103,4 +108,21 @@ export default function CollectionsTree({ className }: Props) {
       </div>
     </IsParentDropDisabledProvider>
   );
+}
+
+function getExpandableCollectionCategoryIds(
+  items: tree.TreeItem[],
+): CollectionCategoryId[] {
+  const collectionCategoryIds: CollectionCategoryId[] = [];
+  for (const item of items) {
+    if (item.type === tree.TreeItemType.CollectionCategory) {
+      if (item.children.length > 0) {
+        collectionCategoryIds.push(item.id);
+      }
+      collectionCategoryIds.push(
+        ...getExpandableCollectionCategoryIds(item.children),
+      );
+    }
+  }
+  return collectionCategoryIds;
 }

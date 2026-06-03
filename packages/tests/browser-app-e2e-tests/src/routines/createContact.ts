@@ -21,8 +21,11 @@ export default async function createContact(
 ) {
   // Go to the Contacts collection page.
   await openSidebar(page);
-  await page.getByRole("row", { name: /Productivity/i }).click();
-  await page.getByRole("row", { name: /Contacts/i }).click();
+  const contactsRow = page.getByRole("row", { name: /Contacts/i });
+  if (!(await contactsRow.isVisible())) {
+    await page.getByRole("row", { name: /Productivity/i }).click();
+  }
+  await contactsRow.click();
 
   // Go to the documents creation page.
   await page.getByRole("link", { name: /Create document/i }).click();
