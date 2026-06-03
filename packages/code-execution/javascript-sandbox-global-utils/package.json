@@ -1,6 +1,6 @@
 {
   "name": "@superego/javascript-sandbox-global-utils",
-  "version": "2026.5.7",
+  "version": "2026.6.0",
   "private": true,
   "type": "module",
   "exports": {
