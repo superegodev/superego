@@ -9,8 +9,6 @@ import {
   useUpdateCollectionCategory,
   useUpdateCollectionSettings,
 } from "../../../business-logic/backend/hooks.js";
-import useLocalStorageItem from "../../../business-logic/local-storage/useLocalStorageItem.js";
-import WellKnownKey from "../../../business-logic/local-storage/WellKnownKey.js";
 import classnames from "../../../utils/classnames.js";
 import CollectionCategoryTreeItem from "./CollectionCategoryTreeItem.js";
 import * as cs from "./CollectionsTree.css.js";
@@ -19,6 +17,7 @@ import { IsParentDropDisabledProvider } from "./dnd.js";
 import Header from "./Header.js";
 import RootTreeItem from "./RootTreeItem.js";
 import * as tree from "./tree.js";
+import useCollectionsTreeExpansionState from "./useCollectionsTreeExpansionState.js";
 
 interface Props {
   className?: string | undefined;
@@ -30,25 +29,12 @@ export default function CollectionsTree({ className }: Props) {
   const { mutate: deleteCollectionCategory } = useDeleteCollectionCategory();
   const { mutate: updateCollectionCategory } = useUpdateCollectionCategory();
   const { mutate: updateCollectionSettings } = useUpdateCollectionSettings();
-  const [collapsedCollectionCategoryIds, setCollapsedCollectionCategoryIds] =
-    useLocalStorageItem<CollectionCategoryId[]>(
-      WellKnownKey.CollectionsTreeCollapsedCollectionCategoryIds,
-      [],
+  const { collectionsTree, expandedCollectionCategoryIds, onExpandedChange } =
+    useCollectionsTreeExpansionState(
+      collectionCategories,
+      collections,
+      collator,
     );
-  const collectionsTree = tree.makeTree(
-    collectionCategories,
-    collections,
-    collator,
-  );
-  const expandableCollectionCategoryIds =
-    tree.getExpandableCollectionCategoryIds(collectionsTree.children);
-  const collapsedCollectionCategoryIdSet = new Set(
-    collapsedCollectionCategoryIds,
-  );
-  const expandedCollectionCategoryIds = expandableCollectionCategoryIds.filter(
-    (collectionCategoryId) =>
-      !collapsedCollectionCategoryIdSet.has(collectionCategoryId),
-  );
   const onItemDropped = (
     droppedItemId: CollectionCategoryId | CollectionId,
     droppedOn: CollectionCategoryId | CollectionId | null,
@@ -78,14 +64,7 @@ export default function CollectionsTree({ className }: Props) {
           selectionMode="none"
           items={collectionsTree.children}
           expandedKeys={expandedCollectionCategoryIds}
-          onExpandedChange={(expandedKeys) =>
-            setCollapsedCollectionCategoryIds(
-              expandableCollectionCategoryIds.filter(
-                (collectionCategoryId) =>
-                  !expandedKeys.has(collectionCategoryId),
-              ),
-            )
-          }
+          onExpandedChange={onExpandedChange}
           className={cs.CollectionsTree.tree}
         >
           {function renderItem(item) {
