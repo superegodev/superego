@@ -77,19 +77,7 @@ export function toHref(route: Route): string {
   }
 }
 
-export function fromHref(href: string): Route;
-export function fromHref<DefaultRoute extends Route | null>(
-  href: string,
-  defaultRoute: DefaultRoute,
-): Route | DefaultRoute;
-export function fromHref<DefaultRoute extends Route | null>(
-  href: string,
-  defaultRoute?: DefaultRoute,
-): Route | DefaultRoute {
-  const fallbackRoute =
-    defaultRoute === undefined
-      ? ({ name: RouteName.NotFound } satisfies Route)
-      : defaultRoute;
+export function fromHref(href: string): Route {
   try {
     const url = parseHref(href);
     const pathname = url.pathname || "/";
@@ -100,9 +88,9 @@ export function fromHref<DefaultRoute extends Route | null>(
       }
     }
   } catch {
-    return fallbackRoute;
+    return { name: RouteName.NotFound };
   }
-  return fallbackRoute;
+  return { name: RouteName.NotFound };
 }
 
 function parseHref(href: string): URL {

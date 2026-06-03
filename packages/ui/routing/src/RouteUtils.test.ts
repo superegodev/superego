@@ -158,12 +158,4 @@ describe("fromHref", () => {
     // Verify
     expect(route).toEqual({ name: RouteName.NotFound });
   });
-
-  it("returns the default route when the href is unknown", () => {
-    // Exercise
-    const route = fromHref("/unknown", null);
-
-    // Verify
-    expect(route).toBeNull();
-  });
 });
