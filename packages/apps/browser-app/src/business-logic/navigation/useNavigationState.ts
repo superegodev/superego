@@ -1,7 +1,8 @@
 import { fromHref, toHref, type Route } from "@superego/routing";
 import { create } from "zustand";
+import getInitialRoute from "./getInitialRoute.js";
 
-const initialRoute = fromHref(window.location.href);
+const initialRoute = getInitialRoute(window.location);
 
 export const useNavigationStateStore = create<UseNavigationState>(
   (set, get) => ({
