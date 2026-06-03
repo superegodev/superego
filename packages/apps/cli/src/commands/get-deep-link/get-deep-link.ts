@@ -1,8 +1,8 @@
 import {
   CollectionRouteView,
   RouteName,
+  deepLinkProtocol,
   toDeepLink,
-  toOpenDeepLink,
   type Route,
 } from "@superego/routing";
 import { valibotSchemas } from "@superego/shared-utils";
@@ -40,6 +40,8 @@ const argsSchema = v.strictObject({
 });
 type GetDeepLinkArgs = v.InferOutput<typeof argsSchema>;
 
+const openDeepLinkOrigin = "https://open.superego.dev";
+
 export default useMarkdownHelp(
   new Command("get-deep-link")
     .description("Create a Superego link for a resource.")
@@ -67,15 +69,10 @@ export default useMarkdownHelp(
 );
 
 function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
-  const route = getRoute(resource);
-  return routeToDeepLink(route, linkFormat);
-}
-
-function routeToDeepLink(
-  route: Route,
-  linkFormat: GetDeepLinkArgs["linkFormat"],
-): string {
-  return linkFormat === "web" ? toOpenDeepLink(route) : toDeepLink(route);
+  const deepLink = toDeepLink(getRoute(resource));
+  return linkFormat === "web"
+    ? deepLink.replace(`${deepLinkProtocol}://`, openDeepLinkOrigin)
+    : deepLink;
 }
 
 function getRoute(resource: GetDeepLinkArgs["resource"]): Route {

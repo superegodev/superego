@@ -4,7 +4,6 @@ import {
   fromDeepLink,
   toDeepLink,
   toHrefFromDeepLink,
-  toOpenDeepLink,
 } from "./DeepLinkUtils.js";
 import { CollectionRouteView, RouteName } from "./Route.js";
 
@@ -35,23 +34,6 @@ describe("toDeepLink", () => {
     // Verify
     expect(deepLink).toEqual(
       "superego:///collections/Collection_111111111111111111111?view=App&appId=App_111111111111111111111",
-    );
-  });
-});
-
-describe("toOpenDeepLink", () => {
-  it("converts route objects into public open links", () => {
-    // Exercise
-    const openDeepLink = toOpenDeepLink({
-      name: RouteName.Collection,
-      collectionId: "Collection_abc",
-      view: CollectionRouteView.App,
-      appId: "App_abc",
-    });
-
-    // Verify
-    expect(openDeepLink).toEqual(
-      "https://open.superego.dev/collections/Collection_abc?view=App&appId=App_abc",
     );
   });
 });

@@ -2,14 +2,8 @@ import deepLinkProtocol from "./deepLinkProtocol.js";
 import type Route from "./Route.js";
 import { fromHref, toHref } from "./RouteUtils.js";
 
-export const openDeepLinkOrigin = "https://open.superego.dev";
-
 export function toDeepLink(route: Route): string {
   return `${deepLinkProtocol}://${toHref(route)}`;
-}
-
-export function toOpenDeepLink(route: Route): string {
-  return `${openDeepLinkOrigin}${toHref(route)}`;
 }
 
 export function fromDeepLink(deepLink: string): Route | null {
