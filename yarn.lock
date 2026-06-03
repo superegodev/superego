@@ -7104,9 +7104,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@superego/routing@workspace:*, @superego/routing@workspace:packages/core/routing":
+"@superego/routing@workspace:*, @superego/routing@workspace:packages/ui/routing":
   version: 0.0.0-use.local
-  resolution: "@superego/routing@workspace:packages/core/routing"
+  resolution: "@superego/routing@workspace:packages/ui/routing"
   dependencies:
     "@superego/backend": "workspace:*"
     "@superego/shared-utils": "workspace:*"

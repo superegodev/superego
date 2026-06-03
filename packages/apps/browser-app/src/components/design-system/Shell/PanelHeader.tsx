@@ -1,8 +1,8 @@
+import { toHref } from "@superego/routing";
 import type { ReactNode } from "react";
 import { Separator, Toolbar } from "react-aria-components";
 import { PiList } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";
 import IconButton from "../IconButton/IconButton.js";

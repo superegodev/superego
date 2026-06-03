@@ -1,6 +1,6 @@
 import type { LitePack } from "@superego/backend";
+import type { Route } from "@superego/routing";
 import { useIntl } from "react-intl";
-import type Route from "../../../business-logic/navigation/Route.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import Image from "../Image/Image.js";
 import Link from "../Link/Link.js";

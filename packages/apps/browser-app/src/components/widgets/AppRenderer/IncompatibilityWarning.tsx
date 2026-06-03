@@ -1,6 +1,6 @@
 import type { App } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { FormattedMessage, useIntl } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import formattedMessageHtmlTags from "../../../utils/formattedMessageHtmlTags.js";
 import Alert from "../../design-system/Alert/Alert.js";
 import Button from "../../design-system/Button/Button.js";

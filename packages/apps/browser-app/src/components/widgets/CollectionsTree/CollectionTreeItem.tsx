@@ -1,13 +1,11 @@
 import type { CollectionCategoryId, CollectionId } from "@superego/backend";
+import { RouteName, toHref, type Route } from "@superego/routing";
 import { useRef } from "react";
 import {
   TreeItem,
   TreeItemContent,
   type TreeItemProps,
 } from "react-aria-components";
-import type Route from "../../../business-logic/navigation/Route.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
 import classnames from "../../../utils/classnames.js";

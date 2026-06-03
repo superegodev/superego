@@ -12,6 +12,7 @@ import type {
   DocumentVersionId,
 } from "@superego/backend";
 import { DocumentContentChangeType } from "@superego/backend";
+import { fromHref, RouteName, toHref } from "@superego/routing";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
@@ -23,11 +24,6 @@ import {
   useCreateNewDocumentVersion,
 } from "../../../business-logic/backend/hooks.js";
 import useBackend from "../../../business-logic/backend/useBackend.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import {
-  fromHref,
-  toHref,
-} from "../../../business-logic/navigation/RouteUtils.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";

@@ -3,10 +3,10 @@ import {
   type InferenceOptions,
   type Message,
 } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useStartConversation } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Link from "../../design-system/Link/Link.js";
 import ResultErrors from "../../design-system/ResultErrors/ResultErrors.js";

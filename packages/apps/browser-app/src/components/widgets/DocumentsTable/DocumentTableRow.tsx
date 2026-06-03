@@ -1,8 +1,7 @@
 import type { CollectionId, LiteDocument } from "@superego/backend";
+import { RouteName, toHref } from "@superego/routing";
 import type { ContentSummaryUtils } from "@superego/shared-utils";
 import { FormattedDate, FormattedMessage } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import ContentSummaryPropertyValue from "../../design-system/ContentSummaryPropertyValue/ContentSummaryPropertyValue.js";

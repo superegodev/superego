@@ -1,4 +1,5 @@
 import type { Backend } from "@superego/backend";
+import { fromHref } from "@superego/routing";
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider, useLocale } from "react-aria-components";
 import { FormattedMessage, IntlProvider } from "react-intl";
@@ -12,7 +13,6 @@ import {
   listCollectionsQuery,
 } from "./business-logic/backend/hooks.js";
 import { BackendProvider } from "./business-logic/backend/useBackend.js";
-import { fromHref } from "./business-logic/navigation/RouteUtils.js";
 import useNavigationState from "./business-logic/navigation/useNavigationState.js";
 import ScreenSizeProvider from "./business-logic/screen-size/ScreenSizeProvider.js";
 import ResultErrors from "./components/design-system/ResultErrors/ResultErrors.js";

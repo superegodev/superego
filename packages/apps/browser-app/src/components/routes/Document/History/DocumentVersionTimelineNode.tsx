@@ -1,7 +1,7 @@
 import type { Document, MinimalDocumentVersion } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { PiChatCircle, PiClockCounterClockwise } from "react-icons/pi";
 import { FormattedDate, useIntl } from "react-intl";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import IconButton from "../../../design-system/IconButton/IconButton.js";
 import IconLink from "../../../design-system/IconLink/IconLink.js";

@@ -1,5 +1,6 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { Collection } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { valibotSchemas } from "@superego/schema";
 import { valibotSchemas as sharedUtilsValibotSchemas } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
@@ -10,7 +11,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import toasts from "../../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../../business-logic/toasts/ToastType.js";

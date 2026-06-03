@@ -1,5 +1,5 @@
+import type { Route } from "@superego/routing";
 import type { ReactNode } from "react";
-import type Route from "../../../business-logic/navigation/Route.js";
 
 type PanelHeaderAction = {
   label: string;

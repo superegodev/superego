@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import { RouteName } from "@superego/routing";
 import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import { valibotSchemas as backendUtilsValibotSchemas } from "@superego/shared-utils";
 import { useEffect, useMemo, useRef } from "react";
@@ -8,7 +9,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateCollection } from "../../../../business-logic/backend/hooks.js";
 import forms from "../../../../business-logic/forms/forms.js";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../../business-logic/navigation/useNavigationState.js";
 import FullPageTabs from "../../../design-system/FullPageTabs/FullPageTabs.js";
 import FormStateEffects from "../../../widgets/FormStateEffects/FormStateEffects.js";

@@ -1,6 +1,5 @@
+import { fromHref, toHref, type Route } from "@superego/routing";
 import { create } from "zustand";
-import type Route from "./Route.js";
-import { fromHref, toHref } from "./RouteUtils.js";
 
 const initialRoute = fromHref(window.location.href);
 

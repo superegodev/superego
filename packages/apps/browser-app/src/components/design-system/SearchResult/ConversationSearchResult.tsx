@@ -1,8 +1,7 @@
 import type { LiteConversation, TextSearchResult } from "@superego/backend";
+import { RouteName, toHref } from "@superego/routing";
 import { ListBoxItem } from "react-aria-components";
 import { FormattedDate, useIntl } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import MatchedText from "../MatchedText/MatchedText.js";
 import * as cs from "./SearchResult.css.js";
 

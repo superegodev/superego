@@ -1,8 +1,8 @@
+import { RouteName } from "@superego/routing";
 import { Toolbar } from "react-aria-components";
 import { PiFolderSimplePlus, PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useCreateCollectionCategory } from "../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useShell from "../../../business-logic/navigation/useShell.js";
 import IconButton from "../../design-system/IconButton/IconButton.js";
 import IconLink from "../../design-system/IconLink/IconLink.js";

@@ -1,4 +1,4 @@
-import { RouteName } from "../../../business-logic/navigation/Route.js";
+import { RouteName } from "@superego/routing";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import Ask from "../Ask/Ask.js";
 import BackgroundJob from "../BackgroundJob/BackgroundJob.js";

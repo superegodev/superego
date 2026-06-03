@@ -1,6 +1,6 @@
 import type { Document } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { useEffect } from "react";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 
 interface Props {

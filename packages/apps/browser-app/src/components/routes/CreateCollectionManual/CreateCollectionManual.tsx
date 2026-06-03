@@ -1,6 +1,6 @@
+import { RouteName } from "@superego/routing";
 import { PiRobot } from "react-icons/pi";
 import { useIntl } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import Shell from "../../design-system/Shell/Shell.js";
 import CreateCollectionForm from "./CreateCollectionForm/CreateCollectionForm.js";
 

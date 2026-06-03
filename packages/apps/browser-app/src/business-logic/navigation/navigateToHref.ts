@@ -1,4 +1,4 @@
-import { fromHref } from "./RouteUtils.js";
+import { fromHref } from "@superego/routing";
 import { useNavigationStateStore } from "./useNavigationState.js";
 
 export default function navigateToHref(href: string): void {

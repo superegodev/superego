@@ -1,11 +1,11 @@
 import type { Collection, CollectionId, DocumentId } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import type { DocumentRef } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { PiArrowSquareOut } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import DataLoader from "../../../../business-logic/backend/DataLoader.js";
 import { getDocumentQuery } from "../../../../business-logic/backend/hooks.js";
-import { RouteName } from "../../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../../utils/CollectionUtils.js";
 import DocumentUtils from "../../../../utils/DocumentUtils.js";
 import Button from "../../../design-system/Button/Button.js";

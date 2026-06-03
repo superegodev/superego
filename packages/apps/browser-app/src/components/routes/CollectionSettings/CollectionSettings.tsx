@@ -1,9 +1,9 @@
 import type { CollectionId } from "@superego/backend";
+import { RouteName } from "@superego/routing";
 import { useState } from "react";
 import { PiTrash } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import FullPageTabs from "../../design-system/FullPageTabs/FullPageTabs.js";
 import Shell from "../../design-system/Shell/Shell.js";

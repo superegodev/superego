@@ -1,7 +1,6 @@
 import type { LiteConversation } from "@superego/backend";
+import { RouteName, toHref } from "@superego/routing";
 import { FormattedDate, useIntl } from "react-intl";
-import { RouteName } from "../../../business-logic/navigation/Route.js";
-import { toHref } from "../../../business-logic/navigation/RouteUtils.js";
 import ScreenSize from "../../../business-logic/screen-size/ScreenSize.js";
 import ConversationUtils from "../../../utils/ConversationUtils.js";
 import ConversationAssistant from "../../design-system/ConversationAssistant/ConversationAssistant.js";

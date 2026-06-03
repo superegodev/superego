@@ -8,6 +8,7 @@ import type {
   PackId,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
+import decodePathSegment from "./decodePathSegment.js";
 import type Route from "./Route.js";
 import { CollectionRouteView, RouteName } from "./Route.js";
 
@@ -76,11 +77,19 @@ export function toHref(route: Route): string {
   }
 }
 
-export function fromHref(href: string): Route {
-  return tryFromHref(href) ?? { name: RouteName.Ask };
-}
-
-export function tryFromHref(href: string): Route | null {
+export function fromHref(href: string): Route;
+export function fromHref<DefaultRoute extends Route | null>(
+  href: string,
+  defaultRoute: DefaultRoute,
+): Route | DefaultRoute;
+export function fromHref<DefaultRoute extends Route | null>(
+  href: string,
+  defaultRoute?: DefaultRoute,
+): Route | DefaultRoute {
+  const fallbackRoute =
+    defaultRoute === undefined
+      ? ({ name: RouteName.Ask } satisfies Route)
+      : defaultRoute;
   try {
     const url = new URL(href, HREF_PARSE_ORIGIN);
     const pathname = url.pathname || "/";
@@ -91,9 +100,9 @@ export function tryFromHref(href: string): Route | null {
       }
     }
   } catch {
-    return null;
+    return fallbackRoute;
   }
-  return null;
+  return fallbackRoute;
 }
 
 interface RouteMatcher {
@@ -287,16 +296,3 @@ const routeMatchers: RouteMatcher[] = [
     }),
   },
 ];
-
-function decodePathSegment<Segment extends string>(
-  value: string | undefined,
-): Segment {
-  if (value === undefined) {
-    throw new Error("Missing path segment");
-  }
-  try {
-    return decodeURIComponent(value) as Segment;
-  } catch {
-    return value as Segment;
-  }
-}

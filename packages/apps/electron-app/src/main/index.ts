@@ -1,43 +1,21 @@
-import { resolve } from "node:path";
-import { fromDeepLink, toHref } from "@superego/routing";
 import { app, BrowserWindow } from "electron";
 import createWindow from "./createWindow.js";
-import { navigateWindowToHref } from "./navigateFocusedWindow.js";
+import registerDeepLinks from "./deep-links/registerDeepLinks.js";
 import onReady from "./onReady.js";
 import registerAppSandboxProtocol from "./registerAppSandboxProtocol.js";
 
-const DEEP_LINK_PROTOCOL = "superego";
-
 registerAppSandboxProtocol();
-registerDeepLinkProtocol();
-
-let pendingDeepLink = process.argv.find((argument) =>
-  argument.startsWith(`${DEEP_LINK_PROTOCOL}://`),
-);
 
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
 if (!gotSingleInstanceLock) {
   app.quit();
 } else {
+  const deepLinks = registerDeepLinks();
+
   app
     .on("ready", () => {
       onReady();
-      if (pendingDeepLink) {
-        navigateToDeepLink(pendingDeepLink);
-        pendingDeepLink = undefined;
-      }
-    })
-    .on("second-instance", (_event, commandLine) => {
-      const deepLink = commandLine.find((argument) =>
-        argument.startsWith(`${DEEP_LINK_PROTOCOL}://`),
-      );
-      if (deepLink) {
-        handleDeepLink(deepLink);
-      }
-    })
-    .on("open-url", (event, deepLink) => {
-      event.preventDefault();
-      handleDeepLink(deepLink);
+      deepLinks.navigateToPendingDeepLink();
     })
     .on("window-all-closed", () => {
       if (process.platform !== "darwin") {
@@ -57,35 +35,4 @@ if (!gotSingleInstanceLock) {
         event.preventDefault();
       });
     });
-}
-
-function registerDeepLinkProtocol(): void {
-  if (process.defaultApp && process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient(DEEP_LINK_PROTOCOL, process.execPath, [
-      resolve(process.argv[1]!),
-    ]);
-  } else {
-    app.setAsDefaultProtocolClient(DEEP_LINK_PROTOCOL);
-  }
-}
-
-function handleDeepLink(deepLink: string): void {
-  if (!app.isReady()) {
-    pendingDeepLink = deepLink;
-    return;
-  }
-  navigateToDeepLink(deepLink);
-}
-
-function navigateToDeepLink(deepLink: string): void {
-  const route = fromDeepLink(deepLink);
-  if (route === null) {
-    return;
-  }
-  const window = BrowserWindow.getFocusedWindow() ?? createWindow();
-  if (window.isMinimized()) {
-    window.restore();
-  }
-  window.focus();
-  navigateWindowToHref(window, toHref(route));
 }

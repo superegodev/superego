@@ -1,5 +1,5 @@
 import type Route from "./Route.js";
-import { toHref, tryFromHref } from "./RouteUtils.js";
+import { fromHref, toHref } from "./RouteUtils.js";
 
 const DEEP_LINK_PROTOCOL = "superego";
 
@@ -9,7 +9,7 @@ export function toDeepLink(route: Route): string {
 
 export function fromDeepLink(deepLink: string): Route | null {
   const href = toHrefFromDeepLink(deepLink);
-  return href === null ? null : tryFromHref(href);
+  return href === null ? null : fromHref(href, null);
 }
 
 export function toHrefFromDeepLink(deepLink: string): string | null {
