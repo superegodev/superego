@@ -7070,7 +7070,6 @@ __metadata:
     "@cloudflare/workers-types": "npm:4.20260526.1"
     "@superego/routing": "workspace:*"
     typescript: "npm:^6.0.3"
-    vitest: "npm:^4.1.7"
     wrangler: "npm:^4.94.0"
   languageName: unknown
   linkType: soft
