@@ -186,14 +186,50 @@ jobs:
     needs: [build-deploy-demo, build-deploy-website, deploy-open, build-deploy-electron]
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      issues: write
     steps:
-      - uses: mshick/add-pr-comment@v2
+      - name: Comment preview URLs
+        uses: actions/github-script@v8
         with:
-          message: |
-            ### 🚀 Previews available
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const marker = "<!-- preview-deployments-comment -->";
+            const legacyMarker = "<!-- add-pr-comment:add-pr-comment -->";
+            const body = [
+              marker,
+              "",
+              "### 🚀 Previews available",
+              "",
+              `- Demo app: https://${prNumber}.demosuperegodev.pages.dev/`,
+              `- Website: https://${prNumber}.superegodev.pages.dev/`,
+              `- Open worker: https://pr-${prNumber}-opensuperegodev.paolo-scanferla.workers.dev/`,
+              `- Electron apps: https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            ].join("\n");
 
-            - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
-            - Website: https://${{ github.event.number }}.superegodev.pages.dev/
-            - Open worker: https://pr-${{ github.event.number }}-opensuperegodev.paolo-scanferla.workers.dev/
-            - Electron apps: https://github.com/superegodev/superego/actions/runs/${{ github.run_id }}
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existingComment = comments.find(
+              (comment) =>
+                comment.body.includes(marker) ||
+                comment.body.includes(legacyMarker),
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
