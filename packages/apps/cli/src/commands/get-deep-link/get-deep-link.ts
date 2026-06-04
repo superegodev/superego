@@ -66,7 +66,7 @@ export default useMarkdownHelp(
     }),
   { argsSchema, additionalNotes },
 );
-
+// Exported only for tests.
 export function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
   const deepLink = toDeepLink(getRoute(resource));
   return linkFormat === "desktop"
