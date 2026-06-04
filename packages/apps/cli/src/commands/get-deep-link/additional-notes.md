@@ -3,5 +3,5 @@
 block custom URL schemes.
 
 Web links keep Superego resource IDs in the URL fragment. Browsers do not send
-URL fragments to `open.superego.dev`, so the service only receives the request
-needed to serve the opener page.
+URL fragments to `open.superego.dev`, so sensitive URL data never reaches the
+server and is handled only in the browser.
