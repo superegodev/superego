@@ -69,9 +69,9 @@ export default useMarkdownHelp(
 
 export function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
   const deepLink = toDeepLink(getRoute(resource));
-  return linkFormat === "web"
-    ? `${openDeepLinkOrigin}/#deepLink=${encodeURIComponent(deepLink)}`
-    : deepLink;
+  return linkFormat === "desktop"
+    ? deepLink
+    : `${openDeepLinkOrigin}/#deepLink=${encodeURIComponent(deepLink)}`;
 }
 
 function getRoute(resource: GetDeepLinkArgs["resource"]): Route {
