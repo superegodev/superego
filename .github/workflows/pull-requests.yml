@@ -89,8 +89,6 @@ jobs:
   deploy-open:
     needs: qa
     runs-on: ubuntu-latest
-    outputs:
-      preview-url: ${{ steps.deploy.outputs.preview-url }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -101,15 +99,10 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable --check-cache --refresh-lockfile
       - name: Deploy open worker to preview environment
-        id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
-        run: |
-          set -euo pipefail
-          yarn deploy-open:preview --preview-alias pr-${{ github.event.number }} | tee wrangler-output.txt
-          PREVIEW_URL=$(grep -m 1 -Eo 'https://[^ ]+\.workers\.dev[^ ]*' wrangler-output.txt)
-          echo "preview-url=${PREVIEW_URL}" >> "$GITHUB_OUTPUT"
+        run: yarn deploy-open:preview --preview-alias pr-${{ github.event.number }}
 
   build-deploy-electron:
     needs: qa
@@ -184,5 +177,5 @@ jobs:
 
             - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
             - Website: https://${{ github.event.number }}.superegodev.pages.dev/
-            - Open worker: ${{ needs.deploy-open.outputs.preview-url }}
+            - Open worker: https://pr-${{ github.event.number }}-opensuperegodev.paolo-scanferla.workers.dev/
             - Electron apps: https://github.com/superegodev/superego/actions/runs/${{ github.run_id }}
