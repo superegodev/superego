@@ -1,6 +1,6 @@
 {
   "name": "@superego/browser-app",
-  "version": "2026.6.0",
+  "version": "2026.6.1",
   "private": true,
   "type": "module",
   "exports": {
