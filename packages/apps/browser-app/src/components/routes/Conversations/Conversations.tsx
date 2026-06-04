@@ -11,7 +11,9 @@ export default function Conversations() {
   return (
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
-        title={intl.formatMessage({ defaultMessage: "🤖\u2002Conversations" })}
+        title={intl.formatMessage({
+          defaultMessage: "🤖 Conversations",
+        })}
         actionsAriaLabel={intl.formatMessage({
           defaultMessage: "Conversations actions",
         })}

@@ -221,11 +221,8 @@
   "Conversation.tsx_A4DzYS": {
     "defaultMessage": "Mostra le tool call"
   },
-  "Conversation.tsx_avxZiI": {
-    "defaultMessage": "🤖 Conversazioni » {conversationId}"
-  },
-  "Conversation.tsx_l0Yx7U": {
-    "defaultMessage": "🤖 Conversazioni » {conversation}"
+  "Conversation.tsx_eq3LES": {
+    "defaultMessage": "🤖 Conversazioni » {conversation}"
   },
   "Conversation.tsx_oZLZvb": {
     "defaultMessage": "Come posso aiutarti?"
@@ -233,14 +230,17 @@
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Azioni della conversazione"
   },
+  "Conversation.tsx_y2z/xn": {
+    "defaultMessage": "🤖 Conversazioni » {conversationId}"
+  },
   "Conversation.tsx_yGVyFv": {
     "defaultMessage": "Nascondi le tool call"
   },
   "Conversation.tsx_yWDfdE": {
     "defaultMessage": "Che tipo di dati vuoi salvare?"
   },
-  "Conversation.tsx_2U3CJ+": {
-    "defaultMessage": "🤖 Conversazioni"
+  "Conversation.tsx_yYmfIl": {
+    "defaultMessage": "🤖 Conversazioni"
   },
   "ConversationSearchResult.tsx_KHJ2sI": {
     "defaultMessage": "Conversazione senza titolo"
@@ -254,8 +254,8 @@
   "Conversations.tsx_YdANpb": {
     "defaultMessage": "Azioni delle conversazioni"
   },
-  "Conversations.tsx_2U3CJ+": {
-    "defaultMessage": "🤖 Conversazioni"
+  "Conversations.tsx_yYmfIl": {
+    "defaultMessage": "🤖 Conversazioni"
   },
   "ConversationsTable.tsx_/+r2Su": {
     "defaultMessage": "Non hai ancora conversazioni."
@@ -575,8 +575,8 @@
   "EditApp.tsx_K3r6DQ": {
     "defaultMessage": "Elimina"
   },
-  "EditApp.tsx_LVy7EO": {
-    "defaultMessage": "🧩 {app} » Modifica"
+  "EditApp.tsx_LDlHu6": {
+    "defaultMessage": "🧩 {app} » Modifica"
   },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Crea nuova versione"

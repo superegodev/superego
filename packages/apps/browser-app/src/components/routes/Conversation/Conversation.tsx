@@ -32,7 +32,7 @@ export default function Conversation({ conversationId }: Props) {
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
             title={intl.formatMessage({
-              defaultMessage: "🤖\u2002Conversations",
+              defaultMessage: "🤖 Conversations",
             })}
           />
         </Shell.Panel>
@@ -43,11 +43,11 @@ export default function Conversation({ conversationId }: Props) {
             screenSize > ScreenSize.Small
               ? intl.formatMessage(
                   {
-                    defaultMessage: "🤖\u2002Conversations » {conversationId}",
+                    defaultMessage: "🤖 Conversations » {conversationId}",
                   },
                   { conversationId },
                 )
-              : "🤖\u2002 {conversationId}"
+              : "🤖 {conversationId}"
           }
           errors={errors}
         />
@@ -89,7 +89,7 @@ const MemoizedConversation = memo(
             screenSize > ScreenSize.Small
               ? intl.formatMessage(
                   {
-                    defaultMessage: "🤖\u2002Conversations » {conversation}",
+                    defaultMessage: "🤖 Conversations » {conversation}",
                   },
                   {
                     conversation: ConversationUtils.getDisplayTitle(
@@ -98,10 +98,7 @@ const MemoizedConversation = memo(
                     ),
                   },
                 )
-              : `🤖\u2002 ${ConversationUtils.getDisplayTitle(
-                  conversation,
-                  intl,
-                )}`
+              : `🤖 ${ConversationUtils.getDisplayTitle(conversation, intl)}`
           }
           actionsAriaLabel={intl.formatMessage({
             defaultMessage: "Conversation actions",

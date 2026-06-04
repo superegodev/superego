@@ -77,9 +77,9 @@ export default function Title({ toolCall, toolResult }: Props) {
   }
   return (
     <h5 className={cs.Title.root}>
-      {"⚡\u2002"}
+      {"⚡ "}
       {title}
-      {"\u2002→\u2002"}
+      {" → "}
       {toolResult ? (
         toolResult.output.success ? (
           <FormattedMessage defaultMessage="Succeeded" />

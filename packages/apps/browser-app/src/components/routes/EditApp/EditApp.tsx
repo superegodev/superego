@@ -38,7 +38,9 @@ export default function EditApp({ appId }: Props) {
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage(
-          { defaultMessage: "🧩\u2002{app} » Edit" },
+          {
+            defaultMessage: "🧩 {app} » Edit",
+          },
           { app: app.name },
         )}
         actions={[
