@@ -16,7 +16,7 @@
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",

@@ -20,12 +20,12 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "@vitest/browser": "^4.1.7",
-    "@vitest/browser-playwright": "^4.1.7",
+    "@vitest/browser": "^4.1.8",
+    "@vitest/browser-playwright": "^4.1.8",
     "es-toolkit": "^1.47.0",
     "monaco-editor": "^0.55.1",
     "playwright": "^1.60.0",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",

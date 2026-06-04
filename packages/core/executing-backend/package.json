@@ -28,7 +28,7 @@
     "luxon": "^3.7.2",
     "p-map": "^7.0.4",
     "valibot": "^1.4.1",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",

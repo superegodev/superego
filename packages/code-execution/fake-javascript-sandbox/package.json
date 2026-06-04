@@ -22,10 +22,10 @@
     "@superego/javascript-sandbox-global-utils": "workspace:*"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.1.7",
-    "@vitest/browser-playwright": "^4.1.7",
+    "@vitest/browser": "^4.1.8",
+    "@vitest/browser-playwright": "^4.1.8",
     "playwright": "^1.60.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.7"
+    "vitest": "^4.1.8"
   }
 }

@@ -53,12 +53,12 @@
     "@electron-forge/plugin-fuses": "^7.11.2",
     "@electron-forge/publisher-github": "^7.11.2",
     "@electron/fuses": "^2.1.1",
-    "@formatjs/cli": "^6.16.3",
-    "@formatjs/unplugin": "^1.1.15",
+    "@formatjs/cli": "^6.16.6",
+    "@formatjs/unplugin": "^1.1.17",
     "@reforged/maker-appimage": "^5.2.0",
-    "electron": "42.2.0",
+    "electron": "42.3.0",
     "electron-vite": "6.0.0-beta.1",
-    "vite": "^8.0.14"
+    "vite": "^8.0.16"
   },
   "productName": "superego"
 }
