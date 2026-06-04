@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",
-    "@formatjs/cli": "patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch",
+    "@formatjs/cli": "^6.16.7",
     "@formatjs/unplugin": "^1.1.17",
     "@superego/app-sandbox": "workspace:*",
     "@superego/demo-data-repositories": "workspace:*",
