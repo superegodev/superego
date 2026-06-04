@@ -2649,7 +2649,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/cli@npm:^6.16.6":
+"@formatjs/cli@npm:6.16.6":
   version: 6.16.6
   resolution: "@formatjs/cli@npm:6.16.6"
   dependencies:
@@ -2689,6 +2689,49 @@ __metadata:
   bin:
     formatjs: bin/formatjs
   checksum: 10c0/fd24df16040afa6d64de48b12c632c3f18031a739f93d4adfc23968300a0abfadf1f9f49233359aeb86bd3d19f5e37e8d87715f45481d422b376732b2e688764
+  languageName: node
+  linkType: hard
+
+"@formatjs/cli@patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch":
+  version: 6.16.6
+  resolution: "@formatjs/cli@patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch::version=6.16.6&hash=ef5fb3"
+  dependencies:
+    "@formatjs/cli-native-darwin-arm64": "npm:1.1.1"
+    "@formatjs/cli-native-linux-arm64": "npm:1.2.1"
+    "@formatjs/cli-native-linux-x64": "npm:1.1.1"
+    "@formatjs/cli-native-win32-x64": "npm:1.1.2"
+  peerDependencies:
+    "@glimmer/syntax": ^0.84.3 || ^0.95.0
+    "@vue/compiler-core": ^3.5.0
+    content-tag: ^4.1.0
+    vue: ^3.5.0
+  dependenciesMeta:
+    "@formatjs/cli-native-darwin-arm64":
+      optional: true
+    "@formatjs/cli-native-linux-arm64":
+      optional: true
+    "@formatjs/cli-native-linux-x64":
+      optional: true
+    "@formatjs/cli-native-win32-x64":
+      optional: true
+  peerDependenciesMeta:
+    "@glimmer/env":
+      optional: true
+    "@glimmer/reference":
+      optional: true
+    "@glimmer/syntax":
+      optional: true
+    "@glimmer/validator":
+      optional: true
+    "@vue/compiler-core":
+      optional: true
+    content-tag:
+      optional: true
+    vue:
+      optional: true
+  bin:
+    formatjs: bin/formatjs
+  checksum: 10c0/d491cf91015e297edb6bd2109a0b83eeca50d9a31a5b73a826dac19d31855ca1d876567970c1afaf0dcb7655a0af9ce0a7314f3dd8ea4e47aee5767121b9fab7
   languageName: node
   linkType: hard
 
@@ -6813,7 +6856,7 @@ __metadata:
   dependencies:
     "@excalidraw/excalidraw": "npm:0.18.0-0457ac9"
     "@fast-check/vitest": "npm:^0.4.1"
-    "@formatjs/cli": "npm:^6.16.6"
+    "@formatjs/cli": "patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch"
     "@formatjs/unplugin": "npm:^1.1.17"
     "@geoman-io/maplibre-geoman-free": "npm:^0.7.1"
     "@hookform/resolvers": "npm:^5.4.0"
@@ -6992,7 +7035,7 @@ __metadata:
     "@electron-forge/plugin-fuses": "npm:^7.11.2"
     "@electron-forge/publisher-github": "npm:^7.11.2"
     "@electron/fuses": "npm:^2.1.1"
-    "@formatjs/cli": "npm:^6.16.6"
+    "@formatjs/cli": "patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch"
     "@formatjs/intl": "npm:^4.1.12"
     "@formatjs/unplugin": "npm:^1.1.17"
     "@reforged/maker-appimage": "npm:^5.2.0"

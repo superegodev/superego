@@ -53,7 +53,7 @@
     "@electron-forge/plugin-fuses": "^7.11.2",
     "@electron-forge/publisher-github": "^7.11.2",
     "@electron/fuses": "^2.1.1",
-    "@formatjs/cli": "^6.16.6",
+    "@formatjs/cli": "patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch",
     "@formatjs/unplugin": "^1.1.17",
     "@reforged/maker-appimage": "^5.2.0",
     "electron": "42.3.0",
