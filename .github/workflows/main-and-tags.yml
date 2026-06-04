@@ -2,14 +2,51 @@ name: QA and deploy
 
 on:
   push:
+    branches:
+      - main
     tags:
       - "v*"
 
 jobs:
-  qa:
-    runs-on: warp-macos-26-arm64-6x
+  detect-trigger:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      is-tag: ${{ steps.detect.outputs.is-tag }}
+      run-jobs: ${{ steps.detect.outputs.run-jobs }}
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Detect push type
+        id: detect
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "is-tag=true" >> "$GITHUB_OUTPUT"
+            echo "run-jobs=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git fetch --force origin "refs/tags/v*:refs/tags/v*"
+          if git tag --points-at "$GITHUB_SHA" --list "v*" | grep -q .; then
+            echo "is-tag=false" >> "$GITHUB_OUTPUT"
+            echo "run-jobs=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "is-tag=false" >> "$GITHUB_OUTPUT"
+            echo "run-jobs=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  qa:
+    needs: detect-trigger
+    if: needs.detect-trigger.outputs.run-jobs == 'true'
+    runs-on: macos-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -44,11 +81,16 @@ jobs:
           compression-level: 0
 
   build-deploy-demo-website-and-open:
-    needs: qa
+    needs: [detect-trigger, qa]
+    if: needs.detect-trigger.outputs.run-jobs == 'true'
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -80,7 +122,8 @@ jobs:
         run: yarn deploy-open:production
 
   build-deploy-electron:
-    needs: qa
+    needs: [detect-trigger, qa]
+    if: needs.detect-trigger.outputs.is-tag == 'true'
     strategy:
       matrix:
         include:
@@ -101,6 +144,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24.14.0"

@@ -1,7 +1,6 @@
 import {
   CollectionRouteView,
   RouteName,
-  deepLinkProtocol,
   toDeepLink,
   type Route,
 } from "@superego/routing";
@@ -67,12 +66,12 @@ export default useMarkdownHelp(
     }),
   { argsSchema, additionalNotes },
 );
-
-function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
+// Exported only for tests.
+export function getDeepLink({ linkFormat, resource }: GetDeepLinkArgs): string {
   const deepLink = toDeepLink(getRoute(resource));
-  return linkFormat === "web"
-    ? deepLink.replace(`${deepLinkProtocol}://`, openDeepLinkOrigin)
-    : deepLink;
+  return linkFormat === "desktop"
+    ? deepLink
+    : `${openDeepLinkOrigin}/#deepLink=${encodeURIComponent(deepLink)}`;
 }
 
 function getRoute(resource: GetDeepLinkArgs["resource"]): Route {

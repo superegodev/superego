@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "check-types": "tsc --noEmit",
-    "test": "vitest --reporter=verbose",
+    "deploy:preview": "wrangler versions upload",
     "deploy:production": "wrangler deploy"
   },
   "dependencies": {
@@ -14,7 +14,6 @@
   "devDependencies": {
     "@cloudflare/workers-types": "4.20260526.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.7",
     "wrangler": "^4.94.0"
   }
 }

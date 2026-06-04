@@ -3,6 +3,7 @@
   "name": "opensuperegodev",
   "compatibility_date": "2026-06-03",
   "main": "./src/worker.ts",
+  "preview_urls": true,
   "routes": [{ "pattern": "open.superego.dev", "custom_domain": true }],
   "observability": {
     "logs": { "enabled": false },

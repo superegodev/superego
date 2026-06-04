@@ -5,8 +5,12 @@ on: pull_request
 jobs:
   qa:
     runs-on: macos-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -43,8 +47,12 @@ jobs:
   build-deploy-demo:
     needs: qa
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -66,8 +74,12 @@ jobs:
     needs: qa
     runs-on: ubuntu-latest
     environment: preview
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
@@ -85,6 +97,28 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
           CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
         run: yarn deploy-website:preview --branch ${{ github.event.number }}
+
+  deploy-open:
+    needs: qa
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Enable corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable --check-cache --refresh-lockfile
+      - name: Deploy open worker to preview environment
+        env:
+          CLOUDFLARE_API_TOKEN: ${{secrets.CLOUDFLARE_API_TOKEN}}
+          CLOUDFLARE_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+        run: yarn deploy-open:preview --preview-alias pr-${{ github.event.number }}
 
   build-deploy-electron:
     needs: qa
@@ -114,9 +148,11 @@ jobs:
       run:
         shell: bash
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v6
         with:
           node-version: "24.14.0"
@@ -147,16 +183,54 @@ jobs:
           compression-level: 0
 
   add-pr-comment:
-    needs: [build-deploy-demo, build-deploy-website, build-deploy-electron]
+    needs: [build-deploy-demo, build-deploy-website, deploy-open, build-deploy-electron]
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      issues: write
     steps:
-      - uses: mshick/add-pr-comment@v2
+      - name: Comment preview URLs
+        uses: actions/github-script@v8
         with:
-          message: |
-            ### 🚀 Previews available
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const marker = "<!-- preview-deployments-comment -->";
+            const legacyMarker = "<!-- add-pr-comment:add-pr-comment -->";
+            const body = [
+              marker,
+              "",
+              "### 🚀 Previews available",
+              "",
+              `- Demo app: https://${prNumber}.demosuperegodev.pages.dev/`,
+              `- Website: https://${prNumber}.superegodev.pages.dev/`,
+              `- Open worker: https://pr-${prNumber}-opensuperegodev.paolo-scanferla.workers.dev/`,
+              `- Electron apps: https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            ].join("\n");
 
-            - Demo app: https://${{ github.event.number }}.demosuperegodev.pages.dev/
-            - Website: https://${{ github.event.number }}.superegodev.pages.dev/
-            - Electron apps: https://github.com/superegodev/superego/actions/runs/${{ github.run_id }}
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              per_page: 100,
+            });
+
+            const existingComment = comments.find(
+              (comment) =>
+                comment.body.includes(marker) ||
+                comment.body.includes(legacyMarker),
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
