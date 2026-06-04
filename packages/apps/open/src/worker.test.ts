@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { handleRequest } from "./worker.js";
 
 describe("handleRequest", () => {
-  it("redirects route paths to Superego deep links", () => {
+  it("does not redirect route paths to Superego deep links", () => {
     // Exercise
     const response = handleRequest(
       new Request(
@@ -11,14 +11,12 @@ describe("handleRequest", () => {
     );
 
     // Verify
-    expect(response.status).toBe(302);
-    expect(response.headers.get("Location")).toBe(
-      "superego:///collections/Collection_abc?view=App&appId=App_abc",
-    );
+    expect(response.status).toBe(404);
+    expect(response.headers.get("Location")).toBeNull();
     expect(response.headers.get("Cache-Control")).toBe("no-store");
   });
 
-  it("renders the privacy note at the root", async () => {
+  it("renders the fragment-based opener at the root", async () => {
     // Exercise
     const response = handleRequest(new Request("https://open.superego.dev/"));
 
@@ -27,8 +25,9 @@ describe("handleRequest", () => {
     expect(response.headers.get("Content-Type")).toBe(
       "text/html; charset=utf-8",
     );
+    expect(response.headers.get("Referrer-Policy")).toBe("no-referrer");
     await expect(response.text()).resolves.toContain(
-      "Superego does not store, analyze, or log these IDs",
+      "window.location.replace(deepLink)",
     );
   });
 

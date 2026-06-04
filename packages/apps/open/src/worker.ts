@@ -1,7 +1,22 @@
 import { deepLinkProtocol } from "@superego/routing";
 
-const noStoreHeaders = {
+const baseHeaders = {
   "Cache-Control": "no-store",
+  "Referrer-Policy": "no-referrer",
+  "X-Robots-Tag": "noindex, nofollow",
+} as const;
+
+const htmlHeaders = {
+  ...baseHeaders,
+  "Content-Security-Policy": [
+    "default-src 'none'",
+    "script-src 'unsafe-inline'",
+    "style-src 'unsafe-inline'",
+    "base-uri 'none'",
+    "form-action 'none'",
+    "frame-ancestors 'none'",
+  ].join("; "),
+  "Content-Type": "text/html; charset=utf-8",
 } as const;
 
 export default {
@@ -14,7 +29,7 @@ export function handleRequest(request: Request): Response {
   if (request.method !== "GET" && request.method !== "HEAD") {
     return new Response("Method not allowed", {
       status: 405,
-      headers: noStoreHeaders,
+      headers: baseHeaders,
     });
   }
 
@@ -25,28 +40,14 @@ export function handleRequest(request: Request): Response {
   if (url.pathname === "/" || url.pathname === "/privacy") {
     return htmlResponse(getInfoPage());
   }
-  if (!isSafeHref(url.pathname)) {
-    return textResponse("Not found\n", 404);
-  }
-
-  return new Response(null, {
-    status: 302,
-    headers: {
-      ...noStoreHeaders,
-      Location: `${deepLinkProtocol}://${url.pathname}${url.search}`,
-    },
-  });
-}
-
-function isSafeHref(pathname: string): boolean {
-  return pathname.startsWith("/") && !pathname.startsWith("//");
+  return textResponse("Not found\n", 404);
 }
 
 function textResponse(body: string, status = 200): Response {
   return new Response(body, {
     status,
     headers: {
-      ...noStoreHeaders,
+      ...baseHeaders,
       "Content-Type": "text/plain; charset=utf-8",
     },
   });
@@ -54,10 +55,7 @@ function textResponse(body: string, status = 200): Response {
 
 function htmlResponse(body: string): Response {
   return new Response(body, {
-    headers: {
-      ...noStoreHeaders,
-      "Content-Type": "text/html; charset=utf-8",
-    },
+    headers: htmlHeaders,
   });
 }
 
@@ -94,17 +92,38 @@ function getInfoPage(): string {
   <body>
     <h1>Open Superego Links</h1>
     <p>
-      This service redirects links from <code>https://open.superego.dev/...</code>
-      to the Superego desktop app using <code>superego://...</code>.
+      This service opens Superego desktop app links from
+      <code>https://open.superego.dev/#deepLink=...</code>.
     </p>
     <p>
-      The URL path contains Superego resource IDs. Resource IDs can be sensitive
-      because they identify local collections, documents, versions, and apps.
+      Superego link details are stored in the URL fragment. Browsers do not send
+      URL fragments to this service.
     </p>
     <p>
-      Superego does not store, analyze, or log these IDs in this Worker. The
-      request is still processed by Cloudflare to provide the redirect.
+      This service only receives the request needed to serve this page. It does
+      not receive collection, document, version, or app IDs from current
+      Superego web links.
     </p>
+    <script>
+      (() => {
+        const searchParams = new URLSearchParams(window.location.hash.slice(1));
+        const deepLink = searchParams.get("deepLink");
+        if (deepLink === null) {
+          return;
+        }
+
+        let deepLinkUrl;
+        try {
+          deepLinkUrl = new URL(deepLink);
+        } catch {
+          return;
+        }
+
+        if (deepLinkUrl.protocol === "${deepLinkProtocol}:") {
+          window.location.replace(deepLink);
+        }
+      })();
+    </script>
   </body>
 </html>`;
 }
