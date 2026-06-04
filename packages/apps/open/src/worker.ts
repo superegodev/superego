@@ -90,19 +90,15 @@ function getInfoPage(): string {
     </style>
   </head>
   <body>
-    <h1>Open Superego Links</h1>
+    <h1 id="title">Open Superego Links</h1>
+    <p id="status">This page opens Superego desktop app links.</p>
     <p>
-      This service opens Superego desktop app links from
-      <code>https://open.superego.dev/#deepLink=...</code>.
+      Privacy notice: Superego link details belong in the URL fragment, which
+      browsers keep client-side and do not send to this service.
     </p>
     <p>
-      Superego link details are stored in the URL fragment. Browsers do not send
-      URL fragments to this service.
-    </p>
-    <p>
-      This service only receives the request needed to serve this page. It does
-      not receive collection, document, version, or app IDs from current
-      Superego web links.
+      If Superego does not open, make sure the desktop app is installed and
+      registered for <code>${deepLinkProtocol}://</code> links.
     </p>
     <script>
       (() => {
@@ -120,6 +116,14 @@ function getInfoPage(): string {
         }
 
         if (deepLinkUrl.protocol === "${deepLinkProtocol}:") {
+          document.title = "Opening Superego link";
+          document.getElementById("title").textContent =
+            "Opening Superego link";
+          const status = document.getElementById("status");
+          status.textContent = "Opening ";
+          const code = document.createElement("code");
+          code.textContent = deepLink;
+          status.append(code, ".");
           window.location.replace(deepLink);
         }
       })();
