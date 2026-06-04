@@ -1,4 +1,5 @@
 import {
+  type CalendarDate,
   getLocalTimeZone,
   getWeeksInMonth,
   today,
@@ -10,7 +11,6 @@ import {
   CalendarGridBody,
   CalendarGridHeader,
   CalendarHeaderCell,
-  type DateValue,
   useLocale,
 } from "react-aria-components";
 import DayCell from "./DayCell.js";
@@ -38,8 +38,8 @@ export default function SimpleMonthCalendar({
   firstDayOfWeek,
 }: Props) {
   const { locale } = useLocale();
-  const [selectedDate, setSelectedDate] = useState<DateValue | null>(null);
-  const [focusedDate, setFocusedDate] = useState<DateValue | null>(
+  const [selectedDate, setSelectedDate] = useState<CalendarDate | null>(null);
+  const [focusedDate, setFocusedDate] = useState<CalendarDate | null>(
     today(getLocalTimeZone()),
   );
 

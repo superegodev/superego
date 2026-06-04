@@ -2621,42 +2621,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formatjs/cli-native-darwin-arm64@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@formatjs/cli-native-darwin-arm64@npm:1.1.1"
+"@formatjs/cli-native-darwin-arm64@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@formatjs/cli-native-darwin-arm64@npm:1.1.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@formatjs/cli-native-linux-arm64@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@formatjs/cli-native-linux-arm64@npm:1.2.1"
+"@formatjs/cli-native-linux-arm64@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@formatjs/cli-native-linux-arm64@npm:1.2.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@formatjs/cli-native-linux-x64@npm:1.1.1":
-  version: 1.1.1
-  resolution: "@formatjs/cli-native-linux-x64@npm:1.1.1"
+"@formatjs/cli-native-linux-x64@npm:1.1.2":
+  version: 1.1.2
+  resolution: "@formatjs/cli-native-linux-x64@npm:1.1.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@formatjs/cli-native-win32-x64@npm:1.1.2":
-  version: 1.1.2
-  resolution: "@formatjs/cli-native-win32-x64@npm:1.1.2"
+"@formatjs/cli-native-win32-x64@npm:1.1.3":
+  version: 1.1.3
+  resolution: "@formatjs/cli-native-win32-x64@npm:1.1.3"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@formatjs/cli@npm:^6.16.6":
-  version: 6.16.6
-  resolution: "@formatjs/cli@npm:6.16.6"
+"@formatjs/cli@npm:^6.16.7":
+  version: 6.16.7
+  resolution: "@formatjs/cli@npm:6.16.7"
   dependencies:
-    "@formatjs/cli-native-darwin-arm64": "npm:1.1.1"
-    "@formatjs/cli-native-linux-arm64": "npm:1.2.1"
-    "@formatjs/cli-native-linux-x64": "npm:1.1.1"
-    "@formatjs/cli-native-win32-x64": "npm:1.1.2"
+    "@formatjs/cli-native-darwin-arm64": "npm:1.1.2"
+    "@formatjs/cli-native-linux-arm64": "npm:1.2.2"
+    "@formatjs/cli-native-linux-x64": "npm:1.1.2"
+    "@formatjs/cli-native-win32-x64": "npm:1.1.3"
   peerDependencies:
     "@glimmer/syntax": ^0.84.3 || ^0.95.0
     "@vue/compiler-core": ^3.5.0
@@ -2688,7 +2688,7 @@ __metadata:
       optional: true
   bin:
     formatjs: bin/formatjs
-  checksum: 10c0/fd24df16040afa6d64de48b12c632c3f18031a739f93d4adfc23968300a0abfadf1f9f49233359aeb86bd3d19f5e37e8d87715f45481d422b376732b2e688764
+  checksum: 10c0/65610415dfb2934a15ae57d31e86f0dcb32436f1a9fd3e31c38f8bc30c3998c3baf6652487e2d6b1ebf2637005ed37f2d902706d296912e4b9423005de97794f
   languageName: node
   linkType: hard
 
@@ -6813,7 +6813,7 @@ __metadata:
   dependencies:
     "@excalidraw/excalidraw": "npm:0.18.0-0457ac9"
     "@fast-check/vitest": "npm:^0.4.1"
-    "@formatjs/cli": "npm:^6.16.6"
+    "@formatjs/cli": "npm:^6.16.7"
     "@formatjs/unplugin": "npm:^1.1.17"
     "@geoman-io/maplibre-geoman-free": "npm:^0.7.1"
     "@hookform/resolvers": "npm:^5.4.0"
@@ -6992,7 +6992,7 @@ __metadata:
     "@electron-forge/plugin-fuses": "npm:^7.11.2"
     "@electron-forge/publisher-github": "npm:^7.11.2"
     "@electron/fuses": "npm:^2.1.1"
-    "@formatjs/cli": "npm:^6.16.6"
+    "@formatjs/cli": "npm:^6.16.7"
     "@formatjs/intl": "npm:^4.1.12"
     "@formatjs/unplugin": "npm:^1.1.17"
     "@reforged/maker-appimage": "npm:^5.2.0"

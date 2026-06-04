@@ -224,14 +224,20 @@
   "Controls.tsx_xbi38c": {
     "defaultMessage": "Zoom in"
   },
+  "Conversation.tsx_2U3CJ+": {
+    "defaultMessage": "🤖 Conversations"
+  },
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
   },
   "Conversation.tsx_A4DzYS": {
     "defaultMessage": "Show tool calls"
   },
-  "Conversation.tsx_eq3LES": {
-    "defaultMessage": "🤖 Conversations » {conversation}"
+  "Conversation.tsx_avxZiI": {
+    "defaultMessage": "🤖 Conversations » {conversationId}"
+  },
+  "Conversation.tsx_l0Yx7U": {
+    "defaultMessage": "🤖 Conversations » {conversation}"
   },
   "Conversation.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
@@ -239,17 +245,11 @@
   "Conversation.tsx_w5q/I/": {
     "defaultMessage": "Conversation actions"
   },
-  "Conversation.tsx_y2z/xn": {
-    "defaultMessage": "🤖 Conversations » {conversationId}"
-  },
   "Conversation.tsx_yGVyFv": {
     "defaultMessage": "Hide tool calls"
   },
   "Conversation.tsx_yWDfdE": {
     "defaultMessage": "What kind of data do you want to store?"
-  },
-  "Conversation.tsx_yYmfIl": {
-    "defaultMessage": "🤖 Conversations"
   },
   "ConversationSearchResult.tsx_KHJ2sI": {
     "defaultMessage": "Untitled conversation"
@@ -257,14 +257,14 @@
   "ConversationUtils.ts_PQ8A3I": {
     "defaultMessage": "New conversation"
   },
+  "Conversations.tsx_2U3CJ+": {
+    "defaultMessage": "🤖 Conversations"
+  },
   "Conversations.tsx_PQ8A3I": {
     "defaultMessage": "New conversation"
   },
   "Conversations.tsx_YdANpb": {
     "defaultMessage": "Conversations actions"
-  },
-  "Conversations.tsx_yYmfIl": {
-    "defaultMessage": "🤖 Conversations"
   },
   "ConversationsTable.tsx_/+r2Su": {
     "defaultMessage": "You don't have any conversations yet."
@@ -569,8 +569,8 @@
   "EditApp.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
-  "EditApp.tsx_LDlHu6": {
-    "defaultMessage": "🧩 {app} » Edit"
+  "EditApp.tsx_LVy7EO": {
+    "defaultMessage": "🧩 {app} » Edit"
   },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Create new version"

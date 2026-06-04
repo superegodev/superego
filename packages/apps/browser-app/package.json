@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",
-    "@formatjs/cli": "^6.16.6",
+    "@formatjs/cli": "^6.16.7",
     "@formatjs/unplugin": "^1.1.17",
     "@superego/app-sandbox": "workspace:*",
     "@superego/demo-data-repositories": "workspace:*",
