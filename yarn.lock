@@ -2694,7 +2694,7 @@ __metadata:
 
 "@formatjs/cli@patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch":
   version: 6.16.6
-  resolution: "@formatjs/cli@patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch::version=6.16.6&hash=ef5fb3"
+  resolution: "@formatjs/cli@patch:@formatjs/cli@npm%3A6.16.6#~/.yarn/patches/@formatjs-cli-npm-6.16.6-ae1f2ea0e8.patch::version=6.16.6&hash=a631fb"
   dependencies:
     "@formatjs/cli-native-darwin-arm64": "npm:1.1.1"
     "@formatjs/cli-native-linux-arm64": "npm:1.2.1"
@@ -2731,7 +2731,7 @@ __metadata:
       optional: true
   bin:
     formatjs: bin/formatjs
-  checksum: 10c0/d491cf91015e297edb6bd2109a0b83eeca50d9a31a5b73a826dac19d31855ca1d876567970c1afaf0dcb7655a0af9ce0a7314f3dd8ea4e47aee5767121b9fab7
+  checksum: 10c0/894632a8c5c4eeb165e6310d342ad75998106c56161edd40621194d9ec0f5fe1317d0e79bc901f219d241815737f7b4e2f176171718b8968cda44e96b9d521d7
   languageName: node
   linkType: hard
 

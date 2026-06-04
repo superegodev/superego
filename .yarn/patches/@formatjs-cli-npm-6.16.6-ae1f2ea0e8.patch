@@ -2,7 +2,7 @@ diff --git a/bin/formatjs b/bin/formatjs
 index 3d968a46111f1a130bde589a7d9eb64d67799686..fa82dfa08c3f42f5c316dd8a840a50c1a39b249f 100755
 --- a/bin/formatjs
 +++ b/bin/formatjs
-@@ -163516,8 +163516,11 @@ function calculateLineColFromOffset(text, start) {
+@@ -163516,8 +163516,12 @@ function calculateLineColFromOffset(text, start) {
  function isBuiltinFormatter(format) {
  	return !format || typeof format === "string" && BUILTIN_FORMATTERS.has(format);
  }
