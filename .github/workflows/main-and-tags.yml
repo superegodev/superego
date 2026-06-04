@@ -1,4 +1,4 @@
-name: Push QA and deploy
+name: QA and deploy
 
 on:
   push:
