@@ -6,6 +6,7 @@ index 3d968a46111f1a130bde589a7d9eb64d67799686..fa82dfa08c3f42f5c316dd8a840a50c1
  function isBuiltinFormatter(format) {
  	return !format || typeof format === "string" && BUILTIN_FORMATTERS.has(format);
  }
++// https://github.com/formatjs/formatjs/issues/6730
 +function canNativeExtractIdInterpolationPattern(pattern) {
 +	return /^\[sha512:contenthash:(?:base64|base64url|base62|hex):[1-9]\d*\]$/i.test(pattern);
 +}
