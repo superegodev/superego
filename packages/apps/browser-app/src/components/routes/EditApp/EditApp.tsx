@@ -38,7 +38,11 @@ export default function EditApp({ appId }: Props) {
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage(
-          { defaultMessage: "🧩\u2002{app} » Edit" },
+          {
+            // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+            id: "EditApp.tsx_LVy7EO",
+            defaultMessage: "🧩\u2002{app} » Edit",
+          },
           { app: app.name },
         )}
         actions={[

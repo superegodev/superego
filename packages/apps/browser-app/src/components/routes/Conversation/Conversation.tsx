@@ -32,6 +32,8 @@ export default function Conversation({ conversationId }: Props) {
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
             title={intl.formatMessage({
+              // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+              id: "Conversation.tsx_2U3CJ+",
               defaultMessage: "🤖\u2002Conversations",
             })}
           />
@@ -43,11 +45,13 @@ export default function Conversation({ conversationId }: Props) {
             screenSize > ScreenSize.Small
               ? intl.formatMessage(
                   {
+                    // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+                    id: "Conversation.tsx_avxZiI",
                     defaultMessage: "🤖\u2002Conversations » {conversationId}",
                   },
                   { conversationId },
                 )
-              : "🤖\u2002 {conversationId}"
+              : `🤖\u2002${conversationId}`
           }
           errors={errors}
         />
@@ -89,6 +93,8 @@ const MemoizedConversation = memo(
             screenSize > ScreenSize.Small
               ? intl.formatMessage(
                   {
+                    // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+                    id: "Conversation.tsx_l0Yx7U",
                     defaultMessage: "🤖\u2002Conversations » {conversation}",
                   },
                   {
@@ -98,10 +104,7 @@ const MemoizedConversation = memo(
                     ),
                   },
                 )
-              : `🤖\u2002 ${ConversationUtils.getDisplayTitle(
-                  conversation,
-                  intl,
-                )}`
+              : `🤖\u2002${ConversationUtils.getDisplayTitle(conversation, intl)}`
           }
           actionsAriaLabel={intl.formatMessage({
             defaultMessage: "Conversation actions",
