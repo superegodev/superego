@@ -47,7 +47,7 @@ export default function Conversation({ conversationId }: Props) {
                   },
                   { conversationId },
                 )
-              : "🤖 {conversationId}"
+              : `🤖 ${conversationId}`
           }
           errors={errors}
         />
