@@ -5,6 +5,6 @@ export default {
     collectionCategory: Pick<CollectionCategory, "name" | "icon">,
   ): string {
     const { icon, name } = collectionCategory;
-    return icon ? `${icon} ${name}` : name;
+    return icon ? `${icon}\u2002${name}` : name;
   },
 };

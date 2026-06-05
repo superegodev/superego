@@ -517,6 +517,12 @@
       "value": "Ingrandisci"
     }
   ],
+  "Conversation.tsx_2U3CJ+": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni"
+    }
+  ],
   "Conversation.tsx_9eR0Qp": [
     {
       "type": 0,
@@ -529,10 +535,20 @@
       "value": "Mostra le tool call"
     }
   ],
-  "Conversation.tsx_eq3LES": [
+  "Conversation.tsx_avxZiI": [
     {
       "type": 0,
-      "value": "🤖 Conversazioni » "
+      "value": "🤖 Conversazioni » "
+    },
+    {
+      "type": 1,
+      "value": "conversationId"
+    }
+  ],
+  "Conversation.tsx_l0Yx7U": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni » "
     },
     {
       "type": 1,
@@ -551,16 +567,6 @@
       "value": "Azioni della conversazione"
     }
   ],
-  "Conversation.tsx_y2z/xn": [
-    {
-      "type": 0,
-      "value": "🤖 Conversazioni » "
-    },
-    {
-      "type": 1,
-      "value": "conversationId"
-    }
-  ],
   "Conversation.tsx_yGVyFv": [
     {
       "type": 0,
@@ -571,12 +577,6 @@
     {
       "type": 0,
       "value": "Che tipo di dati vuoi salvare?"
-    }
-  ],
-  "Conversation.tsx_yYmfIl": [
-    {
-      "type": 0,
-      "value": "🤖 Conversazioni"
     }
   ],
   "ConversationSearchResult.tsx_KHJ2sI": [
@@ -591,6 +591,12 @@
       "value": "Nuova conversazione"
     }
   ],
+  "Conversations.tsx_2U3CJ+": [
+    {
+      "type": 0,
+      "value": "🤖 Conversazioni"
+    }
+  ],
   "Conversations.tsx_PQ8A3I": [
     {
       "type": 0,
@@ -601,12 +607,6 @@
     {
       "type": 0,
       "value": "Azioni delle conversazioni"
-    }
-  ],
-  "Conversations.tsx_yYmfIl": [
-    {
-      "type": 0,
-      "value": "🤖 Conversazioni"
     }
   ],
   "ConversationsTable.tsx_/+r2Su": [
@@ -1390,10 +1390,10 @@
       "value": "Elimina"
     }
   ],
-  "EditApp.tsx_LDlHu6": [
+  "EditApp.tsx_LVy7EO": [
     {
       "type": 0,
-      "value": "🧩 "
+      "value": "🧩 "
     },
     {
       "type": 1,

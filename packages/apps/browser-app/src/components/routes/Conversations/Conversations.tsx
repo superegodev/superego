@@ -12,7 +12,9 @@ export default function Conversations() {
     <Shell.Panel slot="Main">
       <Shell.Panel.Header
         title={intl.formatMessage({
-          defaultMessage: "🤖 Conversations",
+          // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+          id: "Conversations.tsx_2U3CJ+",
+          defaultMessage: "🤖\u2002Conversations",
         })}
         actionsAriaLabel={intl.formatMessage({
           defaultMessage: "Conversations actions",

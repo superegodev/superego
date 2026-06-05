@@ -24,7 +24,7 @@ export default {
     settings: Pick<CollectionSettings, "name" | "icon">;
   }): string {
     const { icon, name } = collection.settings;
-    return icon ? `${icon} ${name}` : name;
+    return icon ? `${icon}\u2002${name}` : name;
   },
 
   getApps(collection: Collection, apps: App[]): App[] {

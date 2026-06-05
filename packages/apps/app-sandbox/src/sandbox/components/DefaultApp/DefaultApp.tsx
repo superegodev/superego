@@ -12,10 +12,11 @@ export default function DefaultApp({ collections }: AppComponentProps) {
       <Text element="p">{infoLine1}</Text>
       <Text element="p">
         {infoLine2}
-        {" 👇"}
+        {"\u2002👇"}
       </Text>
       <Text element="p">
-        {infoLine3}{" "}
+        {infoLine3}
+        {"\u2002"}
         <span style={{ display: "inline-block", transform: "rotate(45deg)" }}>
           {"👆"}
         </span>

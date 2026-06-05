@@ -141,7 +141,9 @@ export default function Collection(props: Props) {
                 key: "CreateApp",
                 label: (
                   <span className={cs.Collection.panelHeaderMenuItem}>
-                    <PiPlus /> <FormattedMessage defaultMessage="Create new" />
+                    <PiPlus />
+                    {"\u2002"}
+                    <FormattedMessage defaultMessage="Create new" />
                   </span>
                 ),
                 to: {

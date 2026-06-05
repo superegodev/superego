@@ -32,7 +32,9 @@ export default function Conversation({ conversationId }: Props) {
         <Shell.Panel slot="Main">
           <Shell.Panel.Header
             title={intl.formatMessage({
-              defaultMessage: "🤖 Conversations",
+              // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+              id: "Conversation.tsx_2U3CJ+",
+              defaultMessage: "🤖\u2002Conversations",
             })}
           />
         </Shell.Panel>
@@ -43,11 +45,13 @@ export default function Conversation({ conversationId }: Props) {
             screenSize > ScreenSize.Small
               ? intl.formatMessage(
                   {
-                    defaultMessage: "🤖 Conversations » {conversationId}",
+                    // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+                    id: "Conversation.tsx_avxZiI",
+                    defaultMessage: "🤖\u2002Conversations » {conversationId}",
                   },
                   { conversationId },
                 )
-              : `🤖 ${conversationId}`
+              : `🤖\u2002${conversationId}`
           }
           errors={errors}
         />
@@ -89,7 +93,9 @@ const MemoizedConversation = memo(
             screenSize > ScreenSize.Small
               ? intl.formatMessage(
                   {
-                    defaultMessage: "🤖 Conversations » {conversation}",
+                    // TODO(formatjs): Remove explicit ID when https://github.com/formatjs/formatjs/issues/6735 is fixed.
+                    id: "Conversation.tsx_l0Yx7U",
+                    defaultMessage: "🤖\u2002Conversations » {conversation}",
                   },
                   {
                     conversation: ConversationUtils.getDisplayTitle(
@@ -98,7 +104,7 @@ const MemoizedConversation = memo(
                     ),
                   },
                 )
-              : `🤖 ${ConversationUtils.getDisplayTitle(conversation, intl)}`
+              : `🤖\u2002${ConversationUtils.getDisplayTitle(conversation, intl)}`
           }
           actionsAriaLabel={intl.formatMessage({
             defaultMessage: "Conversation actions",
