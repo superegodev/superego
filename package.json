@@ -29,12 +29,12 @@
     "playwright": "playwright"
   },
   "devDependencies": {
-    "oxfmt": "^0.52.0",
-    "oxlint": "^1.67.0",
-    "playwright": "^1.60.0",
-    "prettier": "^3.8.3",
+    "oxfmt": "^0.59.0",
+    "oxlint": "^1.74.0",
+    "playwright": "^1.61.1",
+    "prettier": "^3.9.5",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-sh": "^0.18.1",
+    "prettier-plugin-sh": "^0.19.0",
     "prettier-plugin-sql-cst": "^0.22.1",
     "typescript": "^6.0.3",
     "zx": "8.8.5-lite"
@@ -57,5 +57,5 @@
     "baseline-browser-mapping": "2.9.19",
     "browserslist": "4.28.1"
   },
-  "packageManager": "yarn@4.16.0+sha512.5374c94eb4ef6aa8188fb112f20c1aa6569f248d676c5e576e1fd2a1a4d8d87a96df65d9dfe1c2a0252cbe38bda46cf18d955005b81b43cc7607a5c9d56fd2b6"
+  "packageManager": "yarn@4.17.1+sha512.ccbfabf7d7b6b32075088be9386fb9a2e00bb6887ef07fa56effabc890a56d53da1ccc4128d62db245fcbd3961b236d75335bdf7d5320ed6eafb7588b7ad4697"
 }

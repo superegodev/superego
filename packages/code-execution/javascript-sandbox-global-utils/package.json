@@ -21,9 +21,9 @@
     "luxon": "^3.7.2"
   },
   "devDependencies": {
-    "@types/luxon": "^3.7.1",
+    "@types/luxon": "^3.7.2",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8",
+    "vitest": "^4.1.10",
     "zx": "8.8.5-lite"
   }
 }

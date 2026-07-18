@@ -23,14 +23,14 @@
     "@superego/shared-utils": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
-    "@valibot/to-json-schema": "^1.7.0",
+    "@valibot/to-json-schema": "^1.7.1",
     "commander": "^15.0.0",
     "mime-types": "^3.0.2",
     "typescript": "^6.0.3",
-    "valibot": "^1.4.1"
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@types/mime-types": "^3.0.1",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.10"
   }
 }

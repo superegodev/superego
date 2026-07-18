@@ -6,9 +6,7 @@ export default async function drawRectangleInExcalidrawInput(page: Page) {
   await excalidraw.click();
 
   // Select the Rectangle tool
-  await excalidraw
-    .getByRole("radio", { name: /^Rectangle$/i })
-    .check({ force: true });
+  await excalidraw.getByRole("button", { name: /^Rectangle$/i }).click();
 
   // Draw a rectangle
   const boundingBox = await excalidrawJsonObjectField(page)
@@ -27,7 +25,7 @@ export default async function drawRectangleInExcalidrawInput(page: Page) {
   await page.mouse.move(centerX + rectWidth / 2, centerY + rectHeight / 2);
   await page.mouse.up();
 
-  // Change stroke style: click Stroke button, then select Architect
+  // Change stroke style: click Stroke, then select Architect.
   await excalidraw
     .getByRole("button", { name: /^Stroke$/i })
     .last()
@@ -37,7 +35,7 @@ export default async function drawRectangleInExcalidrawInput(page: Page) {
     .locator("input")
     .check({ force: true });
 
-  // Close the Stroke popup
+  // Close the Stroke popup.
   await page.keyboard.press("Escape");
 
   await page.waitForTimeout(500);

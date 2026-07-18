@@ -225,7 +225,7 @@
     "defaultMessage": "Zoom in"
   },
   "Conversation.tsx_2U3CJ+": {
-    "defaultMessage": "🤖 Conversations"
+    "defaultMessage": "🤖 Conversations"
   },
   "Conversation.tsx_9eR0Qp": {
     "defaultMessage": "Delete conversation"
@@ -234,10 +234,10 @@
     "defaultMessage": "Show tool calls"
   },
   "Conversation.tsx_avxZiI": {
-    "defaultMessage": "🤖 Conversations » {conversationId}"
+    "defaultMessage": "🤖 Conversations » {conversationId}"
   },
   "Conversation.tsx_l0Yx7U": {
-    "defaultMessage": "🤖 Conversations » {conversation}"
+    "defaultMessage": "🤖 Conversations » {conversation}"
   },
   "Conversation.tsx_oZLZvb": {
     "defaultMessage": "How can I help you?"
@@ -258,7 +258,7 @@
     "defaultMessage": "New conversation"
   },
   "Conversations.tsx_2U3CJ+": {
-    "defaultMessage": "🤖 Conversations"
+    "defaultMessage": "🤖 Conversations"
   },
   "Conversations.tsx_PQ8A3I": {
     "defaultMessage": "New conversation"
@@ -570,7 +570,7 @@
     "defaultMessage": "Delete"
   },
   "EditApp.tsx_LVy7EO": {
-    "defaultMessage": "🧩 {app} » Edit"
+    "defaultMessage": "🧩 {app} » Edit"
   },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Create new version"

@@ -12,8 +12,8 @@
     "@superego/routing": "workspace:*"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20260601.1",
+    "@cloudflare/workers-types": "5.20260715.1",
     "typescript": "^6.0.3",
-    "wrangler": "^4.95.0"
+    "wrangler": "^4.111.0"
   }
 }
