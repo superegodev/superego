@@ -1,0 +1,96 @@
+import {
+  AssistantName,
+  type GlobalSettings,
+  type InferenceOptions,
+  type InferenceProvider,
+} from "@superego/backend";
+import type { GlobalSettingsRepository } from "@superego/executing-backend";
+import type TursoDatabase from "../TursoDatabase.js";
+import type TursoGlobalSettings from "../types/TursoGlobalSettings.js";
+import { toEntity } from "../types/TursoGlobalSettings.js";
+import type DeepPartial from "../utils/DeepPartial.js";
+
+const table = "singleton__global_settings";
+
+export default class TursoGlobalSettingsRepository implements GlobalSettingsRepository {
+  constructor(
+    private db: TursoDatabase,
+    private defaultGlobalSettings: GlobalSettings,
+  ) {}
+
+  async replace(globalSettings: GlobalSettings): Promise<void> {
+    await this.db
+      .prepare(`
+        INSERT OR REPLACE INTO "${table}"
+          ("id", "value")
+        VALUES
+          (?, ?)
+      `)
+      .run("singleton", JSON.stringify(globalSettings));
+  }
+
+  async get(): Promise<GlobalSettings> {
+    const settings = (await this.db
+      .prepare(`SELECT * FROM "${table}" WHERE "id" = ?`)
+      .get("singleton")) as TursoGlobalSettings | undefined;
+    return this.mergeDefaults(settings ? toEntity(settings) : {});
+  }
+
+  // The settings retrieved from Turso could be either missing, or they could
+  // have been saved by a previous version of Superego and been missing some
+  // properties. This function merges them with the default settings, ensuring
+  // that the returned object respects the GlobalSettings interface.
+  private mergeDefaults(settings: DeepPartial<GlobalSettings>): GlobalSettings {
+    return {
+      appearance: {
+        theme:
+          settings?.appearance?.theme ??
+          this.defaultGlobalSettings.appearance.theme,
+      },
+      inference: {
+        providers:
+          (settings.inference?.providers as InferenceProvider[]) ??
+          this.defaultGlobalSettings.inference.providers,
+        defaultInferenceOptions: {
+          completion:
+            (settings.inference?.defaultInferenceOptions
+              ?.completion as InferenceOptions["completion"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .completion,
+          transcription:
+            (settings.inference?.defaultInferenceOptions
+              ?.transcription as InferenceOptions["transcription"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .transcription,
+          fileInspection:
+            (settings.inference?.defaultInferenceOptions
+              ?.fileInspection as InferenceOptions["fileInspection"]) ??
+            this.defaultGlobalSettings.inference.defaultInferenceOptions
+              .fileInspection,
+        },
+      },
+      assistants: {
+        userInfo:
+          settings.assistants?.userInfo ??
+          this.defaultGlobalSettings.assistants.userInfo,
+        userPreferences:
+          settings.assistants?.userPreferences ??
+          this.defaultGlobalSettings.assistants.userPreferences,
+        developerPrompts: {
+          [AssistantName.CollectionCreator]:
+            settings.assistants?.developerPrompts?.[
+              AssistantName.CollectionCreator
+            ] ??
+            this.defaultGlobalSettings.assistants.developerPrompts[
+              AssistantName.CollectionCreator
+            ],
+          [AssistantName.Factotum]:
+            settings.assistants?.developerPrompts?.[AssistantName.Factotum] ??
+            this.defaultGlobalSettings.assistants.developerPrompts[
+              AssistantName.Factotum
+            ],
+        },
+      },
+    };
+  }
+}
