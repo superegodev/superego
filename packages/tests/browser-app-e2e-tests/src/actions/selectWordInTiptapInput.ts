@@ -14,7 +14,7 @@ export default async function selectWordInTiptapInput(
       let foundNode: Text | null = null;
       let startOffset = -1;
 
-      for (let currentNode = walker.nextNode(); currentNode; ) {
+      for (let currentNode = walker.nextNode(); currentNode;) {
         const textNode = currentNode as Text;
         const index = textNode.data.indexOf(selectedWord);
         if (index >= 0) {

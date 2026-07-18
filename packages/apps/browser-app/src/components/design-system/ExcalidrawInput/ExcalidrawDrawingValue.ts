@@ -21,7 +21,7 @@ export const PERSISTED_APP_STATE_KEYS = [
   "currentItemStrokeColor",
   "currentItemBackgroundColor",
   "currentItemFillStyle",
-  "currentItemStrokeWidth",
+  "currentItemStrokeWidthKey",
   "currentItemStrokeStyle",
   "currentItemRoughness",
   "currentItemOpacity",

@@ -13,7 +13,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "26"
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies
@@ -55,7 +55,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "26"
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies
@@ -82,7 +82,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "26"
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies
@@ -109,7 +109,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version: "26"
       - name: Enable corepack
         run: corepack enable
       - name: Install dependencies
@@ -155,7 +155,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v6
         with:
-          node-version: "24.14.0"
+          node-version: "26.5.0"
       - name: Enable corepack
         run: corepack enable
       - name: Install AppImage build dependencies

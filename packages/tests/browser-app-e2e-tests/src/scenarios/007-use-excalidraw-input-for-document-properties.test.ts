@@ -65,7 +65,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
     );
   });
 
-  await test.step("02. Draw 'Hello world!' text in Excalidraw", async () => {
+  await test.step("02. Draw a rectangle in Excalidraw", async () => {
     // Exercise
     await drawRectangleInExcalidrawInput(page);
 
@@ -73,7 +73,7 @@ test("007. Use Excalidraw input for document properties", async ({ page }) => {
     await VisualEvaluator.expectToSee(
       "02.png",
       page,
-      'Excalidraw input with "Hello world!" text drawn on the canvas',
+      "Excalidraw input with a selected Architect-style rectangle on the canvas",
     );
   });
 });

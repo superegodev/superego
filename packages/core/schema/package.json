@@ -19,16 +19,16 @@
     "@superego/global-types": "workspace:*",
     "luxon": "^3.7.2",
     "remove-markdown": "^0.6.4",
-    "valibot": "^1.4.1"
+    "valibot": "^1.4.2"
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",
     "@types/json-schema": "^7.0.15",
-    "@types/luxon": "^3.7.1",
-    "@types/node": "^25.9.1",
+    "@types/luxon": "^3.7.2",
+    "@types/node": "^26.1.1",
     "tsafe": "^1.8.12",
     "typescript": "^6.0.3",
-    "vite": "^8.0.16",
-    "vitest": "^4.1.8"
+    "vite": "^8.1.4",
+    "vitest": "^4.1.10"
   }
 }

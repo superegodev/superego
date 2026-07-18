@@ -19,10 +19,10 @@
     "flexsearch": "^0.8.212"
   },
   "devDependencies": {
-    "@vitest/browser": "^4.1.8",
-    "@vitest/browser-playwright": "^4.1.8",
-    "playwright": "^1.60.0",
+    "@vitest/browser": "^4.1.10",
+    "@vitest/browser-playwright": "^4.1.10",
+    "playwright": "^1.61.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.10"
   }
 }
