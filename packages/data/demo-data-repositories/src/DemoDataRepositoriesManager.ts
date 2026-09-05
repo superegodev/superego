@@ -53,6 +53,10 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
       conversationTextSearchTexts: {},
       globalSettings: { value: this.defaultGlobalSettings },
     };
+    // Older IndexedDB snapshots predate app specifications.
+    for (const appVersion of Object.values(transactionData.appVersions)) {
+      appVersion.spec ??= "";
+    }
     const initialVersion = transactionData.version;
     const onWrite = () => {
       transactionData.version = crypto.randomUUID();

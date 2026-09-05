@@ -605,75 +605,80 @@ export default rd<GetDependencies>("Packs", (deps) => {
       expect(listResult.data).toHaveLength(1);
     });
 
-    it("success: installs pack with apps referencing collections", async () => {
-      // Setup SUT
-      const { backend } = deps();
+    it.each([undefined, "# App requirements"])(
+      "success: installs pack apps with spec %s",
+      async (spec) => {
+        // Setup SUT
+        const { backend } = deps();
 
-      // Exercise
-      const result = await backend.packs.install({
-        id: "Pack_com.example.test",
-        info: {
-          name: "Test Pack",
-          shortDescription: "A test pack",
-          longDescription: "A test pack for testing",
-          screenshots: [],
-        },
-        collectionCategories: [],
-        collections: [
-          {
-            settings: {
-              name: "My Collection",
-              icon: null,
-              collectionCategoryId: null,
-              defaultCollectionViewAppId: null,
-              description: null,
-              assistantInstructions: null,
-              redirectToCollectionAfterDocumentCreation: false,
-            },
-            schema: {
-              types: {
-                Root: {
-                  dataType: DataType.Struct,
-                  properties: { title: { dataType: DataType.String } },
+        // Exercise
+        const result = await backend.packs.install({
+          id: "Pack_com.example.test",
+          info: {
+            name: "Test Pack",
+            shortDescription: "A test pack",
+            longDescription: "A test pack for testing",
+            screenshots: [],
+          },
+          collectionCategories: [],
+          collections: [
+            {
+              settings: {
+                name: "My Collection",
+                icon: null,
+                collectionCategoryId: null,
+                defaultCollectionViewAppId: null,
+                description: null,
+                assistantInstructions: null,
+                redirectToCollectionAfterDocumentCreation: false,
+              },
+              schema: {
+                types: {
+                  Root: {
+                    dataType: DataType.Struct,
+                    properties: { title: { dataType: DataType.String } },
+                  },
                 },
+                rootType: "Root",
               },
-              rootType: "Root",
-            },
-            versionSettings: {
-              contentBlockingKeysGetter: null,
-              contentSummaryGetter: {
-                source: "",
-                compiled:
-                  "export default function getContentSummary() { return {}; }",
+              versionSettings: {
+                contentBlockingKeysGetter: null,
+                contentSummaryGetter: {
+                  source: "",
+                  compiled:
+                    "export default function getContentSummary() { return {}; }",
+                },
+                defaultDocumentViewUiOptions: null,
               },
-              defaultDocumentViewUiOptions: null,
             },
-          },
-        ],
-        apps: [
-          {
-            type: AppType.CollectionView,
-            name: "My App",
-            targetCollectionIds: [Id.generate.protoCollection(0)],
-            files: { "/main.tsx": { source: "", compiled: "" } },
-          },
-        ],
-        documents: [],
-      });
+          ],
+          apps: [
+            {
+              type: AppType.CollectionView,
+              name: "My App",
+              ...(spec === undefined ? {} : { spec }),
+              targetCollectionIds: [Id.generate.protoCollection(0)],
+              files: { "/main.tsx": { source: "", compiled: "" } },
+            },
+          ],
+          documents: [],
+        });
 
-      // Verify
-      expect(result.success).toBe(true);
-      assert.isTrue(result.success);
-      expect(result.data.collections).toHaveLength(1);
-      expect(result.data.apps).toHaveLength(1);
-      expect(result.data.apps[0]!.name).toBe("My App");
-      expect(result.data.apps[0]!.latestVersion.targetCollections[0]!.id).toBe(
-        result.data.collections[0]!.id,
-      );
-      const listResult = await backend.apps.list();
-      assert.isTrue(listResult.success);
-      expect(listResult.data).toHaveLength(1);
-    });
+        // Verify
+        expect(result.success).toBe(true);
+        assert.isTrue(result.success);
+        expect(result.data.collections).toHaveLength(1);
+        expect(result.data.apps).toHaveLength(1);
+        expect(result.data.apps[0]!.name).toBe("My App");
+        expect(result.data.apps[0]!.latestVersion.spec).toBe(spec ?? "");
+        expect(
+          result.data.apps[0]!.latestVersion.targetCollections[0]!.id,
+        ).toBe(result.data.collections[0]!.id);
+        const listResult = await backend.apps.list();
+        assert.isTrue(listResult.success);
+        expect(listResult.data).toHaveLength(1);
+      },
+    );
 
     it("success: installs pack with documents", async () => {
       // Setup SUT

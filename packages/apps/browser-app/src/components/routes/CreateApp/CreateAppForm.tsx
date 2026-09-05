@@ -22,6 +22,7 @@ interface FormValues {
   name: string;
   appVersion: {
     targetCollectionIds: CollectionId[];
+    spec: string;
     files: RHFAppVersionFiles;
   };
 }
@@ -48,6 +49,7 @@ export default function CreateAppForm({
     defaultValues: {
       appVersion: {
         targetCollectionIds: initialTargetCollections.map(({ id }) => id),
+        spec: "",
         files: forms.defaults.collectionViewAppFiles(initialTargetCollections),
       },
     },
@@ -60,6 +62,7 @@ export default function CreateAppForm({
             v.array(valibotSchemas.id.collection()),
             v.minLength(1),
           ),
+          spec: v.string(),
           files: forms.schemas.rhfAppVersionFiles(intl),
         }),
       }),
@@ -71,6 +74,7 @@ export default function CreateAppForm({
       type: AppType.CollectionView,
       name,
       targetCollectionIds: appVersion.targetCollectionIds,
+      spec: appVersion.spec,
       files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     });
     if (success) {

@@ -1,5 +1,6 @@
 import {
   type ArgumentsNotValid,
+  type AppVersion,
   type Collection,
   type InferenceOptions,
   type InferenceOptionsNotValid,
@@ -15,7 +16,7 @@ import {
 import type { ResultPromise } from "@superego/global-types";
 import { assertInferenceOptionsHas } from "@superego/shared-utils";
 import {
-  useImplementTypescriptModule,
+  useImplementApp,
   useStt,
 } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
@@ -28,7 +29,7 @@ interface UseSttAndImplement {
     >,
     inferenceOptions: InferenceOptions<"completion">,
   ) => ResultPromise<
-    TypescriptModule,
+    Pick<AppVersion, "files" | "spec">,
     | ArgumentsNotValid
     | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
@@ -39,15 +40,14 @@ interface UseSttAndImplement {
 export default function useSttAndImplement(
   targetCollections: Collection[],
   mainTsx: TypescriptModule,
+  spec: string,
   typescriptLibs: TypescriptFile[],
 ): UseSttAndImplement {
   const { isPending: isSttPending, mutate: stt } = useStt();
-  const {
-    isPending: isImplementTypescriptModulePending,
-    mutate: implementTypescriptModule,
-  } = useImplementTypescriptModule();
+  const { isPending: isImplementAppPending, mutate: implementApp } =
+    useImplementApp();
 
-  const isPending = isSttPending || isImplementTypescriptModulePending;
+  const isPending = isSttPending || isImplementAppPending;
 
   const mutate = async (
     messageContent: NonEmptyArray<
@@ -55,7 +55,7 @@ export default function useSttAndImplement(
     >,
     inferenceOptions: InferenceOptions<"completion">,
   ): ResultPromise<
-    TypescriptModule,
+    Pick<AppVersion, "files" | "spec">,
     | ArgumentsNotValid
     | InferenceOptionsNotValid
     | WriteTypescriptModuleToolNotCalled
@@ -91,8 +91,9 @@ export default function useSttAndImplement(
       })
       .join("\n");
 
-    return implementTypescriptModule(
+    return implementApp(
       {
+        spec,
         description: `
 This module implements and default-exports a single-file React app for
 visualizing the documents in the following collections:

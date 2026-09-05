@@ -566,6 +566,12 @@
   "EagerRHFAppVersionField.tsx_4rTNK7": {
     "defaultMessage": "Cosa vuoi creare?"
   },
+  "EagerRHFAppVersionField.tsx_N8wZn2": {
+    "defaultMessage": "Descrivi i requisiti dell’app, il comportamento atteso, i vincoli e le motivazioni."
+  },
+  "EagerRHFAppVersionField.tsx_i+LJdj": {
+    "defaultMessage": "Specifica dell’app"
+  },
   "EagerRHFAppVersionField.tsx_Yhz0gl": {
     "defaultMessage": "Si è verificato un errore durante la generazione dell'app"
   },
@@ -598,6 +604,9 @@
   },
   "EditingToolbar.tsx_JkS37H": {
     "defaultMessage": "Annulla"
+  },
+  "EditingToolbar.tsx_i+LJdj": {
+    "defaultMessage": "Specifica dell’app"
   },
   "EditingToolbar.tsx_ou7tYh": {
     "defaultMessage": "Collezioni di destinazione"

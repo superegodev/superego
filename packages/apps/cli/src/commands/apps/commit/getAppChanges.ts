@@ -6,6 +6,7 @@ import {
 } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
 import { readMainSource } from "../common/mainSource.js";
+import { readSpec } from "../common/spec.js";
 import type { AppManifest } from "../common/types.js";
 import getTargetCollectionIds from "./getTargetCollectionIds.js";
 import type { AppChanges } from "./types.js";
@@ -22,6 +23,8 @@ export default async function getAppChanges({
   app: App;
 }): Promise<AppChanges> {
   const targetCollectionIds = getTargetCollectionIds(app);
+  const spec = readSpec(path, app.latestVersion.spec);
+  const specChanged = spec !== app.latestVersion.spec;
   const source = readMainSource(path);
   const sourceChanged = source !== app.latestVersion.files["/main.tsx"].source;
   const targetCollectionsChanged = !sameArray(
@@ -39,5 +42,11 @@ export default async function getAppChanges({
         )
       : null;
 
-  return { sourceChanged, targetCollectionsChanged, mainModule };
+  return {
+    sourceChanged,
+    targetCollectionsChanged,
+    mainModule,
+    spec,
+    specChanged,
+  };
 }

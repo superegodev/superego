@@ -226,6 +226,7 @@ export default class PacksInstall extends BackendUsecase<
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
+          spec: definition.spec ?? "",
           files: PacksInstall.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,

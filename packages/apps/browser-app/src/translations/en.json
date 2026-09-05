@@ -560,8 +560,14 @@
   "EagerRHFAppVersionField.tsx_4rTNK7": {
     "defaultMessage": "What do you want to build?"
   },
+  "EagerRHFAppVersionField.tsx_N8wZn2": {
+    "defaultMessage": "Describe the app’s requirements, expected behavior, constraints, and rationale."
+  },
   "EagerRHFAppVersionField.tsx_Yhz0gl": {
     "defaultMessage": "An error occurred generating the app"
+  },
+  "EagerRHFAppVersionField.tsx_i+LJdj": {
+    "defaultMessage": "App specification"
   },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
@@ -592,6 +598,9 @@
   },
   "EditingToolbar.tsx_JkS37H": {
     "defaultMessage": "Undo"
+  },
+  "EditingToolbar.tsx_i+LJdj": {
+    "defaultMessage": "App specification"
   },
   "EditingToolbar.tsx_ou7tYh": {
     "defaultMessage": "Target collections"

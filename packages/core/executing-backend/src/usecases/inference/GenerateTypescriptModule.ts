@@ -1,0 +1,396 @@
+import {
+  type Backend,
+  type InferenceOptions,
+  type InferenceOptionsNotValid,
+  type Message,
+  MessageContentPartType,
+  MessageRole,
+  type ToolCall,
+  ToolName,
+  type ToolResult,
+  type TooManyFailedImplementationAttempts,
+  type TypescriptFile,
+  type TypescriptModule,
+  type UnexpectedError,
+  type WriteTypescriptModuleToolNotCalled,
+} from "@superego/backend";
+import type { ResultPromise } from "@superego/global-types";
+import {
+  Id,
+  makeSuccessfulResult,
+  makeUnsuccessfulResult,
+  validateInferenceOptions,
+} from "@superego/shared-utils";
+import { compact } from "es-toolkit";
+import makeResultError from "../../makers/makeResultError.js";
+import InferenceService from "../../requirements/InferenceService.js";
+import isEmpty from "../../utils/isEmpty.js";
+import Usecase from "../../utils/Usecase.js";
+
+const MAX_ATTEMPTS = 5;
+
+export default class GenerateTypescriptModule extends Usecase {
+  async exec(
+    {
+      description,
+      rules,
+      additionalInstructions,
+      template,
+      libs,
+      startingPoint,
+      userRequest,
+      spec,
+    }: Parameters<Backend["inference"]["implementTypescriptModule"]>[0] & {
+      spec?: string;
+    },
+    inferenceOptions: InferenceOptions<"completion">,
+  ): ResultPromise<
+    { module: TypescriptModule; spec: string },
+    | InferenceOptionsNotValid
+    | TooManyFailedImplementationAttempts
+    | WriteTypescriptModuleToolNotCalled
+    | UnexpectedError
+  > {
+    const globalSettings = await this.repos.globalSettings.get();
+
+    const inferenceOptionsIssues = validateInferenceOptions(
+      inferenceOptions,
+      globalSettings.inference,
+    );
+    if (!isEmpty(inferenceOptionsIssues)) {
+      return makeUnsuccessfulResult(
+        makeResultError("InferenceOptionsNotValid", {
+          issues: inferenceOptionsIssues,
+        }),
+      );
+    }
+
+    const inferenceService = this.inferenceServiceFactory.create(
+      globalSettings.inference,
+    );
+
+    return this.attemptImplementation(
+      inferenceService,
+      inferenceOptions,
+      description,
+      rules,
+      additionalInstructions,
+      template,
+      libs,
+      startingPoint,
+      userRequest,
+      spec,
+      1,
+    );
+  }
+
+  private async attemptImplementation(
+    inferenceService: InferenceService,
+    inferenceOptions: InferenceOptions<"completion">,
+    description: string,
+    rules: string | null,
+    additionalInstructions: string | null,
+    template: string,
+    libs: TypescriptFile[],
+    startingPoint: TypescriptFile,
+    userRequest: string,
+    spec: string | undefined,
+    attemptNumber: number,
+    previousAttempt?: Message.ToolCallAssistant | undefined,
+    previousAttemptResponse?: Message.Tool | undefined,
+  ): ResultPromise<
+    { module: TypescriptModule; spec: string },
+    | WriteTypescriptModuleToolNotCalled
+    | TooManyFailedImplementationAttempts
+    | UnexpectedError
+  > {
+    const shouldReattempt = attemptNumber < MAX_ATTEMPTS;
+
+    const message = await inferenceService.generateNextMessage(
+      [
+        GenerateTypescriptModule.getDeveloperMessage(
+          description,
+          rules,
+          additionalInstructions,
+          template,
+          libs,
+          spec !== undefined,
+        ),
+        GenerateTypescriptModule.getUserContextMessage(
+          startingPoint,
+          userRequest,
+          spec,
+        ),
+        previousAttempt ?? null,
+        previousAttemptResponse ?? null,
+      ].filter((message) => message !== null),
+      [WriteTypescriptModuleTool.get(spec !== undefined)],
+      inferenceOptions,
+    );
+
+    if (
+      !(
+        "toolCalls" in message &&
+        message.toolCalls[0] &&
+        WriteTypescriptModuleTool.is(message.toolCalls[0]) &&
+        message.toolCalls[0].input !== null &&
+        typeof message.toolCalls[0].input === "object" &&
+        typeof message.toolCalls[0].input.source === "string" &&
+        (spec === undefined ||
+          typeof message.toolCalls[0].input.spec === "string")
+      )
+    ) {
+      return shouldReattempt
+        ? this.attemptImplementation(
+            inferenceService,
+            inferenceOptions,
+            description,
+            rules,
+            additionalInstructions,
+            template,
+            libs,
+            startingPoint,
+            userRequest,
+            spec,
+            attemptNumber + 1,
+            previousAttempt,
+            previousAttemptResponse,
+          )
+        : makeUnsuccessfulResult(
+            makeResultError("WriteTypescriptModuleToolNotCalled", {
+              generatedMessage: message,
+            }),
+          );
+    }
+
+    const toolCall = message.toolCalls[0];
+
+    const compileResult = await this.typescriptCompiler.compile(
+      { path: startingPoint.path, source: toolCall.input.source },
+      libs,
+    );
+
+    if (!compileResult.success) {
+      return compileResult.error.name === "UnexpectedError"
+        ? makeUnsuccessfulResult(compileResult.error)
+        : shouldReattempt
+          ? this.attemptImplementation(
+              inferenceService,
+              inferenceOptions,
+              description,
+              rules,
+              additionalInstructions,
+              template,
+              libs,
+              startingPoint,
+              userRequest,
+              spec,
+              attemptNumber + 1,
+              message,
+              {
+                id: Id.generate.message(),
+                role: MessageRole.Tool,
+                toolResults: [
+                  {
+                    tool: ToolName.WriteTypescriptModule,
+                    toolCallId: toolCall.id,
+                    output: makeUnsuccessfulResult(compileResult.error),
+                  } satisfies ToolResult.WriteTypescriptModule,
+                ],
+                createdAt: new Date(),
+              },
+            )
+          : makeUnsuccessfulResult(
+              makeResultError("TooManyFailedImplementationAttempts", {
+                failedAttemptsCount: attemptNumber,
+              }),
+            );
+    }
+
+    return makeSuccessfulResult({
+      spec: toolCall.input.spec ?? "",
+      module: {
+        source: toolCall.input.source.replace(
+          `// filename: ${startingPoint.path}\n`,
+          "",
+        ),
+        compiled: compileResult.data,
+      },
+    });
+  }
+
+  private static getDeveloperMessage(
+    description: string,
+    rules: string | null,
+    additionalInstructions: string | null,
+    template: string,
+    libs: TypescriptFile[],
+    includeSpec: boolean,
+  ): Message.Developer {
+    const availableLibs = slimDownLibs(libs)
+      .flatMap((lib) => [
+        "```ts",
+        `// filename: ${lib.path}`,
+        lib.source,
+        "```",
+        "",
+      ])
+      .join("\n");
+    return {
+      role: MessageRole.Developer,
+      content: [
+        {
+          type: MessageContentPartType.Text,
+          text: `
+You are a TypeScript code generator. When asked to implement code, you MUST call
+${ToolName.WriteTypescriptModule}. Do not write any response text - only return
+the tool call.
+
+Starting from the user-supplied TypeScript starting point, implement the
+**entire** module to satisfy the user request.
+
+## Module description
+
+${description}
+
+## Implementation rules
+
+- The module’s default export **must match exactly** the type specified in the
+  template below.
+- The module can import and use the TypeScript files provided below.
+- The implemented module MUST compile without errors and have no type errors.
+  When you receive compiler diagnostics, correct them and call the tool again.
+- Solve all pending TODOs.
+- Only make the changes necessary to satisfy the user request - preserve
+  existing working code in the starting point.
+- Use clear, descriptive variable names and add comments for complex logic.
+${rules ?? ""}
+${
+  includeSpec
+    ? `
+- Return the complete current Markdown app specification in the tool's spec field.
+- Initialize an empty specification from the user request. Describe requirements,
+  expected behavior, constraints, and relevant rationale.
+- Revise the specification when the request changes those requirements. Preserve
+  still-relevant intent, and keep it unchanged for implementation-only fixes.
+- The specification is the current source of truth, not a changelog. Do not invent
+  requirements or record compiler retry history. Code and spec must agree.
+`
+    : ""
+}
+
+${additionalInstructions ? "## Additional instructions" : ""}
+
+${additionalInstructions ? additionalInstructions : ""}
+
+## Module template
+
+\`\`\`ts
+${template}
+\`\`\`
+
+## Available libs
+
+${availableLibs}
+          `
+            .replace(/\n{3,}/g, "\n\n")
+            .trim(),
+        },
+      ],
+    };
+  }
+
+  private static getUserContextMessage(
+    startingPoint: TypescriptFile,
+    userRequest: string,
+    spec: string | undefined,
+  ): Message.UserContext {
+    return {
+      role: MessageRole.UserContext,
+      content: [
+        {
+          type: MessageContentPartType.Text,
+          text: `
+## Starting point
+
+\`\`\`ts
+// filename: ${startingPoint.path}
+${startingPoint.source}
+\`\`\`
+
+${spec !== undefined ? `## Current app specification\n\n${spec}` : ""}
+
+## User request
+
+${userRequest}
+          `.trim(),
+        },
+      ],
+    };
+  }
+}
+
+const WriteTypescriptModuleTool = {
+  is(toolCall: ToolCall): toolCall is ToolCall.WriteTypescriptModule {
+    return toolCall.tool === ToolName.WriteTypescriptModule;
+  },
+
+  get(includeSpec: boolean): InferenceService.FunctionTool {
+    return {
+      type: InferenceService.ToolType.Function,
+      name: ToolName.WriteTypescriptModule,
+      description: "Returns the implemented TypeScript module to the user.",
+      inputSchema: {
+        type: "object",
+        required: includeSpec ? ["source", "spec"] : ["source"],
+        properties: {
+          ...(includeSpec
+            ? {
+                spec: {
+                  type: "string",
+                  description:
+                    "Complete current Markdown specification of the app, without fences.",
+                },
+              }
+            : {}),
+          source: {
+            description:
+              "Source code of the entire TypeScript module that was implemented. Source only. No fences.",
+            type: "string",
+          },
+        },
+      },
+    };
+  },
+};
+
+/** Slims down libs to avoid a huge and largely useless context. */
+function slimDownLibs(libs: TypescriptFile[]): TypescriptFile[] {
+  return compact([
+    ...libs.filter(
+      (lib) =>
+        !(
+          lib.path.startsWith("/node_modules/react") ||
+          lib.path.startsWith("/node_modules/echarts")
+        ),
+    ),
+    libs.some((lib) => lib.path.startsWith("/node_modules/react"))
+      ? {
+          path: "/node_modules/react/index.d.ts",
+          source: [
+            "// Full type definitions omitted. Use standard APIs",
+            'declare module "react";',
+          ].join("\n"),
+        }
+      : null,
+    libs.some((lib) => lib.path.startsWith("/node_modules/echarts"))
+      ? {
+          path: "/node_modules/echarts/index.d.ts",
+          source: [
+            "// Full type definitions omitted. Use standard APIs",
+            'declare module "echarts";',
+          ].join("\n"),
+        }
+      : null,
+  ]);
+}

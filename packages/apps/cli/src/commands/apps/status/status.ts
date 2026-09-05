@@ -9,6 +9,7 @@ import {
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
+import { readSpec } from "../common/spec.js";
 
 export default useMarkdownHelp(
   new Command("status")
@@ -25,6 +26,9 @@ export default useMarkdownHelp(
         const backend = await createBackend();
         const app = await getLockedApp(backend, lock.appId);
         const status: string[] = [];
+        if (readSpec(path, app.latestVersion.spec) !== app.latestVersion.spec) {
+          status.push("spec changed");
+        }
         if (
           manifest.name !== app.name ||
           !sameArray(

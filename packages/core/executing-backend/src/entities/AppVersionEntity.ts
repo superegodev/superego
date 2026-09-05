@@ -5,6 +5,8 @@ export default interface AppVersionEntity {
   previousVersionId: AppVersionId | null;
   appId: AppId;
   targetCollections: AppVersion["targetCollections"];
+  /** Current Markdown specification, versioned with the implementation. */
+  spec: string;
   files: AppVersion["files"];
   createdAt: Date;
 }

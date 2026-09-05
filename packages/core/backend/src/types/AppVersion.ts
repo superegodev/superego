@@ -9,6 +9,8 @@ export default interface AppVersion {
     id: CollectionId;
     versionId: CollectionVersionId;
   }[];
+  /** Current Markdown specification, versioned with the implementation. */
+  spec: string;
   files: {
     "/main.tsx": TypescriptModule;
   };

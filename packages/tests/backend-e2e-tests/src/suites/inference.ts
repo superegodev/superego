@@ -365,4 +365,104 @@ export default rd<GetDependencies>("Inference", (deps) => {
       },
     );
   });
+  describe("implementApp", () => {
+    const request = {
+      description: "An app",
+      rules: null,
+      additionalInstructions: null,
+      template: "export default function App(): number;",
+      libs: [],
+      startingPoint: {
+        path: "/main.tsx" as const,
+        source: "export default function App() { return 1; }",
+      },
+      userRequest: "Display two",
+      spec: "# App\nDisplay one.",
+    };
+
+    it
+      .skipIf(typeof window !== "undefined")
+      .each([
+        "missing",
+        "invalid",
+        "compile failure",
+        "retry",
+        "success",
+        "initial",
+      ])("handles %s", async (scenario) => {
+      // Setup mocks
+      let attempts = 0;
+      const inferenceService: InferenceService = {
+        generateNextMessage: async (messages, tools, inferenceOptions) => {
+          attempts += 1;
+          expect(JSON.stringify(messages)).toContain("Display two");
+          expect(JSON.stringify(messages)).toContain(
+            "Current app specification",
+          );
+          expect(tools[0]?.inputSchema.required).toEqual(["source", "spec"]);
+          const source =
+            scenario === "compile failure" ||
+            (scenario === "retry" && attempts === 1)
+              ? "const value: number = 'wrong';"
+              : "export default function App() { return 2; }";
+          return {
+            id: Id.generate.message(),
+            role: MessageRole.Assistant,
+            toolCalls: [
+              {
+                id: "call-1",
+                tool: ToolName.WriteTypescriptModule,
+                input: {
+                  source,
+                  ...(scenario === "missing"
+                    ? {}
+                    : {
+                        spec:
+                          scenario === "invalid"
+                            ? (42 as any)
+                            : "# App\nDisplay two.",
+                      }),
+                },
+              },
+            ],
+            reasoning: {},
+            inferenceOptions,
+            generationStats: {
+              timeTaken: 0,
+              inputTokens: 0,
+              outputTokens: 0,
+              totalTokens: 0,
+            },
+            createdAt: new Date(),
+          };
+        },
+        stt: async () => "Mock",
+        inspectFile: async () => "Mock",
+      };
+      // Setup SUT
+      const { backend } = deps({ inferenceService });
+
+      // Exercise
+      const result = await backend.inference.implementApp(
+        { ...request, spec: scenario === "initial" ? "" : request.spec },
+        validInferenceOptions,
+      );
+
+      // Verify
+      if (scenario === "missing" || scenario === "invalid") {
+        expect(result.error?.name).toBe("WriteTypescriptModuleToolNotCalled");
+        expect(attempts).toBe(5);
+      } else if (scenario === "compile failure") {
+        expect(result.error?.name).toBe("TooManyFailedImplementationAttempts");
+        expect(attempts).toBe(5);
+      } else {
+        assert(result.success);
+        expect(result.data.spec).toBe("# App\nDisplay two.");
+        expect(result.data.files["/main.tsx"].source).toContain("return 2");
+        expect(result.data.files["/main.tsx"].compiled).toContain("return 2");
+        expect(attempts).toBe(scenario === "retry" ? 2 : 1);
+      }
+      expect(request.spec).toBe("# App\nDisplay one.");
+    });
+  });
 });

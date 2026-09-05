@@ -61,6 +61,7 @@ import DocumentsSearch from "./usecases/documents/Search.js";
 import FilesGetContent from "./usecases/files/GetContent.js";
 import GlobalSettingsGet from "./usecases/global-settings/Get.js";
 import GlobalSettingsUpdate from "./usecases/global-settings/Update.js";
+import InferenceImplementApp from "./usecases/inference/ImplementApp.js";
 import InferenceImplementTypescriptModule from "./usecases/inference/ImplementTypescriptModule.js";
 import InferenceStt from "./usecases/inference/Stt.js";
 import PacksInstall from "./usecases/packs/Install.js";
@@ -172,6 +173,7 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.inference = {
+      implementApp: this.makeUsecase(InferenceImplementApp, false),
       stt: this.makeUsecase(InferenceStt, false),
       implementTypescriptModule: this.makeUsecase(
         InferenceImplementTypescriptModule,

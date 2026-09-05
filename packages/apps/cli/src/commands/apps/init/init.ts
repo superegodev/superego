@@ -46,6 +46,7 @@ export default useMarkdownHelp(
         getInitialMainSource(targetCollections),
         targetCollections,
         null,
+        "",
       );
       return {
         path: projectPath,

@@ -7,6 +7,7 @@ export default function makeAppVersion(
   return {
     id: appVersion.id,
     targetCollections: appVersion.targetCollections,
+    spec: appVersion.spec,
     files: appVersion.files,
     createdAt: appVersion.createdAt,
   };
