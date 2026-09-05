@@ -11,5 +11,7 @@ export default interface AppDefinition<
   targetCollectionIds: (AllowProtoCollectionIds extends true
     ? ProtoCollectionId | CollectionId
     : CollectionId)[];
+  /** Defaults to an empty specification when omitted. */
+  spec?: string;
   files: AppVersion["files"];
 }

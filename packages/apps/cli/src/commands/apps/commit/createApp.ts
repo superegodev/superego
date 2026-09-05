@@ -1,6 +1,7 @@
 import { resolveLatestTargetCollections } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
 import { buildLock, writeLock } from "../common/lock.js";
+import { readSpec } from "../common/spec.js";
 import type { CommitContext, CommitResult } from "./types.js";
 
 export default async function createApp({
@@ -17,6 +18,7 @@ export default async function createApp({
     type: manifest.type,
     name: manifest.name,
     targetCollectionIds: manifest.targetCollectionIds,
+    spec: readSpec(path),
     files: { "/main.tsx": mainModule },
   });
   if (!result.success) {

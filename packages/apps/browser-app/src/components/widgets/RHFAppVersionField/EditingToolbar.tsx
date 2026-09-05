@@ -5,6 +5,7 @@ import {
   PiArrowUDownLeft,
   PiArrowUDownRight,
   PiCode,
+  PiFileText,
   PiPresentationChart,
 } from "react-icons/pi";
 import { useIntl } from "react-intl";
@@ -97,6 +98,16 @@ export default function EditingToolbar({
         />
         <SelectOptions options={collectionOptions} />
       </Select>
+      <IconButton
+        variant="invisible"
+        label={intl.formatMessage({ defaultMessage: "App specification" })}
+        onPress={() =>
+          onActivateView(activeView === View.Spec ? View.Preview : View.Spec)
+        }
+        className={cs.EditingToolbar.button}
+      >
+        <PiFileText />
+      </IconButton>
       <IconButton
         variant="invisible"
         label={

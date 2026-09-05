@@ -1,10 +1,12 @@
 export default function getStatus({
   metadataChanged,
   sourceChanged,
+  specChanged,
   stale,
 }: {
   metadataChanged: boolean;
   sourceChanged: boolean;
+  specChanged: boolean;
   stale: boolean;
 }): string[] {
   const status: string[] = [];
@@ -13,6 +15,9 @@ export default function getStatus({
   }
   if (sourceChanged) {
     status.push("source changed");
+  }
+  if (specChanged) {
+    status.push("spec changed");
   }
   if (stale) {
     status.push("checkout stale");

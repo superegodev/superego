@@ -19,7 +19,10 @@ const targetCollections: AppVersionEntity["targetCollections"] = [
 ];
 
 export default rd<GetDependencies>("App versions", (deps) => {
-  it("inserting", async () => {
+  it.each([
+    "",
+    "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
+  ])("inserting spec %s", async (spec) => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
 
@@ -29,6 +32,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: null,
       appId: Id.generate.app(),
       targetCollections: targetCollections,
+      spec,
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -61,6 +65,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: null,
         appId,
         targetCollections: targetCollections,
+        spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
         files: appVersionFiles,
         createdAt: new Date(),
       };
@@ -69,6 +74,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: appVersion1.id,
         appId,
         targetCollections: targetCollections,
+        spec: "# Revised specification",
         files: appVersionFiles,
         createdAt: new Date(appVersion1.createdAt.getTime() + 1),
       };
@@ -121,6 +127,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: null,
       appId: app1Id,
       targetCollections: targetCollections,
+      spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -129,6 +136,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: appVersion1.id,
       appId: app1Id,
       targetCollections: targetCollections,
+      spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -137,6 +145,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
       previousVersionId: null,
       appId: app2Id,
       targetCollections: targetCollections,
+      spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
       files: appVersionFiles,
       createdAt: new Date(),
     };
@@ -196,6 +205,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: null,
         appId: app1Id,
         targetCollections: targetCollections,
+        spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
         files: appVersionFiles,
         createdAt: new Date(),
       };
@@ -204,6 +214,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: appVersion1.id,
         appId: app1Id,
         targetCollections: targetCollections,
+        spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
         files: appVersionFiles,
         createdAt: new Date(),
       };
@@ -212,6 +223,7 @@ export default rd<GetDependencies>("App versions", (deps) => {
         previousVersionId: null,
         appId: app2Id,
         targetCollections: targetCollections,
+        spec: "# App specification\n\nPreserve **Markdown** and Unicode: caffè.",
         files: appVersionFiles,
         createdAt: new Date(),
       };

@@ -1372,10 +1372,22 @@
       "value": "Cosa vuoi creare?"
     }
   ],
+  "EagerRHFAppVersionField.tsx_N8wZn2": [
+    {
+      "type": 0,
+      "value": "Descrivi i requisiti dell’app, il comportamento atteso, i vincoli e le motivazioni."
+    }
+  ],
   "EagerRHFAppVersionField.tsx_Yhz0gl": [
     {
       "type": 0,
       "value": "Si è verificato un errore durante la generazione dell'app"
+    }
+  ],
+  "EagerRHFAppVersionField.tsx_i+LJdj": [
+    {
+      "type": 0,
+      "value": "Specifica dell’app"
     }
   ],
   "EagerTiptapInput.tsx_0he+1r": [
@@ -1444,6 +1456,12 @@
     {
       "type": 0,
       "value": "Annulla"
+    }
+  ],
+  "EditingToolbar.tsx_i+LJdj": [
+    {
+      "type": 0,
+      "value": "Specifica dell’app"
     }
   ],
   "EditingToolbar.tsx_ou7tYh": [

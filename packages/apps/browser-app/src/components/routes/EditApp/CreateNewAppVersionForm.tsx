@@ -20,6 +20,7 @@ import * as cs from "./EditApp.css.js";
 interface FormValues {
   appVersion: {
     targetCollectionIds: CollectionId[];
+    spec: string;
     files: RHFAppVersionFiles;
   };
 }
@@ -52,6 +53,7 @@ export default function CreateNewAppVersionForm({
     defaultValues: {
       appVersion: {
         targetCollectionIds: validTargetCollectionIds,
+        spec: app.latestVersion.spec,
         files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
           app.latestVersion.files,
         ),
@@ -65,6 +67,7 @@ export default function CreateNewAppVersionForm({
             v.array(valibotSchemas.id.collection()),
             v.minLength(1),
           ),
+          spec: v.string(),
           files: forms.schemas.rhfAppVersionFiles(intl),
         }),
       }),
@@ -76,6 +79,7 @@ export default function CreateNewAppVersionForm({
       app.id,
       appVersion.targetCollectionIds,
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
+      appVersion.spec,
     );
     if (success) {
       reset(
@@ -84,6 +88,7 @@ export default function CreateNewAppVersionForm({
             targetCollectionIds: data.latestVersion.targetCollections.map(
               ({ id }) => id,
             ),
+            spec: data.latestVersion.spec,
             files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
               data.latestVersion.files,
             ),

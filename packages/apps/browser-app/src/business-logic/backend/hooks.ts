@@ -297,6 +297,12 @@ export const useDeleteConversation = makeUseBackendMutation(
 
 export const useStt = makeUseBackendMutation("inference", "stt", () => []);
 
+export const useImplementApp = makeUseBackendMutation(
+  "inference",
+  "implementApp",
+  () => [],
+);
+
 export const useImplementTypescriptModule = makeUseBackendMutation(
   "inference",
   "implementTypescriptModule",

@@ -63,3 +63,15 @@ Recovering stale checkouts:
   elsewhere.
 - Reapply the local edits to the refreshed checkout, run `superego apps check`,
   then `superego apps commit`.
+
+## App specifications
+
+App projects include `spec.md`, the current Markdown description of the app's
+requirements, expected behavior, constraints, and rationale. Read it before
+editing and update it alongside behavior changes. For a new app, initialize it
+from the user's request. Keep it as a current specification, not a changelog.
+
+`superego apps checkout` retrieves the stored spec. `apps status` and
+`apps diff` include spec changes, and `apps commit` saves them even when code is
+unchanged. An absent `spec.md` in an older checkout preserves the stored spec;
+an empty file clears it. Specs are versioned together with the implementation.

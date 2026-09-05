@@ -519,6 +519,20 @@ export default interface Backend {
   };
 
   inference: {
+    implementApp(
+      request: Parameters<
+        Backend["inference"]["implementTypescriptModule"]
+      >[0] & { spec: string },
+      inferenceOptions: InferenceOptions<"completion">,
+    ): ResultPromise<
+      { files: AppVersion["files"]; spec: string },
+      | InferenceOptionsNotValid
+      | WriteTypescriptModuleToolNotCalled
+      | TooManyFailedImplementationAttempts
+      | ArgumentsNotValid
+      | UnexpectedError
+    >;
+
     stt(
       audio: AudioContent,
       inferenceOptions: InferenceOptions<"transcription">,
@@ -568,6 +582,8 @@ export default interface Backend {
       id: AppId,
       targetCollectionIds: CollectionId[],
       files: AppVersion["files"],
+      /** Omit to preserve the previous spec; pass an empty string to clear it. */
+      spec?: string,
     ): ResultPromise<
       App,
       AppNotFound | CollectionNotFound | ArgumentsNotValid | UnexpectedError

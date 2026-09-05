@@ -13,6 +13,7 @@ import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
 import useUndoRedo from "../CodeInput/common-hooks/useUndoRedo.js";
+import RHFMarkdownField from "../RHFMarkdownField/RHFMarkdownField.js";
 import RHFTypescriptModuleField from "../RHFTypescriptModuleField/RHFTypescriptModuleField.js";
 import UserMessageContentInput from "../UserMessageContentInput/UserMessageContentInput.js";
 import EditingToolbar from "./EditingToolbar.js";
@@ -35,6 +36,8 @@ export default function EagerRHFAppVersionField({
   const intl = useIntl();
 
   const [activeView, setActiveView] = useState(View.Preview);
+
+  const { field: specField } = useController({ control, name: `${name}.spec` });
 
   const filesFieldName = `${name}.files./main__DOT__tsx`;
   const { field: filesField } = useController({
@@ -59,6 +62,7 @@ export default function EagerRHFAppVersionField({
   const { isPending, mutate } = useSttAndImplement(
     targetCollections,
     mainTsx,
+    specField.value,
     typescriptLibs,
   );
 
@@ -74,7 +78,8 @@ export default function EagerRHFAppVersionField({
       inferenceOptions,
     );
     if (success) {
-      filesField.onChange(data);
+      filesField.onChange(data.files["/main.tsx"]);
+      specField.onChange(data.spec);
     } else {
       console.error(error);
       toasts.add({
@@ -98,9 +103,9 @@ export default function EagerRHFAppVersionField({
     <div className={cs.EagerRHFAppVersionField.root}>
       <EditingToolbar
         onUndo={undoRedo.undo}
-        isUndoDisabled={!undoRedo.canUndo}
+        isUndoDisabled={activeView === View.Spec || !undoRedo.canUndo}
         onRedo={undoRedo.redo}
-        isRedoDisabled={!undoRedo.canRedo}
+        isRedoDisabled={activeView === View.Spec || !undoRedo.canRedo}
         onActivateView={setActiveView}
         activeView={activeView}
         collections={collections}
@@ -126,6 +131,19 @@ export default function EagerRHFAppVersionField({
             ]
           }
         />
+        <div hidden={activeView !== View.Spec}>
+          <RHFMarkdownField
+            control={control}
+            name={`${name}.spec`}
+            label={intl.formatMessage({ defaultMessage: "App specification" })}
+            description={intl.formatMessage({
+              defaultMessage:
+                "Describe the app’s requirements, expected behavior, constraints, and rationale.",
+            })}
+            isReadOnly={isPending}
+            showToolbar={true}
+          />
+        </div>
         <RHFTypescriptModuleField
           control={control}
           name={filesFieldName}

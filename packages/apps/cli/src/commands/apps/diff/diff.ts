@@ -5,6 +5,7 @@ import { getLockedApp, runAppCommand } from "../common/commandUtils.js";
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
+import { readSpec } from "../common/spec.js";
 import getStatus from "./getStatus.js";
 import makeArrayFieldDiff from "./makeArrayFieldDiff.js";
 import makeFieldDiff from "./makeFieldDiff.js";
@@ -39,12 +40,15 @@ export default useMarkdownHelp(
           manifest.targetCollectionIds,
           remoteManifest.targetCollectionIds,
         );
+        const spec = readSpec(path, app.latestVersion.spec);
+        const specChanged = spec !== app.latestVersion.spec;
         const sourceChanged = source !== remoteSource;
         const stale = lock.latestAppVersionId !== app.latestVersion.id;
         const status = getStatus({
           metadataChanged:
             name.changed || type.changed || targetCollectionIds.changed,
           sourceChanged,
+          specChanged,
           stale,
         });
 
@@ -58,6 +62,17 @@ export default useMarkdownHelp(
             name,
             type,
             targetCollectionIds,
+          },
+          spec: {
+            changed: specChanged,
+            diff: specChanged
+              ? makeUnifiedDiff(
+                  "remote/spec.md",
+                  app.latestVersion.spec,
+                  "local/spec.md",
+                  spec,
+                )
+              : null,
           },
           source: {
             changed: sourceChanged,

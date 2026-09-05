@@ -42,7 +42,7 @@ export default class AppsCreate extends BackendUsecase<
   );
 
   async exec(
-    { type, name, targetCollectionIds, files }: AppDefinition,
+    { type, name, targetCollectionIds, files, spec = "" }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
@@ -90,6 +90,7 @@ export default class AppsCreate extends BackendUsecase<
       previousVersionId: null,
       appId: app.id,
       targetCollections: targetCollections,
+      spec,
       files: files,
       createdAt: now,
     };

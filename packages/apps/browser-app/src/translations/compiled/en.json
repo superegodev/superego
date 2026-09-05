@@ -1380,10 +1380,22 @@
       "value": "What do you want to build?"
     }
   ],
+  "EagerRHFAppVersionField.tsx_N8wZn2": [
+    {
+      "type": 0,
+      "value": "Describe the app’s requirements, expected behavior, constraints, and rationale."
+    }
+  ],
   "EagerRHFAppVersionField.tsx_Yhz0gl": [
     {
       "type": 0,
       "value": "An error occurred generating the app"
+    }
+  ],
+  "EagerRHFAppVersionField.tsx_i+LJdj": [
+    {
+      "type": 0,
+      "value": "App specification"
     }
   ],
   "EagerTiptapInput.tsx_0he+1r": [
@@ -1452,6 +1464,12 @@
     {
       "type": 0,
       "value": "Undo"
+    }
+  ],
+  "EditingToolbar.tsx_i+LJdj": [
+    {
+      "type": 0,
+      "value": "App specification"
     }
   ],
   "EditingToolbar.tsx_ou7tYh": [

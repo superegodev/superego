@@ -13,6 +13,7 @@ import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
+import { isEqual } from "es-toolkit";
 import * as v from "valibot";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
@@ -31,6 +32,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     v.strictObject({
       "/main.tsx": structuralSchemas.backend.types.typescriptModule(),
     }),
+    v.optional(v.string()),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.app(),
@@ -45,6 +47,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     id: AppId,
     targetCollectionIds: CollectionId[],
     files: AppVersionEntity["files"],
+    spec?: string,
   ): ResultPromise<App, AppNotFound | CollectionNotFound | UnexpectedError> {
     const app = await this.repos.app.find(id);
     if (!app) {
@@ -58,13 +61,28 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     );
     assertAppVersionExists(app.id, previousVersion);
 
+    // Updating intent alone must not rebind unchanged code to newer schemas.
+    const isSpecOnlyUpdate =
+      spec !== undefined &&
+      spec !== previousVersion.spec &&
+      isEqual(files, previousVersion.files) &&
+      isEqual(
+        targetCollectionIds,
+        previousVersion.targetCollections.map(({ id }) => id),
+      );
+
     const targetCollections: AppVersionEntity["targetCollections"] = [];
-    for (const collectionId of targetCollectionIds) {
+    for (const [index, collectionId] of targetCollectionIds.entries()) {
       const collection = await this.repos.collection.find(collectionId);
       if (!collection) {
         return makeUnsuccessfulResult(
           makeResultError("CollectionNotFound", { collectionId }),
         );
+      }
+
+      if (isSpecOnlyUpdate) {
+        targetCollections.push(previousVersion.targetCollections[index]!);
+        continue;
       }
 
       const latestCollectionVersion =
@@ -83,6 +101,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       previousVersionId: previousVersion.id,
       appId: app.id,
       targetCollections,
+      spec: spec ?? previousVersion.spec,
       files: files,
       createdAt: new Date(),
     };

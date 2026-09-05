@@ -109,6 +109,7 @@ namespace ToolCall {
     ToolName.WriteTypescriptModule,
     {
       source: string;
+      spec?: string;
     }
   >;
 }

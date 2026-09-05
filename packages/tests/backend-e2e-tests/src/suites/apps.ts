@@ -125,6 +125,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           type: AppType.CollectionView,
           name: "name",
           latestVersion: {
+            spec: "",
             id: expect.any(String),
             targetCollections: [
               {
@@ -146,6 +147,214 @@ export default rd<GetDependencies>("Apps", (deps) => {
         error: null,
       });
     });
+  });
+
+  describe("spec-only collection bindings", () => {
+    it("keeps the collection versions that match unchanged code", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const collection = await backend.collections.create({
+        settings: {
+          name: "Items",
+          icon: null,
+          collectionCategoryId: null,
+          defaultCollectionViewAppId: null,
+          description: null,
+          assistantInstructions: null,
+          redirectToCollectionAfterDocumentCreation: false,
+        },
+        schema: {
+          types: { Root: { dataType: DataType.Struct, properties: {} } },
+          rootType: "Root",
+        },
+        versionSettings: {
+          contentBlockingKeysGetter: null,
+          contentSummaryGetter: {
+            source: "",
+            compiled:
+              "export default function getContentSummary() { return {}; }",
+          },
+          defaultDocumentViewUiOptions: null,
+        },
+      });
+      assert(collection.success);
+      const files = {
+        "/main.tsx": {
+          source: "export default 1;",
+          compiled: "export default 1;",
+        },
+      };
+      const app = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [collection.data.id],
+        files,
+        spec: "Original intent",
+      });
+      assert(app.success);
+      const newCollectionVersion = await backend.collections.createNewVersion(
+        collection.data.id,
+        collection.data.latestVersion.id,
+        collection.data.latestVersion.schema,
+        collection.data.latestVersion.settings,
+        {
+          source: "",
+          compiled:
+            "export default function migrate(content) { return content; }",
+        },
+      );
+      assert(newCollectionVersion.success);
+      expect(newCollectionVersion.data.latestVersion.id).not.toBe(
+        collection.data.latestVersion.id,
+      );
+
+      // Exercise
+      const updated = await backend.apps.createNewVersion(
+        app.data.id,
+        [collection.data.id],
+        files,
+        "Revised intent",
+      );
+
+      // Verify
+      assert(updated.success);
+      expect(updated.data.latestVersion.targetCollections).toEqual(
+        app.data.latestVersion.targetCollections,
+      );
+      expect(updated.data.latestVersion.files).toEqual(files);
+      expect(updated.data.latestVersion.spec).toBe("Revised intent");
+    });
+  });
+
+  describe("specifications", () => {
+    const files = {
+      "/main.tsx": {
+        source: "export default 1;",
+        compiled: "export default 1;",
+      },
+    };
+    const initialSpec =
+      "# Intent\n\nPreserve **Markdown**, whitespace, and caffè.\n";
+
+    it.each([undefined, initialSpec, ""])(
+      "creates and lists spec %s",
+      async (spec) => {
+        // Setup SUT
+        const { backend } = deps();
+
+        // Exercise
+        const created = await backend.apps.create({
+          type: AppType.CollectionView,
+          name: "App",
+          targetCollectionIds: [],
+          files,
+          ...(spec === undefined ? {} : { spec }),
+        });
+        const listed = await backend.apps.list();
+
+        // Verify
+        assert(created.success);
+        expect(created.data.latestVersion.spec).toBe(spec ?? "");
+        assert(listed.success);
+        expect(listed.data).toEqual([created.data]);
+      },
+    );
+
+    it.each([undefined, "# Revised intent", ""])(
+      "creates a spec-only version with %s",
+      async (spec) => {
+        // Setup SUT
+        const { backend } = deps();
+        const created = await backend.apps.create({
+          type: AppType.CollectionView,
+          name: "App",
+          targetCollectionIds: [],
+          files,
+          spec: initialSpec,
+        });
+        assert(created.success);
+
+        // Exercise
+        const updated = await backend.apps.createNewVersion(
+          created.data.id,
+          [],
+          files,
+          spec,
+        );
+        const listed = await backend.apps.list();
+
+        // Verify
+        assert(updated.success);
+        expect(updated.data.latestVersion.spec).toBe(spec ?? initialSpec);
+        expect(updated.data.latestVersion.files).toEqual(files);
+        expect(updated.data.latestVersion.id).not.toBe(
+          created.data.latestVersion.id,
+        );
+        expect(created.data.latestVersion.spec).toBe(initialSpec);
+        assert(listed.success);
+        expect(listed.data).toEqual([updated.data]);
+      },
+    );
+
+    it("preserves the spec when older callers omit the fourth argument", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files,
+        spec: initialSpec,
+      });
+      assert(created.success);
+
+      // Exercise
+      const updated = await backend.apps.createNewVersion(
+        created.data.id,
+        [],
+        files,
+      );
+
+      // Verify
+      assert(updated.success);
+      expect(updated.data.latestVersion.spec).toBe(initialSpec);
+    });
+
+    it.each([null, 42, {}])(
+      "rejects invalid specs without changing the app: %s",
+      async (spec) => {
+        // Setup SUT
+        const { backend } = deps();
+        const definition = {
+          type: AppType.CollectionView,
+          name: "App",
+          targetCollectionIds: [],
+          files,
+          spec: initialSpec,
+        };
+        const created = await backend.apps.create(definition);
+        assert(created.success);
+
+        // Exercise
+        const invalidCreate = await backend.apps.create({
+          ...definition,
+          spec: spec as any,
+        });
+        const invalidUpdate = await backend.apps.createNewVersion(
+          created.data.id,
+          [],
+          files,
+          spec as any,
+        );
+        const listed = await backend.apps.list();
+
+        // Verify
+        expect(invalidCreate.error?.name).toBe("ArgumentsNotValid");
+        expect(invalidUpdate.error?.name).toBe("ArgumentsNotValid");
+        assert(listed.success);
+        expect(listed.data).toEqual([created.data]);
+      },
+    );
   });
 
   describe("updateName", () => {
@@ -387,6 +596,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           type: AppType.CollectionView,
           name: "name",
           latestVersion: {
+            spec: "",
             id: expect.any(String),
             targetCollections: [
               {

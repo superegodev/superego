@@ -60,6 +60,7 @@ function getApp(
         type: AppType.CollectionView,
         name: "New App Preview",
         latestVersion: {
+          spec: "",
           id: Id.generate.appVersion(),
           targetCollections: targetCollections.map((collection) => ({
             id: collection.id,

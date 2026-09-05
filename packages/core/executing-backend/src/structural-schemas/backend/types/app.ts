@@ -23,6 +23,7 @@ export function appVersion(): v.GenericSchema<unknown, AppVersion> {
         versionId: collectionVersionId(),
       }),
     ),
+    spec: v.string(),
     files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
@@ -48,6 +49,7 @@ export function appDefinition(): v.GenericSchema<
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
+    spec: v.optional(v.string(), ""),
     files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
@@ -64,6 +66,7 @@ export function protoAppDefinition(): v.GenericSchema<
     targetCollectionIds: v.array(
       v.union([protoCollectionId(), collectionId()]),
     ),
+    spec: v.optional(v.string(), ""),
     files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
