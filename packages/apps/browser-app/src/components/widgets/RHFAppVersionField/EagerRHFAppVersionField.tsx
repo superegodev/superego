@@ -7,7 +7,7 @@ import type {
   TypescriptModule,
 } from "@superego/backend";
 import { useMemo, useState } from "react";
-import { useController } from "react-hook-form";
+import { useController, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
@@ -54,7 +54,11 @@ export default function EagerRHFAppVersionField({
     [collections, targetCollectionIds],
   );
 
-  const typescriptLibs = useTypescriptLibs(targetCollections);
+  const state = useWatch({
+    control,
+    name: `${name}.state`,
+  });
+  const typescriptLibs = useTypescriptLibs(targetCollections, state?.schema);
 
   const { isPending, mutate } = useSttAndImplement(
     targetCollections,
@@ -119,6 +123,7 @@ export default function EagerRHFAppVersionField({
         {isPending ? <ImplementingSpinner /> : null}
         <Preview
           mainTsx={mainTsx}
+          state={state}
           targetCollections={targetCollections}
           className={
             cs.EagerRHFAppVersionField.preview[

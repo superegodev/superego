@@ -86,10 +86,20 @@ export type InvokeBackendMethodMessage = BaseMessage<
 export function isInvokeBackendMethodMessage(
   message: unknown,
 ): message is InvokeBackendMethodMessage {
-  return isMessageWith(
-    message,
-    MessageSender.Sandbox,
-    MessageType.InvokeBackendMethod,
+  if (
+    !isMessageWith(
+      message,
+      MessageSender.Sandbox,
+      MessageType.InvokeBackendMethod,
+    )
+  ) {
+    return false;
+  }
+  const payload = (message as InvokeBackendMethodMessage).payload;
+  return (
+    !!payload &&
+    typeof payload.invocationId === "string" &&
+    /^[a-zA-Z0-9-]{1,128}$/.test(payload.invocationId)
   );
 }
 
@@ -103,9 +113,19 @@ export type NavigateHostToMessage = BaseMessage<
 export function isNavigateHostToMessage(
   message: unknown,
 ): message is NavigateHostToMessage {
-  return isMessageWith(
-    message,
-    MessageSender.Sandbox,
-    MessageType.NavigateHostTo,
+  return (
+    isMessageWith(message, MessageSender.Sandbox, MessageType.NavigateHostTo) &&
+    typeof (message as NavigateHostToMessage).payload?.href === "string"
   );
+}
+
+export type StateChangedMessage = BaseMessage<
+  MessageSender.Host,
+  MessageType.StateChanged,
+  null
+>;
+export function isStateChangedMessage(
+  message: unknown,
+): message is StateChangedMessage {
+  return isMessageWith(message, MessageSender.Host, MessageType.StateChanged);
 }

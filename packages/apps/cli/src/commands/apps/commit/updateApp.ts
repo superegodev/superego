@@ -23,12 +23,19 @@ export default async function updateApp({
     operations.push("updated name");
   }
 
-  if (changes.sourceChanged || changes.targetCollectionsChanged) {
+  if (
+    changes.sourceChanged ||
+    changes.targetCollectionsChanged ||
+    changes.permissionsChanged ||
+    changes.stateChanged
+  ) {
     app = await createAppVersion({
       backend,
       app,
       manifest,
       mainModule: changes.mainModule!,
+      path,
+      stateChanged: changes.stateChanged,
     });
     operations.push("created new version");
   }

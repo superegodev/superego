@@ -1,3 +1,4 @@
+import type { AppStateDefinition } from "@superego/backend";
 import {
   type App,
   AppType,
@@ -5,6 +6,7 @@ import {
   type TypescriptModule,
 } from "@superego/backend";
 import { Id } from "@superego/shared-utils";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import classnames from "../../../utils/classnames.js";
@@ -19,17 +21,25 @@ const invalidCompiledValues = new Set([
 
 interface Props {
   mainTsx: TypescriptModule;
+  state?: AppStateDefinition | undefined;
   targetCollections: Collection[];
   className: string;
 }
 export default function Preview({
   mainTsx,
+  state,
   targetCollections,
   className,
 }: Props) {
   const appCompilationFailed =
     mainTsx.compiled === forms.constants.COMPILATION_FAILED;
-  const app = getApp(mainTsx, targetCollections);
+  const app = useMemo(() => {
+    const app = getApp(mainTsx, targetCollections);
+    if (app) {
+      app.latestVersion.state = state;
+    }
+    return app;
+  }, [mainTsx, targetCollections, state]);
   return (
     <div
       className={classnames(
@@ -37,10 +47,14 @@ export default function Preview({
         className,
       )}
     >
+      <p>
+        <FormattedMessage defaultMessage="Preview state is temporary. Browser dialogs, printing, downloads, and host HTTP requests are disabled here. Run the saved app to test permissions. Existing direct browser networking policies still apply." />
+      </p>
       {app ? (
         <AppRenderer
           key={targetCollections.map(({ id }) => id).join(",")}
           app={app}
+          preview={true}
         />
       ) : null}
       {appCompilationFailed ? (

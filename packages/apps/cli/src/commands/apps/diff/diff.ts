@@ -1,10 +1,12 @@
 import { Command } from "commander";
+import { isEqual } from "es-toolkit";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import { getLockedApp, runAppCommand } from "../common/commandUtils.js";
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
+import { readStateSource, stateSourceOf } from "../common/state.js";
 import getStatus from "./getStatus.js";
 import makeArrayFieldDiff from "./makeArrayFieldDiff.js";
 import makeFieldDiff from "./makeFieldDiff.js";
@@ -48,7 +50,36 @@ export default useMarkdownHelp(
           stale,
         });
 
+        const localState = readStateSource(path);
+        const remoteState = stateSourceOf(app.latestVersion.state);
+        const permissionsChanged = !isEqual(
+          manifest.permissions ?? {},
+          app.latestVersion.permissions ?? {},
+        );
+        const stateChanged = !isEqual(localState, remoteState);
+        if (permissionsChanged || stateChanged) {
+          const cleanIndex = status.indexOf("clean");
+          if (cleanIndex !== -1) {
+            status.splice(cleanIndex, 1);
+          }
+        }
+        if (permissionsChanged) {
+          status.push("permissions changed");
+        }
+        if (stateChanged) {
+          status.push("state definition changed");
+        }
         return {
+          permissions: {
+            changed: permissionsChanged,
+            local: manifest.permissions,
+            remote: app.latestVersion.permissions,
+          },
+          state: {
+            changed: stateChanged,
+            local: localState,
+            remote: remoteState,
+          },
           status,
           appId: lock.appId,
           lockedLatestAppVersionId: lock.latestAppVersionId,

@@ -1,6 +1,12 @@
 import type { AppId } from "@superego/backend";
 import { useId, useState } from "react";
-import { PiFloppyDisk, PiPencilSimple, PiTrash } from "react-icons/pi";
+import {
+  PiShieldCheck,
+  PiDatabase,
+  PiFloppyDisk,
+  PiPencilSimple,
+  PiTrash,
+} from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
@@ -16,6 +22,8 @@ interface Props {
 }
 export default function EditApp({ appId }: Props) {
   const intl = useIntl();
+  const [isStateModalOpen, setIsStateModalOpen] = useState(false);
+  const [isPermissionsModalOpen, setIsPermissionsModalOpen] = useState(false);
   const { apps } = useGlobalData();
 
   const [isUpdateNameModalFormOpen, setIsUpdateNameModalFormOpen] =
@@ -47,6 +55,16 @@ export default function EditApp({ appId }: Props) {
         )}
         actions={[
           {
+            icon: <PiDatabase />,
+            label: intl.formatMessage({ defaultMessage: "Persistent state" }),
+            onPress: () => setIsStateModalOpen(true),
+          },
+          {
+            icon: <PiShieldCheck />,
+            label: intl.formatMessage({ defaultMessage: "Permissions" }),
+            onPress: () => setIsPermissionsModalOpen(true),
+          },
+          {
             icon: <PiPencilSimple />,
             label: intl.formatMessage({ defaultMessage: "Edit name" }),
             onPress: () => setIsUpdateNameModalFormOpen(true),
@@ -67,6 +85,12 @@ export default function EditApp({ appId }: Props) {
       />
       <Shell.Panel.Content fullWidth={true} className={cs.EditApp.panelContent}>
         <CreateNewAppVersionForm
+          isStateModalOpen={isStateModalOpen}
+          onStateModalClose={() => setIsStateModalOpen(false)}
+          onStateModalOpen={() => setIsStateModalOpen(true)}
+          isPermissionsModalOpen={isPermissionsModalOpen}
+          onPermissionsModalClose={() => setIsPermissionsModalOpen(false)}
+          onPermissionsModalOpen={() => setIsPermissionsModalOpen(true)}
           app={app}
           formId={createNewVersionFormId}
           setSubmitDisabled={setIsCreateNewVersionFormSubmitDisabled}

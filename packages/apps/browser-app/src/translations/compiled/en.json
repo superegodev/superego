@@ -649,6 +649,18 @@
       "value": "Assistant"
     }
   ],
+  "CreateApp.tsx_B02JHP": [
+    {
+      "type": 0,
+      "value": "Persistent state"
+    }
+  ],
+  "CreateApp.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permissions"
+    }
+  ],
   "CreateApp.tsx_VzzYJk": [
     {
       "type": 0,
@@ -1392,6 +1404,12 @@
       "value": "Write..."
     }
   ],
+  "EditApp.tsx_B02JHP": [
+    {
+      "type": 0,
+      "value": "Persistent state"
+    }
+  ],
   "EditApp.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -1410,6 +1428,12 @@
     {
       "type": 0,
       "value": " » Edit"
+    }
+  ],
+  "EditApp.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permissions"
     }
   ],
   "EditApp.tsx_Vl13tq": [
@@ -2740,10 +2764,118 @@
       "value": "Close sidebar"
     }
   ],
+  "PermissionsModal.tsx_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+    }
+  ],
+  "PermissionsModal.tsx_5g9TrD": [
+    {
+      "type": 0,
+      "value": "Allow browser dialogs and printing"
+    }
+  ],
+  "PermissionsModal.tsx_BfEtYQ": [
+    {
+      "type": 0,
+      "value": "These destinations apply to requests through Superego. Direct browser requests and resource loads are not controlled by this list."
+    }
+  ],
+  "PermissionsModal.tsx_DXYQgJ": [
+    {
+      "type": 0,
+      "value": "Allow HTTP requests through Superego to these destinations:"
+    }
+  ],
+  "PermissionsModal.tsx_FDxP0D": [
+    {
+      "type": 0,
+      "value": "Use exact HTTP(S) origins with no path. For local services, use an IP address and port. A service URL stored in state does not grant access."
+    }
+  ],
+  "PermissionsModal.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
+  "PermissionsModal.tsx_QpiApO": [
+    {
+      "type": 0,
+      "value": "Remove destination"
+    }
+  ],
+  "PermissionsModal.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permissions"
+    }
+  ],
+  "PermissionsModal.tsx_i05XEx": [
+    {
+      "type": 0,
+      "value": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
+    }
+  ],
+  "PermissionsModal.tsx_kgdY08": [
+    {
+      "type": 0,
+      "value": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
+    }
+  ],
+  "PermissionsModal.tsx_t+/rfR": [
+    {
+      "type": 0,
+      "value": "Permission changes apply when you save the app version."
+    }
+  ],
+  "PermissionsModal.tsx_wwiDxb": [
+    {
+      "type": 0,
+      "value": "Add destination"
+    }
+  ],
+  "PermissionsModal.tsx_xj9V0+": [
+    {
+      "type": 0,
+      "value": "Allow file downloads"
+    }
+  ],
+  "PermissionsModal.tsx_xv5gU1": [
+    {
+      "type": 0,
+      "value": "HTTP origin"
+    }
+  ],
+  "PersistentStateModal.tsx_B02JHP": [
+    {
+      "type": 0,
+      "value": "Persistent state"
+    }
+  ],
+  "PersistentStateModal.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Done"
+    }
+  ],
+  "PersistentStateModal.tsx_P3pJ2z": [
+    {
+      "type": 0,
+      "value": "State definition changes apply when you save the app version."
+    }
+  ],
   "Preview.tsx_Dd6cIb": [
     {
       "type": 0,
       "value": "App compilation failed."
+    }
+  ],
+  "Preview.tsx_j2J7L3": [
+    {
+      "type": 0,
+      "value": "Preview state is temporary. Browser dialogs, printing, downloads, and host HTTP requests are disabled here. Run the saved app to test permissions. Existing direct browser networking policies still apply."
     }
   ],
   "PrimarySidebarPanel.tsx_D3idYv": [
@@ -3682,6 +3814,48 @@
       "value": "Create app"
     }
   ],
+  "StateDefinitionFields.tsx_3bEK6S": [
+    {
+      "type": 0,
+      "value": "Initial state is used only when state is first created. Existing saved state is preserved. File and DocumentRef types are not supported."
+    }
+  ],
+  "StateDefinitionFields.tsx_G5kF2d": [
+    {
+      "type": 0,
+      "value": "Initial state"
+    }
+  ],
+  "StateDefinitionFields.tsx_Jj2Pym": [
+    {
+      "type": 0,
+      "value": "Declare an app state schema"
+    }
+  ],
+  "StateDefinitionFields.tsx_MdY8XX": [
+    {
+      "type": 0,
+      "value": "Migration trial failed"
+    }
+  ],
+  "StateDefinitionFields.tsx_V4WF+5": [
+    {
+      "type": 0,
+      "value": "State schema"
+    }
+  ],
+  "StateDefinitionFields.tsx_g/qEMW": [
+    {
+      "type": 0,
+      "value": "Try migration on preview initial state"
+    }
+  ],
+  "StateDefinitionFields.tsx_sEQMlq": [
+    {
+      "type": 0,
+      "value": "Apply an explicit state migration"
+    }
+  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4190,6 +4364,12 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "appDefinitionOptions.ts_epKnft": [
+    {
+      "type": 0,
+      "value": "Initial state must match the state schema"
     }
   ],
   "downloadFile.ts_sG8Krh": [

@@ -25,6 +25,7 @@
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@valibot/to-json-schema": "^1.7.1",
     "commander": "^15.0.0",
+    "es-toolkit": "^1.49.0",
     "mime-types": "^3.0.2",
     "typescript": "^6.0.3",
     "valibot": "^1.4.2"

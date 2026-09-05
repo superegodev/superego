@@ -1648,5 +1648,95 @@
   },
   "Explainer.tsx_2ouWR4": {
     "defaultMessage": "<p> Qui nella Boutique puoi trovare collezioni e app già pronte, raggruppate in <b>pack</b> tematici che puoi installare con un click. </p>"
+  },
+  "CreateApp.tsx_B02JHP": {
+    "defaultMessage": "Stato persistente"
+  },
+  "CreateApp.tsx_SFuk1v": {
+    "defaultMessage": "Permessi"
+  },
+  "EditApp.tsx_B02JHP": {
+    "defaultMessage": "Stato persistente"
+  },
+  "EditApp.tsx_SFuk1v": {
+    "defaultMessage": "Permessi"
+  },
+  "PermissionsModal.tsx_+Ynh/m": {
+    "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+  },
+  "PermissionsModal.tsx_5g9TrD": {
+    "defaultMessage": "Consenti finestre di dialogo del browser e stampa"
+  },
+  "PermissionsModal.tsx_BfEtYQ": {
+    "defaultMessage": "Queste destinazioni si applicano alle richieste tramite Superego. Le richieste dirette del browser e il caricamento delle risorse non sono controllati da questo elenco."
+  },
+  "PermissionsModal.tsx_DXYQgJ": {
+    "defaultMessage": "Consenti richieste HTTP tramite Superego verso queste destinazioni:"
+  },
+  "PermissionsModal.tsx_FDxP0D": {
+    "defaultMessage": "Usa origini HTTP(S) esatte, senza percorso. Per i servizi locali, usa un indirizzo IP e una porta. Un URL di servizio salvato nello stato non concede l’accesso."
+  },
+  "PermissionsModal.tsx_JXdbo8": {
+    "defaultMessage": "Fatto"
+  },
+  "PermissionsModal.tsx_QpiApO": {
+    "defaultMessage": "Rimuovi destinazione"
+  },
+  "PermissionsModal.tsx_SFuk1v": {
+    "defaultMessage": "Permessi"
+  },
+  "PermissionsModal.tsx_i05XEx": {
+    "defaultMessage": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
+  },
+  "PermissionsModal.tsx_kgdY08": {
+    "defaultMessage": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+  },
+  "PermissionsModal.tsx_t+/rfR": {
+    "defaultMessage": "Le modifiche ai permessi vengono applicate quando salvi la versione dell’app."
+  },
+  "PermissionsModal.tsx_wwiDxb": {
+    "defaultMessage": "Aggiungi destinazione"
+  },
+  "PermissionsModal.tsx_xj9V0+": {
+    "defaultMessage": "Consenti download di file"
+  },
+  "PermissionsModal.tsx_xv5gU1": {
+    "defaultMessage": "Origine HTTP"
+  },
+  "PersistentStateModal.tsx_B02JHP": {
+    "defaultMessage": "Stato persistente"
+  },
+  "PersistentStateModal.tsx_JXdbo8": {
+    "defaultMessage": "Fatto"
+  },
+  "PersistentStateModal.tsx_P3pJ2z": {
+    "defaultMessage": "Le modifiche alla definizione dello stato vengono applicate quando salvi la versione dell’app."
+  },
+  "Preview.tsx_j2J7L3": {
+    "defaultMessage": "Lo stato dell'anteprima è temporaneo. Finestre di dialogo, stampa, download e richieste HTTP dell'host sono disabilitati qui. Esegui l'app salvata per verificare i permessi. Le politiche esistenti per la rete diretta del browser restano valide."
+  },
+  "StateDefinitionFields.tsx_3bEK6S": {
+    "defaultMessage": "Lo stato iniziale viene usato solo alla prima creazione dello stato. Lo stato già salvato viene conservato. I tipi File e DocumentRef non sono supportati."
+  },
+  "StateDefinitionFields.tsx_G5kF2d": {
+    "defaultMessage": "Stato iniziale"
+  },
+  "StateDefinitionFields.tsx_Jj2Pym": {
+    "defaultMessage": "Definisci uno schema per lo stato dell'app"
+  },
+  "StateDefinitionFields.tsx_MdY8XX": {
+    "defaultMessage": "Prova di migrazione non riuscita"
+  },
+  "StateDefinitionFields.tsx_V4WF+5": {
+    "defaultMessage": "Schema dello stato"
+  },
+  "StateDefinitionFields.tsx_g/qEMW": {
+    "defaultMessage": "Prova la migrazione sullo stato iniziale dell'anteprima"
+  },
+  "StateDefinitionFields.tsx_sEQMlq": {
+    "defaultMessage": "Applica una migrazione esplicita dello stato"
+  },
+  "appDefinitionOptions.ts_epKnft": {
+    "defaultMessage": "Lo stato iniziale deve rispettare lo schema dello stato"
   }
 }

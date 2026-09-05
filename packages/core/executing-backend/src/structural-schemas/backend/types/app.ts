@@ -4,7 +4,10 @@ import {
   AppType,
   type AppVersion,
 } from "@superego/backend";
+import { type Schema } from "@superego/schema";
+import { appPermissionsSchema, isJsonValue } from "@superego/shared-utils";
 import * as v from "valibot";
+import { schemaShape } from "../../schema/index.js";
 import {
   appId,
   appVersionId,
@@ -16,6 +19,8 @@ import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
+    permissions: v.optional(appPermissionsSchema()),
+    state: v.optional(appStateDefinition()),
     id: appVersionId(),
     targetCollections: v.array(
       v.strictObject({
@@ -26,6 +31,7 @@ export function appVersion(): v.GenericSchema<unknown, AppVersion> {
     files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
+    stateSchemaId: v.optional(appVersionId()),
     createdAt: v.date(),
   });
 }
@@ -46,6 +52,8 @@ export function appDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
+    permissions: v.optional(appPermissionsSchema()),
+    state: v.optional(appStateDefinition()),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
     files: v.strictObject({
@@ -60,6 +68,8 @@ export function protoAppDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
+    permissions: v.optional(appPermissionsSchema()),
+    state: v.optional(appStateDefinition()),
     name: v.string(),
     targetCollectionIds: v.array(
       v.union([protoCollectionId(), collectionId()]),
@@ -67,5 +77,26 @@ export function protoAppDefinition(): v.GenericSchema<
     files: v.strictObject({
       "/main.tsx": typescriptModule(),
     }),
+  });
+}
+
+export function appStateDefinition() {
+  return v.strictObject({
+    schema: schemaShape() as unknown as v.GenericSchema<unknown, Schema>,
+    initialState: v.pipe(
+      v.record(v.string(), v.unknown()),
+      v.check((value) => isJsonValue(value)),
+    ),
+    migration: v.optional(typescriptModule()),
+  });
+}
+export function appState() {
+  return v.strictObject({
+    content: v.pipe(
+      v.record(v.string(), v.unknown()),
+      v.check((value) => isJsonValue(value)),
+    ),
+    revision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
+    schemaId: appVersionId(),
   });
 }

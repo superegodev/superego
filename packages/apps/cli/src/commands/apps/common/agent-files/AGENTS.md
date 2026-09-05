@@ -2,10 +2,15 @@
 
 Durable files:
 
+- `app.json` permissions and optional state source-file declaration.
+- `state.schema.json`, `state.initial.json`, and optional `state.migration.ts`.
+
 - `app.json`: editable app manifest.
 - `main.tsx`: app source committed to Superego.
 
 Generated files:
+
+- `app-state.ts` (generated state types; do not store saved app state here).
 
 - `app.lock.json`, `Collection_*.ts`, `AGENTS.md`, `.agents/**`,
   `node_modules/**`, `tsconfig.json`.

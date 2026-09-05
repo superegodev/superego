@@ -645,6 +645,18 @@
       "value": "Assistente"
     }
   ],
+  "CreateApp.tsx_B02JHP": [
+    {
+      "type": 0,
+      "value": "Stato persistente"
+    }
+  ],
+  "CreateApp.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permessi"
+    }
+  ],
   "CreateApp.tsx_VzzYJk": [
     {
       "type": 0,
@@ -1384,6 +1396,12 @@
       "value": "Scrivi..."
     }
   ],
+  "EditApp.tsx_B02JHP": [
+    {
+      "type": 0,
+      "value": "Stato persistente"
+    }
+  ],
   "EditApp.tsx_K3r6DQ": [
     {
       "type": 0,
@@ -1402,6 +1420,12 @@
     {
       "type": 0,
       "value": " » Modifica"
+    }
+  ],
+  "EditApp.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permessi"
     }
   ],
   "EditApp.tsx_Vl13tq": [
@@ -2732,10 +2756,118 @@
       "value": "Chiudi barra laterale"
     }
   ],
+  "PermissionsModal.tsx_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+    }
+  ],
+  "PermissionsModal.tsx_5g9TrD": [
+    {
+      "type": 0,
+      "value": "Consenti finestre di dialogo del browser e stampa"
+    }
+  ],
+  "PermissionsModal.tsx_BfEtYQ": [
+    {
+      "type": 0,
+      "value": "Queste destinazioni si applicano alle richieste tramite Superego. Le richieste dirette del browser e il caricamento delle risorse non sono controllati da questo elenco."
+    }
+  ],
+  "PermissionsModal.tsx_DXYQgJ": [
+    {
+      "type": 0,
+      "value": "Consenti richieste HTTP tramite Superego verso queste destinazioni:"
+    }
+  ],
+  "PermissionsModal.tsx_FDxP0D": [
+    {
+      "type": 0,
+      "value": "Usa origini HTTP(S) esatte, senza percorso. Per i servizi locali, usa un indirizzo IP e una porta. Un URL di servizio salvato nello stato non concede l’accesso."
+    }
+  ],
+  "PermissionsModal.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Fatto"
+    }
+  ],
+  "PermissionsModal.tsx_QpiApO": [
+    {
+      "type": 0,
+      "value": "Rimuovi destinazione"
+    }
+  ],
+  "PermissionsModal.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permessi"
+    }
+  ],
+  "PermissionsModal.tsx_i05XEx": [
+    {
+      "type": 0,
+      "value": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
+    }
+  ],
+  "PermissionsModal.tsx_kgdY08": [
+    {
+      "type": 0,
+      "value": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+    }
+  ],
+  "PermissionsModal.tsx_t+/rfR": [
+    {
+      "type": 0,
+      "value": "Le modifiche ai permessi vengono applicate quando salvi la versione dell’app."
+    }
+  ],
+  "PermissionsModal.tsx_wwiDxb": [
+    {
+      "type": 0,
+      "value": "Aggiungi destinazione"
+    }
+  ],
+  "PermissionsModal.tsx_xj9V0+": [
+    {
+      "type": 0,
+      "value": "Consenti download di file"
+    }
+  ],
+  "PermissionsModal.tsx_xv5gU1": [
+    {
+      "type": 0,
+      "value": "Origine HTTP"
+    }
+  ],
+  "PersistentStateModal.tsx_B02JHP": [
+    {
+      "type": 0,
+      "value": "Stato persistente"
+    }
+  ],
+  "PersistentStateModal.tsx_JXdbo8": [
+    {
+      "type": 0,
+      "value": "Fatto"
+    }
+  ],
+  "PersistentStateModal.tsx_P3pJ2z": [
+    {
+      "type": 0,
+      "value": "Le modifiche alla definizione dello stato vengono applicate quando salvi la versione dell’app."
+    }
+  ],
   "Preview.tsx_Dd6cIb": [
     {
       "type": 0,
       "value": "Compilazione dell'app non riuscita."
+    }
+  ],
+  "Preview.tsx_j2J7L3": [
+    {
+      "type": 0,
+      "value": "Lo stato dell'anteprima è temporaneo. Finestre di dialogo, stampa, download e richieste HTTP dell'host sono disabilitati qui. Esegui l'app salvata per verificare i permessi. Le politiche esistenti per la rete diretta del browser restano valide."
     }
   ],
   "PrimarySidebarPanel.tsx_D3idYv": [
@@ -3660,6 +3792,48 @@
       "value": "Crea app"
     }
   ],
+  "StateDefinitionFields.tsx_3bEK6S": [
+    {
+      "type": 0,
+      "value": "Lo stato iniziale viene usato solo alla prima creazione dello stato. Lo stato già salvato viene conservato. I tipi File e DocumentRef non sono supportati."
+    }
+  ],
+  "StateDefinitionFields.tsx_G5kF2d": [
+    {
+      "type": 0,
+      "value": "Stato iniziale"
+    }
+  ],
+  "StateDefinitionFields.tsx_Jj2Pym": [
+    {
+      "type": 0,
+      "value": "Definisci uno schema per lo stato dell'app"
+    }
+  ],
+  "StateDefinitionFields.tsx_MdY8XX": [
+    {
+      "type": 0,
+      "value": "Prova di migrazione non riuscita"
+    }
+  ],
+  "StateDefinitionFields.tsx_V4WF+5": [
+    {
+      "type": 0,
+      "value": "Schema dello stato"
+    }
+  ],
+  "StateDefinitionFields.tsx_g/qEMW": [
+    {
+      "type": 0,
+      "value": "Prova la migrazione sullo stato iniziale dell'anteprima"
+    }
+  ],
+  "StateDefinitionFields.tsx_sEQMlq": [
+    {
+      "type": 0,
+      "value": "Applica una migrazione esplicita dello stato"
+    }
+  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4164,6 +4338,12 @@
     {
       "type": 0,
       "value": "."
+    }
+  ],
+  "appDefinitionOptions.ts_epKnft": [
+    {
+      "type": 0,
+      "value": "Lo stato iniziale deve rispettare lo schema dello stato"
     }
   ],
   "downloadFile.ts_sG8Krh": [

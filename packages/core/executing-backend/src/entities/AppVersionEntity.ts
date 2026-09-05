@@ -1,3 +1,4 @@
+import type { AppPermissions, AppStateDefinition } from "@superego/backend";
 import type { AppId, AppVersion, AppVersionId } from "@superego/backend";
 
 export default interface AppVersionEntity {
@@ -7,4 +8,7 @@ export default interface AppVersionEntity {
   targetCollections: AppVersion["targetCollections"];
   files: AppVersion["files"];
   createdAt: Date;
+  permissions?: AppPermissions | undefined;
+  state?: AppStateDefinition | undefined;
+  stateSchemaId?: AppVersionId | undefined;
 }

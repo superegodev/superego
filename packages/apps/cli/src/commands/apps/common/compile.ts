@@ -8,6 +8,7 @@ import type {
 import { codegen } from "@superego/schema";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { readMainSource } from "./mainSource.js";
+import { readStateSource } from "./state.js";
 import type { TargetCollection } from "./types.js";
 
 export async function compileApp(
@@ -15,9 +16,16 @@ export async function compileApp(
   targetCollections: TargetCollection[],
 ): Promise<TypescriptModule> {
   const source = readMainSource(path);
+  const state = readStateSource(path);
   const result = await new TscTypescriptCompiler().compile(
     { path: "/main.tsx", source },
-    [...typescriptLibs, ...getCollectionTypescriptLibs(targetCollections)],
+    [
+      ...typescriptLibs,
+      ...getCollectionTypescriptLibs(targetCollections),
+      ...(state
+        ? [{ path: "/app-state.ts" as const, source: codegen(state.schema) }]
+        : []),
+    ],
   );
   if (!result.success) {
     if (result.error.name === "TypescriptCompilationFailed") {

@@ -284,6 +284,12 @@
   "ConversationsTable.tsx_wSAvhu": {
     "defaultMessage": "Assistant"
   },
+  "CreateApp.tsx_B02JHP": {
+    "defaultMessage": "Persistent state"
+  },
+  "CreateApp.tsx_SFuk1v": {
+    "defaultMessage": "Permissions"
+  },
   "CreateApp.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
@@ -566,11 +572,17 @@
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
   },
+  "EditApp.tsx_B02JHP": {
+    "defaultMessage": "Persistent state"
+  },
   "EditApp.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
   },
   "EditApp.tsx_LVy7EO": {
     "defaultMessage": "🧩 {app} » Edit"
+  },
+  "EditApp.tsx_SFuk1v": {
+    "defaultMessage": "Permissions"
   },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Create new version"
@@ -1037,8 +1049,62 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
+  "PermissionsModal.tsx_+Ynh/m": {
+    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+  },
+  "PermissionsModal.tsx_5g9TrD": {
+    "defaultMessage": "Allow browser dialogs and printing"
+  },
+  "PermissionsModal.tsx_BfEtYQ": {
+    "defaultMessage": "These destinations apply to requests through Superego. Direct browser requests and resource loads are not controlled by this list."
+  },
+  "PermissionsModal.tsx_DXYQgJ": {
+    "defaultMessage": "Allow HTTP requests through Superego to these destinations:"
+  },
+  "PermissionsModal.tsx_FDxP0D": {
+    "defaultMessage": "Use exact HTTP(S) origins with no path. For local services, use an IP address and port. A service URL stored in state does not grant access."
+  },
+  "PermissionsModal.tsx_JXdbo8": {
+    "defaultMessage": "Done"
+  },
+  "PermissionsModal.tsx_QpiApO": {
+    "defaultMessage": "Remove destination"
+  },
+  "PermissionsModal.tsx_SFuk1v": {
+    "defaultMessage": "Permissions"
+  },
+  "PermissionsModal.tsx_i05XEx": {
+    "defaultMessage": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
+  },
+  "PermissionsModal.tsx_kgdY08": {
+    "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
+  },
+  "PermissionsModal.tsx_t+/rfR": {
+    "defaultMessage": "Permission changes apply when you save the app version."
+  },
+  "PermissionsModal.tsx_wwiDxb": {
+    "defaultMessage": "Add destination"
+  },
+  "PermissionsModal.tsx_xj9V0+": {
+    "defaultMessage": "Allow file downloads"
+  },
+  "PermissionsModal.tsx_xv5gU1": {
+    "defaultMessage": "HTTP origin"
+  },
+  "PersistentStateModal.tsx_B02JHP": {
+    "defaultMessage": "Persistent state"
+  },
+  "PersistentStateModal.tsx_JXdbo8": {
+    "defaultMessage": "Done"
+  },
+  "PersistentStateModal.tsx_P3pJ2z": {
+    "defaultMessage": "State definition changes apply when you save the app version."
+  },
   "Preview.tsx_Dd6cIb": {
     "defaultMessage": "App compilation failed."
+  },
+  "Preview.tsx_j2J7L3": {
+    "defaultMessage": "Preview state is temporary. Browser dialogs, printing, downloads, and host HTTP requests are disabled here. Run the saved app to test permissions. Existing direct browser networking policies still apply."
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
@@ -1289,6 +1355,27 @@
   "SetNameAndSaveModal.tsx_r+ksJu": {
     "defaultMessage": "Create app"
   },
+  "StateDefinitionFields.tsx_3bEK6S": {
+    "defaultMessage": "Initial state is used only when state is first created. Existing saved state is preserved. File and DocumentRef types are not supported."
+  },
+  "StateDefinitionFields.tsx_G5kF2d": {
+    "defaultMessage": "Initial state"
+  },
+  "StateDefinitionFields.tsx_Jj2Pym": {
+    "defaultMessage": "Declare an app state schema"
+  },
+  "StateDefinitionFields.tsx_MdY8XX": {
+    "defaultMessage": "Migration trial failed"
+  },
+  "StateDefinitionFields.tsx_V4WF+5": {
+    "defaultMessage": "State schema"
+  },
+  "StateDefinitionFields.tsx_g/qEMW": {
+    "defaultMessage": "Try migration on preview initial state"
+  },
+  "StateDefinitionFields.tsx_sEQMlq": {
+    "defaultMessage": "Apply an explicit state migration"
+  },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"
   },
@@ -1474,6 +1561,9 @@
   },
   "Welcome.tsx_mNIlLz": {
     "defaultMessage": "<createAppLink>Create your first app</createAppLink>."
+  },
+  "appDefinitionOptions.ts_epKnft": {
+    "defaultMessage": "Initial state must match the state schema"
   },
   "downloadFile.ts_sG8Krh": {
     "defaultMessage": "Downloading file failed"

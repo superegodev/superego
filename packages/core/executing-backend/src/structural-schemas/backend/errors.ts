@@ -425,3 +425,21 @@ export const writeTypescriptModuleToolNotCalled = () =>
       { generatedMessage: Message }
     >
   >;
+
+export const appStateError = () =>
+  resultError(
+    "AppStateError",
+    v.strictObject({
+      reason: v.picklist([
+        "StateNotDefined",
+        "SchemaNotValid",
+        "ContentNotValid",
+        "RevisionConflict",
+        "ObsoleteSchema",
+        "ObsoleteVersion",
+        "MigrationRequired",
+        "MigrationFailed",
+        "SchemaRemovalNotAllowed",
+      ]),
+    }),
+  );

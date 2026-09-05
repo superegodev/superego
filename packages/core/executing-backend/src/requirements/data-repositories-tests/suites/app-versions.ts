@@ -1,4 +1,5 @@
 import type { AppVersionEntity } from "@superego/executing-backend";
+import { DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { describe, expect, it } from "vitest";
@@ -30,6 +31,20 @@ export default rd<GetDependencies>("App versions", (deps) => {
       appId: Id.generate.app(),
       targetCollections: targetCollections,
       files: appVersionFiles,
+      permissions: {
+        modals: true,
+        downloads: false,
+        http: { allowedOrigins: ["http://127.0.0.1:8080"] },
+      },
+      state: {
+        schema: {
+          types: { State: { dataType: DataType.Struct, properties: {} } },
+          rootType: "State",
+        },
+        initialState: {},
+        migration: { source: "source", compiled: "compiled" },
+      },
+      stateSchemaId: Id.generate.appVersion(),
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(

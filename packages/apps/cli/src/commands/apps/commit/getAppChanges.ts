@@ -1,4 +1,5 @@
 import type { App } from "@superego/backend";
+import { isEqual } from "es-toolkit";
 import {
   type CliBackend,
   resolveLatestTargetCollections,
@@ -6,6 +7,7 @@ import {
 } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
 import { readMainSource } from "../common/mainSource.js";
+import { readStateSource, stateSourceOf } from "../common/state.js";
 import type { AppManifest } from "../common/types.js";
 import getTargetCollectionIds from "./getTargetCollectionIds.js";
 import type { AppChanges } from "./types.js";
@@ -28,8 +30,19 @@ export default async function getAppChanges({
     manifest.targetCollectionIds,
     targetCollectionIds,
   );
+  const permissionsChanged = !isEqual(
+    manifest.permissions ?? {},
+    app.latestVersion.permissions ?? {},
+  );
+  const stateChanged = !isEqual(
+    readStateSource(path),
+    stateSourceOf(app.latestVersion.state),
+  );
   const mainModule =
-    sourceChanged || targetCollectionsChanged
+    sourceChanged ||
+    targetCollectionsChanged ||
+    permissionsChanged ||
+    stateChanged
       ? await compileApp(
           path,
           await resolveLatestTargetCollections(
@@ -39,5 +52,11 @@ export default async function getAppChanges({
         )
       : null;
 
-  return { sourceChanged, targetCollectionsChanged, mainModule };
+  return {
+    sourceChanged,
+    targetCollectionsChanged,
+    permissionsChanged,
+    stateChanged,
+    mainModule,
+  };
 }

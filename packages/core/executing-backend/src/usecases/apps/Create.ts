@@ -1,3 +1,4 @@
+import type { AppStateError } from "@superego/backend";
 import type {
   App,
   AppDefinition,
@@ -23,6 +24,7 @@ import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
+import transitionAppState from "../../utils/transitionAppState.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
@@ -36,17 +38,25 @@ export default class AppsCreate extends BackendUsecase<
     structuralSchemas.backend.types.app(),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appStateError(),
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
 
   async exec(
-    { type, name, targetCollectionIds, files }: AppDefinition,
+    {
+      type,
+      name,
+      targetCollectionIds,
+      files,
+      permissions,
+      state,
+    }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
-    AppNameNotValid | CollectionNotFound | UnexpectedError
+    AppStateError | AppNameNotValid | CollectionNotFound | UnexpectedError
   > {
     const nameValidationResult = v.safeParse(valibotSchemas.appName(), name);
     if (!nameValidationResult.success) {
@@ -91,9 +101,23 @@ export default class AppsCreate extends BackendUsecase<
       appId: app.id,
       targetCollections: targetCollections,
       files: files,
+      permissions,
+      state,
       createdAt: now,
     };
 
+    const stateResult = await transitionAppState(
+      state,
+      undefined,
+      undefined,
+      appVersion.id,
+      this.javascriptSandbox,
+    );
+    if (!stateResult.success) {
+      return stateResult;
+    }
+    app.state = stateResult.data;
+    appVersion.stateSchemaId = app.state?.schemaId;
     await this.repos.app.insert(app);
     await this.repos.appVersion.insert(appVersion);
 

@@ -1,6 +1,6 @@
 import type { CollectionId } from "@superego/backend";
 import { useMemo, useState } from "react";
-import { PiFloppyDisk } from "react-icons/pi";
+import { PiShieldCheck, PiDatabase, PiFloppyDisk } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import CollectionUtils from "../../../utils/CollectionUtils.js";
@@ -13,6 +13,8 @@ interface Props {
 }
 export default function CreateApp({ initialCollectionIds }: Props) {
   const intl = useIntl();
+  const [isStateModalOpen, setIsStateModalOpen] = useState(false);
+  const [isPermissionsModalOpen, setIsPermissionsModalOpen] = useState(false);
 
   const [isSetNameAndSaveModalOpen, setIsSetNameAndSaveModalOpen] =
     useState(false);
@@ -28,6 +30,16 @@ export default function CreateApp({ initialCollectionIds }: Props) {
         title={intl.formatMessage({ defaultMessage: "Create App" })}
         actions={[
           {
+            icon: <PiDatabase />,
+            label: intl.formatMessage({ defaultMessage: "Persistent state" }),
+            onPress: () => setIsStateModalOpen(true),
+          },
+          {
+            icon: <PiShieldCheck />,
+            label: intl.formatMessage({ defaultMessage: "Permissions" }),
+            onPress: () => setIsPermissionsModalOpen(true),
+          },
+          {
             label: intl.formatMessage({ defaultMessage: "Create" }),
             icon: <PiFloppyDisk />,
             onPress: () => setIsSetNameAndSaveModalOpen(true),
@@ -39,6 +51,12 @@ export default function CreateApp({ initialCollectionIds }: Props) {
         className={cs.CreateApp.panelContent}
       >
         <CreateAppForm
+          isStateModalOpen={isStateModalOpen}
+          onStateModalClose={() => setIsStateModalOpen(false)}
+          onStateModalOpen={() => setIsStateModalOpen(true)}
+          isPermissionsModalOpen={isPermissionsModalOpen}
+          onPermissionsModalClose={() => setIsPermissionsModalOpen(false)}
+          onPermissionsModalOpen={() => setIsPermissionsModalOpen(true)}
           collections={collections}
           initialTargetCollections={initialTargetCollections}
           isSetNameAndSaveModalOpen={isSetNameAndSaveModalOpen}

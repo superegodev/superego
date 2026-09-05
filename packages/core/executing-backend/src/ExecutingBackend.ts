@@ -17,8 +17,10 @@ import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
 import AppsCreate from "./usecases/apps/Create.js";
 import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
 import AppsDelete from "./usecases/apps/Delete.js";
+import AppsGetState from "./usecases/apps/GetState.js";
 import AppsList from "./usecases/apps/List.js";
 import AppsUpdateName from "./usecases/apps/UpdateName.js";
+import AppsUpdateState from "./usecases/apps/UpdateState.js";
 import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
 import AssistantsDeleteConversation from "./usecases/assistants/DeleteConversation.js";
 import AssistantsGetConversation from "./usecases/assistants/GetConversation.js";
@@ -180,9 +182,11 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.apps = {
-      create: this.makeUsecase(AppsCreate, true),
+      getState: this.makeUsecase(AppsGetState, false),
+      updateState: this.makeUsecase(AppsUpdateState, false, true),
+      create: this.makeUsecase(AppsCreate, true, true),
       updateName: this.makeUsecase(AppsUpdateName, true),
-      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
+      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true, true),
       delete: this.makeUsecase(AppsDelete, true),
       list: this.makeUsecase(AppsList, false),
     };
@@ -231,6 +235,7 @@ export default class ExecutingBackend implements Backend {
       config: Config,
     ) => BackendUsecase<Exec>,
     triggerBackgroundJobCheck: boolean,
+    retryOnConflict = false,
   ): Exec {
     return (async (...args: any[]) =>
       this.dataRepositoriesManager
@@ -287,6 +292,7 @@ export default class ExecutingBackend implements Backend {
               returnValue: result as Awaited<ReturnType<Exec>>,
             };
           },
+          { retryOnConflict },
         )
         .then((result) => {
           // We trigger a background job check only _after_ the transaction that

@@ -1,5 +1,10 @@
-import { AppType } from "@superego/backend";
-import { DataType } from "@superego/schema";
+import {
+  type AppDefinition,
+  type App,
+  type Backend,
+  AppType,
+} from "@superego/backend";
+import { type Schema, DataType } from "@superego/schema";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -265,6 +270,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const result = await backend.apps.createNewVersion(
         Id.generate.app(),
+        Id.generate.appVersion(),
         [],
         {} as any,
       );
@@ -280,9 +286,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const appId = Id.generate.app();
-      const result = await backend.apps.createNewVersion(appId, [], {
-        "/main.tsx": { source: "", compiled: "" },
-      });
+      const result = await backend.apps.createNewVersion(
+        appId,
+        Id.generate.appVersion(),
+        [],
+        {
+          "/main.tsx": { source: "", compiled: "" },
+        },
+      );
 
       // Verify
       expect(result).toEqual({
@@ -310,6 +321,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const collectionId = Id.generate.collection();
       const createNewVersionResult = await backend.apps.createNewVersion(
         createResult.data.id,
+        createResult.data.latestVersion.id,
         [collectionId],
         { "/main.tsx": { source: "", compiled: "" } },
       );
@@ -375,6 +387,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       };
       const createNewAppVersionResult = await backend.apps.createNewVersion(
         createAppResult.data.id,
+        createAppResult.data.latestVersion.id,
         [createCollectionResult.data.id],
         updatedFiles,
       );
@@ -617,5 +630,384 @@ export default rd<GetDependencies>("Apps", (deps) => {
         error: null,
       });
     });
+  });
+  describe("permissions and persistent state", () => {
+    const schema: Schema = {
+      types: {
+        State: {
+          dataType: DataType.Struct,
+          properties: { count: { dataType: DataType.Number } },
+        },
+      },
+      rootType: "State",
+    };
+    const definition: AppDefinition = {
+      type: AppType.CollectionView,
+      name: "Stateful app",
+      targetCollectionIds: [],
+      files: { "/main.tsx": { source: "", compiled: "" } },
+      state: { schema, initialState: { count: 0 } },
+      permissions: {
+        modals: true,
+        http: { allowedOrigins: ["https://EXAMPLE.com:443/"] },
+      },
+    };
+    const read = (backend: Backend, app: App) =>
+      backend.apps.getState(
+        app.id,
+        app.latestVersion.id,
+        app.latestVersion.stateSchemaId ?? null,
+      );
+    const update = (
+      backend: Backend,
+      app: App,
+      revision: number,
+      content: Record<string, unknown>,
+    ) =>
+      backend.apps.updateState(
+        app.id,
+        app.latestVersion.id,
+        app.latestVersion.stateSchemaId ?? null,
+        revision,
+        content,
+      );
+
+    it("normalizes permissions, initializes once, preserves state and permissions on code updates", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      // Exercise
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const initial = await read(backend, created.data);
+      assert(initial.success);
+      const saved = await update(backend, created.data, initial.data.revision, {
+        count: 3,
+      });
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+      );
+      assert(version.success);
+      const after = await read(backend, version.data);
+      // Verify
+      expect(initial.data.content).toEqual({ count: 0 });
+      expect(
+        created.data.latestVersion.permissions?.http?.allowedOrigins,
+      ).toEqual(["https://example.com"]);
+      expect(saved.success).toBe(true);
+      expect(after).toEqual(saved);
+      expect(version.data.latestVersion.stateSchemaId).toBe(
+        created.data.latestVersion.stateSchemaId,
+      );
+      expect(version.data.latestVersion.permissions).toEqual(
+        created.data.latestVersion.permissions,
+      );
+      expect(created.data).not.toHaveProperty("state");
+    });
+
+    it("rejects unknown capabilities and reports state-not-defined for legacy apps", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      // Exercise
+      const invalid = await backend.apps.create({
+        ...definition,
+        permissions: { sandbox: ["allow-top-navigation"] },
+      } as any);
+      const legacy = await backend.apps.create({
+        ...definition,
+        state: undefined,
+        permissions: undefined,
+      });
+      assert(legacy.success);
+      const state = await read(backend, legacy.data);
+      // Verify
+      expect(invalid.error?.name).toBe("ArgumentsNotValid");
+      expect(state.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "StateNotDefined" },
+      });
+      expect(legacy.data.latestVersion.permissions).toBeUndefined();
+    });
+
+    it("checks revision atomically and rejects invalid writes", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      // Exercise
+      const results = await Promise.all([
+        update(backend, created.data, 1, { count: 1 }),
+        update(backend, created.data, 1, { count: 2 }),
+      ]);
+      const invalid = await update(backend, created.data, 2, {
+        count: "wrong",
+      });
+      const saved = await read(backend, created.data);
+      // Verify
+      expect(results.filter((result) => result.success)).toHaveLength(1);
+      expect(results.find((result) => !result.success)?.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "RevisionConflict" },
+      });
+      expect(invalid.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "ContentNotValid" },
+      });
+      expect(saved.data?.revision).toBe(2);
+    });
+
+    it("coordinates concurrent migration and state writes without losing a successful write", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      // Exercise
+      const [version, write] = await Promise.all([
+        backend.apps.createNewVersion(
+          created.data.id,
+          created.data.latestVersion.id,
+          [],
+          definition.files,
+          {
+            state: {
+              ...definition.state!,
+              migration: {
+                source: "",
+                compiled:
+                  "export default (previous) => ({ count: previous.count + 5 });",
+              },
+            },
+          },
+        ),
+        update(backend, created.data, 1, { count: 10 }),
+      ]);
+      assert(version.success);
+      const state = await read(backend, version.data);
+      // Verify
+      expect(state.data?.content).toEqual({ count: write.success ? 15 : 5 });
+      expect(state.data?.revision).toBe(write.success ? 3 : 2);
+      if (!write.success) {
+        expect(write.error).toEqual({
+          name: "AppStateError",
+          details: { reason: "ObsoleteSchema" },
+        });
+      }
+    });
+
+    it("migrates atomically, rejects obsolete contexts and never removes state", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const nextSchema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { total: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const state = { schema: nextSchema, initialState: { total: 0 } };
+      // Exercise
+      const missingMigration = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { state },
+      );
+      const failedMigration = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          state: {
+            ...state,
+            migration: {
+              source: "",
+              compiled: "export default () => { throw new Error('failure'); };",
+            },
+          },
+        },
+      );
+      const unchanged = await read(backend, created.data);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          state: {
+            ...state,
+            migration: {
+              source: "",
+              compiled:
+                "export default (previous) => ({ total: previous.count + 5 });",
+            },
+          },
+        },
+      );
+      assert(version.success);
+      const obsolete = await update(backend, created.data, 1, { count: 9 });
+      const removal = await backend.apps.createNewVersion(
+        version.data.id,
+        version.data.latestVersion.id,
+        [],
+        definition.files,
+        { state: null },
+      );
+      // Verify
+      expect(missingMigration.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "MigrationRequired" },
+      });
+      expect(failedMigration.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "MigrationFailed" },
+      });
+      expect(unchanged.data?.content).toEqual({ count: 0 });
+      expect((await read(backend, version.data)).data).toEqual({
+        content: { total: 5 },
+        revision: 2,
+        schemaId: version.data.latestVersion.id,
+      });
+      expect(obsolete.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "ObsoleteSchema" },
+      });
+      expect(removal.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "SchemaRemovalNotAllowed" },
+      });
+    });
+
+    it("allows semantic migrations and guards concurrent app version creation", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      // Exercise
+      const saved = await update(backend, created.data, 1, { count: 8 });
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          permissions: {},
+          state: {
+            ...definition.state!,
+            migration: {
+              source: "",
+              compiled:
+                "export default (previous) => ({ count: previous.count * 2 });",
+            },
+          },
+        },
+      );
+      assert(version.success);
+      const staleVersion = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+      );
+      const obsolete = await update(backend, created.data, 2, { count: 9 });
+      // Verify
+      expect(saved.success).toBe(true);
+      expect((await read(backend, version.data)).data?.content).toEqual({
+        count: 16,
+      });
+      expect(staleVersion.error).toEqual({
+        name: "AppStateError",
+        details: { reason: "ObsoleteVersion" },
+      });
+      expect(obsolete.error?.name).toBe("AppStateError");
+      expect(version.data.latestVersion.permissions).toEqual({});
+    });
+
+    it("initializes existing apps, preserves compatible content, isolates apps and deletes state", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const legacy = await backend.apps.create({
+        ...definition,
+        state: undefined,
+      });
+      const other = await backend.apps.create(definition);
+      assert(legacy.success && other.success);
+      // Exercise
+      const initialized = await backend.apps.createNewVersion(
+        legacy.data.id,
+        legacy.data.latestVersion.id,
+        [],
+        definition.files,
+        { state: definition.state },
+      );
+      assert(initialized.success);
+      await update(backend, initialized.data, 1, { count: 7 });
+      const compatible = await backend.apps.createNewVersion(
+        initialized.data.id,
+        initialized.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          state: {
+            schema: {
+              ...schema,
+              types: {
+                State: {
+                  ...schema.types["State"]!,
+                  description: "Compatible description update",
+                },
+              },
+            },
+            initialState: { count: 99 },
+          },
+        },
+      );
+      assert(compatible.success);
+      const saved = await read(backend, compatible.data);
+      await backend.apps.delete(compatible.data.id, "delete");
+      // Verify
+      expect(saved.data?.content).toEqual({ count: 7 });
+      expect(saved.data?.schemaId).toBe(compatible.data.latestVersion.id);
+      expect((await read(backend, other.data)).data?.content).toEqual({
+        count: 0,
+      });
+      expect((await read(backend, compatible.data)).error?.name).toBe(
+        "AppNotFound",
+      );
+    });
+
+    it.each([DataType.File, DataType.DocumentRef] as const)(
+      "rejects unsupported named and nested state type %s",
+      async (dataType) => {
+        // Setup SUT
+        const { backend } = deps();
+        // Exercise
+        const result = await backend.apps.create({
+          ...definition,
+          state: {
+            schema: {
+              ...schema,
+              types: {
+                ...schema.types,
+                Hidden: { dataType: DataType.List, items: { dataType } },
+              },
+            },
+            initialState: { count: 0 },
+          },
+        });
+        // Verify
+        expect(result.error).toEqual({
+          name: "AppStateError",
+          details: { reason: "SchemaNotValid" },
+        });
+      },
+    );
   });
 });

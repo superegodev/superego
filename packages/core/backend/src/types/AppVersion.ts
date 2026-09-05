@@ -1,6 +1,8 @@
 import type AppVersionId from "../ids/AppVersionId.js";
 import type CollectionId from "../ids/CollectionId.js";
 import type CollectionVersionId from "../ids/CollectionVersionId.js";
+import type AppPermissions from "./AppPermissions.js";
+import type AppStateDefinition from "./AppStateDefinition.js";
 import type TypescriptModule from "./TypescriptModule.js";
 
 export default interface AppVersion {
@@ -13,4 +15,7 @@ export default interface AppVersion {
     "/main.tsx": TypescriptModule;
   };
   createdAt: Date;
+  permissions?: AppPermissions | undefined;
+  state?: AppStateDefinition | undefined;
+  stateSchemaId?: AppVersionId | undefined;
 }

@@ -11,8 +11,10 @@ import m0008 from "./0008.sql?raw";
 import m0009 from "./0009.sql?raw";
 import m0010 from "./0010.sql?raw";
 import m0011 from "./0011.sql?raw";
+import m0012 from "./0012.sql?raw";
 
 const migrationFiles = {
+  "0012.sql": m0012,
   "0000.sql": m0000,
   "0001.sql": m0001,
   "0002.sql": m0002,

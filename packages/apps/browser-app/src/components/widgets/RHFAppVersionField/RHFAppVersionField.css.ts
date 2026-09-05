@@ -23,6 +23,7 @@ export const EagerRHFAppVersionField = {
   preview: styleVariants({
     visible: {
       display: "flex",
+      flexDirection: "column",
     },
     hidden: {
       position: "absolute",
@@ -138,3 +139,39 @@ export const ImplementingSpinner = {
     },
   }),
 };
+
+export const StateDefinitionFields = {
+  fieldset: style({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: vars.spacing._2,
+    marginTop: vars.spacing._2,
+    border: 0,
+  }),
+};
+
+export const PermissionsModal = {
+  fieldset: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: vars.spacing._2,
+    border: 0,
+    padding: 0,
+  }),
+  destination: style({
+    display: "flex",
+    gap: vars.spacing._2,
+    alignItems: "center",
+  }),
+  origin: style({
+    flexGrow: 1,
+    minWidth: 0,
+    font: "inherit",
+    padding: vars.spacing._2,
+    border: `1px solid ${vars.colors.border.default}`,
+    borderRadius: vars.borders.radius.md,
+  }),
+};
+
+export const JsonField = { root: style({ width: "100%", minWidth: 0 }) };

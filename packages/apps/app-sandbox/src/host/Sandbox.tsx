@@ -1,11 +1,8 @@
-import type {
-  Backend,
-  CollectionId,
-  DocumentId,
-  DocumentVersionId,
-} from "@superego/backend";
-import type { Result } from "@superego/global-types";
+import type { AppPermissions } from "@superego/backend";
 import { useEffect, useRef, useState } from "react";
+import dispatchOperation, {
+  type HostBackend,
+} from "../ipc/dispatchOperation.js";
 import HostIpc from "../ipc/HostIpc.js";
 import MessageType from "../ipc/MessageType.js";
 import type AppComponentProps from "../types/AppComponentProps.js";
@@ -14,24 +11,9 @@ import type Settings from "../types/Settings.js";
 
 interface Props {
   /** Backend methods exposed to sandboxed apps. */
-  backend: {
-    documents: {
-      create: Backend["documents"]["create"];
-      createNewVersion: (
-        collectionId: CollectionId,
-        documentId: DocumentId,
-        latestVersionId: DocumentVersionId,
-        content: any,
-      ) => ReturnType<Backend["documents"]["createNewVersion"]>;
-      delete: (
-        collectionId: CollectionId,
-        documentId: DocumentId,
-      ) => Result<null, never>;
-    };
-    files: {
-      getContent: Backend["files"]["getContent"];
-    };
-  };
+  backend: HostBackend;
+  permissions?: AppPermissions | undefined;
+  subscribeChanges?: ((callback: () => void) => () => void) | undefined;
   navigateTo: (href: string) => void;
   iframeSrc: string;
   appName: string;
@@ -43,6 +25,8 @@ interface Props {
 }
 export default function Sandbox({
   backend,
+  permissions,
+  subscribeChanges,
   navigateTo,
   iframeSrc,
   appName,
@@ -55,6 +39,11 @@ export default function Sandbox({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const hostIpcRef = useRef<HostIpc>(null);
 
+  const backendRef = useRef(backend);
+  backendRef.current = backend;
+  const navigateToRef = useRef(navigateTo);
+  navigateToRef.current = navigateTo;
+
   const [sandboxReady, setSandboxReady] = useState(false);
 
   useEffect(() => {
@@ -63,20 +52,56 @@ export default function Sandbox({
     }
     const hostIpc = new HostIpc(window, iframeRef.current.contentWindow);
     hostIpcRef.current = hostIpc;
-    return hostIpc.registerHandlers({
+    let active = true;
+    const unregister = hostIpc.registerHandlers({
       [MessageType.SandboxReady]: () => setSandboxReady(true),
       [MessageType.InvokeBackendMethod]: async ({ payload }) => {
-        const result = await (backend as any)[payload.entity][payload.method](
-          ...payload.args,
-        );
+        let result;
+        try {
+          result = await dispatchOperation(
+            backendRef.current,
+            payload.entity,
+            payload.method,
+            payload.args,
+          );
+        } catch {
+          result = {
+            success: false as const,
+            data: null,
+            error: {
+              name: "AppBridgeError",
+              details: { reason: "TransportFailure" },
+            },
+          };
+        }
+        if (!active) {
+          return;
+        }
         hostIpc.send({
           type: MessageType.RespondToBackendMethodInvocation,
           payload: { invocationId: payload.invocationId, result },
         });
       },
-      [MessageType.NavigateHostTo]: ({ payload }) => navigateTo(payload.href),
+      [MessageType.NavigateHostTo]: ({ payload }) =>
+        navigateToRef.current(payload.href),
     });
-  }, [backend, navigateTo]);
+    return () => {
+      active = false;
+      unregister();
+      hostIpcRef.current = null;
+    };
+  }, []);
+
+  useEffect(
+    () =>
+      subscribeChanges?.(() =>
+        hostIpcRef.current?.send({
+          type: MessageType.StateChanged,
+          payload: null,
+        }),
+      ),
+    [subscribeChanges],
+  );
 
   useEffect(() => {
     if (hostIpcRef.current && sandboxReady) {
@@ -91,7 +116,14 @@ export default function Sandbox({
     <iframe
       ref={iframeRef}
       src={iframeSrc}
-      sandbox="allow-scripts allow-same-origin"
+      sandbox={[
+        "allow-scripts",
+        "allow-same-origin",
+        permissions?.modals && "allow-modals",
+        permissions?.downloads && "allow-downloads",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       title={appName}
       className={className}
     />

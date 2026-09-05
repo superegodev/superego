@@ -1,3 +1,4 @@
+import type { AppStateError, AppVersionId } from "@superego/backend";
 import type {
   App,
   AppId,
@@ -8,6 +9,7 @@ import type {
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
+import { appPermissionsSchema, appStateFailure } from "@superego/shared-utils";
 import {
   Id,
   makeSuccessfulResult,
@@ -21,21 +23,32 @@ import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
+import transitionAppState from "../../utils/transitionAppState.js";
 
 export default class AppsCreateNewVersion extends BackendUsecase<
   Backend["apps"]["createNewVersion"]
 > {
   argumentsSchema = v.tuple([
     structuralSchemas.backend.ids.appId(),
+    structuralSchemas.backend.ids.appVersionId(),
     v.array(structuralSchemas.backend.ids.collectionId()),
     v.strictObject({
       "/main.tsx": structuralSchemas.backend.types.typescriptModule(),
     }),
+    v.optional(
+      v.strictObject({
+        permissions: v.optional(appPermissionsSchema()),
+        state: v.optional(
+          v.nullable(structuralSchemas.backend.types.appStateDefinition()),
+        ),
+      }),
+    ),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.app(),
     [
       structuralSchemas.backend.errors.appNotFound(),
+      structuralSchemas.backend.errors.appStateError(),
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
@@ -43,9 +56,14 @@ export default class AppsCreateNewVersion extends BackendUsecase<
 
   async exec(
     id: AppId,
+    latestVersionId: AppVersionId,
     targetCollectionIds: CollectionId[],
     files: AppVersionEntity["files"],
-  ): ResultPromise<App, AppNotFound | CollectionNotFound | UnexpectedError> {
+    options: Parameters<Backend["apps"]["createNewVersion"]>[4] = {},
+  ): ResultPromise<
+    App,
+    AppStateError | AppNotFound | CollectionNotFound | UnexpectedError
+  > {
     const app = await this.repos.app.find(id);
     if (!app) {
       return makeUnsuccessfulResult(
@@ -57,6 +75,9 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       app.id,
     );
     assertAppVersionExists(app.id, previousVersion);
+    if (latestVersionId !== previousVersion.id) {
+      return appStateFailure("ObsoleteVersion");
+    }
 
     const targetCollections: AppVersionEntity["targetCollections"] = [];
     for (const collectionId of targetCollectionIds) {
@@ -84,9 +105,31 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       appId: app.id,
       targetCollections,
       files: files,
+      permissions: options.permissions ?? previousVersion.permissions,
+      state:
+        options.state === undefined
+          ? previousVersion.state
+          : (options.state ?? undefined),
+      stateSchemaId: previousVersion.stateSchemaId,
       createdAt: new Date(),
     };
 
+    // Omitted state means a code/permissions update; do not replay an old migration.
+    if (options.state !== undefined) {
+      const stateResult = await transitionAppState(
+        options.state,
+        previousVersion.state,
+        app.state,
+        appVersion.id,
+        this.javascriptSandbox,
+      );
+      if (!stateResult.success) {
+        return stateResult;
+      }
+      app.state = stateResult.data;
+      appVersion.stateSchemaId = app.state?.schemaId;
+      await this.repos.app.replace(app);
+    }
     await this.repos.appVersion.insert(appVersion);
 
     return makeSuccessfulResult(makeApp(app, appVersion));

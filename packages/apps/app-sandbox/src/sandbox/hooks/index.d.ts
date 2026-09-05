@@ -67,3 +67,90 @@ export declare function useCreateNewDocumentVersion(): {
   } | null;
   data: null;
 };
+
+export interface AppState<Content> {
+  content: Content;
+  revision: number;
+  schemaId: string;
+}
+export interface AppStateError {
+  name: "AppStateError";
+  details: {
+    reason:
+      | "SchemaNotValid"
+      | "MigrationRequired"
+      | "MigrationFailed"
+      | "SchemaRemovalNotAllowed"
+      | "StateNotDefined"
+      | "ContentNotValid"
+      | "RevisionConflict"
+      | "ObsoleteSchema"
+      | "ObsoleteVersion";
+  };
+}
+export interface AppBridgeError {
+  name: "AppBridgeError";
+  details: { reason: "InvalidArguments" | "TransportFailure" };
+}
+export type AppStateApiError =
+  | AppStateError
+  | AppBridgeError
+  | {
+      name: "AppNotFound" | "ArgumentsNotValid" | "UnexpectedError";
+      details: unknown;
+    };
+export interface AsyncMutation<Data, Error, Variables> {
+  mutate(variables: Variables): void;
+  mutateAsync(variables: Variables): Promise<Data>;
+  data: Data | undefined;
+  error: Error | null;
+  isIdle: boolean;
+  isPending: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  reset(): void;
+}
+export declare function useAppState<Content = Record<string, unknown>>(): {
+  data: AppState<Content> | undefined;
+  error: AppStateApiError | null;
+  isPending: boolean;
+  isLoading: boolean;
+  isFetching: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  refetch(): Promise<unknown>;
+};
+export declare function useUpdateAppState<
+  Content = Record<string, unknown>,
+>(): AsyncMutation<
+  AppState<Content>,
+  AppStateApiError,
+  { expectedRevision: number; content: Content }
+>;
+/** Requests through Superego. Browser runtimes require CORS support; previews return UnsupportedRuntime. */
+export declare function useHttpRequest(): AsyncMutation<
+  {
+    status: number;
+    headers: [string, string][];
+    body: { encoding: "base64"; data: string };
+    url: string;
+  },
+  | AppBridgeError
+  | {
+      name: "AppHttpError";
+      details: {
+        reason:
+          | "DestinationDenied"
+          | "UnsupportedRuntime"
+          | "InvalidArguments"
+          | "TransportFailure"
+          | "ObsoleteInstance";
+      };
+    },
+  {
+    url: string;
+    method?: string;
+    headers?: [string, string][];
+    body?: { encoding: "utf8" | "base64"; data: string };
+  }
+>;

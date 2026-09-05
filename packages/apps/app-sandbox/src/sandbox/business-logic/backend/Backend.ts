@@ -1,4 +1,13 @@
 import type {
+  AppState,
+  AppStateError,
+  AppNotFound,
+  ArgumentsNotValid,
+  AppHttpRequest,
+  AppHttpResponse,
+  AppHttpError,
+} from "@superego/backend";
+import type {
   CollectionId,
   CollectionNotFound,
   Document,
@@ -17,6 +26,18 @@ import type { Result, ResultPromise } from "@superego/global-types";
 import MessageType from "../../../ipc/MessageType.js";
 import type SandboxIpc from "../../../ipc/SandboxIpc.js";
 
+export interface AppBridgeError {
+  name: "AppBridgeError";
+  details: { reason: "InvalidArguments" | "TransportFailure" };
+}
+export type AppStateApiError =
+  | AppStateError
+  | AppNotFound
+  | ArgumentsNotValid
+  | UnexpectedError
+  | AppBridgeError;
+export type AppHttpApiError = AppHttpError | AppBridgeError;
+
 export default class Backend {
   constructor(private sandboxIpc: SandboxIpc) {
     sandboxIpc.registerHandlers({
@@ -28,6 +49,7 @@ export default class Backend {
           );
           return;
         }
+        this.invocations.delete(payload.invocationId);
         resolve(payload.result);
       },
     });
@@ -81,10 +103,46 @@ export default class Backend {
     return this.invokeMethod("files", "getContent", [id]);
   }
 
+  /** Each iframe owns one QueryClient and one host-established app context. */
+  readonly stateQueryKey = ["appState", crypto.randomUUID()];
+  getState(): ResultPromise<AppState, AppStateApiError> {
+    return this.invokeMethod("state", "get", []);
+  }
+  updateState(
+    expectedRevision: number,
+    content: Record<string, unknown>,
+  ): ResultPromise<AppState, AppStateApiError> {
+    return this.invokeMethod("state", "update", [expectedRevision, content]);
+  }
+  requestHttp(
+    request: AppHttpRequest,
+  ): ResultPromise<AppHttpResponse, AppHttpApiError> {
+    return this.invokeMethod("http", "request", [request]);
+  }
+  onStateChanged(callback: () => void) {
+    return this.sandboxIpc.registerHandlers({
+      [MessageType.StateChanged]: callback,
+    });
+  }
+
   private invokeMethod(entity: string, method: string, args: any[]) {
     const invocationId = crypto.randomUUID();
     return new Promise<Result<any, any>>((resolve) => {
-      this.invocations.set(invocationId, resolve);
+      const timeout = setTimeout(() => {
+        this.invocations.delete(invocationId);
+        resolve({
+          success: false,
+          data: null,
+          error: {
+            name: "AppBridgeError",
+            details: { reason: "TransportFailure" },
+          },
+        });
+      }, 35_000);
+      this.invocations.set(invocationId, (result) => {
+        clearTimeout(timeout);
+        resolve(result);
+      });
       this.sandboxIpc.send({
         type: MessageType.InvokeBackendMethod,
         payload: { invocationId, entity, method, args },

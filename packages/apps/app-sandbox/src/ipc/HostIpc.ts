@@ -1,4 +1,5 @@
 import type { DistributiveOmit } from "@superego/global-types";
+import type { StateChangedMessage } from "./messages.js";
 import {
   type InvokeBackendMethodMessage,
   isInvokeBackendMethodMessage,
@@ -21,7 +22,9 @@ export default class HostIpc {
   /** Send a Host message. */
   send(
     message: DistributiveOmit<
-      RenderAppMessage | RespondToBackendMethodInvocationMessage,
+      | RenderAppMessage
+      | RespondToBackendMethodInvocationMessage
+      | StateChangedMessage,
       "sender"
     >,
   ) {

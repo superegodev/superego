@@ -33,6 +33,29 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
     fn: (
       repos: DataRepositories,
     ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
+    options: { retryOnConflict?: boolean } = {},
+  ): Promise<ReturnValue> {
+    for (let attempt = 0; ; attempt++) {
+      try {
+        return await this.executeTransaction(fn);
+      } catch (error) {
+        const conflict =
+          error instanceof Error &&
+          ["Transaction aborted", "IndexedDb transaction aborted"].includes(
+            error.message,
+          );
+        if (!options.retryOnConflict || !conflict || attempt >= 8) {
+          throw error;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 10 * (attempt + 1)));
+      }
+    }
+  }
+
+  private async executeTransaction<ReturnValue>(
+    fn: (
+      repos: DataRepositories,
+    ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
   ): Promise<ReturnValue> {
     const transactionId = crypto.randomUUID();
     let shouldAbort = false;
@@ -104,19 +127,26 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
       createSavepoint,
       rollbackToSavepoint,
     );
-    const { action, returnValue } = await fn(repos);
-    repos.dispose();
-    if (shouldAbort) {
-      throw new Error("Transaction aborted");
+    try {
+      const { action, returnValue } = await fn(repos);
+      repos.dispose();
+      if (shouldAbort) {
+        throw new Error("Transaction aborted");
+      }
+      if (action === "commit" && transactionData.version !== initialVersion) {
+        this.lock = null;
+        await this.writeData(clone(transactionData), initialVersion);
+        DemoDataRepositoriesManager.runTransactionSucceededCallbacks(
+          transactionSucceededCallbacks,
+        );
+      }
+      return returnValue;
+    } finally {
+      repos.dispose();
+      if (this.lock === transactionId) {
+        this.lock = null;
+      }
     }
-    if (action === "commit" && transactionData.version !== initialVersion) {
-      this.lock = null;
-      await this.writeData(clone(transactionData), initialVersion);
-      DemoDataRepositoriesManager.runTransactionSucceededCallbacks(
-        transactionSucceededCallbacks,
-      );
-    }
-    return returnValue;
   }
 
   private async writeData(data: Data, initialVersion: string): Promise<void> {

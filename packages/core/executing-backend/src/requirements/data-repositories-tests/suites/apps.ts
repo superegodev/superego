@@ -15,6 +15,11 @@ export default rd<GetDependencies>("Apps", (deps) => {
       id: Id.generate.app(),
       type: AppType.CollectionView,
       name: "name",
+      state: {
+        content: { count: 3, nested: [true, null, "value"] },
+        revision: 2,
+        schemaId: Id.generate.appVersion(),
+      },
       createdAt: new Date(),
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -51,7 +56,15 @@ export default rd<GetDependencies>("Apps", (deps) => {
     );
 
     // Exercise
-    const updatedApp: AppEntity = { ...app, name: "updated name" };
+    const updatedApp: AppEntity = {
+      ...app,
+      name: "updated name",
+      state: {
+        content: { remembered: true },
+        revision: 1,
+        schemaId: Id.generate.appVersion(),
+      },
+    };
     await dataRepositoriesManager.runInSerializableTransaction(
       async (repos) => {
         await repos.app.replace(updatedApp);

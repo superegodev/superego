@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
+import AppHttpIPCProxyClient from "../ipc-proxies/AppHttpIPCProxyClient.js";
 import BackendIPCProxyClient from "../ipc-proxies/BackendIPCProxyClient.js";
 import CliIPCProxyClient from "../ipc-proxies/CliIPCProxyClient.js";
 import OpenFileWithNativeAppIPCProxyClient from "../ipc-proxies/OpenFileWithNativeAppIPCProxyClient.js";
@@ -6,6 +7,7 @@ import OpenInNativeBrowserIPCProxyClient from "../ipc-proxies/OpenInNativeBrowse
 import WindowCloseIPCProxyClient from "../ipc-proxies/WindowCloseIPCProxyClient.js";
 
 contextBridge.exposeInMainWorld("isElectron", true);
+contextBridge.exposeInMainWorld("appHttp", AppHttpIPCProxyClient());
 contextBridge.exposeInMainWorld("backend", new BackendIPCProxyClient());
 contextBridge.exposeInMainWorld("cli", CliIPCProxyClient());
 contextBridge.exposeInMainWorld(

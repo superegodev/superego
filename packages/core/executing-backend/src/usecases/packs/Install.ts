@@ -1,3 +1,4 @@
+import type { AppStateError } from "@superego/backend";
 import type {
   App,
   AppId,
@@ -79,6 +80,7 @@ export default class PacksInstall extends BackendUsecase<
     }),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appStateError(),
       structuralSchemas.backend.errors.appNotFound(),
       structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
       structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
@@ -120,6 +122,7 @@ export default class PacksInstall extends BackendUsecase<
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
     | DefaultDocumentViewUiOptionsNotValid
+    | AppStateError
     | AppNameNotValid
     | CollectionNotFound
     | DocumentContentNotValid
@@ -226,6 +229,8 @@ export default class PacksInstall extends BackendUsecase<
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
+          permissions: definition.permissions,
+          state: definition.state,
           files: PacksInstall.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,

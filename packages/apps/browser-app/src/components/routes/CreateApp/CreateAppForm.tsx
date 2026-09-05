@@ -1,4 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
+import type { AppPermissions, AppStateDefinition } from "@superego/backend";
 import { AppType, type Collection, type CollectionId } from "@superego/backend";
 import { CollectionRouteView, RouteName } from "@superego/routing";
 import { valibotSchemas } from "@superego/shared-utils";
@@ -9,11 +10,14 @@ import { useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateApp } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import appDefinitionOptions from "../../../business-logic/forms/schemas/appDefinitionOptions.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
+import PermissionsModal from "../../widgets/RHFAppVersionField/PermissionsModal.js";
+import PersistentStateModal from "../../widgets/RHFAppVersionField/PersistentStateModal.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./CreateApp.css.js";
 import SetNameAndSaveModal from "./SetNameAndSaveModal.js";
@@ -23,16 +27,30 @@ interface FormValues {
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
+    permissions?: AppPermissions | undefined;
+    state?: AppStateDefinition | undefined;
   };
 }
 
 interface Props {
+  isStateModalOpen: boolean;
+  onStateModalClose: () => void;
+  onStateModalOpen: () => void;
+  isPermissionsModalOpen: boolean;
+  onPermissionsModalClose: () => void;
+  onPermissionsModalOpen: () => void;
   collections: Collection[];
   initialTargetCollections: Collection[];
   isSetNameAndSaveModalOpen: boolean;
   onSetNameAndSaveModalClose: () => void;
 }
 export default function CreateAppForm({
+  isStateModalOpen,
+  onStateModalClose,
+  onStateModalOpen,
+  isPermissionsModalOpen,
+  onPermissionsModalClose,
+  onPermissionsModalOpen,
   collections,
   initialTargetCollections,
   isSetNameAndSaveModalOpen,
@@ -56,6 +74,7 @@ export default function CreateAppForm({
       v.strictObject({
         name: valibotSchemas.appName(),
         appVersion: v.strictObject({
+          ...appDefinitionOptions(intl),
           targetCollectionIds: v.pipe(
             v.array(valibotSchemas.id.collection()),
             v.minLength(1),
@@ -70,6 +89,8 @@ export default function CreateAppForm({
     const { success, data } = await mutate({
       type: AppType.CollectionView,
       name,
+      permissions: appVersion.permissions,
+      state: appVersion.state,
       targetCollectionIds: appVersion.targetCollectionIds,
       files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     });
@@ -92,11 +113,32 @@ export default function CreateAppForm({
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, (errors) => {
+        if (errors.appVersion?.permissions) {
+          onSetNameAndSaveModalClose();
+          onPermissionsModalOpen();
+        } else if (errors.appVersion?.state) {
+          onSetNameAndSaveModalClose();
+          onStateModalOpen();
+        }
+      })}
       id={formId}
       className={cs.CreateAppForm.root}
     >
       <FormStateEffects control={control} triggerExitWarningWhenDirty={true} />
+      <PersistentStateModal
+        control={control}
+        name="appVersion"
+        app={null}
+        isOpen={isStateModalOpen}
+        onClose={onStateModalClose}
+      />
+      <PermissionsModal
+        control={control}
+        name="appVersion.permissions"
+        isOpen={isPermissionsModalOpen}
+        onClose={onPermissionsModalClose}
+      />
       <RHFAppVersionField
         control={control}
         name="appVersion"

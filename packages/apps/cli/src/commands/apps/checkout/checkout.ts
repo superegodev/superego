@@ -46,6 +46,16 @@ export default useMarkdownHelp(
         projectPath,
         {
           name: app.name,
+          permissions: app.latestVersion.permissions,
+          state: app.latestVersion.state
+            ? {
+                schema: "state.schema.json",
+                initialState: "state.initial.json",
+                ...(app.latestVersion.state.migration && {
+                  migration: "state.migration.ts",
+                }),
+              }
+            : undefined,
           type: app.type,
           targetCollectionIds: app.latestVersion.targetCollections.map(
             (targetCollection) => targetCollection.id,
@@ -54,6 +64,7 @@ export default useMarkdownHelp(
         app.latestVersion.files["/main.tsx"].source,
         targetCollections,
         buildLock(app),
+        app.latestVersion.state,
       );
       return { path: projectPath, appId: app.id };
     });

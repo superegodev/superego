@@ -6710,6 +6710,7 @@ __metadata:
     "@types/mime-types": "npm:^3.0.1"
     "@valibot/to-json-schema": "npm:^1.7.1"
     commander: "npm:^15.0.0"
+    es-toolkit: "npm:^1.49.0"
     mime-types: "npm:^3.0.2"
     typescript: "npm:^6.0.3"
     valibot: "npm:^1.4.2"
@@ -6729,9 +6730,9 @@ __metadata:
     "@superego/browser-app": "workspace:*"
     "@superego/demo-data-repositories": "workspace:*"
     "@superego/executing-backend": "workspace:*"
-    "@superego/fake-javascript-sandbox": "workspace:*"
     "@superego/monaco-typescript-compiler": "workspace:*"
     "@superego/multi-driver-inference-service": "workspace:*"
+    "@superego/quickjs-javascript-sandbox": "workspace:*"
     "@superego/schema": "workspace:*"
     "@superego/shared-utils": "workspace:*"
     "@tanstack/react-query": "npm:^5.101.2"
@@ -6803,7 +6804,9 @@ __metadata:
     es-toolkit: "npm:^1.49.0"
     filenamify: "npm:^7.0.2"
     typescript: "npm:^6.0.3"
+    valibot: "npm:^1.4.2"
     vite: "npm:^8.1.4"
+    vitest: "npm:^4.1.10"
   languageName: unknown
   linkType: soft
 

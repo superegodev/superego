@@ -141,3 +141,15 @@ export type { default as ToolResult } from "./types/ToolResult.js";
 export type { default as TypescriptFile } from "./types/TypescriptFile.js";
 export type { default as TypescriptModule } from "./types/TypescriptModule.js";
 export type { default as ValidationIssue } from "./types/ValidationIssue.js";
+
+export type { default as AppPermissions } from "./types/AppPermissions.js";
+export type { default as AppStateDefinition } from "./types/AppStateDefinition.js";
+export type { default as AppState } from "./types/AppState.js";
+export type { default as AppStateError } from "./errors/AppStateError.js";
+export type {
+  AppHttpBody,
+  AppHttpRequest,
+  AppHttpResponse,
+  AppHttpError,
+  AppHttpRuntime,
+} from "./types/AppHttp.js";
