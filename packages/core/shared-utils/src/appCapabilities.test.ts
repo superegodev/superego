@@ -24,6 +24,9 @@ describe("app capabilities", () => {
   it.each([
     "file:///tmp",
     "https://*.example.com",
+    "https://%2A.example.com",
+    "https://%2a.example.com",
+    "https://api*.example.com",
     "https://example.com/path",
     "https://example.com?token=secret",
     "https://user:pass@example.com",

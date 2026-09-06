@@ -18,7 +18,8 @@ export function normalizeHttpOrigin(value: string): string {
     !/^https?:$/.test(url.protocol) ||
     url.username ||
     url.password ||
-    url.hostname.includes("*") ||
+    // Chromium percent-encodes wildcard hostnames; Node leaves them decoded.
+    decodeURIComponent(url.hostname).includes("*") ||
     !/^https?:\/\/[^/?#]+\/?$/i.test(value) ||
     url.pathname !== "/" ||
     url.search ||
