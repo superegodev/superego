@@ -13,7 +13,7 @@ import type Settings from "../types/Settings.js";
 interface Props {
   /** Backend methods exposed to sandboxed apps. */
   backend: HostBackend;
-  permissions?: AppPermissions | undefined;
+  permissions: AppPermissions;
   navigateTo: (href: string) => void;
   iframeSrc: string;
   appName: string;
@@ -100,9 +100,8 @@ export default function Sandbox({
           appProps,
           settings,
           intlMessages,
-          allowedOrigins: (permissions?.http?.allowedOrigins ?? []).map(
-            normalizeHttpOrigin,
-          ),
+          allowedOrigins:
+            permissions.http.allowedOrigins.map(normalizeHttpOrigin),
         },
       });
     }
@@ -115,8 +114,8 @@ export default function Sandbox({
       sandbox={[
         "allow-scripts",
         "allow-same-origin",
-        permissions?.modals && "allow-modals",
-        permissions?.downloads && "allow-downloads",
+        permissions.modals && "allow-modals",
+        permissions.downloads && "allow-downloads",
       ]
         .filter(Boolean)
         .join(" ")}

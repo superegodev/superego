@@ -4,6 +4,7 @@ import {
   type LiteCollection,
 } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import { defaultAppPermissions } from "@superego/shared-utils";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -1788,6 +1789,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
         });
       assert.isTrue(createCollectionCategoryResult.success);
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "app",
@@ -3619,6 +3621,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "collection view",

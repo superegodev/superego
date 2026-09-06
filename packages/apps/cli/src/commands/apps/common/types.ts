@@ -7,11 +7,11 @@ import {
 
 export interface AppManifest {
   name: string;
-  permissions?: AppPermissions | undefined;
+  permissions: AppPermissions;
   state: {
     schema: "state.schema.json";
     initialState: "state.initial.json";
-    migration?: "state.migration.ts" | undefined;
+    migration: "state.migration.ts" | null;
   };
   type: AppType.CollectionView;
   targetCollectionIds: CollectionId[];

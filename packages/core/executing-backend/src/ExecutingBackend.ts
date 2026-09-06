@@ -183,10 +183,10 @@ export default class ExecutingBackend implements Backend {
 
     this.apps = {
       getState: this.makeUsecase(AppsGetState, false),
-      updateState: this.makeUsecase(AppsUpdateState, false, true),
-      create: this.makeUsecase(AppsCreate, true, true),
+      updateState: this.makeUsecase(AppsUpdateState, false),
+      create: this.makeUsecase(AppsCreate, true),
       updateName: this.makeUsecase(AppsUpdateName, true),
-      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true, true),
+      createNewVersion: this.makeUsecase(AppsCreateNewVersion, true),
       delete: this.makeUsecase(AppsDelete, true),
       list: this.makeUsecase(AppsList, false),
     };
@@ -235,7 +235,6 @@ export default class ExecutingBackend implements Backend {
       config: Config,
     ) => BackendUsecase<Exec>,
     triggerBackgroundJobCheck: boolean,
-    retryOnConflict = false,
   ): Exec {
     return (async (...args: any[]) =>
       this.dataRepositoriesManager
@@ -292,7 +291,6 @@ export default class ExecutingBackend implements Backend {
               returnValue: result as Awaited<ReturnType<Exec>>,
             };
           },
-          { retryOnConflict },
         )
         .then((result) => {
           // We trigger a background job check only _after_ the transaction that

@@ -2,7 +2,6 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { AppPermissions, AppStateDefinition } from "@superego/backend";
 import type { App, CollectionId } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
-import { isEqual } from "es-toolkit";
 import { useMemo } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
@@ -26,7 +25,7 @@ interface FormValues {
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
-    permissions?: AppPermissions | undefined;
+    permissions: AppPermissions;
     state: AppStateDefinition;
   };
 }
@@ -72,7 +71,7 @@ export default function CreateNewAppVersionForm({
       appVersion: {
         targetCollectionIds: validTargetCollectionIds,
         permissions: app.latestVersion.permissions,
-        state: { ...app.latestVersion.state, migration: undefined },
+        state: { ...app.latestVersion.state, migration: null },
         files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
           app.latestVersion.files,
         ),
@@ -99,21 +98,14 @@ export default function CreateNewAppVersionForm({
       app.latestVersion.id,
       appVersion.targetCollectionIds,
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
-      {
-        permissions: appVersion.permissions,
-        state: isEqual(appVersion.state, {
-          ...app.latestVersion.state,
-          migration: undefined,
-        })
-          ? undefined
-          : appVersion.state,
-      },
+      appVersion.permissions,
+      appVersion.state,
     );
     if (success) {
       reset({
         appVersion: {
           permissions: data.latestVersion.permissions,
-          state: { ...data.latestVersion.state, migration: undefined },
+          state: { ...data.latestVersion.state, migration: null },
           targetCollectionIds: data.latestVersion.targetCollections.map(
             ({ id }) => id,
           ),

@@ -5,6 +5,7 @@ import {
   AppType,
 } from "@superego/backend";
 import { type Schema, DataType } from "@superego/schema";
+import { defaultAppPermissions } from "@superego/shared-utils";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -31,6 +32,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const result = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name".repeat(100),
@@ -64,6 +66,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const collectionId = Id.generate.collection();
       const result = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -119,6 +122,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const files = { "/main.tsx": { source: "", compiled: "" } };
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -134,6 +138,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           type: AppType.CollectionView,
           name: "name",
           latestVersion: {
+            permissions: defaultAppPermissions,
             state: emptyAppStateDefinition,
             id: expect.any(String),
             targetCollections: [
@@ -197,6 +202,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -234,6 +240,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -280,6 +287,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         Id.generate.appVersion(),
         [],
         {} as any,
+        defaultAppPermissions,
+        emptyAppStateDefinition,
       );
 
       // Verify
@@ -300,6 +309,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         {
           "/main.tsx": { source: "", compiled: "" },
         },
+        defaultAppPermissions,
+        emptyAppStateDefinition,
       );
 
       // Verify
@@ -317,6 +328,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -332,6 +344,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         createResult.data.latestVersion.id,
         [collectionId],
         { "/main.tsx": { source: "", compiled: "" } },
+        createResult.data.latestVersion.permissions,
+        { ...createResult.data.latestVersion.state, migration: null },
       );
 
       // Verify
@@ -382,6 +396,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         "/main.tsx": { source: "initial", compiled: "initial" },
       };
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -399,6 +414,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         createAppResult.data.latestVersion.id,
         [createCollectionResult.data.id],
         updatedFiles,
+        createAppResult.data.latestVersion.permissions,
+        { ...createAppResult.data.latestVersion.state, migration: null },
       );
 
       // Verify
@@ -409,6 +426,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           type: AppType.CollectionView,
           name: "name",
           latestVersion: {
+            permissions: defaultAppPermissions,
             state: emptyAppStateDefinition,
             id: expect.any(String),
             targetCollections: [
@@ -497,6 +515,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
@@ -559,6 +578,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "default-app",
@@ -618,6 +638,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResultZeta = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "zeta",
@@ -626,6 +647,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createResultZeta.success);
       const createResultAlpha = await backend.apps.create({
+        permissions: defaultAppPermissions,
         state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "alpha",
@@ -660,8 +682,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       name: "Stateful app",
       targetCollectionIds: [],
       files: { "/main.tsx": { source: "", compiled: "" } },
-      state: { schema, initialState: { count: 0 } },
+      state: { migration: null, schema, initialState: { count: 0 } },
       permissions: {
+        downloads: false,
         modals: true,
         http: { allowedOrigins: ["https://EXAMPLE.com:443/"] },
       },
@@ -675,6 +698,141 @@ export default rd<GetDependencies>("Apps", (deps) => {
       content: Record<string, unknown>,
     ) =>
       backend.apps.updateState(app.id, app.latestVersion.id, revision, content);
+
+    it.each([
+      { permissions: undefined },
+      { permissions: { modals: false } },
+      { permissions: { ...defaultAppPermissions, downloads: undefined } },
+      { permissions: { ...defaultAppPermissions, http: undefined } },
+      { state: undefined },
+      { state: { schema, initialState: { count: 0 } } },
+    ])("rejects missing required definition fields: %j", async (overrides) => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const invalidDefinition = {
+        ...definition,
+        ...overrides,
+      } as AppDefinition;
+
+      // Exercise
+      const creation = await backend.apps.create(invalidDefinition);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        invalidDefinition.permissions,
+        invalidDefinition.state,
+      );
+
+      // Verify
+      expect(creation.error?.name).toBe("ArgumentsNotValid");
+      expect(version.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect((await read(backend, created.data)).data).toEqual({
+        content: { count: 0 },
+        revision: 1,
+      });
+    });
+
+    it("validates the schema before initial content on creation and version updates", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const invalidState = {
+        ...definition.state,
+        schema: { ...schema, rootType: "Missing" },
+        initialState: { count: "invalid" },
+      };
+
+      // Exercise
+      const creation = await backend.apps.create({
+        ...definition,
+        state: invalidState,
+      });
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        definition.permissions,
+        invalidState,
+      );
+
+      // Verify
+      for (const [result, appId] of [
+        [creation, null],
+        [version, created.data.id],
+      ] as const) {
+        expect(result.error).toEqual({
+          name: "AppStateSchemaNotValid",
+          details: {
+            appId,
+            issues: expect.arrayContaining([
+              expect.objectContaining({ message: expect.any(String) }),
+            ]),
+          },
+        });
+      }
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("uses initial content on creation and runs every supplied migration until explicitly set to null", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const stateDefinition = {
+        ...definition.state,
+        migration: {
+          source: "",
+          compiled:
+            "export default (previous) => ({ count: previous.count + 1 });",
+        },
+      };
+
+      // Exercise
+      const created = await backend.apps.create({
+        ...definition,
+        state: stateDefinition,
+      });
+      assert(created.success);
+      const initial = await read(backend, created.data);
+      let app = created.data;
+      for (let i = 0; i < 2; i++) {
+        const version = await backend.apps.createNewVersion(
+          app.id,
+          app.latestVersion.id,
+          [],
+          definition.files,
+          definition.permissions,
+          stateDefinition,
+        );
+        assert(version.success);
+        app = version.data;
+      }
+      const migrated = await read(backend, app);
+      const version = await backend.apps.createNewVersion(
+        app.id,
+        app.latestVersion.id,
+        [],
+        definition.files,
+        defaultAppPermissions,
+        { ...stateDefinition, migration: null },
+      );
+      assert(version.success);
+      const preserved = await read(backend, version.data);
+
+      // Verify
+      expect(initial.data).toEqual({ content: { count: 0 }, revision: 1 });
+      expect(migrated.data).toEqual({ content: { count: 2 }, revision: 3 });
+      expect(preserved).toEqual(migrated);
+      expect(version.data.latestVersion.state.migration).toBeNull();
+      expect(version.data.latestVersion.permissions).toEqual(
+        defaultAppPermissions,
+      );
+    });
 
     it("normalizes permissions, initializes once, preserves state and permissions on code updates", async () => {
       // Setup SUT
@@ -692,6 +850,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
+        { ...created.data.latestVersion.state, migration: null },
       );
       assert(version.success);
       const after = await read(backend, version.data);
@@ -744,13 +904,26 @@ export default rd<GetDependencies>("Apps", (deps) => {
         update(backend, created.data, 1, { count: 1 }),
         update(backend, created.data, 1, { count: 2 }),
       ]);
+      const staleRevision = await update(backend, created.data, 1, {
+        count: 3,
+      });
       const invalid = await update(backend, created.data, 2, {
         count: "wrong",
       });
       const saved = await read(backend, created.data);
       // Verify
       expect(results.filter((result) => result.success)).toHaveLength(1);
-      expect(results.find((result) => !result.success)?.error).toEqual({
+      expect(results.find((result) => !result.success)?.error).toMatchObject({
+        name: "UnexpectedError",
+        details: {
+          cause: {
+            message: expect.stringMatching(
+              /transaction aborted|database is locked/i,
+            ),
+          },
+        },
+      });
+      expect(staleRevision.error).toEqual({
         name: "AppStateRevisionNotMatching",
         details: {
           appId: created.data.id,
@@ -785,34 +958,42 @@ export default rd<GetDependencies>("Apps", (deps) => {
           created.data.latestVersion.id,
           [],
           definition.files,
+          created.data.latestVersion.permissions,
           {
-            state: {
-              ...definition.state!,
-              migration: {
-                source: "",
-                compiled:
-                  "export default (previous) => ({ count: previous.count + 5 });",
-              },
+            ...definition.state!,
+            migration: {
+              source: "",
+              compiled:
+                "export default (previous) => ({ count: previous.count + 5 });",
             },
           },
         ),
         update(backend, created.data, 1, { count: 10 }),
       ]);
-      assert(version.success);
-      const state = await read(backend, version.data);
+      const state = await read(
+        backend,
+        version.success ? version.data : created.data,
+      );
       // Verify
-      expect(state.data?.content).toEqual({ count: write.success ? 15 : 5 });
-      expect(state.data?.revision).toBe(write.success ? 3 : 2);
-      if (!write.success) {
-        expect(write.error).toEqual({
-          name: "AppVersionIdNotMatching",
-          details: {
-            appId: created.data.id,
-            latestVersionId: version.data.latestVersion.id,
-            suppliedVersionId: created.data.latestVersion.id,
+      expect([version, write].filter((result) => result.success)).toHaveLength(
+        1,
+      );
+      expect(
+        [version, write].find((result) => !result.success)?.error,
+      ).toMatchObject({
+        name: "UnexpectedError",
+        details: {
+          cause: {
+            message: expect.stringMatching(
+              /transaction aborted|database is locked/i,
+            ),
           },
-        });
-      }
+        },
+      });
+      expect(state.data).toEqual({
+        content: { count: write.success ? 10 : 5 },
+        revision: 2,
+      });
     });
 
     it("migrates atomically and rejects obsolete app versions", async () => {
@@ -829,27 +1010,31 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
         rootType: "State",
       };
-      const state = { schema: nextSchema, initialState: { total: 0 } };
+      const state = {
+        migration: null,
+        schema: nextSchema,
+        initialState: { total: 0 },
+      };
       // Exercise
       const missingMigration = await backend.apps.createNewVersion(
         created.data.id,
         created.data.latestVersion.id,
         [],
         definition.files,
-        { state },
+        created.data.latestVersion.permissions,
+        state,
       );
       const failedMigration = await backend.apps.createNewVersion(
         created.data.id,
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
         {
-          state: {
-            ...state,
-            migration: {
-              source: "",
-              compiled: "export default () => { throw new Error('failure'); };",
-            },
+          ...state,
+          migration: {
+            source: "",
+            compiled: "export default () => { throw new Error('failure'); };",
           },
         },
       );
@@ -859,14 +1044,13 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
         {
-          state: {
-            ...state,
-            migration: {
-              source: "",
-              compiled:
-                "export default (previous) => ({ total: previous.count + 5 });",
-            },
+          ...state,
+          migration: {
+            source: "",
+            compiled:
+              "export default (previous) => ({ total: previous.count + 5 });",
           },
         },
       );
@@ -922,15 +1106,13 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        { modals: false, downloads: false, http: { allowedOrigins: [] } },
         {
-          permissions: {},
-          state: {
-            ...definition.state!,
-            migration: {
-              source: "",
-              compiled:
-                "export default (previous) => ({ count: previous.count * 2 });",
-            },
+          ...definition.state!,
+          migration: {
+            source: "",
+            compiled:
+              "export default (previous) => ({ count: previous.count * 2 });",
           },
         },
       );
@@ -940,6 +1122,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
+        { ...created.data.latestVersion.state, migration: null },
       );
       const obsolete = await update(backend, created.data, 2, { count: 9 });
       // Verify
@@ -963,7 +1147,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
           suppliedVersionId: created.data.latestVersion.id,
         },
       });
-      expect(version.data.latestVersion.permissions).toEqual({});
+      expect(version.data.latestVersion.permissions).toEqual(
+        defaultAppPermissions,
+      );
     });
 
     it("preserves empty state across code-only updates and rejects stale versions", async () => {
@@ -979,6 +1165,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
+        { ...created.data.latestVersion.state, migration: null },
       );
       assert(version.success);
 
@@ -988,6 +1176,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
+        { ...created.data.latestVersion.state, migration: null },
       );
       const saved = await update(backend, version.data, 1, {});
 
@@ -1013,6 +1203,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
+        { ...created.data.latestVersion.state, migration: null },
       );
       assert(version.success);
 
@@ -1053,7 +1245,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
-        { state: invalidState },
+        created.data.latestVersion.permissions,
+        invalidState,
       );
       const invalidWrite = await update(backend, created.data, 1, {
         count: Number.NaN,
@@ -1114,11 +1307,10 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
         {
-          state: {
-            ...definition.state!,
-            migration: { source: "", compiled: "export default 42;" },
-          },
+          ...definition.state!,
+          migration: { source: "", compiled: "export default 42;" },
         },
       );
       const invalidOutput = await backend.apps.createNewVersion(
@@ -1126,13 +1318,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
         {
-          state: {
-            ...definition.state!,
-            migration: {
-              source: "",
-              compiled: 'export default () => ({ count: "invalid" });',
-            },
+          ...definition.state!,
+          migration: {
+            source: "",
+            compiled: 'export default () => ({ count: "invalid" });',
           },
         },
       );
@@ -1194,13 +1385,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
         legacy.data.latestVersion.id,
         [],
         definition.files,
+        legacy.data.latestVersion.permissions,
         {
-          state: {
-            ...definition.state,
-            migration: {
-              source: "",
-              compiled: "export default () => ({ count: 0 });",
-            },
+          ...definition.state,
+          migration: {
+            source: "",
+            compiled: "export default () => ({ count: 0 });",
           },
         },
       );
@@ -1211,19 +1401,19 @@ export default rd<GetDependencies>("Apps", (deps) => {
         initialized.data.latestVersion.id,
         [],
         definition.files,
+        initialized.data.latestVersion.permissions,
         {
-          state: {
-            schema: {
-              ...schema,
-              types: {
-                State: {
-                  ...schema.types["State"]!,
-                  description: "Compatible description update",
-                },
+          migration: null,
+          schema: {
+            ...schema,
+            types: {
+              State: {
+                ...schema.types["State"]!,
+                description: "Compatible description update",
               },
             },
-            initialState: { count: 99 },
           },
+          initialState: { count: 99 },
         },
       );
       assert(compatible.success);
@@ -1251,25 +1441,26 @@ export default rd<GetDependencies>("Apps", (deps) => {
         created.data.latestVersion.id,
         [],
         definition.files,
-        { state: null } as any,
+        created.data.latestVersion.permissions,
+        null as any,
       );
       const missingMigration = await backend.apps.createNewVersion(
         created.data.id,
         created.data.latestVersion.id,
         [],
         definition.files,
-        { state: emptyAppStateDefinition },
+        created.data.latestVersion.permissions,
+        emptyAppStateDefinition,
       );
       const emptied = await backend.apps.createNewVersion(
         created.data.id,
         created.data.latestVersion.id,
         [],
         definition.files,
+        created.data.latestVersion.permissions,
         {
-          state: {
-            ...emptyAppStateDefinition,
-            migration: { source: "", compiled: "export default () => ({});" },
-          },
+          ...emptyAppStateDefinition,
+          migration: { source: "", compiled: "export default () => ({});" },
         },
       );
       assert(emptied.success);
@@ -1295,6 +1486,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         const result = await backend.apps.create({
           ...definition,
           state: {
+            migration: null,
             schema: {
               ...schema,
               types: {

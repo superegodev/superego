@@ -29,27 +29,6 @@ export default class SqliteDataRepositoriesManager implements DataRepositoriesMa
     fn: (
       repos: DataRepositories,
     ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
-    options: { retryOnConflict?: boolean } = {},
-  ): Promise<ReturnValue> {
-    for (let attempt = 0; ; attempt++) {
-      try {
-        return await this.executeTransaction(fn);
-      } catch (error) {
-        const conflict =
-          error instanceof Error &&
-          error.message === "SQLite database is locked.";
-        if (!options.retryOnConflict || !conflict || attempt >= 8) {
-          throw error;
-        }
-        await new Promise((resolve) => setTimeout(resolve, 10 * (attempt + 1)));
-      }
-    }
-  }
-
-  private async executeTransaction<ReturnValue>(
-    fn: (
-      repos: DataRepositories,
-    ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
   ): Promise<ReturnValue> {
     const transactionSucceededCallbacks: (() => void)[] = [];
     const db = this.openDb();

@@ -69,7 +69,7 @@ export default function StateDefinitionFields({
                       compiled:
                         "export default function migrate(previous) { return previous; }",
                     }
-                  : undefined,
+                  : null,
               })
             }
           />

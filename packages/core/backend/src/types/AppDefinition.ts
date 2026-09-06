@@ -14,6 +14,6 @@ export default interface AppDefinition<
     ? ProtoCollectionId | CollectionId
     : CollectionId)[];
   files: AppVersion["files"];
-  permissions?: AppPermissions | undefined;
+  permissions: AppPermissions;
   state: AppStateDefinition;
 }

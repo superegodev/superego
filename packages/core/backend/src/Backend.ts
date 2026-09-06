@@ -585,10 +585,8 @@ export default interface Backend {
       latestVersionId: AppVersionId,
       targetCollectionIds: CollectionId[],
       files: AppVersion["files"],
-      options?: {
-        permissions?: AppPermissions | undefined;
-        state?: AppStateDefinition | undefined;
-      },
+      permissions: AppPermissions,
+      stateDefinition: AppStateDefinition,
     ): ResultPromise<
       App,
       | AppStateSchemaNotValid
@@ -615,6 +613,7 @@ export default interface Backend {
     >;
 
     list(): ResultPromise<App[], ArgumentsNotValid | UnexpectedError>;
+
     getState(
       id: AppId,
       versionId: AppVersionId,
@@ -625,6 +624,7 @@ export default interface Backend {
       | ArgumentsNotValid
       | UnexpectedError
     >;
+
     updateState(
       id: AppId,
       versionId: AppVersionId,

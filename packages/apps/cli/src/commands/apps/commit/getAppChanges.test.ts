@@ -46,7 +46,11 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
         files: {
           "/main.tsx": { source: "source", compiled: "different compilation" },
         },
-        permissions: { modals: true },
+        permissions: {
+          downloads: false,
+          http: { allowedOrigins: [] },
+          modals: true,
+        },
         state,
       },
     };
@@ -66,7 +70,11 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
         name: app.name,
         type: app.type,
         targetCollectionIds: [],
-        permissions: { modals: change !== "permissions" },
+        permissions: {
+          downloads: false,
+          http: { allowedOrigins: [] },
+          modals: change !== "permissions",
+        },
         state: {
           schema: "state.schema.json",
           initialState: "state.initial.json",

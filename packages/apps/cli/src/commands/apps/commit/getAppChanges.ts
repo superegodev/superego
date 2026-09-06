@@ -31,8 +31,8 @@ export default async function getAppChanges({
     targetCollectionIds,
   );
   const permissionsChanged = !isEqual(
-    manifest.permissions ?? {},
-    app.latestVersion.permissions ?? {},
+    manifest.permissions,
+    app.latestVersion.permissions,
   );
   const stateChanged = !isEqual(
     readStateSource(path),

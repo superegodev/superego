@@ -8,6 +8,6 @@ export default interface AppVersionEntity {
   targetCollections: AppVersion["targetCollections"];
   files: AppVersion["files"];
   createdAt: Date;
-  permissions?: AppPermissions | undefined;
-  state: AppStateDefinition;
+  permissions: AppPermissions;
+  stateDefinition: AppStateDefinition;
 }

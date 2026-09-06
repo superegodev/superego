@@ -8,6 +8,7 @@ import {
   normalizeHttpOrigin,
   isJsonValue,
 } from "./appCapabilities.js";
+import defaultAppPermissions from "./defaultAppPermissions.js";
 
 describe("app capabilities", () => {
   it.each([
@@ -39,18 +40,33 @@ describe("app capabilities", () => {
   ])("rejects %s", (origin) => {
     // Exercise
     const result = v.safeParse(appPermissionsSchema(), {
+      ...defaultAppPermissions,
       http: { allowedOrigins: [origin] },
     });
     // Verify
     expect(result.success).toBe(false);
   });
-  it("uses restrictive defaults and rejects arbitrary capabilities", () => {
+  it("accepts explicit restrictive permissions and rejects arbitrary capabilities", () => {
     // Exercise
-    const valid = v.parse(appPermissionsSchema(), {});
+    const valid = v.parse(appPermissionsSchema(), defaultAppPermissions);
     const invalid = v.safeParse(appPermissionsSchema(), { scripts: true });
     // Verify
-    expect(valid).toEqual({});
+    expect(valid).toEqual(defaultAppPermissions);
     expect(invalid.success).toBe(false);
+  });
+  it.each([
+    undefined,
+    {},
+    { downloads: false, http: { allowedOrigins: [] } },
+    { modals: false, http: { allowedOrigins: [] } },
+    { modals: false, downloads: false },
+    { ...defaultAppPermissions, http: {} },
+  ])("rejects incomplete permissions: %j", (permissions) => {
+    // Exercise
+    const result = v.safeParse(appPermissionsSchema(), permissions);
+
+    // Verify
+    expect(result.success).toBe(false);
   });
   it("rejects cyclic and non-JSON state", () => {
     // Setup SUT

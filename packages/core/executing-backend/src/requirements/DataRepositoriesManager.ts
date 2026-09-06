@@ -16,6 +16,5 @@ export default interface DataRepositoriesManager {
       action: "commit" | "rollback";
       returnValue: ReturnValue;
     }>,
-    options?: { retryOnConflict?: boolean },
   ): Promise<ReturnValue>;
 }

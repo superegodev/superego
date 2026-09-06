@@ -9,24 +9,20 @@ export default async function createAppVersion({
   manifest,
   mainModule,
   path,
-  stateChanged,
 }: {
   backend: CliBackend;
   app: App;
   manifest: AppManifest;
   mainModule: TypescriptModule;
   path: string;
-  stateChanged: boolean;
 }): Promise<App> {
   const result = await backend.apps.createNewVersion(
     app.id,
     app.latestVersion.id,
     manifest.targetCollectionIds,
     { "/main.tsx": mainModule },
-    {
-      permissions: manifest.permissions ?? {},
-      state: stateChanged ? await compileState(path) : undefined,
-    },
+    manifest.permissions,
+    await compileState(path),
   );
   if (!result.success) {
     throw new Error(JSON.stringify(result.error));

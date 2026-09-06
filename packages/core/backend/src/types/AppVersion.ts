@@ -15,6 +15,6 @@ export default interface AppVersion {
     "/main.tsx": TypescriptModule;
   };
   createdAt: Date;
-  permissions?: AppPermissions | undefined;
+  permissions: AppPermissions;
   state: AppStateDefinition;
 }

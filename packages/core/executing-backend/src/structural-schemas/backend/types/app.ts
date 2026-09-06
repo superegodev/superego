@@ -19,7 +19,7 @@ import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
-    permissions: v.optional(appPermissionsSchema()),
+    permissions: appPermissionsSchema(),
     state: appStateDefinition(),
     id: appVersionId(),
     targetCollections: v.array(
@@ -51,7 +51,7 @@ export function appDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
-    permissions: v.optional(appPermissionsSchema()),
+    permissions: appPermissionsSchema(),
     state: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
@@ -67,7 +67,7 @@ export function protoAppDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
-    permissions: v.optional(appPermissionsSchema()),
+    permissions: appPermissionsSchema(),
     state: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(
@@ -86,7 +86,7 @@ export function appStateDefinition() {
       v.record(v.string(), v.unknown()),
       v.check((value) => isJsonValue(value)),
     ),
-    migration: v.optional(typescriptModule()),
+    migration: v.nullable(typescriptModule()),
   });
 }
 export function appState() {

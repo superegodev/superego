@@ -50,9 +50,9 @@ export default useMarkdownHelp(
           state: {
             schema: "state.schema.json",
             initialState: "state.initial.json",
-            ...(app.latestVersion.state.migration && {
-              migration: "state.migration.ts",
-            }),
+            migration: app.latestVersion.state.migration
+              ? "state.migration.ts"
+              : null,
           },
           type: app.type,
           targetCollectionIds: app.latestVersion.targetCollections.map(

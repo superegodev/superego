@@ -7,5 +7,6 @@ const emptyAppStateDefinition: AppStateDefinition = {
     rootType: "State",
   },
   initialState: {},
+  migration: null,
 };
 export default emptyAppStateDefinition;

@@ -35,7 +35,6 @@ export default async function updateApp({
       manifest,
       mainModule: changes.mainModule!,
       path,
-      stateChanged: changes.stateChanged,
     });
     operations.push("created new version");
   }

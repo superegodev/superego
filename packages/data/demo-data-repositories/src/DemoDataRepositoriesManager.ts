@@ -34,29 +34,6 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
     fn: (
       repos: DataRepositories,
     ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
-    options: { retryOnConflict?: boolean } = {},
-  ): Promise<ReturnValue> {
-    for (let attempt = 0; ; attempt++) {
-      try {
-        return await this.executeTransaction(fn);
-      } catch (error) {
-        const conflict =
-          error instanceof Error &&
-          ["Transaction aborted", "IndexedDb transaction aborted"].includes(
-            error.message,
-          );
-        if (!options.retryOnConflict || !conflict || attempt >= 8) {
-          throw error;
-        }
-        await new Promise((resolve) => setTimeout(resolve, 10 * (attempt + 1)));
-      }
-    }
-  }
-
-  private async executeTransaction<ReturnValue>(
-    fn: (
-      repos: DataRepositories,
-    ) => Promise<{ action: "commit" | "rollback"; returnValue: ReturnValue }>,
   ): Promise<ReturnValue> {
     const transactionId = crypto.randomUUID();
     let shouldAbort = false;

@@ -46,7 +46,7 @@ export default class SqliteAppVersionRepository implements AppVersionRepository 
         appVersion.createdAt.toISOString(),
         encode({
           permissions: appVersion.permissions,
-          state: appVersion.state,
+          stateDefinition: appVersion.stateDefinition,
         }),
         1,
       );

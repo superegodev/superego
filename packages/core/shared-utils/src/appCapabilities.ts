@@ -54,13 +54,11 @@ export function appPermissionsSchema(): v.GenericSchema<
   AppPermissions
 > {
   return v.strictObject({
-    modals: v.optional(v.boolean()),
-    downloads: v.optional(v.boolean()),
-    http: v.optional(
-      v.strictObject({
-        allowedOrigins: v.array(httpOriginSchema()),
-      }),
-    ),
+    modals: v.boolean(),
+    downloads: v.boolean(),
+    http: v.strictObject({
+      allowedOrigins: v.array(httpOriginSchema()),
+    }),
   });
 }
 function supportedStateType(definition: AnyTypeDefinition): boolean {

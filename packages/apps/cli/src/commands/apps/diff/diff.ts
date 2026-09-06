@@ -53,8 +53,8 @@ export default useMarkdownHelp(
         const localState = readStateSource(path);
         const remoteState = stateSourceOf(app.latestVersion.state);
         const permissionsChanged = !isEqual(
-          manifest.permissions ?? {},
-          app.latestVersion.permissions ?? {},
+          manifest.permissions,
+          app.latestVersion.permissions,
         );
         const stateChanged = !isEqual(localState, remoteState);
         if (permissionsChanged || stateChanged) {

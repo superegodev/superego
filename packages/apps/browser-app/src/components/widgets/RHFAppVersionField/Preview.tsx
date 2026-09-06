@@ -5,7 +5,7 @@ import {
   type Collection,
   type TypescriptModule,
 } from "@superego/backend";
-import { Id } from "@superego/shared-utils";
+import { defaultAppPermissions, Id } from "@superego/shared-utils";
 import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
@@ -72,6 +72,7 @@ function getApp(
         type: AppType.CollectionView,
         name: "New App Preview",
         latestVersion: {
+          permissions: defaultAppPermissions,
           state,
           id: Id.generate.appVersion(),
           targetCollections: targetCollections.map((collection) => ({

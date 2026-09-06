@@ -36,14 +36,26 @@ it("backfills demo app state and preserves existing content and definitions", ()
     revision: 7,
   });
   expect(data.appVersions["AppVersion_empty"]).toEqual({
-    permissions: { downloads: true },
-    state: {
+    permissions: {
+      modals: false,
+      downloads: true,
+      http: { allowedOrigins: [] },
+    },
+    stateDefinition: {
       schema: {
         types: { State: { dataType: "Struct", properties: {} } },
         rootType: "State",
       },
       initialState: {},
+      migration: null,
     },
   });
-  expect(data.appVersions["AppVersion_saved"]).toEqual({ state: definition });
+  expect(data.appVersions["AppVersion_saved"]).toEqual({
+    permissions: {
+      modals: false,
+      downloads: false,
+      http: { allowedOrigins: [] },
+    },
+    stateDefinition: { ...definition, migration: null },
+  });
 });

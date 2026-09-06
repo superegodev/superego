@@ -4,6 +4,7 @@ import { AppType, type Collection, type CollectionId } from "@superego/backend";
 import { CollectionRouteView, RouteName } from "@superego/routing";
 import {
   emptyAppStateDefinition,
+  defaultAppPermissions,
   valibotSchemas,
 } from "@superego/shared-utils";
 import { useId } from "react";
@@ -30,7 +31,7 @@ interface FormValues {
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
-    permissions?: AppPermissions | undefined;
+    permissions: AppPermissions;
     state: AppStateDefinition;
   };
 }
@@ -69,6 +70,7 @@ export default function CreateAppForm({
     defaultValues: {
       appVersion: {
         state: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
         targetCollectionIds: initialTargetCollections.map(({ id }) => id),
         files: forms.defaults.collectionViewAppFiles(initialTargetCollections),
       },

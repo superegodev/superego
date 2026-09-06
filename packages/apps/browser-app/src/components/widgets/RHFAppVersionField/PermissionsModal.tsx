@@ -34,9 +34,9 @@ export default function PermissionsModal<T extends FieldValues>({
   const intl = useIntl();
   const { field: permissionsField, fieldState: permissionsFieldState } =
     useController({ control, name });
-  const permissions: AppPermissions = permissionsField.value ?? {};
+  const permissions: AppPermissions = permissionsField.value;
   const originKeys = useRef<string[]>([]);
-  const origins = permissions.http?.allowedOrigins ?? [];
+  const origins = permissions.http.allowedOrigins;
   while (originKeys.current.length < origins.length) {
     originKeys.current.push(crypto.randomUUID());
   }
@@ -60,7 +60,7 @@ export default function PermissionsModal<T extends FieldValues>({
             </p>
           ))}
         <Switch
-          isSelected={permissions.modals ?? false}
+          isSelected={permissions.modals}
           onChange={(modals) =>
             permissionsField.onChange({ ...permissions, modals })
           }
@@ -71,7 +71,7 @@ export default function PermissionsModal<T extends FieldValues>({
           <FormattedMessage defaultMessage="Enables printing, alert, confirm, prompt, and other browser modal dialogs." />
         </p>
         <Switch
-          isSelected={permissions.downloads ?? false}
+          isSelected={permissions.downloads}
           onChange={(downloads) =>
             permissionsField.onChange({ ...permissions, downloads })
           }

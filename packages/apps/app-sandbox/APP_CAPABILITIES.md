@@ -21,21 +21,22 @@ commits a new app version. The supported configuration is:
 ```
 
 Every app declares state. Use an empty object and a Struct schema with no
-properties when the app does not need to store anything. Only the `migration`
-entry is optional. `apps init` creates the schema and initial-state files;
-`apps check` validates them and compiles migration source. `apps checkout`
-writes those source files; `apps status`, `diff` and `commit` include them.
-`app-state.ts` is generated from the state schema and exports its root type.
-Saved content and revision are database data and are never checked out or
-exported with the app. An app definition outside the CLI embeds
-`state: { schema, initialState, migration?: { source, compiled } }` and the same
-permissions object.
+properties when the app does not need to store anything. The `migration` entry
+is required; use `null` when no migration should run. `apps init` creates the
+schema and initial-state files; `apps check` validates them and compiles
+migration source. `apps checkout` writes those source files; `apps status`,
+`diff` and `commit` include them. `app-state.ts` is generated from the state
+schema and exports its root type. Saved content and revision are database data
+and are never checked out or exported with the app. An app definition outside
+the CLI embeds
+`state: { schema, initialState, migration: { source, compiled } | null }` and
+the same permissions object.
 
-Missing permissions are restrictive. The modals capability permits printing,
-alert, confirm, prompt and other browser modal dialogs; downloads enables file
-downloads. HTTP destinations are normalized HTTP(S) origins without credentials,
-paths, queries or wildcards. A service URL stored in app state does **not**
-authorize that service.
+All permission fields are required. Existing apps are migrated to restrictive
+defaults. The modals capability permits printing, alert, confirm, prompt and
+other browser modal dialogs; downloads enables file downloads. HTTP destinations
+are normalized HTTP(S) origins without credentials, paths, queries or wildcards.
+A service URL stored in app state does **not** authorize that service.
 
 Use native `fetch()` inside the app, including at module initialization:
 
@@ -137,16 +138,17 @@ migration `(previousContent) => nextContent`; explicit migrations also support
 semantic changes with an unchanged schema. Migrations run in the existing
 isolated JavaScript sandbox without networking or app-editing APIs. Version and
 state commit together or roll back together. Schema changes and explicit
-migrations advance the state revision. Code-only versions preserve state and do
-not replay earlier migrations. Reads and writes supply the loaded app version
-ID; `AppVersionIdNotMatching` rejects calls from obsolete versions. Invalid
-content is `AppStateContentNotValid`, with validation issues. App version
-creation reports `AppStateSchemaNotValid`, `AppStateMigrationRequired`,
-`AppStateMigrationNotValid`, or `AppStateMigrationFailed` as appropriate.
-Migration failures include a typed cause with execution diagnostics or content
-validation issues. State definitions cannot be null or absent. To stop storing
-content, migrate to an empty object and its schema. Deleting the app deletes its
-state.
+migrations advance the state revision. Every new-version call supplies
+permissions and a state definition. Code-only versions use `migration: null` to
+preserve saved state without replaying an earlier migration. Reads and writes
+supply the loaded app version ID; `AppVersionIdNotMatching` rejects calls from
+obsolete versions. Invalid content is `AppStateContentNotValid`, with validation
+issues. App version creation reports `AppStateSchemaNotValid`,
+`AppStateMigrationRequired`, `AppStateMigrationNotValid`, or
+`AppStateMigrationFailed` as appropriate. Migration failures include a typed
+cause with execution diagnostics or content validation issues. State definitions
+cannot be null or absent. To stop storing content, migrate to an empty object
+and its schema. Deleting the app deletes its state.
 
 Permissions use the app version loaded by the host. Reload an app to pick up
 changes made elsewhere. There are no HTTP sessions, instance tokens, lifecycle

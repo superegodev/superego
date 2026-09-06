@@ -3,9 +3,18 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { AppType, type AppStateDefinition } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import {
+  defaultAppPermissions,
+  emptyAppStateDefinition,
+} from "@superego/shared-utils";
 import { expect, it } from "vitest";
 import { readManifest, writeManifest } from "./manifest.js";
-import { readStateSource, stateSourceOf, writeStateSource } from "./state.js";
+import {
+  compileState,
+  readStateSource,
+  stateSourceOf,
+  writeStateSource,
+} from "./state.js";
 
 it("round-trips permissions and state source independently of saved content", async () => {
   // Setup SUT
@@ -33,6 +42,7 @@ it("round-trips permissions and state source independently of saved content", as
       type: AppType.CollectionView,
       targetCollectionIds: [],
       permissions: {
+        modals: false,
         downloads: true,
         http: { allowedOrigins: ["HTTPS://EXAMPLE.COM:443"] },
       },
@@ -47,6 +57,7 @@ it("round-trips permissions and state source independently of saved content", as
     const source = readStateSource(path);
     // Verify
     expect(manifest.permissions).toEqual({
+      modals: false,
       downloads: true,
       http: { allowedOrigins: ["https://example.com"] },
     });
@@ -54,6 +65,34 @@ it("round-trips permissions and state source independently of saved content", as
     expect(source).not.toHaveProperty("revision");
     expect(source).not.toHaveProperty("schemaId");
     expect(source).not.toHaveProperty("content");
+  } finally {
+    rmSync(path, { recursive: true });
+  }
+});
+
+it("compiles an explicit null migration without a migration source file", async () => {
+  // Setup SUT
+  const path = mkdtempSync(join(tmpdir(), "superego-app-sources-"));
+  try {
+    await writeManifest(path, {
+      name: "App",
+      type: AppType.CollectionView,
+      targetCollectionIds: [],
+      permissions: defaultAppPermissions,
+      state: {
+        schema: "state.schema.json",
+        initialState: "state.initial.json",
+        migration: null,
+      },
+    });
+    await writeStateSource(path, emptyAppStateDefinition);
+
+    // Exercise
+    const stateDefinition = await compileState(path);
+
+    // Verify
+    expect(stateDefinition).toEqual(emptyAppStateDefinition);
+    expect(readManifest(path).state.migration).toBeNull();
   } finally {
     rmSync(path, { recursive: true });
   }

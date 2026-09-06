@@ -13,7 +13,10 @@ import type {
 } from "@superego/backend";
 import { DocumentContentChangeType } from "@superego/backend";
 import { fromHref, RouteName, toHref } from "@superego/routing";
-import { makeSuccessfulResult } from "@superego/shared-utils";
+import {
+  defaultAppPermissions,
+  makeSuccessfulResult,
+} from "@superego/shared-utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import useAppBackend from "../../../business-logic/apps/useAppBackend.js";
@@ -125,7 +128,9 @@ export default function AppRenderer({ app, preview = false }: Props) {
           <Sandbox
             key={`${app.id}:${app.latestVersion.id}`}
             backend={backend}
-            permissions={preview ? undefined : app.latestVersion.permissions}
+            permissions={
+              preview ? defaultAppPermissions : app.latestVersion.permissions
+            }
             navigateTo={sandboxNavigateTo}
             iframeSrc={
               import.meta.env["VITE_SANDBOX_URL"] ??

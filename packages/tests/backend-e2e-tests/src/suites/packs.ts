@@ -1,5 +1,6 @@
 import { AppType } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import { defaultAppPermissions } from "@superego/shared-utils";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -40,6 +41,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           documents: [],
           apps: [
             {
+              permissions: defaultAppPermissions,
               state: emptyAppStateDefinition,
               type: AppType.CollectionView,
               name: "Valid App",
@@ -47,11 +49,13 @@ export default rd<GetDependencies>("Packs", (deps) => {
               files: { "/main.tsx": { source: "", compiled: "" } },
             },
             {
+              permissions: defaultAppPermissions,
               type: AppType.CollectionView,
               name: "Invalid App",
               targetCollectionIds: [],
               files: { "/main.tsx": { source: "", compiled: "" } },
               state: {
+                migration: null,
                 schema: {
                   types: {
                     State: {
@@ -343,6 +347,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         collections: [],
         apps: [
           {
+            permissions: defaultAppPermissions,
             state: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "Test App",
@@ -719,6 +724,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         ],
         apps: [
           {
+            permissions: defaultAppPermissions,
             state: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "My App",
@@ -865,6 +871,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         ],
         apps: [
           {
+            permissions: defaultAppPermissions,
             state: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "App",

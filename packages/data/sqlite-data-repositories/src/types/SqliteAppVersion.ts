@@ -20,11 +20,11 @@ export default SqliteAppVersion;
 export function toEntity(appVersion: SqliteAppVersion): AppVersionEntity {
   const options = decode(appVersion.definition_options) as Pick<
     AppVersionEntity,
-    "permissions" | "state"
+    "permissions" | "stateDefinition"
   >;
   return {
-    permissions: options.permissions ?? undefined,
-    state: options.state,
+    permissions: options.permissions,
+    stateDefinition: options.stateDefinition,
     id: appVersion.id,
     previousVersionId: appVersion.previous_version_id,
     appId: appVersion.app_id,

@@ -16,15 +16,12 @@ export function readManifest(path: string): AppManifest {
   ) {
     throw new Error("app.json is invalid.");
   }
-  const permissions =
-    data["permissions"] === undefined
-      ? undefined
-      : v.parse(appPermissionsSchema(), data["permissions"]);
+  const permissions = v.parse(appPermissionsSchema(), data["permissions"]);
   const state = v.parse(
     v.strictObject({
       schema: v.literal("state.schema.json"),
       initialState: v.literal("state.initial.json"),
-      migration: v.optional(v.literal("state.migration.ts")),
+      migration: v.nullable(v.literal("state.migration.ts")),
     }),
     data["state"],
   );

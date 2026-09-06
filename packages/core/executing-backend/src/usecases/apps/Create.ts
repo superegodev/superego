@@ -12,6 +12,8 @@ import type {
 import type { ResultPromise } from "@superego/global-types";
 import {
   Id,
+  appStateSchema,
+  appStateContentSchema,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
   valibotSchemas,
@@ -20,7 +22,6 @@ import * as v from "valibot";
 import type AppEntity from "../../entities/AppEntity.js";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
-import makeInitialAppState from "../../makers/makeInitialAppState.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
@@ -53,7 +54,7 @@ export default class AppsCreate extends BackendUsecase<
       targetCollectionIds,
       files,
       permissions,
-      state,
+      state: stateDefinition,
     }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
@@ -94,15 +95,38 @@ export default class AppsCreate extends BackendUsecase<
       });
     }
 
-    const stateResult = makeInitialAppState(null, state);
-    if (!stateResult.success) {
-      return stateResult;
+    // Validate state schema.
+    const schemaValidationResult = v.safeParse(
+      appStateSchema(),
+      stateDefinition.schema,
+    );
+    if (!schemaValidationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateSchemaNotValid", {
+          appId: null,
+          issues: makeValidationIssues(schemaValidationResult.issues),
+        }),
+      );
+    }
+
+    // Validate initial state.
+    const initialStateValidationResult = v.safeParse(
+      appStateContentSchema(stateDefinition.schema),
+      stateDefinition.initialState,
+    );
+    if (!initialStateValidationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateContentNotValid", {
+          appId: null,
+          issues: makeValidationIssues(initialStateValidationResult.issues),
+        }),
+      );
     }
 
     const now = new Date();
     const app: AppEntity = {
       id: options.appId ?? Id.generate.app(),
-      state: stateResult.data,
+      state: { content: stateDefinition.initialState, revision: 1 },
       type: type,
       name: nameValidationResult.output,
       createdAt: now,
@@ -114,7 +138,7 @@ export default class AppsCreate extends BackendUsecase<
       targetCollections: targetCollections,
       files: files,
       permissions,
-      state,
+      stateDefinition,
       createdAt: now,
     };
 

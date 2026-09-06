@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { AppType } from "@superego/backend";
+import { defaultAppPermissions } from "@superego/shared-utils";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { assert, describe, expect, test } from "vitest";
 import {
@@ -278,6 +279,7 @@ describeWithAgent("CLI agent evals", () => {
     const backend = createEvalBackend(workspace.databaseFile);
     const collection = await seedExpensesCollection(backend);
     const createAppResult = await backend.apps.create({
+      permissions: defaultAppPermissions,
       state: emptyAppStateDefinition,
       type: AppType.CollectionView,
       name: "Expenses Dashboard",

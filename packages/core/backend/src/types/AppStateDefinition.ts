@@ -5,5 +5,5 @@ export default interface AppStateDefinition {
   schema: Schema;
   initialState: Record<string, unknown>;
   /** Default-exported synchronous (previousContent) => nextContent function. */
-  migration?: TypescriptModule | undefined;
+  migration: TypescriptModule | null;
 }

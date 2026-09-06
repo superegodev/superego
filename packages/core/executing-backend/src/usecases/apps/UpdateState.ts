@@ -68,7 +68,7 @@ export default class AppsUpdateState extends BackendUsecase<
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);
     assertAppVersionExists(id, version);
     const contentValidationResult = v.safeParse(
-      appStateContentSchema(version.state.schema),
+      appStateContentSchema(version.stateDefinition.schema),
       content,
     );
     if (!contentValidationResult.success) {

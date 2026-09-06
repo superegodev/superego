@@ -7,6 +7,7 @@ import createPreviewState from "./createPreviewState.js";
 it("keeps preview stores isolated and never overwrites initial state", async () => {
   // Setup SUT
   const definition: AppStateDefinition = {
+    migration: null,
     schema: {
       types: {
         State: {
@@ -49,6 +50,7 @@ it("supports empty state in previews", async () => {
 it("preserves schema validation failures on preview reads and writes", async () => {
   // Setup SUT
   const preview = createPreviewState("App_preview", {
+    migration: null,
     schema: {
       types: {
         State: {
@@ -83,6 +85,7 @@ it("preserves schema validation failures on preview reads and writes", async () 
 it("distinguishes invalid initial content and preserves its validation path", async () => {
   // Setup SUT
   const preview = createPreviewState("App_preview", {
+    migration: null,
     schema: {
       types: {
         State: {

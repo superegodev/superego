@@ -10,7 +10,7 @@ import typescriptModule from "./typescriptModule.js";
 
 export default function appDefinitionOptions(intl: IntlShape) {
   return {
-    permissions: v.optional(appPermissionsSchema()),
+    permissions: appPermissionsSchema(),
     state: v.pipe(
       v.strictObject({
         schema: appStateSchema(),
@@ -18,7 +18,7 @@ export default function appDefinitionOptions(intl: IntlShape) {
           v.record(v.string(), v.unknown()),
           v.check((value) => isJsonValue(value)),
         ),
-        migration: v.optional(typescriptModule(intl)),
+        migration: v.nullable(typescriptModule(intl)),
       }),
       v.check(
         (state) =>

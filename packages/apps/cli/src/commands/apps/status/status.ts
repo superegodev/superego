@@ -38,12 +38,7 @@ export default useMarkdownHelp(
         ) {
           status.push("metadata changed");
         }
-        if (
-          !isEqual(
-            manifest.permissions ?? {},
-            app.latestVersion.permissions ?? {},
-          )
-        ) {
+        if (!isEqual(manifest.permissions, app.latestVersion.permissions)) {
           status.push("permissions changed");
         }
         if (

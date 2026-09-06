@@ -45,6 +45,7 @@ export default useMarkdownHelp(
         state: {
           schema: "state.schema.json",
           initialState: "state.initial.json",
+          migration: null,
         },
         name,
         permissions: args.permissions ?? {

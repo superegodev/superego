@@ -32,20 +32,20 @@ export function readStateSource(path: string) {
     initialState: initialState as Record<string, unknown>,
     migration: manifest.state.migration
       ? readFileSync(join(path, manifest.state.migration), "utf8")
-      : undefined,
+      : null,
   };
 }
 export function stateSourceOf(definition: AppStateDefinition) {
   return {
     schema: definition.schema,
     initialState: definition.initialState,
-    migration: definition.migration?.source,
+    migration: definition.migration?.source ?? null,
   };
 }
 export async function compileState(path: string): Promise<AppStateDefinition> {
   const source = readStateSource(path);
-  if (source.migration === undefined) {
-    return { schema: source.schema, initialState: source.initialState };
+  if (source.migration === null) {
+    return { ...source, migration: null };
   }
   const result = await new TscTypescriptCompiler().compile(
     { path: "/state.migration.ts", source: source.migration },
