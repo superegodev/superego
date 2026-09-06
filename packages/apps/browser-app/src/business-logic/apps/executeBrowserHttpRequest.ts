@@ -13,7 +13,6 @@ const maximumBytes = 16 * 1024 * 1024;
 export default async function executeBrowserHttpRequest(
   input: unknown,
   allowedOrigins: string[],
-  lifetime: AbortSignal,
 ) {
   const parsed = v.safeParse(appHttpRequestSchema(), input);
   if (!parsed.success) {
@@ -24,7 +23,7 @@ export default async function executeBrowserHttpRequest(
   if (!allowedOrigins.includes(url.origin)) {
     return appHttpFailure("DestinationDenied");
   }
-  const signal = AbortSignal.any([lifetime, AbortSignal.timeout(30_000)]);
+  const signal = AbortSignal.timeout(30_000);
   try {
     signal.throwIfAborted();
     const body = request.body
@@ -83,8 +82,6 @@ export default async function executeBrowserHttpRequest(
       url: response.url || url.href,
     });
   } catch {
-    return appHttpFailure(
-      lifetime.aborted ? "ObsoleteInstance" : "TransportFailure",
-    );
+    return appHttpFailure("TransportFailure");
   }
 }

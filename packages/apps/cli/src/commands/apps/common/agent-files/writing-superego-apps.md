@@ -117,14 +117,14 @@ const state = useAppState<State>();
 const updateState = useUpdateAppState<State>();
 const request = useHttpRequest();
 
-// Query: isLoading, isPending, isFetching, isError, error, data, refetch().
-// Mutation: isIdle, isPending, isError, isSuccess, error, data, reset().
-// Handle errors and conflicts explicitly in the component.
+// State exposes data, isLoading, error and refetch().
+// updateState and request are async functions; handle errors with try/catch.
+// Keep any saving/request loading indicators in component state.
 async function save(nextState: State) {
   if (!state.data) {
     return;
   }
-  await updateState.mutateAsync({
+  await updateState({
     expectedRevision: state.data.revision,
     content: nextState,
   });
@@ -133,7 +133,7 @@ async function send() {
   if (!state.data) {
     return;
   }
-  const response = await request.mutateAsync({
+  const response = await request({
     url: state.data.content.serviceUrl,
     method: "POST",
     headers: [
@@ -178,7 +178,7 @@ encoding or decode content encodings in the app. Errors expose typed reasons
 without including credentials, query values, bodies or headers in diagnostics.
 
 Browser and demo runtimes execute the same API using browser fetch, with the
-same stored app/version identity and exact destination origins. Requests omit
+loaded app's configured destination origins supplied by the host. Requests omit
 browser credentials and referrers. CORS still applies: configure the destination
 to allow the Superego origin, or configure a CORS browser extension. Browser
 transport failures (including CORS) return `TransportFailure` without sensitive
@@ -214,10 +214,15 @@ contexts and advance the state revision and schema identity. Code-only versions
 preserve schema identity and do not replay earlier migrations. Removing a state
 schema is rejected; deleting the app deletes state.
 
-Mounted instances refresh with active versions. Desktop windows receive change
-notifications; same-host instances share invalidations, and focus refetch is the
-fallback when cross-window delivery is unavailable. Revocation cancels affected
-HTTP requests where possible; already-sent requests cannot be undone.
+HTTP requests use the permission configuration loaded with the app. The iframe
+supplies request data only; the host supplies the allowed origins. Desktop uses
+one IPC request to the main process; browser runtimes call fetch. There are no
+HTTP sessions, instance tokens, background app polling or change subscriptions.
+Reload an app to pick up changes made elsewhere. Requests already in progress
+finish normally or time out; app updates do not cancel them.
+
+State writes update the current iframe's cached state. Other open instances read
+the latest saved state when they reload or explicitly call refetch().
 
 Previews use separate ephemeral state initialized from the preview definition.
 Migration trials run on preview initial content, never on saved content.

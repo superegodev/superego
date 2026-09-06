@@ -12,7 +12,6 @@ export default async function executeHttpRequest(
   input: AppHttpRequest,
   allowedOrigins: string[],
   signal: AbortSignal,
-  assertCurrent: () => Promise<void>,
 ): Promise<AppHttpResponse> {
   let url = new URL(input.url);
   let method = input.method ?? "GET";
@@ -27,10 +26,8 @@ export default async function executeHttpRequest(
     throw new Error("Request too large");
   }
   for (let redirects = 0; redirects <= 5; redirects++) {
-    await assertCurrent();
     signal.throwIfAborted();
     const destination = await authorizeDestination(url, allowedOrigins);
-    await assertCurrent();
     signal.throwIfAborted();
     const response = await new Promise<{
       status: number;

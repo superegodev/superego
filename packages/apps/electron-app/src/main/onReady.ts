@@ -14,12 +14,8 @@ import getIntl from "./translations/getIntl.js";
 export default function onReady(): BrowserWindow {
   const intl = getIntl();
   const backend = createBackend();
-  const appHttp = new AppHttpIPCProxyServer(backend);
-  appHttp.start();
-  new BackendIPCProxyServer(backend, async () => {
-    await appHttp.refresh();
-    appHttp.notify();
-  }).start();
+  new AppHttpIPCProxyServer().start();
+  new BackendIPCProxyServer(backend).start();
   new OpenFileWithNativeAppIPCProxyServer(backend).start();
   new OpenInNativeBrowserIPCProxyServer().start();
   new WindowCloseIPCProxyServer().start();

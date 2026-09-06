@@ -22,7 +22,6 @@ async function withServer(
     await new Promise<void>((resolve) => server.close(() => resolve()));
   }
 }
-const assertCurrent = async () => {};
 
 describe("host HTTP transport", () => {
   it("round-trips opaque binary and returns HTTP error responses", async () => {
@@ -49,7 +48,6 @@ describe("host HTTP transport", () => {
           },
           [origin],
           AbortSignal.timeout(5000),
-          assertCurrent,
         );
         // Verify
         expect(result.status).toBe(400);
@@ -83,7 +81,6 @@ describe("host HTTP transport", () => {
               { url: origin },
               [origin],
               AbortSignal.timeout(5000),
-              assertCurrent,
             );
             // Verify
             await expect(denied).rejects.toThrow();
@@ -98,7 +95,6 @@ describe("host HTTP transport", () => {
               },
               [origin, destination],
               AbortSignal.timeout(5000),
-              assertCurrent,
             );
             // Verify
             expect(result.status).toBe(200);
@@ -109,7 +105,7 @@ describe("host HTTP transport", () => {
       },
     );
   });
-  it("bounds redirect loops and aborts obsolete instances", async () => {
+  it("bounds redirect loops and respects the request deadline", async () => {
     // Setup SUT
     let reached = 0;
     await withServer(
@@ -124,20 +120,18 @@ describe("host HTTP transport", () => {
           { url: origin },
           [origin],
           AbortSignal.timeout(5000),
-          assertCurrent,
         );
         // Verify
         await expect(result).rejects.toThrow("Redirect limit");
         expect(reached).toBe(6);
         // Exercise
-        const obsolete = executeHttpRequest(
+        const expired = executeHttpRequest(
           { url: origin },
           [origin],
-          AbortSignal.abort(),
-          assertCurrent,
+          AbortSignal.abort(new DOMException("Timed out", "TimeoutError")),
         );
         // Verify
-        await expect(obsolete).rejects.toThrow();
+        await expect(expired).rejects.toThrow();
         expect(reached).toBe(6);
       },
     );
@@ -159,7 +153,6 @@ describe("host HTTP transport", () => {
             { url },
             [url],
             AbortSignal.timeout(5000),
-            assertCurrent,
           );
           // Verify
           expect(Buffer.from(result.body.data, "base64").toString()).toBe(
@@ -195,7 +188,6 @@ describe("host HTTP transport", () => {
         { url: origin },
         [origin],
         AbortSignal.timeout(5000),
-        assertCurrent,
       );
       // Verify
       await expect(result).rejects.toMatchObject({

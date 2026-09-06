@@ -1,11 +1,8 @@
-import type { AppVersion } from "@superego/backend";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import createBrowserHttpInstance from "./createBrowserHttpInstance.js";
 import executeBrowserHttpRequest from "./executeBrowserHttpRequest.js";
 
 afterEach(() => vi.unstubAllGlobals());
 const origin = "https://example.com";
-const signal = () => new AbortController().signal;
 
 describe("browser app HTTP", () => {
   it("sends opaque bytes without session credentials and returns HTTP errors as responses", async () => {
@@ -25,7 +22,6 @@ describe("browser app HTTP", () => {
         body: { encoding: "base64", data: "AP+A" },
       },
       [origin],
-      signal(),
     );
     // Verify
     expect(result.data).toMatchObject({
@@ -55,7 +51,6 @@ describe("browser app HTTP", () => {
         body: { encoding: "utf8", data: "not JSON; 😀" },
       },
       ["http://127.0.0.1:9876"],
-      signal(),
     );
     // Verify
     expect(result.success).toBe(true);
@@ -71,17 +66,14 @@ describe("browser app HTTP", () => {
     const denied = await executeBrowserHttpRequest(
       { url: "https://example.com:8443" },
       [origin],
-      signal(),
     );
     const invalid = await executeBrowserHttpRequest(
       { url: origin, headers: [["Host", "other.example"]] },
       [origin],
-      signal(),
     );
     const malformed = await executeBrowserHttpRequest(
       { url: origin, body: { encoding: "json", data: {} } },
       [origin],
-      signal(),
     );
     // Verify
     expect(denied.error?.details.reason).toBe("DestinationDenied");
@@ -96,55 +88,34 @@ describe("browser app HTTP", () => {
       vi.fn().mockRejectedValue(new TypeError("secret-url?token=secret")),
     );
     // Exercise
-    const result = await executeBrowserHttpRequest(
-      { url: origin },
-      [origin],
-      signal(),
-    );
+    const result = await executeBrowserHttpRequest({ url: origin }, [origin]);
     // Verify
     expect(result.error).toEqual({
       name: "AppHttpError",
       details: { reason: "TransportFailure" },
     });
   });
-  it("binds permissions to the stored version and cancels obsolete instances", async () => {
+  it("uses the host's allowed origins independently for each request", async () => {
     // Setup mocks
     const fetchRequest = vi
       .fn()
-      .mockImplementation(
-        (_url, options) =>
-          new Promise((_resolve, reject) =>
-            options.signal.addEventListener("abort", () =>
-              reject(new Error("Aborted")),
-            ),
-          ),
-      );
+      .mockImplementation(async () => new Response("ok"));
     vi.stubGlobal("fetch", fetchRequest);
-    // Setup SUT
-    let version: AppVersion = {
-      id: "AppVersion_first",
-      targetCollections: [],
-      files: { "/main.tsx": { source: "", compiled: "" } },
-      createdAt: new Date(),
-      permissions: { http: { allowedOrigins: [origin] } },
-    };
-    const instance = createBrowserHttpInstance(version.id, async () => version);
     // Exercise
-    const request = instance.request({ url: origin });
-    await vi.waitFor(() => expect(fetchRequest).toHaveBeenCalledOnce());
-    version = { ...version, id: "AppVersion_second", permissions: {} };
-    await instance.refresh();
-    const aborted = await request;
-    const obsolete = await instance.request({ url: origin });
-    const replacement = createBrowserHttpInstance(
-      version.id,
-      async () => version,
+    const allowed = await executeBrowserHttpRequest({ url: origin }, [origin]);
+    const denied = await executeBrowserHttpRequest({ url: origin }, []);
+    const allowedAgain = await executeBrowserHttpRequest({ url: origin }, [
+      origin,
+    ]);
+    const forged = await executeBrowserHttpRequest(
+      { url: origin, allowedOrigins: [origin] },
+      [],
     );
-    const denied = await replacement.request({ url: origin });
     // Verify
-    expect(aborted.error?.details.reason).toBe("ObsoleteInstance");
-    expect(obsolete.error?.details.reason).toBe("ObsoleteInstance");
+    expect(allowed.success).toBe(true);
     expect(denied.error?.details.reason).toBe("DestinationDenied");
-    expect(fetchRequest).toHaveBeenCalledOnce();
+    expect(allowedAgain.success).toBe(true);
+    expect(forged.error?.details.reason).toBe("InvalidArguments");
+    expect(fetchRequest).toHaveBeenCalledTimes(2);
   });
 });

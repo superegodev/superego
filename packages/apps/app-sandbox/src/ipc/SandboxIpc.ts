@@ -1,5 +1,4 @@
 import type { DistributiveOmit } from "@superego/global-types";
-import { isStateChangedMessage, type StateChangedMessage } from "./messages.js";
 import {
   type InvokeBackendMethodMessage,
   isRenderAppMessage,
@@ -31,7 +30,6 @@ export default class SandboxIpc {
   /** Register handlers for messages coming from the Host. */
   registerHandlers(
     handlers: Partial<{
-      [MessageType.StateChanged]: (message: StateChangedMessage) => void;
       [MessageType.RenderApp]: (message: RenderAppMessage) => void;
       [MessageType.RespondToBackendMethodInvocation]: (
         message: RespondToBackendMethodInvocationMessage,
@@ -41,9 +39,6 @@ export default class SandboxIpc {
     const handleMessage = ({ data: message, source }: MessageEvent) => {
       if (source !== this.host) {
         return;
-      }
-      if (isStateChangedMessage(message)) {
-        handlers[MessageType.StateChanged]?.(message);
       }
       if (isRenderAppMessage(message) && handlers[MessageType.RenderApp]) {
         handlers[MessageType.RenderApp](message);

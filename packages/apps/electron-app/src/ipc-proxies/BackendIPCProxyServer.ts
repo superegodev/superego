@@ -2,10 +2,7 @@ import type { Backend } from "@superego/backend";
 import { ipcMain } from "electron";
 
 export default class BackendIPCProxyServer {
-  constructor(
-    private backend: Backend,
-    private onAppsChanged: () => Promise<void>,
-  ) {}
+  constructor(private backend: Backend) {}
 
   start() {
     const domainNames: (keyof Backend)[] = [
@@ -31,15 +28,7 @@ export default class BackendIPCProxyServer {
             throw new Error("Untrusted frame");
           }
           const domain = this.backend[domainName] as any;
-          const result = await domain[methodName](...args);
-          if (
-            domainName === "apps" &&
-            !["list", "getState"].includes(methodName) &&
-            result.success
-          ) {
-            await this.onAppsChanged();
-          }
-          return result;
+          return domain[methodName](...args);
         });
       }
     }

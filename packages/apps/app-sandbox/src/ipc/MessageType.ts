@@ -1,5 +1,4 @@
 enum MessageType {
-  StateChanged = "StateChanged",
   // Sent by host:
   RenderApp = "RenderApp",
   RespondToBackendMethodInvocation = "RespondToBackendMethodInvocation",

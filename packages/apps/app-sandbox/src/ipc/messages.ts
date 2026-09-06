@@ -118,14 +118,3 @@ export function isNavigateHostToMessage(
     typeof (message as NavigateHostToMessage).payload?.href === "string"
   );
 }
-
-export type StateChangedMessage = BaseMessage<
-  MessageSender.Host,
-  MessageType.StateChanged,
-  null
->;
-export function isStateChangedMessage(
-  message: unknown,
-): message is StateChangedMessage {
-  return isMessageWith(message, MessageSender.Host, MessageType.StateChanged);
-}

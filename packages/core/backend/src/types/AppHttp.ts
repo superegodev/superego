@@ -1,6 +1,4 @@
 import type { ResultError, ResultPromise } from "@superego/global-types";
-import type AppId from "../ids/AppId.js";
-import type AppVersionId from "../ids/AppVersionId.js";
 
 /** Text is encoded as UTF-8; binary is canonical padded RFC 4648 base64. */
 export type AppHttpBody = { encoding: "utf8" | "base64"; data: string };
@@ -23,20 +21,13 @@ export type AppHttpError = ResultError<
       | "DestinationDenied"
       | "UnsupportedRuntime"
       | "InvalidArguments"
-      | "TransportFailure"
-      | "ObsoleteInstance";
+      | "TransportFailure";
   }
 >;
-/** Used only by the trusted host; tokens and version claims never enter the iframe. */
+/** The trusted host supplies the loaded app's origins, never the iframe. */
 export interface AppHttpRuntime {
-  open(
-    appId: AppId,
-    versionId: AppVersionId,
-  ): ResultPromise<string, AppHttpError>;
   request(
-    instanceId: string,
     request: AppHttpRequest,
+    allowedOrigins: string[],
   ): ResultPromise<AppHttpResponse, AppHttpError>;
-  close(instanceId: string): Promise<void>;
-  onAppsChanged(callback: () => void): () => void;
 }

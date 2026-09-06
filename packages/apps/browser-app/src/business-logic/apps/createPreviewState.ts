@@ -17,7 +17,6 @@ import * as v from "valibot";
 export default function createPreviewState(
   definition: AppStateDefinition | undefined,
   schemaId: AppVersionId,
-  notify: () => void,
 ) {
   let state: AppState | undefined;
   if (
@@ -61,7 +60,6 @@ export default function createPreviewState(
         content: structuredClone(content),
         revision: state.revision + 1,
       };
-      notify();
       return makeSuccessfulResult(structuredClone(state));
     },
   };

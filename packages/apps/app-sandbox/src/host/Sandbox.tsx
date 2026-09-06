@@ -13,7 +13,6 @@ interface Props {
   /** Backend methods exposed to sandboxed apps. */
   backend: HostBackend;
   permissions?: AppPermissions | undefined;
-  subscribeChanges?: ((callback: () => void) => () => void) | undefined;
   navigateTo: (href: string) => void;
   iframeSrc: string;
   appName: string;
@@ -26,7 +25,6 @@ interface Props {
 export default function Sandbox({
   backend,
   permissions,
-  subscribeChanges,
   navigateTo,
   iframeSrc,
   appName,
@@ -91,17 +89,6 @@ export default function Sandbox({
       hostIpcRef.current = null;
     };
   }, []);
-
-  useEffect(
-    () =>
-      subscribeChanges?.(() =>
-        hostIpcRef.current?.send({
-          type: MessageType.StateChanged,
-          payload: null,
-        }),
-      ),
-    [subscribeChanges],
-  );
 
   useEffect(() => {
     if (hostIpcRef.current && sandboxReady) {

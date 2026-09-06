@@ -1,21 +1,25 @@
 import type { AppState } from "@superego/backend";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
 import type { AppStateApiError } from "../business-logic/backend/Backend.js";
 import useBackend from "../business-logic/backend/useBackend.js";
 import newestAppState from "./newestAppState.js";
 
-export default function useAppState<Content = Record<string, unknown>>() {
+interface UseAppState<Content> {
+  data: AppState<Content> | undefined;
+  error: AppStateApiError | null;
+  isLoading: boolean;
+  refetch(): Promise<void>;
+}
+
+export default function useAppState<
+  Content = Record<string, unknown>,
+>(): UseAppState<Content> {
   const backend = useBackend();
   const queryClient = useQueryClient();
-  useEffect(
-    () =>
-      backend.onStateChanged(() => {
-        void queryClient.invalidateQueries({ queryKey: backend.stateQueryKey });
-      }),
-    [backend, queryClient],
-  );
-  return useQuery<AppState<Content>, AppStateApiError>({
+  const { data, error, isLoading, refetch } = useQuery<
+    AppState<Content>,
+    AppStateApiError
+  >({
     queryKey: backend.stateQueryKey,
     queryFn: async () => {
       const result = await backend.getState();
@@ -27,7 +31,14 @@ export default function useAppState<Content = Record<string, unknown>>() {
         result.data,
       ) as AppState<Content>;
     },
-    refetchOnWindowFocus: "always",
     retry: false,
   });
+  return {
+    data,
+    error,
+    isLoading,
+    refetch: async () => {
+      await refetch({ throwOnError: true });
+    },
+  };
 }

@@ -119,11 +119,6 @@ export default class Backend {
   ): ResultPromise<AppHttpResponse, AppHttpApiError> {
     return this.invokeMethod("http", "request", [request]);
   }
-  onStateChanged(callback: () => void) {
-    return this.sandboxIpc.registerHandlers({
-      [MessageType.StateChanged]: callback,
-    });
-  }
 
   private invokeMethod(entity: string, method: string, args: any[]) {
     const invocationId = crypto.randomUUID();

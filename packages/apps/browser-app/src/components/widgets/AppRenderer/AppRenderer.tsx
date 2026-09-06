@@ -16,7 +16,7 @@ import { fromHref, RouteName, toHref } from "@superego/routing";
 import { makeSuccessfulResult } from "@superego/shared-utils";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import useAppInstance from "../../../business-logic/apps/useAppInstance.js";
+import useAppBackend from "../../../business-logic/apps/useAppBackend.js";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
@@ -38,20 +38,7 @@ interface Props {
   preview?: boolean;
 }
 export default function AppRenderer({ app, preview = false }: Props) {
-  const { apps } = useGlobalData();
-  const currentApp = preview
-    ? app
-    : apps.find((candidate) => candidate.id === app.id);
-  return currentApp ? (
-    <AppRendererInstance
-      key={`${currentApp.id}:${currentApp.latestVersion.id}`}
-      app={currentApp}
-      preview={preview}
-    />
-  ) : null;
-}
-function AppRendererInstance({ app, preview = false }: Props) {
-  const instance = useAppInstance(app, preview);
+  const appBackend = useAppBackend(app, preview);
   const intl = useIntl();
   const theme = useTheme();
   const { navigateTo } = useNavigationState();
@@ -65,8 +52,7 @@ function AppRendererInstance({ app, preview = false }: Props) {
   const createNewDocumentVersionMutation = useCreateNewDocumentVersion();
 
   const backend = {
-    state: instance.state,
-    http: instance.http,
+    ...appBackend,
     // Pass these as mutation so the query cache is automatically invalidated.
     documents: {
       create: useCreateDocument().mutate,
@@ -137,10 +123,9 @@ function AppRendererInstance({ app, preview = false }: Props) {
       >
         {(...documentsLists) => (
           <Sandbox
-            key={app.latestVersion.id}
+            key={`${app.id}:${app.latestVersion.id}`}
             backend={backend}
             permissions={preview ? undefined : app.latestVersion.permissions}
-            subscribeChanges={instance.subscribeChanges}
             navigateTo={sandboxNavigateTo}
             iframeSrc={
               import.meta.env["VITE_SANDBOX_URL"] ??

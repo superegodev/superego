@@ -1,6 +1,5 @@
 import type { Collection, LiteCollection } from "@superego/backend";
 import type { Result } from "@superego/global-types";
-import { announceAppChange } from "../apps/appChanges.js";
 import type BackendQuery from "./BackendQuery.js";
 import { makeBackendQueryGetter } from "./BackendQuery.js";
 import type { SuccessfulResultOf } from "./typeUtils.js";
@@ -326,15 +325,11 @@ export const useCreateNewAppVersion = makeUseBackendMutation(
   "apps",
   "createNewVersion",
   () => [["listApps"]],
-  (_queryClient, [appId]) => announceAppChange(appId),
 );
 
-export const useDeleteApp = makeUseBackendMutation(
-  "apps",
-  "delete",
-  () => [["listApps"]],
-  (_queryClient, [appId]) => announceAppChange(appId),
-);
+export const useDeleteApp = makeUseBackendMutation("apps", "delete", () => [
+  ["listApps"],
+]);
 
 /*
  * Packs

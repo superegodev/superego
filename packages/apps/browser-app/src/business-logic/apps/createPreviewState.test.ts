@@ -17,8 +17,8 @@ it("keeps preview stores isolated and never overwrites initial state", async () 
     },
     initialState: { count: 0 },
   };
-  const first = createPreviewState(definition, "AppVersion_first", () => {});
-  const second = createPreviewState(definition, "AppVersion_second", () => {});
+  const first = createPreviewState(definition, "AppVersion_first");
+  const second = createPreviewState(definition, "AppVersion_second");
   // Exercise
   const saved = await first.update(1, { count: 5 });
   const conflict = await first.update(1, { count: 9 });

@@ -99,42 +99,34 @@ export type AppStateApiError =
       name: "AppNotFound" | "ArgumentsNotValid" | "UnexpectedError";
       details: unknown;
     };
-export interface AsyncMutation<Data, Error, Variables> {
-  mutate(variables: Variables): void;
-  mutateAsync(variables: Variables): Promise<Data>;
-  data: Data | undefined;
-  error: Error | null;
-  isIdle: boolean;
-  isPending: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-  reset(): void;
-}
 export declare function useAppState<Content = Record<string, unknown>>(): {
   data: AppState<Content> | undefined;
   error: AppStateApiError | null;
-  isPending: boolean;
   isLoading: boolean;
-  isFetching: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-  refetch(): Promise<unknown>;
+  /** Reload saved state. Rejects with AppStateApiError on failure. */
+  refetch(): Promise<void>;
 };
+/** Returns an update function. Rejects with AppStateApiError on failure. */
 export declare function useUpdateAppState<
-  Content = Record<string, unknown>,
->(): AsyncMutation<
-  AppState<Content>,
-  AppStateApiError,
-  { expectedRevision: number; content: Content }
->;
-/** Requests through Superego. Browser runtimes require CORS support; previews return UnsupportedRuntime. */
-export declare function useHttpRequest(): AsyncMutation<
-  {
-    status: number;
-    headers: [string, string][];
-    body: { encoding: "base64"; data: string };
-    url: string;
-  },
+  Content extends Record<string, unknown> = Record<string, unknown>,
+>(): (update: {
+  expectedRevision: number;
+  content: Content;
+}) => Promise<AppState<Content>>;
+
+export interface AppHttpRequest {
+  url: string;
+  method?: string;
+  headers?: [string, string][];
+  body?: { encoding: "utf8" | "base64"; data: string };
+}
+export interface AppHttpResponse {
+  status: number;
+  headers: [string, string][];
+  body: { encoding: "base64"; data: string };
+  url: string;
+}
+export type AppHttpApiError =
   | AppBridgeError
   | {
       name: "AppHttpError";
@@ -143,14 +135,13 @@ export declare function useHttpRequest(): AsyncMutation<
           | "DestinationDenied"
           | "UnsupportedRuntime"
           | "InvalidArguments"
-          | "TransportFailure"
-          | "ObsoleteInstance";
+          | "TransportFailure";
       };
-    },
-  {
-    url: string;
-    method?: string;
-    headers?: [string, string][];
-    body?: { encoding: "utf8" | "base64"; data: string };
-  }
->;
+    };
+/**
+ * Returns a request function. Rejects with AppHttpApiError on failure.
+ * Browser runtimes require CORS support; previews return UnsupportedRuntime.
+ */
+export declare function useHttpRequest(): (
+  request: AppHttpRequest,
+) => Promise<AppHttpResponse>;
