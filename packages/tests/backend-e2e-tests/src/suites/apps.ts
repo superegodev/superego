@@ -1,16 +1,189 @@
 import {
   type AppDefinition,
+  type AppHttpRequest,
   type App,
   type Backend,
   AppType,
 } from "@superego/backend";
+import type { HttpExecutor } from "@superego/executing-backend";
 import { type Schema, DataType } from "@superego/schema";
-import { Id } from "@superego/shared-utils";
+import {
+  appHttpFailure,
+  makeSuccessfulResult,
+  Id,
+} from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
-import { assert, describe, expect, it } from "vitest";
+import { assert, describe, expect, it, vi } from "vitest";
 import type GetDependencies from "../GetDependencies.js";
 
 export default rd<GetDependencies>("Apps", (deps) => {
+  describe("requestHttp", () => {
+    const origin = "https://example.com";
+    const response = {
+      status: 500,
+      headers: [["Content-Type", "application/octet-stream"]] as [
+        string,
+        string,
+      ][],
+      body: { encoding: "base64" as const, data: "AP+A" },
+      url: `${origin}/service`,
+    };
+
+    it("executes HTTP without a transaction and keeps other usecases transactional", async () => {
+      // Setup mocks
+      const execute = vi
+        .fn<HttpExecutor["execute"]>()
+        .mockResolvedValue(makeSuccessfulResult(response));
+      // Setup SUT
+      const { backend, dataRepositoriesManager } = deps({
+        httpExecutor: { execute },
+      });
+      const transaction = vi.spyOn(
+        dataRepositoriesManager,
+        "runInSerializableTransaction",
+      );
+      const request: AppHttpRequest = {
+        url: `${origin}/service`,
+        method: "post",
+        headers: [["Authorization", "Bearer supplied"]],
+        body: { encoding: "base64", data: "AP+A" },
+      };
+      // Exercise
+      const result = await backend.apps.requestHttp(request, [
+        "https://EXAMPLE.com:443/",
+      ]);
+      // Verify
+      expect(result).toEqual(makeSuccessfulResult(response));
+      expect(execute).toHaveBeenCalledExactlyOnceWith(
+        { ...request, method: "POST" },
+        [origin],
+      );
+      expect(transaction).not.toHaveBeenCalled();
+      // Exercise
+      const apps = await backend.apps.list();
+      // Verify
+      expect(apps.success).toBe(true);
+      expect(transaction).toHaveBeenCalledOnce();
+    });
+
+    it.each([
+      [{ url: "file:///secret" }, [origin]],
+      [{ url: origin, method: "CONNECT" }, [origin]],
+      [{ url: origin, headers: [["Host", "other.example"]] }, [origin]],
+      [{ url: origin, allowedOrigins: [origin] }, []],
+      [
+        { url: origin, body: { encoding: "base64", data: "invalid" } },
+        [origin],
+      ],
+      [{ url: origin }, ["https://*.example.com"]],
+      [{ url: origin }, ["https://example.com/path"]],
+    ])(
+      "validates arguments without opening a transaction: %j, %j",
+      async (request, allowedOrigins) => {
+        // Setup mocks
+        const execute = vi.fn<HttpExecutor["execute"]>();
+        // Setup SUT
+        const { backend, dataRepositoriesManager } = deps({
+          httpExecutor: { execute },
+        });
+        const transaction = vi.spyOn(
+          dataRepositoriesManager,
+          "runInSerializableTransaction",
+        );
+        // Exercise
+        const result = await backend.apps.requestHttp(
+          request as AppHttpRequest,
+          allowedOrigins,
+        );
+        // Verify
+        expect(result.error?.name).toBe("ArgumentsNotValid");
+        expect(execute).not.toHaveBeenCalled();
+        expect(transaction).not.toHaveBeenCalled();
+      },
+    );
+
+    it.each([
+      { allowedOrigins: [] },
+      { allowedOrigins: ["https://example.com:8443"] },
+      { allowedOrigins: ["https://other.example.com"] },
+    ])(
+      "rejects destinations missing from the host's origins: $allowedOrigins",
+      async ({ allowedOrigins }) => {
+        // Setup mocks
+        const execute = vi.fn<HttpExecutor["execute"]>();
+        // Setup SUT
+        const { backend } = deps({ httpExecutor: { execute } });
+        // Exercise
+        const result = await backend.apps.requestHttp(
+          { url: origin },
+          allowedOrigins,
+        );
+        // Verify
+        expect(result).toEqual(appHttpFailure("DestinationDenied"));
+        expect(execute).not.toHaveBeenCalled();
+      },
+    );
+
+    it("validates executor results without a transaction", async () => {
+      // Setup mocks
+      const execute = vi
+        .fn<HttpExecutor["execute"]>()
+        .mockResolvedValue(
+          makeSuccessfulResult({ ...response, status: "invalid" }) as any,
+        );
+      // Setup SUT
+      const { backend, dataRepositoriesManager } = deps({
+        httpExecutor: { execute },
+      });
+      const transaction = vi.spyOn(
+        dataRepositoriesManager,
+        "runInSerializableTransaction",
+      );
+      // Exercise
+      const result = await backend.apps.requestHttp({ url: origin }, [origin]);
+      // Verify
+      expect(result.error).toMatchObject({
+        name: "UnexpectedError",
+        details: { cause: { reason: "ResultValidationFailed" } },
+      });
+      expect(transaction).not.toHaveBeenCalled();
+    });
+
+    it("returns executor policy errors unchanged", async () => {
+      // Setup mocks
+      const execute = vi
+        .fn<HttpExecutor["execute"]>()
+        .mockResolvedValue(appHttpFailure("DestinationDenied"));
+      // Setup SUT
+      const { backend } = deps({ httpExecutor: { execute } });
+      // Exercise
+      const result = await backend.apps.requestHttp({ url: origin }, [origin]);
+      // Verify
+      expect(result).toEqual(appHttpFailure("DestinationDenied"));
+    });
+
+    it("sanitizes executor exceptions and never retries HTTP requests", async () => {
+      // Setup mocks
+      const execute = vi
+        .fn<HttpExecutor["execute"]>()
+        .mockRejectedValue(new Error("SQLITE_BUSY: secret-url?token=secret"));
+      // Setup SUT
+      const { backend, dataRepositoriesManager } = deps({
+        httpExecutor: { execute },
+      });
+      const transaction = vi.spyOn(
+        dataRepositoriesManager,
+        "runInSerializableTransaction",
+      );
+      // Exercise
+      const result = await backend.apps.requestHttp({ url: origin }, [origin]);
+      // Verify
+      expect(result).toEqual(appHttpFailure("TransportFailure"));
+      expect(execute).toHaveBeenCalledOnce();
+      expect(transaction).not.toHaveBeenCalled();
+    });
+  });
+
   describe("create", () => {
     it("error: ArgumentsNotValid", async () => {
       // Setup SUT

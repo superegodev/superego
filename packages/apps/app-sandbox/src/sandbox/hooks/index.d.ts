@@ -128,6 +128,7 @@ export interface AppHttpResponse {
 }
 export type AppHttpApiError =
   | AppBridgeError
+  | { name: "ArgumentsNotValid" | "UnexpectedError"; details: unknown }
   | {
       name: "AppHttpError";
       details: {

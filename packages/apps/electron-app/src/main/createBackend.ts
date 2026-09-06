@@ -1,6 +1,7 @@
 import { join } from "node:path";
 import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
+import { NodejsHttpExecutor } from "@superego/http-executor/nodejs";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
@@ -39,5 +40,6 @@ export default function createBackend() {
     new QuickjsJavascriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
+    new NodejsHttpExecutor(),
   );
 }

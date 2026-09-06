@@ -11,6 +11,7 @@
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
+    "@superego/http-executor": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",

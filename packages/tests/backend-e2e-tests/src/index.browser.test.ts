@@ -55,23 +55,32 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
-  const effectiveGlobalSettings = inferenceSettings
-    ? { ...defaultGlobalSettings, inference: inferenceSettings }
-    : defaultGlobalSettings;
+registerTests(
+  ({ inferenceService, inferenceSettings, config, httpExecutor } = {}) => {
+    const effectiveGlobalSettings = inferenceSettings
+      ? { ...defaultGlobalSettings, inference: inferenceSettings }
+      : defaultGlobalSettings;
 
-  return {
-    backend: new ExecutingBackend(
-      new DemoDataRepositoriesManager(
-        effectiveGlobalSettings,
-        crypto.randomUUID(),
+    const dataRepositoriesManager = new DemoDataRepositoriesManager(
+      effectiveGlobalSettings,
+      crypto.randomUUID(),
+    );
+    return {
+      dataRepositoriesManager,
+      backend: new ExecutingBackend(
+        dataRepositoriesManager,
+        new FakeJavascriptSandbox(),
+        new MonacoTypescriptCompiler(() => import("monaco-editor")),
+        inferenceService
+          ? { create: () => inferenceService }
+          : new MockInferenceServiceFactory(),
+        httpExecutor ?? {
+          execute: async () => {
+            throw new Error("Unexpected HTTP request");
+          },
+        },
+        config,
       ),
-      new FakeJavascriptSandbox(),
-      new MonacoTypescriptCompiler(() => import("monaco-editor")),
-      inferenceService
-        ? { create: () => inferenceService }
-        : new MockInferenceServiceFactory(),
-      config,
-    ),
-  };
-});
+    };
+  },
+);

@@ -4,7 +4,6 @@ export const electronMainWorld: ElectronMainWorld =
   "isElectron" in window && window.isElectron
     ? {
         isElectron: true,
-        appHttp: (window as any).appHttp,
         backend: (window as any).backend,
         cli: (window as any).cli,
         openInNativeBrowser: (window as any).openInNativeBrowser,

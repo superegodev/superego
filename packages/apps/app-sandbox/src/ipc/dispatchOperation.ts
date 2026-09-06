@@ -1,9 +1,4 @@
-import type {
-  Backend,
-  AppHttpRequest,
-  AppHttpResponse,
-  AppHttpError,
-} from "@superego/backend";
+import type { Backend, AppHttpRequest } from "@superego/backend";
 import type { Result, ResultPromise } from "@superego/global-types";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
 
@@ -27,7 +22,7 @@ export interface HostBackend {
     | {
         request: (
           request: AppHttpRequest,
-        ) => ResultPromise<AppHttpResponse, AppHttpError>;
+        ) => ReturnType<Backend["apps"]["requestHttp"]>;
       }
     | undefined;
 }

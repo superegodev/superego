@@ -6,7 +6,6 @@ type ElectronMainWorld =
   | {
       isElectron: true;
       backend: Backend;
-      appHttp: import("@superego/backend").AppHttpRuntime;
       cli: {
         isInstalled(): Promise<boolean>;
         install(): Promise<boolean>;

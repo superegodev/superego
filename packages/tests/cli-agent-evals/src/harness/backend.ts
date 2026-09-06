@@ -1,5 +1,6 @@
 import { AssistantName, type CollectionId, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
+import { NodejsHttpExecutor } from "@superego/http-executor/nodejs";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { DataType, FormatId, type Schema } from "@superego/schema";
@@ -36,6 +37,7 @@ export function createEvalBackend(databaseFile: string): ExecutingBackend {
     new QuickjsJavascriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
+    new NodejsHttpExecutor(),
   );
 }
 

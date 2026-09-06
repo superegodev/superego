@@ -95,8 +95,10 @@ optional opaque body. UTF-8 text uses `{ encoding: "utf8", data: string }`;
 binary uses padded RFC 4648 base64 with `encoding: "base64"`. Responses always
 return base64 bytes, status, header pairs and final URL. The app constructs and
 interprets payloads. The host does not validate JSON or service business fields.
-GET and HEAD cannot have bodies. CONNECT, TRACE, TRACK and routing headers
-(Host, Content-Length, Connection, Transfer-Encoding, proxy/forwarding and Sec-*
+Invalid usecase arguments return `ArgumentsNotValid`; transport and destination
+failures return `AppHttpError`. Both reject the app's request promise. GET and
+HEAD cannot have bodies. CONNECT, TRACE, TRACK and routing headers (Host,
+Content-Length, Connection, Transfer-Encoding, proxy/forwarding and Sec-*
 headers) are controlled or rejected by the executor. App-supplied auth and
 Cookie headers are allowed on desktop; browser fetch applies its own
 forbidden-header rules. Superego never adds browser session credentials. TLS
@@ -149,11 +151,16 @@ preserve schema identity and do not replay earlier migrations. Removing a state
 schema is rejected; deleting the app deletes state.
 
 HTTP requests use the permission configuration loaded with the app. The iframe
-supplies request data only; the host supplies the allowed origins. Desktop uses
-one IPC request to the main process; browser runtimes call fetch. There are no
-HTTP sessions, instance tokens, background app polling or change subscriptions.
-Reload an app to pick up changes made elsewhere. Requests already in progress
-finish normally or time out; app updates do not cancel them.
+supplies request data only; the host supplies the allowed origins and calls
+`backend.apps.requestHttp(request, allowedOrigins)`. The executing backend's
+usecase validates the call and delegates to its injected `HttpExecutor`
+requirement. Browser and Node implementations provide the actual transport;
+desktop calls use the normal backend IPC. The usecase declares
+`static readonly requiresTransaction = false`, so network requests do not open
+database transactions. There are no HTTP sessions, instance tokens, background
+app polling or change subscriptions. Reload an app to pick up changes made
+elsewhere. Requests already in progress finish normally or time out; app updates
+do not cancel them.
 
 State writes update the current iframe's cached state. Other open instances read
 the latest saved state when they reload or explicitly call refetch().

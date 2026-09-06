@@ -5,6 +5,7 @@ import type Config from "../Config.js";
 import type BackgroundJobEntity from "../entities/BackgroundJobEntity.js";
 import type LiveConversationStore from "../LiveConversationStore.js";
 import type DataRepositories from "../requirements/DataRepositories.js";
+import type HttpExecutor from "../requirements/HttpExecutor.js";
 import type InferenceServiceFactory from "../requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "../requirements/TypescriptCompiler.js";
@@ -24,33 +25,43 @@ export default abstract class Usecase<
   ) => ResultPromise<any, any>,
 > {
   constructor(
-    protected repos: DataRepositories,
+    private dataRepositories: DataRepositories | null,
     protected javascriptSandbox: JavascriptSandbox,
     protected typescriptCompiler: TypescriptCompiler,
     protected inferenceServiceFactory: InferenceServiceFactory,
     protected liveConversationStore: LiveConversationStore,
     protected config: Config,
+    protected httpExecutor: HttpExecutor,
   ) {}
+
+  protected get repos(): DataRepositories {
+    if (!this.dataRepositories) {
+      throw new Error("Repository access requires a transaction");
+    }
+    return this.dataRepositories;
+  }
 
   abstract exec(...args: Parameters<Exec>): ReturnType<Exec>;
 
   protected sub<
     SubUsecase extends new (
-      repos: DataRepositories,
+      repos: DataRepositories | null,
       javascriptSandbox: JavascriptSandbox,
       typescriptCompiler: TypescriptCompiler,
       inferenceServiceFactory: InferenceServiceFactory,
       liveConversationStore: LiveConversationStore,
       config: Config,
+      httpExecutor: HttpExecutor,
     ) => Usecase,
   >(UsecaseClass: SubUsecase): InstanceType<SubUsecase> {
     return new UsecaseClass(
-      this.repos,
+      this.dataRepositories,
       this.javascriptSandbox,
       this.typescriptCompiler,
       this.inferenceServiceFactory,
       this.liveConversationStore,
       this.config,
+      this.httpExecutor,
     ) as InstanceType<SubUsecase>;
   }
 

@@ -3,6 +3,7 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { AssistantName, Theme } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
+import { NodejsHttpExecutor } from "@superego/http-executor/nodejs";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 
@@ -43,6 +44,7 @@ export default async function createBackend(): Promise<ExecutingBackend> {
     new QuickjsJavascriptSandbox(),
     new TscTypescriptCompiler(),
     new MultiDriverInferenceServiceFactory(),
+    new NodejsHttpExecutor(),
   );
 }
 

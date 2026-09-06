@@ -151,5 +151,4 @@ export type {
   AppHttpRequest,
   AppHttpResponse,
   AppHttpError,
-  AppHttpRuntime,
 } from "./types/AppHttp.js";

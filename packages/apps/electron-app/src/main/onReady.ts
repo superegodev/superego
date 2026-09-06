@@ -1,5 +1,4 @@
 import type { BrowserWindow } from "electron";
-import AppHttpIPCProxyServer from "../ipc-proxies/AppHttpIPCProxyServer.js";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
 import CliIPCProxyServer from "../ipc-proxies/CliIPCProxyServer.js";
 import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
@@ -14,7 +13,6 @@ import getIntl from "./translations/getIntl.js";
 export default function onReady(): BrowserWindow {
   const intl = getIntl();
   const backend = createBackend();
-  new AppHttpIPCProxyServer().start();
   new BackendIPCProxyServer(backend).start();
   new OpenFileWithNativeAppIPCProxyServer(backend).start();
   new OpenInNativeBrowserIPCProxyServer().start();

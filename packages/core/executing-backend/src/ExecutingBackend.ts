@@ -11,6 +11,7 @@ import makeResultError from "./makers/makeResultError.js";
 import makeValidationIssues from "./makers/makeValidationIssues.js";
 import type DataRepositories from "./requirements/DataRepositories.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
+import type HttpExecutor from "./requirements/HttpExecutor.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
@@ -19,6 +20,7 @@ import AppsCreateNewVersion from "./usecases/apps/CreateNewVersion.js";
 import AppsDelete from "./usecases/apps/Delete.js";
 import AppsGetState from "./usecases/apps/GetState.js";
 import AppsList from "./usecases/apps/List.js";
+import AppsRequestHttp from "./usecases/apps/RequestHttp.js";
 import AppsUpdateName from "./usecases/apps/UpdateName.js";
 import AppsUpdateState from "./usecases/apps/UpdateState.js";
 import AssistantsContinueConversation from "./usecases/assistants/ContinueConversation.js";
@@ -92,6 +94,7 @@ export default class ExecutingBackend implements Backend {
     private javascriptSandbox: JavascriptSandbox,
     private typescriptCompiler: TypescriptCompiler,
     private inferenceServiceFactory: InferenceServiceFactory,
+    private httpExecutor: HttpExecutor,
     config?: Partial<Config>,
   ) {
     this.resolvedConfig = {
@@ -182,6 +185,7 @@ export default class ExecutingBackend implements Backend {
     };
 
     this.apps = {
+      requestHttp: this.makeUsecase(AppsRequestHttp, false),
       getState: this.makeUsecase(AppsGetState, false),
       updateState: this.makeUsecase(AppsUpdateState, false, true),
       create: this.makeUsecase(AppsCreate, true, true),
@@ -222,100 +226,97 @@ export default class ExecutingBackend implements Backend {
       inferenceServiceFactory,
       this.liveConversationStore,
       this.resolvedConfig,
+      this.httpExecutor,
     );
   }
 
   private makeUsecase<Exec extends (...args: any[]) => any>(
-    UsecaseClass: new (
-      repos: DataRepositories,
-      javascriptSandbox: JavascriptSandbox,
-      typescriptCompiler: TypescriptCompiler,
-      inferenceServiceFactory: InferenceServiceFactory,
-      liveConversationStore: LiveConversationStore,
-      config: Config,
-    ) => BackendUsecase<Exec>,
+    UsecaseClass: {
+      new (
+        repos: DataRepositories | null,
+        javascriptSandbox: JavascriptSandbox,
+        typescriptCompiler: TypescriptCompiler,
+        inferenceServiceFactory: InferenceServiceFactory,
+        liveConversationStore: LiveConversationStore,
+        config: Config,
+        httpExecutor: HttpExecutor,
+      ): BackendUsecase<Exec>;
+      readonly requiresTransaction: boolean;
+    },
     triggerBackgroundJobCheck: boolean,
     retryOnConflict = false,
   ): Exec {
-    return (async (...args: any[]) =>
-      this.dataRepositoriesManager
-        .runInSerializableTransaction<Awaited<ReturnType<Exec>>>(
-          async (repos) => {
-            const usecase = new UsecaseClass(
-              repos,
-              this.javascriptSandbox,
-              this.typescriptCompiler,
-              this.inferenceServiceFactory,
-              this.liveConversationStore,
-              this.resolvedConfig,
-            );
-            const argumentsValidationResult = v.safeParse(
-              usecase.argumentsSchema,
-              args,
-            );
-            if (!argumentsValidationResult.success) {
-              return {
-                action: "rollback",
-                returnValue: makeUnsuccessfulResult(
-                  makeResultError("ArgumentsNotValid", {
-                    issues: makeValidationIssues(
-                      argumentsValidationResult.issues,
-                    ),
-                  }),
-                ) as Awaited<ReturnType<Exec>>,
-              };
-            }
-            const result = await usecase.exec(
-              ...argumentsValidationResult.output,
-            );
-            const resultValidationResult = v.safeParse(
-              usecase.resultSchema,
-              result,
-            );
-            if (!resultValidationResult.success) {
-              return {
-                action: "rollback",
-                returnValue: makeUnsuccessfulResult(
-                  makeResultError("UnexpectedError", {
-                    cause: {
-                      reason: "ResultValidationFailed",
-                      issues: makeValidationIssues(
-                        resultValidationResult.issues,
-                      ),
-                    },
-                  }),
-                ) as Awaited<ReturnType<Exec>>,
-              };
-            }
-            return {
-              action: result.success ? "commit" : "rollback",
-              returnValue: result as Awaited<ReturnType<Exec>>,
-            };
-          },
-          { retryOnConflict },
-        )
-        .then((result) => {
-          // We trigger a background job check only _after_ the transaction that
-          // might have created some background jobs has been committed. (Else
-          // the BackgroundJobExecutor wouldn't even see the created background
-          // jobs, since it executes in a separate transaction.)
-          if (triggerBackgroundJobCheck) {
-            // Trigger after the current microtask queue drains.
-            setTimeout(() => {
-              this.backgroundJobExecutor.executeNext().catch((error) => {
-                console.error("Error triggering next background job execution");
-                console.error(error);
-              });
-            }, 0);
-          }
-          return result;
-        })
-        .catch((error) =>
-          makeUnsuccessfulResult(
-            makeResultError("UnexpectedError", {
-              cause: extractErrorDetails(error),
+    return (async (...args: any[]) => {
+      const execute = async (
+        repos: DataRepositories | null,
+      ): Promise<Awaited<ReturnType<Exec>>> => {
+        const usecase = new UsecaseClass(
+          repos,
+          this.javascriptSandbox,
+          this.typescriptCompiler,
+          this.inferenceServiceFactory,
+          this.liveConversationStore,
+          this.resolvedConfig,
+          this.httpExecutor,
+        );
+        const argumentsValidationResult = v.safeParse(
+          usecase.argumentsSchema,
+          args,
+        );
+        if (!argumentsValidationResult.success) {
+          return makeUnsuccessfulResult(
+            makeResultError("ArgumentsNotValid", {
+              issues: makeValidationIssues(argumentsValidationResult.issues),
             }),
-          ),
-        )) as Exec;
+          ) as Awaited<ReturnType<Exec>>;
+        }
+        const result = await usecase.exec(...argumentsValidationResult.output);
+        const resultValidationResult = v.safeParse(
+          usecase.resultSchema,
+          result,
+        );
+        if (!resultValidationResult.success) {
+          return makeUnsuccessfulResult(
+            makeResultError("UnexpectedError", {
+              cause: {
+                reason: "ResultValidationFailed",
+                issues: makeValidationIssues(resultValidationResult.issues),
+              },
+            }),
+          ) as Awaited<ReturnType<Exec>>;
+        }
+        return result as Awaited<ReturnType<Exec>>;
+      };
+      try {
+        const result = UsecaseClass.requiresTransaction
+          ? await this.dataRepositoriesManager.runInSerializableTransaction(
+              async (repos) => {
+                const result = await execute(repos);
+                return {
+                  action: result.success ? "commit" : "rollback",
+                  returnValue: result,
+                };
+              },
+              { retryOnConflict },
+            )
+          : await execute(null);
+        // Check for jobs after committing so their input is visible to the runner.
+        if (triggerBackgroundJobCheck) {
+          setTimeout(() => {
+            this.backgroundJobExecutor.executeNext().catch((error) => {
+              console.error("Error triggering next background job execution");
+              console.error(error);
+            });
+          }, 0);
+        }
+        return result;
+      } catch (error) {
+        return makeUnsuccessfulResult(
+          makeResultError("UnexpectedError", {
+            cause: extractErrorDetails(error),
+          }),
+        );
+      }
+    }) as Exec;
   }
 }

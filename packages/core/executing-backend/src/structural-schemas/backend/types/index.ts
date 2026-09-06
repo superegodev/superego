@@ -1,4 +1,5 @@
 export * from "./app.js";
+export * from "./appHttp.js";
 export * from "./audioContent.js";
 export * from "./backgroundJob.js";
 export * from "./collection.js";

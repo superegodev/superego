@@ -23,8 +23,7 @@
     "build:electron-vite": "electron-vite --outDir=dist build",
     "build:forge": "electron-forge publish --dry-run",
     "build": "yarn build:cli && yarn build:electron-vite && yarn build:forge",
-    "deploy": "electron-forge publish --from-dry-run",
-    "test": "vitest --reporter=verbose"
+    "deploy": "electron-forge publish --from-dry-run"
   },
   "dependencies": {
     "@formatjs/intl": "^4.1.16",
@@ -34,6 +33,7 @@
     "@superego/cli": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
+    "@superego/http-executor": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/routing": "workspace:*",
@@ -44,8 +44,7 @@
     "@typescript/vfs": "^1.6.4",
     "es-toolkit": "^1.49.0",
     "filenamify": "^7.0.2",
-    "typescript": "^6.0.3",
-    "valibot": "^1.4.2"
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "@electron-forge/cli": "^7.11.2",
@@ -60,8 +59,7 @@
     "@reforged/maker-appimage": "^5.2.0",
     "electron": "43.1.1",
     "electron-vite": "6.0.0-beta.1",
-    "vite": "^8.1.4",
-    "vitest": "^4.1.10"
+    "vite": "^8.1.4"
   },
   "productName": "superego"
 }

@@ -35,6 +35,20 @@ export function normalizeHttpOrigin(value: string): string {
   }
   return url.origin;
 }
+export function httpOriginSchema() {
+  return v.pipe(
+    v.string(),
+    v.check((origin) => {
+      try {
+        normalizeHttpOrigin(origin);
+        return true;
+      } catch {
+        return false;
+      }
+    }, "Expected an HTTP(S) origin."),
+    v.transform(normalizeHttpOrigin),
+  );
+}
 export function appPermissionsSchema(): v.GenericSchema<
   AppPermissions,
   AppPermissions
@@ -44,20 +58,7 @@ export function appPermissionsSchema(): v.GenericSchema<
     downloads: v.optional(v.boolean()),
     http: v.optional(
       v.strictObject({
-        allowedOrigins: v.array(
-          v.pipe(
-            v.string(),
-            v.check((origin) => {
-              try {
-                normalizeHttpOrigin(origin);
-                return true;
-              } catch {
-                return false;
-              }
-            }, "Expected an HTTP(S) origin."),
-            v.transform(normalizeHttpOrigin),
-          ),
-        ),
+        allowedOrigins: v.array(httpOriginSchema()),
       }),
     ),
   });

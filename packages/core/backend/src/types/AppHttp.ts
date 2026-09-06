@@ -1,4 +1,4 @@
-import type { ResultError, ResultPromise } from "@superego/global-types";
+import type { ResultError } from "@superego/global-types";
 
 /** Text is encoded as UTF-8; binary is canonical padded RFC 4648 base64. */
 export type AppHttpBody = { encoding: "utf8" | "base64"; data: string };
@@ -24,10 +24,3 @@ export type AppHttpError = ResultError<
       | "TransportFailure";
   }
 >;
-/** The trusted host supplies the loaded app's origins, never the iframe. */
-export interface AppHttpRuntime {
-  request(
-    request: AppHttpRequest,
-    allowedOrigins: string[],
-  ): ResultPromise<AppHttpResponse, AppHttpError>;
-}

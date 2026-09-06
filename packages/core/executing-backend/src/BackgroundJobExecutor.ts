@@ -5,6 +5,7 @@ import type BackgroundJobEntity from "./entities/BackgroundJobEntity.js";
 import type LiveConversationStore from "./LiveConversationStore.js";
 import makeResultError from "./makers/makeResultError.js";
 import type DataRepositoriesManager from "./requirements/DataRepositoriesManager.js";
+import type HttpExecutor from "./requirements/HttpExecutor.js";
 import type InferenceServiceFactory from "./requirements/InferenceServiceFactory.js";
 import type JavascriptSandbox from "./requirements/JavascriptSandbox.js";
 import type TypescriptCompiler from "./requirements/TypescriptCompiler.js";
@@ -18,6 +19,7 @@ export default class BackgroundJobExecutor {
     private inferenceServiceFactory: InferenceServiceFactory,
     private liveConversationStore: LiveConversationStore,
     private config: Config,
+    private httpExecutor: HttpExecutor,
   ) {}
 
   async executeNext(): Promise<void> {
@@ -39,6 +41,7 @@ export default class BackgroundJobExecutor {
           this.inferenceServiceFactory,
           this.liveConversationStore,
           this.config,
+          this.httpExecutor,
         );
 
         const beforeExecSavepoint = await repos.createSavepoint();

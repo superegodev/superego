@@ -2,9 +2,7 @@ import type { App, AppHttpRequest } from "@superego/backend";
 import { appHttpFailure } from "@superego/shared-utils";
 import { useMemo } from "react";
 import useBackend from "../backend/useBackend.js";
-import { electronMainWorld } from "../electron/electron.js";
 import createPreviewState from "./createPreviewState.js";
-import executeBrowserHttpRequest from "./executeBrowserHttpRequest.js";
 
 export default function useAppBackend(app: App, preview: boolean) {
   const backend = useBackend();
@@ -41,9 +39,7 @@ export default function useAppBackend(app: App, preview: boolean) {
         }
         const allowedOrigins =
           app.latestVersion.permissions?.http?.allowedOrigins ?? [];
-        return electronMainWorld.isElectron
-          ? electronMainWorld.appHttp.request(request, allowedOrigins)
-          : executeBrowserHttpRequest(request, allowedOrigins);
+        return backend.apps.requestHttp(request, allowedOrigins);
       },
     },
   };

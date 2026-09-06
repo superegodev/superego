@@ -23,6 +23,7 @@ export { default as validateInferenceOptions } from "./validators/validateInfere
 export {
   normalizeHttpOrigin,
   appPermissionsSchema,
+  httpOriginSchema,
   appStateSchema,
   isJsonValue,
   appStateFailure,

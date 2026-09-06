@@ -1,14 +1,15 @@
-/// <reference types="vite/client" />
-import "urlpattern-polyfill";
 import {
   AssistantName,
   InferenceProviderDriver,
   ReasoningEffort,
   Theme,
 } from "@superego/backend";
+import "urlpattern-polyfill";
 import { renderBrowserApp } from "@superego/browser-app";
 import { DemoDataRepositoriesManager } from "@superego/demo-data-repositories";
 import { ExecutingBackend } from "@superego/executing-backend";
+/// <reference types="vite/client" />
+import { BrowserHttpExecutor } from "@superego/http-executor/browser";
 import { MonacoTypescriptCompiler } from "@superego/monaco-typescript-compiler";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/browser";
@@ -90,6 +91,7 @@ const backend = new ExecutingBackend(
     async () => (await import("@superego/browser-app/monaco")).default,
   ),
   new MultiDriverInferenceServiceFactory(),
+  new BrowserHttpExecutor(),
 );
 
 const queryClient = new QueryClient({

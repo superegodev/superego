@@ -36,7 +36,11 @@ export type AppStateApiError =
   | ArgumentsNotValid
   | UnexpectedError
   | AppBridgeError;
-export type AppHttpApiError = AppHttpError | AppBridgeError;
+export type AppHttpApiError =
+  | AppHttpError
+  | AppBridgeError
+  | ArgumentsNotValid
+  | UnexpectedError;
 
 export default class Backend {
   constructor(private sandboxIpc: SandboxIpc) {
