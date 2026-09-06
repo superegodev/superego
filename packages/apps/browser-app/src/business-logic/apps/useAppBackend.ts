@@ -1,5 +1,4 @@
-import type { App, AppHttpRequest } from "@superego/backend";
-import { appHttpFailure } from "@superego/shared-utils";
+import type { App } from "@superego/backend";
 import { useMemo } from "react";
 import useBackend from "../backend/useBackend.js";
 import createPreviewState from "./createPreviewState.js";
@@ -32,15 +31,5 @@ export default function useAppBackend(app: App, preview: boolean) {
               content,
             ),
         },
-    http: {
-      request: async (request: AppHttpRequest) => {
-        if (preview) {
-          return appHttpFailure("UnsupportedRuntime");
-        }
-        const allowedOrigins =
-          app.latestVersion.permissions?.http?.allowedOrigins ?? [];
-        return backend.apps.requestHttp(request, allowedOrigins);
-      },
-    },
   };
 }

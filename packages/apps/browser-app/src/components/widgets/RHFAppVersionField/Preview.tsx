@@ -48,7 +48,7 @@ export default function Preview({
       )}
     >
       <p>
-        <FormattedMessage defaultMessage="Preview state is temporary. Browser dialogs, printing, downloads, and host HTTP requests are disabled here. Run the saved app to test permissions. Existing direct browser networking policies still apply." />
+        <FormattedMessage defaultMessage="Preview state is temporary. Browser dialogs, printing, and downloads are disabled, and no HTTP destinations are added. Run the saved app to test permissions." />
       </p>
       {app ? (
         <AppRenderer

@@ -31,29 +31,23 @@ app. An app definition outside the CLI embeds
 permissions object.
 
 Missing permissions are restrictive. The modals capability permits printing,
-alert, confirm, prompt and the other browser modal dialogs; downloads enables
-file downloads. Destinations are exact normalized HTTP(S) origins. No wildcard,
-subdomain, path or alternate-port permission is implied. On desktop, hostnames
-authorize public resolved addresses only. For private or loopback services use
-an explicit IP origin. A service URL stored in app state does **not** authorize
-that service.
+alert, confirm, prompt and other browser modal dialogs; downloads enables file
+downloads. HTTP destinations are normalized HTTP(S) origins without credentials,
+paths, queries or wildcards. A service URL stored in app state does **not**
+authorize that service.
+
+Use native `fetch()` inside the app, including at module initialization:
 
 ```tsx
-import {
-  useAppState,
-  useUpdateAppState,
-  useHttpRequest,
-} from "@superego/app-sandbox/hooks";
+import { useAppState, useUpdateAppState } from "@superego/app-sandbox/hooks";
 import type { State } from "./app-state.js";
 
 // Inside your component. Suppose State has a serviceUrl string property.
 const state = useAppState<State>();
 const updateState = useUpdateAppState<State>();
-const request = useHttpRequest();
 
 // State exposes data, isLoading, error and refetch().
-// updateState and request are async functions; handle errors with try/catch.
-// Keep any saving/request loading indicators in component state.
+// Handle async errors with try/catch and keep loading indicators in component state.
 async function save(nextState: State) {
   if (!state.data) {
     return;
@@ -67,71 +61,65 @@ async function send() {
   if (!state.data) {
     return;
   }
-  const response = await request({
-    url: state.data.content.serviceUrl,
+  const response = await fetch(state.data.content.serviceUrl, {
     method: "POST",
-    headers: [
-      ["Content-Type", "text/plain"],
-      ["Authorization", "Bearer app-supplied-token"],
-    ],
-    body: { encoding: "utf8", data: "Any opaque service payload" },
+    headers: {
+      "Content-Type": "text/plain",
+      Authorization: "Bearer app-supplied-token",
+    },
+    body: "Any opaque service payload",
   });
-  // Includes 4xx and 5xx responses; transport/permission errors reject instead.
-  const bytes = Uint8Array.from(atob(response.body.data), (character) =>
-    character.charCodeAt(0),
-  );
-  const text = new TextDecoder().decode(bytes);
+  // fetch resolves for HTTP errors too. Check response.ok when appropriate.
   return {
     status: response.status,
     headers: response.headers,
     url: response.url,
-    text,
+    text: await response.text(),
   };
 }
 ```
 
-The host API accepts URL, optional method (GET by default), header pairs and an
-optional opaque body. UTF-8 text uses `{ encoding: "utf8", data: string }`;
-binary uses padded RFC 4648 base64 with `encoding: "base64"`. Responses always
-return base64 bytes, status, header pairs and final URL. The app constructs and
-interprets payloads. The host does not validate JSON or service business fields.
-Invalid usecase arguments return `ArgumentsNotValid`; transport and destination
-failures return `AppHttpError`. Both reject the app's request promise. GET and
-HEAD cannot have bodies. CONNECT, TRACE, TRACK and routing headers (Host,
-Content-Length, Connection, Transfer-Encoding, proxy/forwarding and Sec-*
-headers) are controlled or rejected by the executor. App-supplied auth and
-Cookie headers are allowed on desktop; browser fetch applies its own
-forbidden-header rules. Superego never adds browser session credentials. TLS
-certificate verification remains enabled. No cookie jar is maintained.
+The host sends validated allowed origins in the existing `RenderApp` message.
+Each iframe loads the same sandbox HTML and bootstrap in its own document. The
+bootstrap appends a `Content-Security-Policy` meta element to `document.head`
+before importing app code, so `connect-src` also applies to module
+initialization. It installs the policy once per document. Removing or changing
+the meta element cannot loosen the processed policy; additional policies can
+only tighten it. Saving a new version remounts the iframe and installs the new
+permissions.
 
-The desktop main process checks DNS and pins each connection, checks every
-redirect, limits redirects to five and drops **all** app headers on an origin
-change. A 303 changes non-HEAD requests to GET; 301/302 change POST to GET;
-307/308 preserve method and body. New destinations must also be allowed.
-Requests have a 30-second deadline and request/response bodies are limited to 16
-MiB. The raw response is not automatically decompressed; request identity
-encoding or decode content encodings in the app. Errors expose typed reasons
-without including credentials, query values, bodies or headers in diagnostics.
+The policy preserves sandbox resources (`'self'`, `data:`, `blob:` and
+`https://tiles.openfreemap.org` for the built-in map), then adds the configured
+origins. Native CSP source matching applies, including HTTP-to-HTTPS upgrades;
+redirect destinations must also pass CSP. `connect-src` governs fetch, XHR and
+other connection APIs, not all resource types such as images or navigation.
+These permissions are not complete network isolation.
 
-Browser and demo runtimes execute the same API using browser fetch, with the
-loaded app's configured destination origins supplied by the host. Requests omit
-browser credentials and referrers. CORS still applies: configure the destination
-to allow the Superego origin, or configure a CORS browser extension. Browser
-transport failures (including CORS) return `TransportFailure` without sensitive
-request details. Response headers are limited to those exposed by the browser,
-and the browser decodes content encodings automatically.
+On Electron, the static sandbox CSP permits HTTP(S) connections so it does not
+veto the per-document policy. `session.webRequest` adjusts CORS response headers
+only for fetch/XHR requests attributed to a direct app iframe of the trusted
+host document. Chromium enforces that iframe's CSP before issuing the request or
+its OPTIONS preflight; no separate destination registry is needed. Host,
+unrelated frame and unattributed requests retain normal CORS. Preflights receive
+a successful status and the requested method and headers, including
+Authorization. Actual HTTP response statuses and bodies remain unchanged. A
+server still needs to answer OPTIONS: DNS, TLS and connection failures cannot be
+fixed with headers. `webSecurity`, context isolation and renderer sandboxing
+remain enabled.
 
-Browser fetch cannot expose or pin the resolved IP address, so desktop DNS and
-private-address enforcement cannot be reproduced in the browser. Browser local
-network, mixed-content, TLS and extension policies remain in effect. Browser
-redirects are rejected because their destinations cannot be inspected before
-forwarding. Use a service's final URL. The same 30-second and 16 MiB limits
+Browser and demo runtimes retain ordinary fetch/CORS behavior. Configure the
+service to allow the sandbox origin, or configure a CORS browser extension when
+needed. Only response headers exposed by CORS are readable in browsers. An
+extension that adjusts CORS does not grant a destination absent from CSP.
+
+Fetch controls request bodies, response streaming/decoding, redirects, forbidden
+headers and credentials in both runtimes. It defaults to same-origin
+credentials; use `credentials: "include"` when a permitted service requires
+cookies, subject to browser cookie rules. Superego adds no service credentials.
+Use AbortController or `AbortSignal.timeout()` for deadlines. There is no
+Superego body-size limit, DNS/IP pinning, private-address restriction or HTTP
+backend transaction. TLS, mixed-content and local-network browser policies still
 apply.
-
-Previews disable this API with `UnsupportedRuntime`. Allowed destinations govern
-requests through Superego; direct browser fetches and resource loads retain
-existing networking/CORS policies. These permissions do not provide complete
-network isolation.
 
 State is shared by all instances of an app and survives reopen and code updates.
 Writes replace the full schema-valid object and require its revision. Conflicts
@@ -150,23 +138,35 @@ contexts and advance the state revision and schema identity. Code-only versions
 preserve schema identity and do not replay earlier migrations. Removing a state
 schema is rejected; deleting the app deletes state.
 
-HTTP requests use the permission configuration loaded with the app. The iframe
-supplies request data only; the host supplies the allowed origins and calls
-`backend.apps.requestHttp(request, allowedOrigins)`. The executing backend's
-usecase validates the call and delegates to its injected `HttpExecutor`
-requirement. Browser and Node implementations provide the actual transport;
-desktop calls use the normal backend IPC. The usecase declares
-`static readonly requiresTransaction = false`, so network requests do not open
-database transactions. There are no HTTP sessions, instance tokens, background
-app polling or change subscriptions. Reload an app to pick up changes made
-elsewhere. Requests already in progress finish normally or time out; app updates
-do not cancel them.
+Permissions use the app version loaded by the host. Reload an app to pick up
+changes made elsewhere. There are no HTTP sessions, instance tokens, lifecycle
+monitors or polling.
 
 State writes update the current iframe's cached state. Other open instances read
 the latest saved state when they reload or explicitly call refetch().
 
 Previews use separate ephemeral state initialized from the preview definition.
 Migration trials run on preview initial content, never on saved content.
-Previews keep baseline sandbox permissions and disable host HTTP. Test printing,
-downloads and allowed destinations by running the saved app version. Existing
-direct browser networking policies still apply in previews.
+Previews keep baseline sandbox permissions and add no HTTP destinations. Test
+printing, downloads and allowed destinations by running the saved app version.
+
+## Electron verification
+
+Verified with the built shared sandbox on Electron 43.1.1 / Chromium
+150.0.7871.114, with `webSecurity`, context isolation and sandboxing enabled:
+
+- OPTIONS and PATCH both have the correct `details.frame` in
+  `onBeforeSendHeaders` and `onHeadersReceived`. Frame identity remains stable
+  across these callbacks, and the host request is attributed to the main frame.
+- A 405 OPTIONS response is rewritten to 200 with the requested method and
+  Authorization, Content-Type and custom headers. The subsequent fetch with
+  credentials returns the original 500 status, body and readable service header.
+- Two iframes loading the same HTML enforce different origin lists before app
+  module initialization. Disallowed requests and redirect targets never reach
+  the destination server.
+- Changing/removing the meta elements and sending a later RenderApp cannot
+  loosen a policy. A second policy tightens only its own document; recreating
+  the iframe installs the new permissions. The app has no preload backend API.
+
+The implementation uses Electron's documented
+[WebRequest frame attribution and response-header/status interception](https://www.electronjs.org/docs/latest/api/web-request).

@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 import {
   appPermissionsSchema,
   appStateSchema,
-  appHttpRequestSchema,
   normalizeHttpOrigin,
   isJsonValue,
 } from "./appCapabilities.js";
@@ -31,6 +30,11 @@ describe("app capabilities", () => {
     "https://example.com?token=secret",
     "https://user:pass@example.com",
     "https://example.com/#fragment",
+    "https://example.com;connect-src",
+    "https://example.com; connect-src *",
+    "https://example.com%3Bconnect-src",
+    "https://exam\tple.com",
+    "https://example.com\n",
   ])("rejects %s", (origin) => {
     // Exercise
     const result = v.safeParse(appPermissionsSchema(), {
@@ -45,51 +49,6 @@ describe("app capabilities", () => {
     const invalid = v.safeParse(appPermissionsSchema(), { scripts: true });
     // Verify
     expect(valid).toEqual({});
-    expect(invalid.success).toBe(false);
-  });
-  it.each(["not JSON at all", "{ invalid business: fields }", "hello=world"])(
-    "accepts opaque text %s",
-    (data) => {
-      // Exercise
-      const result = v.safeParse(appHttpRequestSchema(), {
-        url: "https://example.com",
-        method: "POST",
-        headers: [["Authorization", "Bearer app-token"]],
-        body: { encoding: "utf8", data },
-      });
-      // Verify
-      expect(result.success).toBe(true);
-    },
-  );
-  it.each([
-    "Host",
-    "Content-Length",
-    "Connection",
-    "Proxy-Authorization",
-    "Transfer-Encoding",
-  ])("rejects routing header %s", (name) => {
-    // Exercise
-    const result = v.safeParse(appHttpRequestSchema(), {
-      url: "https://example.com",
-      headers: [[name, "value"]],
-    });
-    // Verify
-    expect(result.success).toBe(false);
-  });
-  it("validates binary representation without inspecting the body", () => {
-    // Exercise
-    const valid = v.safeParse(appHttpRequestSchema(), {
-      url: "https://example.com",
-      method: "PUT",
-      body: { encoding: "base64", data: "AP+A" },
-    });
-    const invalid = v.safeParse(appHttpRequestSchema(), {
-      url: "https://example.com",
-      method: "PUT",
-      body: { encoding: "base64", data: "??" },
-    });
-    // Verify
-    expect(valid.success).toBe(true);
     expect(invalid.success).toBe(false);
   });
   it("rejects cyclic and non-JSON state", () => {
@@ -107,20 +66,6 @@ describe("app capabilities", () => {
     expect(results).toEqual([false, false, false, false]);
   });
 });
-
-it.each(["AB==", "AAF=", "YQ", "YQ==\n"])(
-  "rejects noncanonical base64 %s",
-  (data) => {
-    // Exercise
-    const result = v.safeParse(appHttpRequestSchema(), {
-      url: "https://example.com",
-      method: "POST",
-      body: { encoding: "base64", data },
-    });
-    // Verify
-    expect(result.success).toBe(false);
-  },
-);
 
 it.each([DataType.File, DataType.DocumentRef])(
   "rejects %s in nested, referenced state types",

@@ -41,7 +41,7 @@ export function getInitialMainSource(collections: TargetCollection[]): string {
   return [
     "// Permissions are edited in app.json or the app editor, then saved as a new version.",
     "// Declare state source files to use useAppState/useUpdateAppState; app-state.ts is generated.",
-    "// useHttpRequest requires an allowed destination. A URL in state grants no permission.",
+    "// fetch() requires an allowed destination. A URL in state grants no permission.",
     "// See .agents/skills/writing-superego-apps/SKILL.md for the full flow and preview limits.",
     'import React from "react";',
     'import { DefaultApp } from "@superego/app-sandbox/components";',

@@ -1667,14 +1667,14 @@
   "PermissionsModal.tsx_5g9TrD": {
     "defaultMessage": "Consenti finestre di dialogo del browser e stampa"
   },
-  "PermissionsModal.tsx_BfEtYQ": {
-    "defaultMessage": "Queste destinazioni si applicano alle richieste tramite Superego. Le richieste dirette del browser e il caricamento delle risorse non sono controllati da questo elenco."
+  "PermissionsModal.tsx_mJRnEG": {
+    "defaultMessage": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
   },
-  "PermissionsModal.tsx_DXYQgJ": {
-    "defaultMessage": "Consenti richieste HTTP tramite Superego verso queste destinazioni:"
+  "PermissionsModal.tsx_JV06rg": {
+    "defaultMessage": "Consenti richieste HTTP verso queste destinazioni:"
   },
-  "PermissionsModal.tsx_FDxP0D": {
-    "defaultMessage": "Usa origini HTTP(S) esatte, senza percorso. Per i servizi locali, usa un indirizzo IP e una porta. Un URL di servizio salvato nello stato non concede l’accesso."
+  "PermissionsModal.tsx_HQU5ER": {
+    "defaultMessage": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
   },
   "PermissionsModal.tsx_JXdbo8": {
     "defaultMessage": "Fatto"
@@ -1712,8 +1712,8 @@
   "PersistentStateModal.tsx_P3pJ2z": {
     "defaultMessage": "Le modifiche alla definizione dello stato vengono applicate quando salvi la versione dell’app."
   },
-  "Preview.tsx_j2J7L3": {
-    "defaultMessage": "Lo stato dell'anteprima è temporaneo. Finestre di dialogo, stampa, download e richieste HTTP dell'host sono disabilitati qui. Esegui l'app salvata per verificare i permessi. Le politiche esistenti per la rete diretta del browser restano valide."
+  "Preview.tsx_xLZaIs": {
+    "defaultMessage": "Lo stato dell’anteprima è temporaneo. Le finestre di dialogo del browser, la stampa e i download sono disabilitati e non vengono aggiunte destinazioni HTTP. Esegui l’app salvata per provare i permessi."
   },
   "StateDefinitionFields.tsx_3bEK6S": {
     "defaultMessage": "Lo stato iniziale viene usato solo alla prima creazione dello stato. Lo stato già salvato viene conservato. I tipi File e DocumentRef non sono supportati."

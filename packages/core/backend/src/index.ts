@@ -146,9 +146,3 @@ export type { default as AppPermissions } from "./types/AppPermissions.js";
 export type { default as AppStateDefinition } from "./types/AppStateDefinition.js";
 export type { default as AppState } from "./types/AppState.js";
 export type { default as AppStateError } from "./errors/AppStateError.js";
-export type {
-  AppHttpBody,
-  AppHttpRequest,
-  AppHttpResponse,
-  AppHttpError,
-} from "./types/AppHttp.js";

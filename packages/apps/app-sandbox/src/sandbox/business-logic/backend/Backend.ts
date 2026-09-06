@@ -3,9 +3,6 @@ import type {
   AppStateError,
   AppNotFound,
   ArgumentsNotValid,
-  AppHttpRequest,
-  AppHttpResponse,
-  AppHttpError,
 } from "@superego/backend";
 import type {
   CollectionId,
@@ -36,11 +33,6 @@ export type AppStateApiError =
   | ArgumentsNotValid
   | UnexpectedError
   | AppBridgeError;
-export type AppHttpApiError =
-  | AppHttpError
-  | AppBridgeError
-  | ArgumentsNotValid
-  | UnexpectedError;
 
 export default class Backend {
   constructor(private sandboxIpc: SandboxIpc) {
@@ -117,11 +109,6 @@ export default class Backend {
     content: Record<string, unknown>,
   ): ResultPromise<AppState, AppStateApiError> {
     return this.invokeMethod("state", "update", [expectedRevision, content]);
-  }
-  requestHttp(
-    request: AppHttpRequest,
-  ): ResultPromise<AppHttpResponse, AppHttpApiError> {
-    return this.invokeMethod("http", "request", [request]);
   }
 
   private invokeMethod(entity: string, method: string, args: any[]) {

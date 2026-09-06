@@ -1,4 +1,5 @@
 import type { AppPermissions } from "@superego/backend";
+import { normalizeHttpOrigin } from "@superego/shared-utils";
 import { useEffect, useRef, useState } from "react";
 import dispatchOperation, {
   type HostBackend,
@@ -94,10 +95,18 @@ export default function Sandbox({
     if (hostIpcRef.current && sandboxReady) {
       hostIpcRef.current.send({
         type: MessageType.RenderApp,
-        payload: { appCode, appProps, settings, intlMessages },
+        payload: {
+          appCode,
+          appProps,
+          settings,
+          intlMessages,
+          allowedOrigins: (permissions?.http?.allowedOrigins ?? []).map(
+            normalizeHttpOrigin,
+          ),
+        },
       });
     }
-  }, [sandboxReady, appCode, appProps, settings, intlMessages]);
+  }, [sandboxReady, appCode, appProps, settings, intlMessages, permissions]);
 
   return (
     <iframe

@@ -6,6 +6,7 @@ import type AppComponentProps from "../../types/AppComponentProps.js";
 import type IntlMessages from "../../types/IntlMessages.js";
 import type Settings from "../../types/Settings.js";
 import importApp from "./importApp.js";
+import installConnectSrcPolicy from "./installConnectSrcPolicy.js";
 
 type AppRenderingParams =
   | {
@@ -34,11 +35,18 @@ export default function useAppRenderingParams(
     () =>
       sandboxIpc.registerHandlers({
         [MessageType.RenderApp]: async ({
-          payload: { appCode, appProps, settings, intlMessages },
+          payload: {
+            appCode,
+            appProps,
+            settings,
+            intlMessages,
+            allowedOrigins,
+          },
         }) => {
           const importId = crypto.randomUUID();
           latestImportIdRef.current = importId;
           try {
+            installConnectSrcPolicy(document, allowedOrigins);
             const App = await importApp(appCode);
             if (latestImportIdRef.current === importId) {
               setLatestAppRenderingParams({

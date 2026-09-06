@@ -1,4 +1,4 @@
-import type { Backend, AppHttpRequest } from "@superego/backend";
+import type { Backend } from "@superego/backend";
 import type { Result, ResultPromise } from "@superego/global-types";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
 
@@ -16,13 +16,6 @@ export interface HostBackend {
           expectedRevision: number,
           content: Record<string, unknown>,
         ) => ReturnType<Backend["apps"]["updateState"]>;
-      }
-    | undefined;
-  http?:
-    | {
-        request: (
-          request: AppHttpRequest,
-        ) => ReturnType<Backend["apps"]["requestHttp"]>;
       }
     | undefined;
 }
@@ -99,11 +92,6 @@ export default async function dispatchOperation(
           args[0] as number,
           args[1] as Record<string, unknown>,
         );
-      }
-      break;
-    case "http.request":
-      if (args.length === 1 && objectAt(0) && backend.http) {
-        return backend.http.request(args[0] as AppHttpRequest);
       }
       break;
   }

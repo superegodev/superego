@@ -6,7 +6,7 @@ describe("app bridge dispatch", () => {
     ["apps", "createNewVersion"],
     ["state", "constructor"],
     ["__proto__", "toString"],
-    ["http", "constructor"],
+    ["http", "request"],
   ])("rejects %s.%s", async (entity, method) => {
     // Setup SUT
     const backend = {} as HostBackend;
@@ -31,18 +31,5 @@ describe("app bridge dispatch", () => {
     ).toBe(true);
     expect(get).not.toHaveBeenCalled();
     expect(update).not.toHaveBeenCalled();
-  });
-  it("rejects HTTP permission arguments supplied by the iframe", async () => {
-    // Setup mocks
-    const request = vi.fn();
-    const backend = { http: { request } } as unknown as HostBackend;
-    // Exercise
-    const result = await dispatchOperation(backend, "http", "request", [
-      { url: "https://example.com" },
-      ["https://example.com"],
-    ]);
-    // Verify
-    expect(result.error?.name).toBe("AppBridgeError");
-    expect(request).not.toHaveBeenCalled();
   });
 });

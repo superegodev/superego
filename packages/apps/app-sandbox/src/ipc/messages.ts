@@ -28,6 +28,7 @@ export type RenderAppMessage = BaseMessage<
     appProps: AppComponentProps;
     settings: Settings;
     intlMessages: IntlMessages;
+    allowedOrigins: string[];
   }
 >;
 export function isRenderAppMessage(

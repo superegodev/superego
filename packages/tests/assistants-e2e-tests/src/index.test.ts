@@ -9,7 +9,6 @@ import {
   Theme,
 } from "@superego/backend";
 import { ExecutingBackend } from "@superego/executing-backend";
-import { NodejsHttpExecutor } from "@superego/http-executor/nodejs";
 import { MultiDriverInferenceServiceFactory } from "@superego/multi-driver-inference-service";
 import { QuickjsJavascriptSandbox } from "@superego/quickjs-javascript-sandbox/nodejs";
 import { SqliteDataRepositoriesManager } from "@superego/sqlite-data-repositories";
@@ -142,7 +141,6 @@ describe.concurrent.each(assistantsModels)(
         javascriptSandbox,
         typescriptCompiler,
         inferenceServiceFactory,
-        new NodejsHttpExecutor(),
       );
 
       const inferenceOptions = {

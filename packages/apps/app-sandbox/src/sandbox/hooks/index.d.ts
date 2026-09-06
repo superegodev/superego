@@ -113,36 +113,3 @@ export declare function useUpdateAppState<
   expectedRevision: number;
   content: Content;
 }) => Promise<AppState<Content>>;
-
-export interface AppHttpRequest {
-  url: string;
-  method?: string;
-  headers?: [string, string][];
-  body?: { encoding: "utf8" | "base64"; data: string };
-}
-export interface AppHttpResponse {
-  status: number;
-  headers: [string, string][];
-  body: { encoding: "base64"; data: string };
-  url: string;
-}
-export type AppHttpApiError =
-  | AppBridgeError
-  | { name: "ArgumentsNotValid" | "UnexpectedError"; details: unknown }
-  | {
-      name: "AppHttpError";
-      details: {
-        reason:
-          | "DestinationDenied"
-          | "UnsupportedRuntime"
-          | "InvalidArguments"
-          | "TransportFailure";
-      };
-    };
-/**
- * Returns a request function. Rejects with AppHttpApiError on failure.
- * Browser runtimes require CORS support; previews return UnsupportedRuntime.
- */
-export declare function useHttpRequest(): (
-  request: AppHttpRequest,
-) => Promise<AppHttpResponse>;

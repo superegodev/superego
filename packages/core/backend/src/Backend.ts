@@ -62,11 +62,6 @@ import type FileId from "./ids/FileId.js";
 import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
 import type AppDefinition from "./types/AppDefinition.js";
-import type {
-  AppHttpError,
-  AppHttpRequest,
-  AppHttpResponse,
-} from "./types/AppHttp.js";
 import type AppPermissions from "./types/AppPermissions.js";
 import type AppState from "./types/AppState.js";
 import type AppStateDefinition from "./types/AppStateDefinition.js";
@@ -559,15 +554,6 @@ export default interface Backend {
   };
 
   apps: {
-    /** The trusted host supplies the loaded app's destinations; no database transaction is used. */
-    requestHttp(
-      request: AppHttpRequest,
-      allowedOrigins: string[],
-    ): ResultPromise<
-      AppHttpResponse,
-      AppHttpError | ArgumentsNotValid | UnexpectedError
-    >;
-
     create(
       definition: AppDefinition,
     ): ResultPromise<

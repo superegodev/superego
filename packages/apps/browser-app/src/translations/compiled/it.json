@@ -2768,22 +2768,16 @@
       "value": "Consenti finestre di dialogo del browser e stampa"
     }
   ],
-  "PermissionsModal.tsx_BfEtYQ": [
+  "PermissionsModal.tsx_HQU5ER": [
     {
       "type": 0,
-      "value": "Queste destinazioni si applicano alle richieste tramite Superego. Le richieste dirette del browser e il caricamento delle risorse non sono controllati da questo elenco."
+      "value": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
     }
   ],
-  "PermissionsModal.tsx_DXYQgJ": [
+  "PermissionsModal.tsx_JV06rg": [
     {
       "type": 0,
-      "value": "Consenti richieste HTTP tramite Superego verso queste destinazioni:"
-    }
-  ],
-  "PermissionsModal.tsx_FDxP0D": [
-    {
-      "type": 0,
-      "value": "Usa origini HTTP(S) esatte, senza percorso. Per i servizi locali, usa un indirizzo IP e una porta. Un URL di servizio salvato nello stato non concede l’accesso."
+      "value": "Consenti richieste HTTP verso queste destinazioni:"
     }
   ],
   "PermissionsModal.tsx_JXdbo8": [
@@ -2814,6 +2808,12 @@
     {
       "type": 0,
       "value": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+    }
+  ],
+  "PermissionsModal.tsx_mJRnEG": [
+    {
+      "type": 0,
+      "value": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
     }
   ],
   "PermissionsModal.tsx_t+/rfR": [
@@ -2864,10 +2864,10 @@
       "value": "Compilazione dell'app non riuscita."
     }
   ],
-  "Preview.tsx_j2J7L3": [
+  "Preview.tsx_xLZaIs": [
     {
       "type": 0,
-      "value": "Lo stato dell'anteprima è temporaneo. Finestre di dialogo, stampa, download e richieste HTTP dell'host sono disabilitati qui. Esegui l'app salvata per verificare i permessi. Le politiche esistenti per la rete diretta del browser restano valide."
+      "value": "Lo stato dell’anteprima è temporaneo. Le finestre di dialogo del browser, la stampa e i download sono disabilitati e non vengono aggiunte destinazioni HTTP. Esegui l’app salvata per provare i permessi."
     }
   ],
   "PrimarySidebarPanel.tsx_D3idYv": [

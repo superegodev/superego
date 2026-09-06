@@ -443,16 +443,3 @@ export const appStateError = () =>
       ]),
     }),
   );
-
-export const appHttpError = () =>
-  resultError(
-    "AppHttpError",
-    v.strictObject({
-      reason: v.picklist([
-        "DestinationDenied",
-        "UnsupportedRuntime",
-        "InvalidArguments",
-        "TransportFailure",
-      ]),
-    }),
-  );

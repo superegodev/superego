@@ -11,7 +11,6 @@
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/global-types": "workspace:*",
-    "@superego/http-executor": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
     "@superego/schema": "workspace:*",

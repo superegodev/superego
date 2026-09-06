@@ -68,34 +68,27 @@ const defaultGlobalSettings = {
   },
 };
 
-registerTests(
-  ({ inferenceService, inferenceSettings, config, httpExecutor } = {}) => {
-    const effectiveGlobalSettings = inferenceSettings
-      ? { ...defaultGlobalSettings, inference: inferenceSettings }
-      : defaultGlobalSettings;
+registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
+  const effectiveGlobalSettings = inferenceSettings
+    ? { ...defaultGlobalSettings, inference: inferenceSettings }
+    : defaultGlobalSettings;
 
-    const dataRepositoriesManager = new SqliteDataRepositoriesManager({
-      fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
-      defaultGlobalSettings: effectiveGlobalSettings,
-    });
-    dataRepositoriesManager.runMigrations();
+  const dataRepositoriesManager = new SqliteDataRepositoriesManager({
+    fileName: join(databasesTmpDir, `${crypto.randomUUID()}.sqlite`),
+    defaultGlobalSettings: effectiveGlobalSettings,
+  });
+  dataRepositoriesManager.runMigrations();
 
-    return {
+  return {
+    dataRepositoriesManager,
+    backend: new ExecutingBackend(
       dataRepositoriesManager,
-      backend: new ExecutingBackend(
-        dataRepositoriesManager,
-        new QuickjsJavascriptSandbox(),
-        new TscTypescriptCompiler(),
-        inferenceService
-          ? { create: () => inferenceService }
-          : new MockInferenceServiceFactory(),
-        httpExecutor ?? {
-          execute: async () => {
-            throw new Error("Unexpected HTTP request");
-          },
-        },
-        config,
-      ),
-    };
-  },
-);
+      new QuickjsJavascriptSandbox(),
+      new TscTypescriptCompiler(),
+      inferenceService
+        ? { create: () => inferenceService }
+        : new MockInferenceServiceFactory(),
+      config,
+    ),
+  };
+});

@@ -39,9 +39,6 @@ export default abstract class BackendUsecase<
     ...args: any[]
   ) => ResultPromise<any, any>,
 > extends Usecase<StripArgumentsNotValid<Exec>> {
-  /** Backend invocations use a transaction by default. Opting out disables repository access. */
-  static readonly requiresTransaction: boolean = true;
-
   abstract argumentsSchema: v.GenericSchema<
     unknown,
     Parameters<StripArgumentsNotValid<Exec>>

@@ -1,9 +1,4 @@
-import type {
-  AppHttpError,
-  AppHttpRequest,
-  AppPermissions,
-  AppStateError,
-} from "@superego/backend";
+import type { AppPermissions, AppStateError } from "@superego/backend";
 import {
   DataType,
   type AnyTypeDefinition,
@@ -20,6 +15,11 @@ export function normalizeHttpOrigin(value: string): string {
     url.password ||
     // Chromium percent-encodes wildcard hostnames; Node leaves them decoded.
     decodeURIComponent(url.hostname).includes("*") ||
+    // Only CSP host-source characters may enter the generated connect-src list.
+    !/^https?:\/\/(?:[a-z0-9.-]+|\[[0-9a-f:]+\])(?::[0-9]+)?$/i.test(
+      url.origin,
+    ) ||
+    /\s/.test(value) ||
     !/^https?:\/\/[^/?#]+\/?$/i.test(value) ||
     url.pathname !== "/" ||
     url.search ||
@@ -122,75 +122,4 @@ export function appStateFailure(reason: AppStateError["details"]["reason"]) {
     name: "AppStateError",
     details: { reason },
   });
-}
-export function appHttpFailure(reason: AppHttpError["details"]["reason"]) {
-  return makeUnsuccessfulResult<AppHttpError>({
-    name: "AppHttpError",
-    details: { reason },
-  });
-}
-const token = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/;
-const controlledHeaders =
-  /^(host|connection|content-length|transfer-encoding|upgrade|expect|trailer|te|proxy-.*|sec-.*|forwarded|x-forwarded-.*)$/i;
-export function appHttpRequestSchema(): v.GenericSchema<
-  unknown,
-  AppHttpRequest
-> {
-  return v.pipe(
-    v.strictObject({
-      url: v.pipe(
-        v.string(),
-        v.check((value) => {
-          try {
-            const url = new URL(value);
-            return (
-              /^https?:$/.test(url.protocol) && !url.username && !url.password
-            );
-          } catch {
-            return false;
-          }
-        }),
-      ),
-      method: v.optional(
-        v.pipe(
-          v.string(),
-          v.regex(token),
-          v.transform((method) => method.toUpperCase()),
-          v.check((method) => !["CONNECT", "TRACE", "TRACK"].includes(method)),
-        ),
-      ),
-      headers: v.optional(
-        v.array(
-          v.tuple([
-            v.pipe(
-              v.string(),
-              v.regex(token),
-              v.check((name) => !controlledHeaders.test(name)),
-            ),
-            v.pipe(
-              v.string(),
-              v.check((value) => !/[^\t\x20-\x7e\x80-\xff]/.test(value)),
-            ),
-          ]),
-        ),
-      ),
-      body: v.optional(
-        v.strictObject({
-          encoding: v.picklist(["utf8", "base64"]),
-          data: v.string(),
-        }),
-      ),
-    }),
-    v.check(
-      (request) =>
-        !request.body || !["GET", "HEAD"].includes(request.method ?? "GET"),
-    ),
-    v.check(
-      (request) =>
-        request.body?.encoding !== "base64" ||
-        /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/][AQgw]==|[A-Za-z0-9+/]{2}[AEIMQUYcgkosw048]=)?$/.test(
-          request.body.data,
-        ),
-    ),
-  );
 }

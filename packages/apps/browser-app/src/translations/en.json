@@ -1055,14 +1055,11 @@
   "PermissionsModal.tsx_5g9TrD": {
     "defaultMessage": "Allow browser dialogs and printing"
   },
-  "PermissionsModal.tsx_BfEtYQ": {
-    "defaultMessage": "These destinations apply to requests through Superego. Direct browser requests and resource loads are not controlled by this list."
+  "PermissionsModal.tsx_HQU5ER": {
+    "defaultMessage": "Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access."
   },
-  "PermissionsModal.tsx_DXYQgJ": {
-    "defaultMessage": "Allow HTTP requests through Superego to these destinations:"
-  },
-  "PermissionsModal.tsx_FDxP0D": {
-    "defaultMessage": "Use exact HTTP(S) origins with no path. For local services, use an IP address and port. A service URL stored in state does not grant access."
+  "PermissionsModal.tsx_JV06rg": {
+    "defaultMessage": "Allow HTTP requests to these destinations:"
   },
   "PermissionsModal.tsx_JXdbo8": {
     "defaultMessage": "Done"
@@ -1078,6 +1075,9 @@
   },
   "PermissionsModal.tsx_kgdY08": {
     "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
+  },
+  "PermissionsModal.tsx_mJRnEG": {
+    "defaultMessage": "Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available."
   },
   "PermissionsModal.tsx_t+/rfR": {
     "defaultMessage": "Permission changes apply when you save the app version."
@@ -1103,8 +1103,8 @@
   "Preview.tsx_Dd6cIb": {
     "defaultMessage": "App compilation failed."
   },
-  "Preview.tsx_j2J7L3": {
-    "defaultMessage": "Preview state is temporary. Browser dialogs, printing, downloads, and host HTTP requests are disabled here. Run the saved app to test permissions. Existing direct browser networking policies still apply."
+  "Preview.tsx_xLZaIs": {
+    "defaultMessage": "Preview state is temporary. Browser dialogs, printing, and downloads are disabled, and no HTTP destinations are added. Run the saved app to test permissions."
   },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"

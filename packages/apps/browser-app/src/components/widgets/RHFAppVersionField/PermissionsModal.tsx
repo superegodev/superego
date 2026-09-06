@@ -79,7 +79,7 @@ export default function PermissionsModal<T extends FieldValues>({
           <FormattedMessage defaultMessage="Allow file downloads" />
         </Switch>
         <p>
-          <FormattedMessage defaultMessage="Allow HTTP requests through Superego to these destinations:" />
+          <FormattedMessage defaultMessage="Allow HTTP requests to these destinations:" />
         </p>
         {origins.map((origin, index) => (
           <div
@@ -127,7 +127,7 @@ export default function PermissionsModal<T extends FieldValues>({
           <FormattedMessage defaultMessage="Add destination" />
         </Button>
         <p>
-          <FormattedMessage defaultMessage="Use exact HTTP(S) origins with no path. For local services, use an IP address and port. A service URL stored in state does not grant access." />
+          <FormattedMessage defaultMessage="Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access." />
         </p>
         {!electronMainWorld.isElectron ? (
           <p>
@@ -135,7 +135,7 @@ export default function PermissionsModal<T extends FieldValues>({
           </p>
         ) : null}
         <p>
-          <FormattedMessage defaultMessage="These destinations apply to requests through Superego. Direct browser requests and resource loads are not controlled by this list." />
+          <FormattedMessage defaultMessage="Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available." />
         </p>
       </fieldset>
 

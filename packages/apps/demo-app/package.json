@@ -20,7 +20,6 @@
     "@superego/browser-app": "workspace:*",
     "@superego/demo-data-repositories": "workspace:*",
     "@superego/executing-backend": "workspace:*",
-    "@superego/http-executor": "workspace:*",
     "@superego/monaco-typescript-compiler": "workspace:*",
     "@superego/multi-driver-inference-service": "workspace:*",
     "@superego/quickjs-javascript-sandbox": "workspace:*",
