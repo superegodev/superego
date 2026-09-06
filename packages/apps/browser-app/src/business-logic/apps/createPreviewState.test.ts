@@ -1,5 +1,6 @@
 import type { AppStateDefinition } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { expect, it } from "vitest";
 import createPreviewState from "./createPreviewState.js";
 
@@ -17,12 +18,8 @@ it("keeps preview stores isolated and never overwrites initial state", async () 
     },
     initialState: { count: 0 },
   };
-  const first = createPreviewState("App_first", definition, "AppVersion_first");
-  const second = createPreviewState(
-    "App_second",
-    definition,
-    "AppVersion_second",
-  );
+  const first = createPreviewState("App_first", definition);
+  const second = createPreviewState("App_second", definition);
   // Exercise
   const saved = await first.update(1, { count: 5 });
   const conflict = await first.update(1, { count: 9 });
@@ -36,44 +33,33 @@ it("keeps preview stores isolated and never overwrites initial state", async () 
   expect(definition.initialState).toEqual({ count: 0 });
 });
 
-it("reports undefined state with app context", async () => {
+it("supports empty state in previews", async () => {
   // Setup SUT
-  const preview = createPreviewState(
-    "App_preview",
-    undefined,
-    "AppVersion_preview",
-  );
+  const preview = createPreviewState("App_preview", emptyAppStateDefinition);
 
   // Exercise
   const read = await preview.get();
   const update = await preview.update(1, {});
 
   // Verify
-  expect(read.error).toEqual({
-    name: "AppStateNotDefined",
-    details: { appId: "App_preview" },
-  });
-  expect(update.error).toEqual(read.error);
+  expect(read.data).toEqual({ content: {}, revision: 1 });
+  expect(update.data).toEqual({ content: {}, revision: 2 });
 });
 
 it("preserves schema validation failures on preview reads and writes", async () => {
   // Setup SUT
-  const preview = createPreviewState(
-    "App_preview",
-    {
-      schema: {
-        types: {
-          State: {
-            dataType: DataType.Struct,
-            properties: { file: { dataType: DataType.File } },
-          },
+  const preview = createPreviewState("App_preview", {
+    schema: {
+      types: {
+        State: {
+          dataType: DataType.Struct,
+          properties: { file: { dataType: DataType.File } },
         },
-        rootType: "State",
       },
-      initialState: {},
+      rootType: "State",
     },
-    "AppVersion_preview",
-  );
+    initialState: {},
+  });
 
   // Exercise
   const read = await preview.get();
@@ -96,22 +82,18 @@ it("preserves schema validation failures on preview reads and writes", async () 
 
 it("distinguishes invalid initial content and preserves its validation path", async () => {
   // Setup SUT
-  const preview = createPreviewState(
-    "App_preview",
-    {
-      schema: {
-        types: {
-          State: {
-            dataType: DataType.Struct,
-            properties: { count: { dataType: DataType.Number } },
-          },
+  const preview = createPreviewState("App_preview", {
+    schema: {
+      types: {
+        State: {
+          dataType: DataType.Struct,
+          properties: { count: { dataType: DataType.Number } },
         },
-        rootType: "State",
       },
-      initialState: { count: "invalid" },
+      rootType: "State",
     },
-    "AppVersion_preview",
-  );
+    initialState: { count: "invalid" },
+  });
 
   // Exercise
   const read = await preview.get();
@@ -122,7 +104,6 @@ it("distinguishes invalid initial content and preserves its validation path", as
     name: "AppStateContentNotValid",
     details: {
       appId: "App_preview",
-      schemaId: "AppVersion_preview",
       issues: [
         expect.objectContaining({
           message: expect.any(String),

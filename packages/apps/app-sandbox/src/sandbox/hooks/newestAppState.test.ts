@@ -6,7 +6,6 @@ it("keeps a newer cached revision when a read arrives after a mutation", () => {
   const current = {
     content: { count: 2 },
     revision: 2,
-    schemaId: "AppVersion_schema" as const,
   };
   // Exercise
   const result = newestAppState(current, {

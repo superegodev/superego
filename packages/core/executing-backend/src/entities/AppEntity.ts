@@ -5,5 +5,5 @@ export default interface AppEntity {
   type: AppType;
   name: string;
   createdAt: Date;
-  state?: AppState | undefined;
+  state: AppState;
 }

@@ -1,4 +1,3 @@
-import type { App } from "@superego/backend";
 import type { Control, FieldValues, FieldPath } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import Button from "../../design-system/Button/Button.js";
@@ -8,14 +7,12 @@ import StateDefinitionFields from "./StateDefinitionFields.js";
 interface Props<T extends FieldValues> {
   control: Control<T>;
   name: FieldPath<T>;
-  app: App | null;
   isOpen: boolean;
   onClose: () => void;
 }
 export default function PersistentStateModal<T extends FieldValues>({
   control,
   name,
-  app,
   isOpen,
   onClose,
 }: Props<T>) {
@@ -30,7 +27,6 @@ export default function PersistentStateModal<T extends FieldValues>({
       <StateDefinitionFields
         control={control as unknown as Control}
         name={name}
-        app={app}
       />
       <ModalDialog.Actions>
         <Button variant="primary" onPress={onClose}>

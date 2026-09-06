@@ -16,6 +16,5 @@ export default interface AppVersion {
   };
   createdAt: Date;
   permissions?: AppPermissions | undefined;
-  state?: AppStateDefinition | undefined;
-  stateSchemaId?: AppVersionId | undefined;
+  state: AppStateDefinition;
 }

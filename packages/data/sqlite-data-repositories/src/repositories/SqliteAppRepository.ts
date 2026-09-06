@@ -23,7 +23,7 @@ export default class SqliteAppRepository implements AppRepository {
         app.type,
         app.name,
         app.createdAt.toISOString(),
-        app.state ? encode(app.state) : null,
+        encode(app.state),
       );
   }
 
@@ -41,7 +41,7 @@ export default class SqliteAppRepository implements AppRepository {
       .run(
         app.type,
         app.name,
-        app.state ? encode(app.state) : null,
+        encode(app.state),
         app.createdAt.toISOString(),
         app.id,
       );

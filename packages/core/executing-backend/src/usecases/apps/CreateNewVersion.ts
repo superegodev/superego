@@ -7,7 +7,6 @@ import type {
   AppStateMigrationNotValid,
   AppStateMigrationRequired,
   AppStateSchemaNotValid,
-  AppStateSchemaRemovalNotAllowed,
   AppVersionId,
   AppVersionIdNotMatching,
   Backend,
@@ -45,9 +44,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     v.optional(
       v.strictObject({
         permissions: v.optional(appPermissionsSchema()),
-        state: v.optional(
-          v.nullable(structuralSchemas.backend.types.appStateDefinition()),
-        ),
+        state: v.optional(structuralSchemas.backend.types.appStateDefinition()),
       }),
     ),
   ]);
@@ -57,7 +54,6 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       structuralSchemas.backend.errors.appNotFound(),
       structuralSchemas.backend.errors.appStateSchemaNotValid(),
       structuralSchemas.backend.errors.appStateContentNotValid(),
-      structuralSchemas.backend.errors.appStateSchemaRemovalNotAllowed(),
       structuralSchemas.backend.errors.appStateMigrationRequired(),
       structuralSchemas.backend.errors.appStateMigrationNotValid(),
       structuralSchemas.backend.errors.appStateMigrationFailed(),
@@ -77,7 +73,6 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     App,
     | AppStateSchemaNotValid
     | AppStateContentNotValid
-    | AppStateSchemaRemovalNotAllowed
     | AppStateMigrationRequired
     | AppStateMigrationNotValid
     | AppStateMigrationFailed
@@ -134,11 +129,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       targetCollections,
       files: files,
       permissions: options.permissions ?? previousVersion.permissions,
-      state:
-        options.state === undefined
-          ? previousVersion.state
-          : (options.state ?? undefined),
-      stateSchemaId: previousVersion.stateSchemaId,
+      state: options.state ?? previousVersion.state,
       createdAt: new Date(),
     };
 
@@ -149,14 +140,12 @@ export default class AppsCreateNewVersion extends BackendUsecase<
         options.state,
         previousVersion.state,
         app.state,
-        appVersion.id,
         this.javascriptSandbox,
       );
       if (!stateResult.success) {
         return stateResult;
       }
       app.state = stateResult.data;
-      appVersion.stateSchemaId = app.state?.schemaId;
       await this.repos.app.replace(app);
     }
     await this.repos.appVersion.insert(appVersion);

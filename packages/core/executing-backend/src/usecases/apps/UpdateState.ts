@@ -2,9 +2,7 @@ import type {
   AppNotFound,
   AppState,
   AppStateContentNotValid,
-  AppStateNotDefined,
   AppStateRevisionNotMatching,
-  AppStateSchemaIdNotMatching,
   AppVersionIdNotMatching,
   Backend,
   UnexpectedError,
@@ -19,6 +17,7 @@ import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
+import assertAppVersionExists from "../../utils/assertAppVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import AppsGetState from "./GetState.js";
 
@@ -28,7 +27,6 @@ export default class AppsUpdateState extends BackendUsecase<
   argumentsSchema = v.tuple([
     structuralSchemas.backend.ids.appId(),
     structuralSchemas.backend.ids.appVersionId(),
-    v.nullable(structuralSchemas.backend.ids.appVersionId()),
     v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
     v.record(v.string(), v.unknown()),
   ]);
@@ -36,8 +34,6 @@ export default class AppsUpdateState extends BackendUsecase<
     structuralSchemas.backend.types.appState(),
     [
       structuralSchemas.backend.errors.appNotFound(),
-      structuralSchemas.backend.errors.appStateNotDefined(),
-      structuralSchemas.backend.errors.appStateSchemaIdNotMatching(),
       structuralSchemas.backend.errors.appVersionIdNotMatching(),
       structuralSchemas.backend.errors.appStateRevisionNotMatching(),
       structuralSchemas.backend.errors.appStateContentNotValid(),
@@ -45,20 +41,18 @@ export default class AppsUpdateState extends BackendUsecase<
     ],
   );
   async exec(
-    ...[id, versionId, schemaId, expectedRevision, content]: Parameters<
+    ...[id, versionId, expectedRevision, content]: Parameters<
       Backend["apps"]["updateState"]
     >
   ): ResultPromise<
     AppState,
     | AppNotFound
-    | AppStateNotDefined
-    | AppStateSchemaIdNotMatching
     | AppVersionIdNotMatching
     | AppStateRevisionNotMatching
     | AppStateContentNotValid
     | UnexpectedError
   > {
-    const result = await this.sub(AppsGetState).exec(id, versionId, schemaId);
+    const result = await this.sub(AppsGetState).exec(id, versionId);
     if (!result.success) {
       return result;
     }
@@ -72,11 +66,7 @@ export default class AppsUpdateState extends BackendUsecase<
       );
     }
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);
-    if (!version?.state) {
-      return makeUnsuccessfulResult(
-        makeResultError("AppStateNotDefined", { appId: id }),
-      );
-    }
+    assertAppVersionExists(id, version);
     const contentValidationResult = v.safeParse(
       appStateContentSchema(version.state.schema),
       content,
@@ -85,7 +75,6 @@ export default class AppsUpdateState extends BackendUsecase<
       return makeUnsuccessfulResult(
         makeResultError("AppStateContentNotValid", {
           appId: id,
-          schemaId: result.data.schemaId,
           issues: makeValidationIssues(contentValidationResult.issues),
         }),
       );
@@ -94,7 +83,6 @@ export default class AppsUpdateState extends BackendUsecase<
     const state = {
       content,
       revision: result.data.revision + 1,
-      schemaId: result.data.schemaId,
     };
     await this.repos.app.replace({ ...app, state });
     return makeSuccessfulResult(state);

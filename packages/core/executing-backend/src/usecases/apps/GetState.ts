@@ -1,8 +1,6 @@
 import type {
   AppNotFound,
   AppState,
-  AppStateNotDefined,
-  AppStateSchemaIdNotMatching,
   AppVersionIdNotMatching,
   Backend,
   UnexpectedError,
@@ -24,46 +22,25 @@ export default class AppsGetState extends BackendUsecase<
   argumentsSchema = v.tuple([
     structuralSchemas.backend.ids.appId(),
     structuralSchemas.backend.ids.appVersionId(),
-    v.nullable(structuralSchemas.backend.ids.appVersionId()),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.appState(),
     [
       structuralSchemas.backend.errors.appNotFound(),
-      structuralSchemas.backend.errors.appStateNotDefined(),
-      structuralSchemas.backend.errors.appStateSchemaIdNotMatching(),
       structuralSchemas.backend.errors.appVersionIdNotMatching(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
   async exec(
-    ...[id, versionId, schemaId]: Parameters<Backend["apps"]["getState"]>
+    ...[id, versionId]: Parameters<Backend["apps"]["getState"]>
   ): ResultPromise<
     AppState,
-    | AppNotFound
-    | AppStateNotDefined
-    | AppStateSchemaIdNotMatching
-    | AppVersionIdNotMatching
-    | UnexpectedError
+    AppNotFound | AppVersionIdNotMatching | UnexpectedError
   > {
     const app = await this.repos.app.find(id);
     if (!app) {
       return makeUnsuccessfulResult(
         makeResultError("AppNotFound", { appId: id }),
-      );
-    }
-    if (!app.state) {
-      return makeUnsuccessfulResult(
-        makeResultError("AppStateNotDefined", { appId: id }),
-      );
-    }
-    if (app.state.schemaId !== schemaId) {
-      return makeUnsuccessfulResult(
-        makeResultError("AppStateSchemaIdNotMatching", {
-          appId: id,
-          latestSchemaId: app.state.schemaId,
-          suppliedSchemaId: schemaId,
-        }),
       );
     }
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);

@@ -12,20 +12,19 @@ type SqliteAppVersion = {
   files: Buffer;
   /** ISO 8601 */
   created_at: string;
-  definition_options: Buffer | null;
+  definition_options: Buffer;
   is_latest: 0 | 1;
 };
 export default SqliteAppVersion;
 
 export function toEntity(appVersion: SqliteAppVersion): AppVersionEntity {
+  const options = decode(appVersion.definition_options) as Pick<
+    AppVersionEntity,
+    "permissions" | "state"
+  >;
   return {
-    ...(appVersion.definition_options
-      ? Object.fromEntries(
-          Object.entries(
-            decode(appVersion.definition_options) as object,
-          ).filter(([, value]) => value !== null),
-        )
-      : {}),
+    permissions: options.permissions ?? undefined,
+    state: options.state,
     id: appVersion.id,
     previousVersionId: appVersion.previous_version_id,
     appId: appVersion.app_id,

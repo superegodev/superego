@@ -1,9 +1,11 @@
 import { type AppDefinition, AppType } from "@superego/backend";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import portfolioDashboardAppCompiled from "./portfolioDashboard.appCompiled.js?raw";
 import portfolioDashboardAppSource from "./portfolioDashboard.appSource.tsx?raw";
 
 export default {
   type: AppType.CollectionView,
+  state: emptyAppStateDefinition,
   name: "Portfolio Dashboard",
   targetCollectionIds: [
     "ProtoCollection_1",

@@ -25,7 +25,7 @@ export default async function createAppVersion({
     { "/main.tsx": mainModule },
     {
       permissions: manifest.permissions ?? {},
-      state: stateChanged ? ((await compileState(path)) ?? null) : undefined,
+      state: stateChanged ? await compileState(path) : undefined,
     },
   );
   if (!result.success) {

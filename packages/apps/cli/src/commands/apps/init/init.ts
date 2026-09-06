@@ -1,6 +1,9 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
-import { appPermissionsSchema } from "@superego/shared-utils";
+import {
+  appPermissionsSchema,
+  emptyAppStateDefinition,
+} from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
@@ -12,6 +15,7 @@ import {
   runAppCommand,
 } from "../common/commandUtils.js";
 import { getInitialMainSource } from "../common/mainSource.js";
+import type { AppManifest } from "../common/types.js";
 import writeAppProject from "../common/writeAppProject.js";
 
 const argsSchema = v.strictObject({
@@ -37,7 +41,11 @@ export default useMarkdownHelp(
         backend,
         collection as CollectionId[],
       );
-      const manifest = {
+      const manifest: AppManifest = {
+        state: {
+          schema: "state.schema.json",
+          initialState: "state.initial.json",
+        },
         name,
         permissions: args.permissions ?? {
           modals: false,
@@ -53,6 +61,7 @@ export default useMarkdownHelp(
         getInitialMainSource(targetCollections),
         targetCollections,
         null,
+        emptyAppStateDefinition,
       );
       return {
         path: projectPath,

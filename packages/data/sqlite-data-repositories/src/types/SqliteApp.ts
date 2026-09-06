@@ -4,7 +4,7 @@ import type { AppEntity } from "@superego/executing-backend";
 
 type SqliteApp = {
   id: AppId;
-  state: Buffer | null;
+  state: Buffer;
   type: AppType;
   name: string;
   /** ISO 8601 */
@@ -15,9 +15,7 @@ export default SqliteApp;
 export function toEntity(app: SqliteApp): AppEntity {
   return {
     id: app.id,
-    ...(app.state && {
-      state: decode(app.state) as NonNullable<AppEntity["state"]>,
-    }),
+    state: decode(app.state) as AppEntity["state"],
     type: app.type,
     name: app.name,
     createdAt: new Date(app.created_at),

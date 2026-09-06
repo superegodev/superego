@@ -17,11 +17,7 @@ export async function regenerateGeneratedFiles(
 ): Promise<void> {
   removeGeneratedCollectionFiles(path);
   const state = readStateSource(path);
-  if (state) {
-    await writeFile(join(path, "app-state.ts"), codegen(state.schema), "utf8");
-  } else if (existsSync(join(path, "app-state.ts"))) {
-    rmSync(join(path, "app-state.ts"));
-  }
+  await writeFile(join(path, "app-state.ts"), codegen(state.schema), "utf8");
   for (const targetCollection of targetCollections) {
     await writeFile(
       join(path, `${targetCollection.id}.ts`),

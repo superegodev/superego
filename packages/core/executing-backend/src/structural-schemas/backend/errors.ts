@@ -45,7 +45,6 @@ export const appStateContentNotValid = () =>
     "AppStateContentNotValid",
     v.strictObject({
       appId: v.nullable(appId()),
-      schemaId: appVersionId(),
       issues: issues(),
     }),
   );
@@ -77,17 +76,7 @@ export const appStateMigrationRequired = () =>
     "AppStateMigrationRequired",
     v.strictObject({
       appId: appId(),
-      previousSchemaId: appVersionId(),
-      targetSchemaId: appVersionId(),
       issues: issues(),
-    }),
-  );
-
-export const appStateNotDefined = () =>
-  resultError(
-    "AppStateNotDefined",
-    v.strictObject({
-      appId: appId(),
     }),
   );
 
@@ -101,30 +90,12 @@ export const appStateRevisionNotMatching = () =>
     }),
   );
 
-export const appStateSchemaIdNotMatching = () =>
-  resultError(
-    "AppStateSchemaIdNotMatching",
-    v.strictObject({
-      appId: appId(),
-      latestSchemaId: appVersionId(),
-      suppliedSchemaId: v.nullable(appVersionId()),
-    }),
-  );
-
 export const appStateSchemaNotValid = () =>
   resultError(
     "AppStateSchemaNotValid",
     v.strictObject({
       appId: v.nullable(appId()),
       issues: issues(),
-    }),
-  );
-
-export const appStateSchemaRemovalNotAllowed = () =>
-  resultError(
-    "AppStateSchemaRemovalNotAllowed",
-    v.strictObject({
-      appId: appId(),
     }),
   );
 

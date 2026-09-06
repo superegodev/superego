@@ -12,7 +12,7 @@ export default async function writeAppProject(
   mainSource: string,
   targetCollections: TargetCollection[],
   lock: AppLock | null,
-  state?: AppStateDefinition,
+  state: AppStateDefinition,
 ): Promise<void> {
   await mkdir(path, { recursive: true });
   await writeJson(join(path, "app.json"), manifest);

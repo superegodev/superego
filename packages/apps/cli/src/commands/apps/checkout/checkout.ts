@@ -47,15 +47,13 @@ export default useMarkdownHelp(
         {
           name: app.name,
           permissions: app.latestVersion.permissions,
-          state: app.latestVersion.state
-            ? {
-                schema: "state.schema.json",
-                initialState: "state.initial.json",
-                ...(app.latestVersion.state.migration && {
-                  migration: "state.migration.ts",
-                }),
-              }
-            : undefined,
+          state: {
+            schema: "state.schema.json",
+            initialState: "state.initial.json",
+            ...(app.latestVersion.state.migration && {
+              migration: "state.migration.ts",
+            }),
+          },
           type: app.type,
           targetCollectionIds: app.latestVersion.targetCollections.map(
             (targetCollection) => targetCollection.id,

@@ -2,7 +2,7 @@
 
 Durable files:
 
-- `app.json` permissions and optional state source-file declaration.
+- `app.json` permissions and required state source-file declaration.
 - `state.schema.json`, `state.initial.json`, and optional `state.migration.ts`.
 
 - `app.json`: editable app manifest.

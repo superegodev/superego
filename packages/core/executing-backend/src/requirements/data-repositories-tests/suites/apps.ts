@@ -18,7 +18,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
       state: {
         content: { count: 3, nested: [true, null, "value"] },
         revision: 2,
-        schemaId: Id.generate.appVersion(),
       },
       createdAt: new Date(),
     };
@@ -43,6 +42,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
     const app: AppEntity = {
+      state: { content: {}, revision: 1 },
       id: Id.generate.app(),
       type: AppType.CollectionView,
       name: "original name",
@@ -62,7 +62,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
       state: {
         content: { remembered: true },
         revision: 1,
-        schemaId: Id.generate.appVersion(),
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(
@@ -86,6 +85,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
     // Setup SUT
     const { dataRepositoriesManager } = deps();
     const app: AppEntity = {
+      state: { content: {}, revision: 1 },
       id: Id.generate.app(),
       type: AppType.CollectionView,
       name: "name",
@@ -123,6 +123,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const app: AppEntity = {
+        state: { content: {}, revision: 1 },
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "name",
@@ -185,12 +186,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { dataRepositoriesManager } = deps();
       const app1: AppEntity = {
+        state: { content: {}, revision: 1 },
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "name 1",
         createdAt: new Date(),
       };
       const app2: AppEntity = {
+        state: { content: {}, revision: 1 },
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "name 2",

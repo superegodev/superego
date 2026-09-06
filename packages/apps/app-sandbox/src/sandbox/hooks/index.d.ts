@@ -71,19 +71,6 @@ export declare function useCreateNewDocumentVersion(): {
 export interface AppState<Content> {
   content: Content;
   revision: number;
-  schemaId: string;
-}
-export interface AppStateNotDefined {
-  name: "AppStateNotDefined";
-  details: { appId: string };
-}
-export interface AppStateSchemaIdNotMatching {
-  name: "AppStateSchemaIdNotMatching";
-  details: {
-    appId: string;
-    latestSchemaId: string;
-    suppliedSchemaId: string | null;
-  };
 }
 export interface AppVersionIdNotMatching {
   name: "AppVersionIdNotMatching";
@@ -111,7 +98,6 @@ export interface AppStateContentNotValid {
   name: "AppStateContentNotValid";
   details: {
     appId: string | null;
-    schemaId: string;
     issues: {
       message: string;
       path?: { key: string | number }[] | undefined;
@@ -123,8 +109,6 @@ export interface AppBridgeError {
   details: { reason: "InvalidArguments" | "TransportFailure" };
 }
 export type GetAppStateError =
-  | AppStateNotDefined
-  | AppStateSchemaIdNotMatching
   | AppVersionIdNotMatching
   // Preview initialization can fail validation before any state exists.
   | AppStateSchemaNotValid

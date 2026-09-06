@@ -5,6 +5,7 @@ import {
   AppType,
 } from "@superego/backend";
 import { type Schema, DataType } from "@superego/schema";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -30,6 +31,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const result = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name".repeat(100),
         targetCollectionIds: [],
@@ -62,6 +64,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const collectionId = Id.generate.collection();
       const result = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [collectionId],
@@ -116,6 +119,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const files = { "/main.tsx": { source: "", compiled: "" } };
       const createAppResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [createCollectionResult.data.id],
@@ -130,6 +134,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           type: AppType.CollectionView,
           name: "name",
           latestVersion: {
+            state: emptyAppStateDefinition,
             id: expect.any(String),
             targetCollections: [
               {
@@ -192,6 +197,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createAppResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -228,6 +234,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -310,6 +317,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -374,6 +382,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         "/main.tsx": { source: "initial", compiled: "initial" },
       };
       const createAppResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -400,6 +409,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           type: AppType.CollectionView,
           name: "name",
           latestVersion: {
+            state: emptyAppStateDefinition,
             id: expect.any(String),
             targetCollections: [
               {
@@ -487,6 +497,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -548,6 +559,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "default-app",
         targetCollectionIds: [createCollectionResult.data.id],
@@ -606,6 +618,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResultZeta = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "zeta",
         targetCollectionIds: [],
@@ -613,6 +626,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createResultZeta.success);
       const createResultAlpha = await backend.apps.create({
+        state: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "alpha",
         targetCollectionIds: [],
@@ -653,24 +667,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
       },
     };
     const read = (backend: Backend, app: App) =>
-      backend.apps.getState(
-        app.id,
-        app.latestVersion.id,
-        app.latestVersion.stateSchemaId ?? null,
-      );
+      backend.apps.getState(app.id, app.latestVersion.id);
     const update = (
       backend: Backend,
       app: App,
       revision: number,
       content: Record<string, unknown>,
     ) =>
-      backend.apps.updateState(
-        app.id,
-        app.latestVersion.id,
-        app.latestVersion.stateSchemaId ?? null,
-        revision,
-        content,
-      );
+      backend.apps.updateState(app.id, app.latestVersion.id, revision, content);
 
     it("normalizes permissions, initializes once, preserves state and permissions on code updates", async () => {
       // Setup SUT
@@ -698,37 +702,36 @@ export default rd<GetDependencies>("Apps", (deps) => {
       ).toEqual(["https://example.com"]);
       expect(saved.success).toBe(true);
       expect(after).toEqual(saved);
-      expect(version.data.latestVersion.stateSchemaId).toBe(
-        created.data.latestVersion.stateSchemaId,
-      );
       expect(version.data.latestVersion.permissions).toEqual(
         created.data.latestVersion.permissions,
       );
       expect(created.data).not.toHaveProperty("state");
     });
 
-    it("rejects unknown capabilities and reports state-not-defined for legacy apps", async () => {
+    it("rejects unknown capabilities and missing state definitions", async () => {
       // Setup SUT
       const { backend } = deps();
+
       // Exercise
       const invalid = await backend.apps.create({
         ...definition,
         permissions: { sandbox: ["allow-top-navigation"] },
       } as any);
-      const legacy = await backend.apps.create({
+      const missingState = await backend.apps.create({
         ...definition,
         state: undefined,
-        permissions: undefined,
+      } as any);
+      const empty = await backend.apps.create({
+        ...definition,
+        state: emptyAppStateDefinition,
       });
-      assert(legacy.success);
-      const state = await read(backend, legacy.data);
+      assert(empty.success);
+      const state = await read(backend, empty.data);
+
       // Verify
       expect(invalid.error?.name).toBe("ArgumentsNotValid");
-      expect(state.error).toEqual({
-        name: "AppStateNotDefined",
-        details: { appId: legacy.data.id },
-      });
-      expect(legacy.data.latestVersion.permissions).toBeUndefined();
+      expect(missingState.error?.name).toBe("ArgumentsNotValid");
+      expect(state.data).toEqual({ content: {}, revision: 1 });
     });
 
     it("checks revision atomically and rejects invalid writes", async () => {
@@ -759,7 +762,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
         name: "AppStateContentNotValid",
         details: {
           appId: created.data.id,
-          schemaId: created.data.latestVersion.stateSchemaId,
           issues: [
             expect.objectContaining({
               message: expect.any(String),
@@ -803,17 +805,17 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(state.data?.revision).toBe(write.success ? 3 : 2);
       if (!write.success) {
         expect(write.error).toEqual({
-          name: "AppStateSchemaIdNotMatching",
+          name: "AppVersionIdNotMatching",
           details: {
             appId: created.data.id,
-            latestSchemaId: version.data.latestVersion.stateSchemaId,
-            suppliedSchemaId: created.data.latestVersion.stateSchemaId,
+            latestVersionId: version.data.latestVersion.id,
+            suppliedVersionId: created.data.latestVersion.id,
           },
         });
       }
     });
 
-    it("migrates atomically, rejects obsolete contexts and never removes state", async () => {
+    it("migrates atomically and rejects obsolete app versions", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -870,20 +872,11 @@ export default rd<GetDependencies>("Apps", (deps) => {
       );
       assert(version.success);
       const obsolete = await update(backend, created.data, 1, { count: 9 });
-      const removal = await backend.apps.createNewVersion(
-        version.data.id,
-        version.data.latestVersion.id,
-        [],
-        definition.files,
-        { state: null },
-      );
       // Verify
       expect(missingMigration.error).toEqual({
         name: "AppStateMigrationRequired",
         details: {
           appId: created.data.id,
-          previousSchemaId: created.data.latestVersion.stateSchemaId,
-          targetSchemaId: expect.stringMatching(/^AppVersion_/),
           issues: expect.arrayContaining([
             expect.objectContaining({
               message: expect.any(String),
@@ -906,19 +899,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect((await read(backend, version.data)).data).toEqual({
         content: { total: 5 },
         revision: 2,
-        schemaId: version.data.latestVersion.id,
       });
       expect(obsolete.error).toEqual({
-        name: "AppStateSchemaIdNotMatching",
+        name: "AppVersionIdNotMatching",
         details: {
           appId: created.data.id,
-          latestSchemaId: version.data.latestVersion.stateSchemaId,
-          suppliedSchemaId: created.data.latestVersion.stateSchemaId,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
         },
-      });
-      expect(removal.error).toEqual({
-        name: "AppStateSchemaRemovalNotAllowed",
-        details: { appId: created.data.id },
       });
     });
 
@@ -968,22 +956,22 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
       });
       expect(obsolete.error).toEqual({
-        name: "AppStateSchemaIdNotMatching",
+        name: "AppVersionIdNotMatching",
         details: {
           appId: created.data.id,
-          latestSchemaId: version.data.latestVersion.stateSchemaId,
-          suppliedSchemaId: created.data.latestVersion.stateSchemaId,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
         },
       });
       expect(version.data.latestVersion.permissions).toEqual({});
     });
 
-    it("reports version conflicts for code-only updates without requiring state", async () => {
+    it("preserves empty state across code-only updates and rejects stale versions", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create({
         ...definition,
-        state: undefined,
+        state: emptyAppStateDefinition,
       });
       assert(created.success);
       const version = await backend.apps.createNewVersion(
@@ -1001,7 +989,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         [],
         definition.files,
       );
-      const missingState = await update(backend, version.data, 1, {});
+      const saved = await update(backend, version.data, 1, {});
 
       // Verify
       expect(conflict.error).toEqual({
@@ -1012,13 +1000,10 @@ export default rd<GetDependencies>("Apps", (deps) => {
           suppliedVersionId: created.data.latestVersion.id,
         },
       });
-      expect(missingState.error).toEqual({
-        name: "AppStateNotDefined",
-        details: { appId: created.data.id },
-      });
+      expect(saved.data).toEqual({ content: {}, revision: 2 });
     });
 
-    it("reports stale app versions separately from stale state schemas", async () => {
+    it("rejects state reads and writes from stale app versions", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1080,7 +1065,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
         name: "AppStateContentNotValid",
         details: {
           appId: null,
-          schemaId: expect.stringMatching(/^AppVersion_/),
           issues: [
             expect.objectContaining({
               message: expect.any(String),
@@ -1093,7 +1077,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
         name: "AppStateContentNotValid",
         details: {
           appId: created.data.id,
-          schemaId: expect.stringMatching(/^AppVersion_/),
           issues: [
             expect.objectContaining({
               message: expect.any(String),
@@ -1106,7 +1089,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
         name: "AppStateContentNotValid",
         details: {
           appId: created.data.id,
-          schemaId: created.data.latestVersion.stateSchemaId,
           issues: [
             expect.objectContaining({
               message: "App state must be JSON-serializable.",
@@ -1117,7 +1099,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(saved.data).toEqual({
         content: { count: 0 },
         revision: 1,
-        schemaId: created.data.latestVersion.stateSchemaId,
       });
     });
 
@@ -1179,7 +1160,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
             name: "AppStateContentNotValid",
             details: {
               appId: created.data.id,
-              schemaId: expect.stringMatching(/^AppVersion_/),
               issues: [
                 expect.objectContaining({
                   message: expect.any(String),
@@ -1193,19 +1173,18 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(saved.data).toEqual({
         content: { count: 0 },
         revision: 1,
-        schemaId: created.data.latestVersion.stateSchemaId,
       });
       expect(
         apps.data?.find((app) => app.id === created.data.id)?.latestVersion.id,
       ).toBe(created.data.latestVersion.id);
     });
 
-    it("initializes existing apps, preserves compatible content, isolates apps and deletes state", async () => {
+    it("migrates empty state, preserves compatible content, isolates apps and deletes state", async () => {
       // Setup SUT
       const { backend } = deps();
       const legacy = await backend.apps.create({
         ...definition,
-        state: undefined,
+        state: emptyAppStateDefinition,
       });
       const other = await backend.apps.create(definition);
       assert(legacy.success && other.success);
@@ -1215,10 +1194,18 @@ export default rd<GetDependencies>("Apps", (deps) => {
         legacy.data.latestVersion.id,
         [],
         definition.files,
-        { state: definition.state },
+        {
+          state: {
+            ...definition.state,
+            migration: {
+              source: "",
+              compiled: "export default () => ({ count: 0 });",
+            },
+          },
+        },
       );
       assert(initialized.success);
-      await update(backend, initialized.data, 1, { count: 7 });
+      await update(backend, initialized.data, 2, { count: 7 });
       const compatible = await backend.apps.createNewVersion(
         initialized.data.id,
         initialized.data.latestVersion.id,
@@ -1244,13 +1231,59 @@ export default rd<GetDependencies>("Apps", (deps) => {
       await backend.apps.delete(compatible.data.id, "delete");
       // Verify
       expect(saved.data?.content).toEqual({ count: 7 });
-      expect(saved.data?.schemaId).toBe(compatible.data.latestVersion.id);
       expect((await read(backend, other.data)).data?.content).toEqual({
         count: 0,
       });
       expect((await read(backend, compatible.data)).error?.name).toBe(
         "AppNotFound",
       );
+    });
+
+    it("requires a definition and migrates populated state back to an empty object", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const removed = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { state: null } as any,
+      );
+      const missingMigration = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { state: emptyAppStateDefinition },
+      );
+      const emptied = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          state: {
+            ...emptyAppStateDefinition,
+            migration: { source: "", compiled: "export default () => ({});" },
+          },
+        },
+      );
+      assert(emptied.success);
+      const state = await read(backend, emptied.data);
+      const invalidWrite = await update(backend, emptied.data, 2, { count: 5 });
+
+      // Verify
+      expect(removed.error?.name).toBe("ArgumentsNotValid");
+      expect(missingMigration.error?.name).toBe("AppStateMigrationRequired");
+      expect(state.data).toEqual({ content: {}, revision: 2 });
+      expect(emptied.data.latestVersion.state.schema).toEqual(
+        emptyAppStateDefinition.schema,
+      );
+      expect(invalidWrite.error?.name).toBe("AppStateContentNotValid");
     });
 
     it.each([DataType.File, DataType.DocumentRef] as const)(

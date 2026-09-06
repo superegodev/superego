@@ -5,11 +5,8 @@ import type {
   AppStateMigrationFailed,
   AppStateMigrationNotValid,
   AppStateMigrationRequired,
-  AppStateNotDefined,
   AppStateRevisionNotMatching,
-  AppStateSchemaIdNotMatching,
   AppStateSchemaNotValid,
-  AppStateSchemaRemovalNotAllowed,
   AppVersionIdNotMatching,
   ArgumentsNotValid,
   CannotContinueConversation,
@@ -67,11 +64,8 @@ type KnownResultError =
   | AppStateMigrationFailed
   | AppStateMigrationNotValid
   | AppStateMigrationRequired
-  | AppStateNotDefined
   | AppStateRevisionNotMatching
-  | AppStateSchemaIdNotMatching
   | AppStateSchemaNotValid
-  | AppStateSchemaRemovalNotAllowed
   | AppVersionIdNotMatching
   | ArgumentsNotValid
   | CannotContinueConversation

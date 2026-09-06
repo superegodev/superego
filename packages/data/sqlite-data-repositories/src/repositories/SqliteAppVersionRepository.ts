@@ -47,7 +47,6 @@ export default class SqliteAppVersionRepository implements AppVersionRepository 
         encode({
           permissions: appVersion.permissions,
           state: appVersion.state,
-          stateSchemaId: appVersion.stateSchemaId,
         }),
         1,
       );

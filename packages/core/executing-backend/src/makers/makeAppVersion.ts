@@ -9,10 +9,7 @@ export default function makeAppVersion(
     targetCollections: appVersion.targetCollections,
     files: appVersion.files,
     ...(appVersion.permissions && { permissions: appVersion.permissions }),
-    ...(appVersion.state && { state: appVersion.state }),
-    ...(appVersion.stateSchemaId && {
-      stateSchemaId: appVersion.stateSchemaId,
-    }),
+    state: appVersion.state,
     createdAt: appVersion.createdAt,
   };
 }

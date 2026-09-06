@@ -9,6 +9,5 @@ export default interface AppVersionEntity {
   files: AppVersion["files"];
   createdAt: Date;
   permissions?: AppPermissions | undefined;
-  state?: AppStateDefinition | undefined;
-  stateSchemaId?: AppVersionId | undefined;
+  state: AppStateDefinition;
 }

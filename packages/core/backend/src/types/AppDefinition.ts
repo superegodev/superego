@@ -15,5 +15,5 @@ export default interface AppDefinition<
     : CollectionId)[];
   files: AppVersion["files"];
   permissions?: AppPermissions | undefined;
-  state?: AppStateDefinition | undefined;
+  state: AppStateDefinition;
 }

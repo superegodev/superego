@@ -2,7 +2,10 @@ import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { AppPermissions, AppStateDefinition } from "@superego/backend";
 import { AppType, type Collection, type CollectionId } from "@superego/backend";
 import { CollectionRouteView, RouteName } from "@superego/routing";
-import { valibotSchemas } from "@superego/shared-utils";
+import {
+  emptyAppStateDefinition,
+  valibotSchemas,
+} from "@superego/shared-utils";
 import { useId } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
@@ -28,7 +31,7 @@ interface FormValues {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
     permissions?: AppPermissions | undefined;
-    state?: AppStateDefinition | undefined;
+    state: AppStateDefinition;
   };
 }
 
@@ -65,6 +68,7 @@ export default function CreateAppForm({
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       appVersion: {
+        state: emptyAppStateDefinition,
         targetCollectionIds: initialTargetCollections.map(({ id }) => id),
         files: forms.defaults.collectionViewAppFiles(initialTargetCollections),
       },
@@ -129,7 +133,6 @@ export default function CreateAppForm({
       <PersistentStateModal
         control={control}
         name="appVersion"
-        app={null}
         isOpen={isStateModalOpen}
         onClose={onStateModalClose}
       />

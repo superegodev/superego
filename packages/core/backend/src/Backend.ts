@@ -7,11 +7,8 @@ import type AppStateContentNotValid from "./errors/AppStateContentNotValid.js";
 import type AppStateMigrationFailed from "./errors/AppStateMigrationFailed.js";
 import type AppStateMigrationNotValid from "./errors/AppStateMigrationNotValid.js";
 import type AppStateMigrationRequired from "./errors/AppStateMigrationRequired.js";
-import type AppStateNotDefined from "./errors/AppStateNotDefined.js";
 import type AppStateRevisionNotMatching from "./errors/AppStateRevisionNotMatching.js";
-import type AppStateSchemaIdNotMatching from "./errors/AppStateSchemaIdNotMatching.js";
 import type AppStateSchemaNotValid from "./errors/AppStateSchemaNotValid.js";
-import type AppStateSchemaRemovalNotAllowed from "./errors/AppStateSchemaRemovalNotAllowed.js";
 import type AppVersionIdNotMatching from "./errors/AppVersionIdNotMatching.js";
 import type ArgumentsNotValid from "./errors/ArgumentsNotValid.js";
 import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
@@ -590,13 +587,12 @@ export default interface Backend {
       files: AppVersion["files"],
       options?: {
         permissions?: AppPermissions | undefined;
-        state?: AppStateDefinition | null | undefined;
+        state?: AppStateDefinition | undefined;
       },
     ): ResultPromise<
       App,
       | AppStateSchemaNotValid
       | AppStateContentNotValid
-      | AppStateSchemaRemovalNotAllowed
       | AppStateMigrationRequired
       | AppStateMigrationNotValid
       | AppStateMigrationFailed
@@ -622,12 +618,9 @@ export default interface Backend {
     getState(
       id: AppId,
       versionId: AppVersionId,
-      schemaId: AppVersionId | null,
     ): ResultPromise<
       AppState,
       | AppNotFound
-      | AppStateNotDefined
-      | AppStateSchemaIdNotMatching
       | AppVersionIdNotMatching
       | ArgumentsNotValid
       | UnexpectedError
@@ -635,14 +628,11 @@ export default interface Backend {
     updateState(
       id: AppId,
       versionId: AppVersionId,
-      schemaId: AppVersionId | null,
       expectedRevision: number,
       content: Record<string, unknown>,
     ): ResultPromise<
       AppState,
       | AppNotFound
-      | AppStateNotDefined
-      | AppStateSchemaIdNotMatching
       | AppVersionIdNotMatching
       | AppStateRevisionNotMatching
       | AppStateContentNotValid

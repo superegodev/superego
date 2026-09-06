@@ -1,5 +1,6 @@
 import type { AppStateDefinition } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { expect, it } from "vitest";
 import makeInitialAppState from "./makeInitialAppState.js";
 
@@ -18,17 +19,13 @@ const definition: AppStateDefinition = {
 
 it("initializes state without applying a migration", () => {
   // Exercise
-  const result = makeInitialAppState(
-    null,
-    {
-      ...definition,
-      migration: {
-        source: "",
-        compiled: "export default () => ({ count: 99 });",
-      },
+  const result = makeInitialAppState(null, {
+    ...definition,
+    migration: {
+      source: "",
+      compiled: "export default () => ({ count: 99 });",
     },
-    "AppVersion_initial",
-  );
+  });
 
   // Verify
   expect(result).toEqual({
@@ -36,30 +33,29 @@ it("initializes state without applying a migration", () => {
     data: {
       content: { count: 0 },
       revision: 1,
-      schemaId: "AppVersion_initial",
     },
     error: null,
   });
 });
 
-it("keeps legacy apps stateless", () => {
+it("initializes empty state", () => {
   // Exercise
-  const result = makeInitialAppState(null, undefined, "AppVersion_initial");
+  const result = makeInitialAppState(null, emptyAppStateDefinition);
 
   // Verify
-  expect(result).toEqual({ success: true, data: undefined, error: null });
+  expect(result).toEqual({
+    success: true,
+    data: { content: {}, revision: 1 },
+    error: null,
+  });
 });
 
 it("retains semantic schema validation issues", () => {
   // Exercise
-  const result = makeInitialAppState(
-    null,
-    {
-      ...definition,
-      schema: { ...definition.schema, rootType: "Missing" },
-    },
-    "AppVersion_initial",
-  );
+  const result = makeInitialAppState(null, {
+    ...definition,
+    schema: { ...definition.schema, rootType: "Missing" },
+  });
 
   // Verify
   expect(result.error).toEqual({
@@ -73,20 +69,18 @@ it("retains semantic schema validation issues", () => {
   });
 });
 
-it("identifies invalid initial content by schema and property path", () => {
+it("identifies invalid initial content by app and property path", () => {
   // Exercise
-  const result = makeInitialAppState(
-    "App_existing",
-    { ...definition, initialState: { count: "invalid" } },
-    "AppVersion_initial",
-  );
+  const result = makeInitialAppState("App_existing", {
+    ...definition,
+    initialState: { count: "invalid" },
+  });
 
   // Verify
   expect(result.error).toEqual({
     name: "AppStateContentNotValid",
     details: {
       appId: "App_existing",
-      schemaId: "AppVersion_initial",
       issues: [
         expect.objectContaining({
           message: expect.any(String),

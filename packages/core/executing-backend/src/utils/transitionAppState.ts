@@ -7,8 +7,6 @@ import type {
   AppStateMigrationNotValid,
   AppStateMigrationRequired,
   AppStateSchemaNotValid,
-  AppStateSchemaRemovalNotAllowed,
-  AppVersionId,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
@@ -28,31 +26,20 @@ import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 /** Caller holds the serializable transaction across migration and persistence. */
 export default async function transitionAppState(
   appId: AppId,
-  definition: AppStateDefinition | null,
-  previousDefinition: AppStateDefinition | undefined,
-  current: AppState | undefined,
-  versionId: AppVersionId,
+  definition: AppStateDefinition,
+  previousDefinition: AppStateDefinition,
+  current: AppState,
   javascriptSandbox: JavascriptSandbox,
 ): ResultPromise<
-  AppState | undefined,
+  AppState,
   | AppStateSchemaNotValid
   | AppStateContentNotValid
-  | AppStateSchemaRemovalNotAllowed
   | AppStateMigrationRequired
   | AppStateMigrationNotValid
   | AppStateMigrationFailed
 > {
-  if (!definition) {
-    if (current) {
-      return makeUnsuccessfulResult(
-        makeResultError("AppStateSchemaRemovalNotAllowed", { appId }),
-      );
-    }
-    return makeSuccessfulResult(undefined);
-  }
-
-  const initialStateResult = makeInitialAppState(appId, definition, versionId);
-  if (!initialStateResult.success || !current) {
+  const initialStateResult = makeInitialAppState(appId, definition);
+  if (!initialStateResult.success) {
     return initialStateResult;
   }
 
@@ -113,7 +100,6 @@ export default async function transitionAppState(
           appId,
           cause: makeResultError("AppStateContentNotValid", {
             appId,
-            schemaId: versionId,
             issues,
           }),
         }),
@@ -122,8 +108,6 @@ export default async function transitionAppState(
     return makeUnsuccessfulResult(
       makeResultError("AppStateMigrationRequired", {
         appId,
-        previousSchemaId: current.schemaId,
-        targetSchemaId: versionId,
         issues,
       }),
     );
@@ -131,10 +115,9 @@ export default async function transitionAppState(
 
   const transitioned =
     !!definition.migration ||
-    !isEqual(definition.schema, previousDefinition?.schema);
+    !isEqual(definition.schema, previousDefinition.schema);
   return makeSuccessfulResult({
     content,
     revision: current.revision + (transitioned ? 1 : 0),
-    schemaId: transitioned ? versionId : current.schemaId,
   });
 }

@@ -3,10 +3,8 @@ import type {
   AppState,
   AppStateContentNotValid,
   AppStateDefinition,
-  AppStateNotDefined,
   AppStateRevisionNotMatching,
   AppStateSchemaNotValid,
-  AppVersionId,
   ValidationIssue,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
@@ -21,63 +19,53 @@ import * as v from "valibot";
 /** Each preview owns this ephemeral store; production repositories are never used. */
 export default function createPreviewState(
   appId: AppId,
-  definition: AppStateDefinition | undefined,
-  schemaId: AppVersionId,
+  definition: AppStateDefinition,
 ) {
-  let state: AppState | undefined;
+  let state: AppState = {
+    content: {},
+    revision: 1,
+  };
   let initializationError:
     | AppStateSchemaNotValid
     | AppStateContentNotValid
     | undefined;
-  if (definition) {
-    const schemaValidationResult = v.safeParse(
-      appStateSchema(),
-      definition.schema,
+  const schemaValidationResult = v.safeParse(
+    appStateSchema(),
+    definition.schema,
+  );
+  if (!schemaValidationResult.success) {
+    initializationError = {
+      name: "AppStateSchemaNotValid",
+      details: {
+        appId,
+        issues: makeValidationIssues(schemaValidationResult.issues),
+      },
+    };
+  } else {
+    const contentValidationResult = v.safeParse(
+      appStateContentSchema(definition.schema),
+      definition.initialState,
     );
-    if (!schemaValidationResult.success) {
+    if (!contentValidationResult.success) {
       initializationError = {
-        name: "AppStateSchemaNotValid",
+        name: "AppStateContentNotValid",
         details: {
           appId,
-          issues: makeValidationIssues(schemaValidationResult.issues),
+          issues: makeValidationIssues(contentValidationResult.issues),
         },
       };
-    } else {
-      const contentValidationResult = v.safeParse(
-        appStateContentSchema(definition.schema),
-        definition.initialState,
-      );
-      if (!contentValidationResult.success) {
-        initializationError = {
-          name: "AppStateContentNotValid",
-          details: {
-            appId,
-            schemaId,
-            issues: makeValidationIssues(contentValidationResult.issues),
-          },
-        };
-      } else {
-        state = {
-          content: structuredClone(definition.initialState),
-          revision: 1,
-          schemaId,
-        };
-      }
     }
+  }
+  if (!initializationError) {
+    state.content = structuredClone(definition.initialState);
   }
   return {
     get: async (): ResultPromise<
       AppState,
-      AppStateNotDefined | AppStateSchemaNotValid | AppStateContentNotValid
+      AppStateSchemaNotValid | AppStateContentNotValid
     > => {
       if (initializationError) {
         return makeUnsuccessfulResult(initializationError);
-      }
-      if (!state) {
-        return makeUnsuccessfulResult<AppStateNotDefined>({
-          name: "AppStateNotDefined",
-          details: { appId },
-        });
       }
       return makeSuccessfulResult(structuredClone(state));
     },
@@ -86,19 +74,12 @@ export default function createPreviewState(
       content: Record<string, unknown>,
     ): ResultPromise<
       AppState,
-      | AppStateNotDefined
       | AppStateSchemaNotValid
       | AppStateContentNotValid
       | AppStateRevisionNotMatching
     > => {
       if (initializationError) {
         return makeUnsuccessfulResult(initializationError);
-      }
-      if (!state || !definition) {
-        return makeUnsuccessfulResult<AppStateNotDefined>({
-          name: "AppStateNotDefined",
-          details: { appId },
-        });
       }
       if (expectedRevision !== state.revision) {
         return makeUnsuccessfulResult<AppStateRevisionNotMatching>({
@@ -119,7 +100,6 @@ export default function createPreviewState(
           name: "AppStateContentNotValid",
           details: {
             appId,
-            schemaId,
             issues: makeValidationIssues(contentValidationResult.issues),
           },
         });

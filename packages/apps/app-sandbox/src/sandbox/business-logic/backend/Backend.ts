@@ -2,9 +2,7 @@ import type {
   AppNotFound,
   AppState,
   AppStateContentNotValid,
-  AppStateNotDefined,
   AppStateRevisionNotMatching,
-  AppStateSchemaIdNotMatching,
   AppStateSchemaNotValid,
   AppVersionIdNotMatching,
   ArgumentsNotValid,
@@ -31,8 +29,6 @@ export interface AppBridgeError {
   details: { reason: "InvalidArguments" | "TransportFailure" };
 }
 export type GetAppStateError =
-  | AppStateNotDefined
-  | AppStateSchemaIdNotMatching
   | AppVersionIdNotMatching
   // Preview initialization can fail validation before any state exists.
   | AppStateSchemaNotValid

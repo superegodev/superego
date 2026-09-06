@@ -4,7 +4,6 @@ import type {
   AppStateContentNotValid,
   AppStateDefinition,
   AppStateSchemaNotValid,
-  AppVersionId,
 } from "@superego/backend";
 import type { Result } from "@superego/global-types";
 import {
@@ -19,16 +18,8 @@ import makeValidationIssues from "./makeValidationIssues.js";
 
 export default function makeInitialAppState(
   appId: AppId | null,
-  definition: AppStateDefinition | undefined,
-  schemaId: AppVersionId,
-): Result<
-  AppState | undefined,
-  AppStateSchemaNotValid | AppStateContentNotValid
-> {
-  if (!definition) {
-    return makeSuccessfulResult(undefined);
-  }
-
+  definition: AppStateDefinition,
+): Result<AppState, AppStateSchemaNotValid | AppStateContentNotValid> {
   const schemaValidationResult = v.safeParse(
     appStateSchema(),
     definition.schema,
@@ -50,7 +41,6 @@ export default function makeInitialAppState(
     return makeUnsuccessfulResult(
       makeResultError("AppStateContentNotValid", {
         appId,
-        schemaId,
         issues: makeValidationIssues(contentValidationResult.issues),
       }),
     );
@@ -59,6 +49,5 @@ export default function makeInitialAppState(
   return makeSuccessfulResult({
     content: definition.initialState,
     revision: 1,
-    schemaId,
   });
 }

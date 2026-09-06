@@ -16,9 +16,6 @@ export const stateFiles = {
 } as const;
 export function readStateSource(path: string) {
   const manifest = readManifest(path);
-  if (!manifest.state) {
-    return undefined;
-  }
   const schema = v.parse(
     appStateSchema(),
     readJson(join(path, manifest.state.schema)),
@@ -38,22 +35,15 @@ export function readStateSource(path: string) {
       : undefined,
   };
 }
-export function stateSourceOf(definition: AppStateDefinition | undefined) {
-  return definition
-    ? {
-        schema: definition.schema,
-        initialState: definition.initialState,
-        migration: definition.migration?.source,
-      }
-    : undefined;
+export function stateSourceOf(definition: AppStateDefinition) {
+  return {
+    schema: definition.schema,
+    initialState: definition.initialState,
+    migration: definition.migration?.source,
+  };
 }
-export async function compileState(
-  path: string,
-): Promise<AppStateDefinition | undefined> {
+export async function compileState(path: string): Promise<AppStateDefinition> {
   const source = readStateSource(path);
-  if (!source) {
-    return undefined;
-  }
   if (source.migration === undefined) {
     return { schema: source.schema, initialState: source.initialState };
   }
@@ -71,11 +61,8 @@ export async function compileState(
 }
 export async function writeStateSource(
   path: string,
-  definition: AppStateDefinition | undefined,
+  definition: AppStateDefinition,
 ) {
-  if (!definition) {
-    return;
-  }
   await writeJson(join(path, stateFiles.schema), definition.schema);
   await writeJson(join(path, stateFiles.initialState), definition.initialState);
   if (definition.migration) {

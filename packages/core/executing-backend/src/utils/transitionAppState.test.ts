@@ -24,7 +24,6 @@ const definition: AppStateDefinition = {
 const current: AppState = {
   content: { count: 5 },
   revision: 2,
-  schemaId: "AppVersion_previous",
 };
 
 it("preserves execution diagnostics as a migration failure cause", async () => {
@@ -50,7 +49,6 @@ it("preserves execution diagnostics as a migration failure cause", async () => {
     definition,
     definition,
     current,
-    "AppVersion_next",
     javascriptSandbox,
   );
 
@@ -88,7 +86,6 @@ it.each(["moduleDefaultExportsFunction", "executeSyncFunction"] as const)(
       definition,
       definition,
       current,
-      "AppVersion_next",
       javascriptSandbox,
     );
 
@@ -126,7 +123,6 @@ it("rejects non-JSON migration output with content validation diagnostics", asyn
     definition,
     definition,
     current,
-    "AppVersion_next",
     javascriptSandbox,
   );
 
@@ -139,7 +135,6 @@ it("rejects non-JSON migration output with content validation diagnostics", asyn
         name: "AppStateContentNotValid",
         details: {
           appId: "App_existing",
-          schemaId: "AppVersion_next",
           issues: [
             expect.objectContaining({
               message: "App state must be JSON-serializable.",
@@ -151,7 +146,7 @@ it("rejects non-JSON migration output with content validation diagnostics", asyn
   });
 });
 
-it("advances revision and schema identity after a valid migration", async () => {
+it("advances revision after a valid migration", async () => {
   // Setup mocks
   const javascriptSandbox: JavascriptSandbox = {
     moduleDefaultExportsFunction: vi.fn().mockResolvedValue(true),
@@ -166,14 +161,13 @@ it("advances revision and schema identity after a valid migration", async () => 
     definition,
     definition,
     current,
-    "AppVersion_next",
     javascriptSandbox,
   );
 
   // Verify
   expect(result).toEqual({
     success: true,
-    data: { content: { count: 6 }, revision: 3, schemaId: "AppVersion_next" },
+    data: { content: { count: 6 }, revision: 3 },
     error: null,
   });
   expect(javascriptSandbox.executeSyncFunction).toHaveBeenCalledWith(

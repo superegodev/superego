@@ -22,9 +22,7 @@ export async function compileApp(
     [
       ...typescriptLibs,
       ...getCollectionTypescriptLibs(targetCollections),
-      ...(state
-        ? [{ path: "/app-state.ts" as const, source: codegen(state.schema) }]
-        : []),
+      { path: "/app-state.ts", source: codegen(state.schema) },
     ],
   );
   if (!result.success) {

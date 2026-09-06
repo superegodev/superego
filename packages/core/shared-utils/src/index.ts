@@ -28,3 +28,4 @@ export {
   isJsonValue,
   appStateContentSchema,
 } from "./appCapabilities.js";
+export { default as emptyAppStateDefinition } from "./emptyAppStateDefinition.js";

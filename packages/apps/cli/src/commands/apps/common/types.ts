@@ -8,13 +8,11 @@ import {
 export interface AppManifest {
   name: string;
   permissions?: AppPermissions | undefined;
-  state?:
-    | {
-        schema: "state.schema.json";
-        initialState: "state.initial.json";
-        migration?: "state.migration.ts" | undefined;
-      }
-    | undefined;
+  state: {
+    schema: "state.schema.json";
+    initialState: "state.initial.json";
+    migration?: "state.migration.ts" | undefined;
+  };
   type: AppType.CollectionView;
   targetCollectionIds: CollectionId[];
 }

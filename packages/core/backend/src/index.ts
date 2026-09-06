@@ -149,9 +149,6 @@ export type { default as AppStateContentNotValid } from "./errors/AppStateConten
 export type { default as AppStateMigrationFailed } from "./errors/AppStateMigrationFailed.js";
 export type { default as AppStateMigrationNotValid } from "./errors/AppStateMigrationNotValid.js";
 export type { default as AppStateMigrationRequired } from "./errors/AppStateMigrationRequired.js";
-export type { default as AppStateNotDefined } from "./errors/AppStateNotDefined.js";
 export type { default as AppStateRevisionNotMatching } from "./errors/AppStateRevisionNotMatching.js";
-export type { default as AppStateSchemaIdNotMatching } from "./errors/AppStateSchemaIdNotMatching.js";
 export type { default as AppStateSchemaNotValid } from "./errors/AppStateSchemaNotValid.js";
-export type { default as AppStateSchemaRemovalNotAllowed } from "./errors/AppStateSchemaRemovalNotAllowed.js";
 export type { default as AppVersionIdNotMatching } from "./errors/AppVersionIdNotMatching.js";

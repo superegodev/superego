@@ -6,20 +6,14 @@ import createPreviewState from "./createPreviewState.js";
 export default function useAppBackend(app: App, preview: boolean) {
   const backend = useBackend();
   const previewState = useMemo(
-    () =>
-      createPreviewState(app.id, app.latestVersion.state, app.latestVersion.id),
-    [app.id, app.latestVersion.state, app.latestVersion.id],
+    () => createPreviewState(app.id, app.latestVersion.state),
+    [app.id, app.latestVersion.state],
   );
   return {
     state: preview
       ? previewState
       : {
-          get: () =>
-            backend.apps.getState(
-              app.id,
-              app.latestVersion.id,
-              app.latestVersion.stateSchemaId ?? null,
-            ),
+          get: () => backend.apps.getState(app.id, app.latestVersion.id),
           update: (
             expectedRevision: number,
             content: Record<string, unknown>,
@@ -27,7 +21,6 @@ export default function useAppBackend(app: App, preview: boolean) {
             backend.apps.updateState(
               app.id,
               app.latestVersion.id,
-              app.latestVersion.stateSchemaId ?? null,
               expectedRevision,
               content,
             ),

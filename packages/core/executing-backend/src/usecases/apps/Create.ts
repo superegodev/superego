@@ -94,9 +94,15 @@ export default class AppsCreate extends BackendUsecase<
       });
     }
 
+    const stateResult = makeInitialAppState(null, state);
+    if (!stateResult.success) {
+      return stateResult;
+    }
+
     const now = new Date();
     const app: AppEntity = {
       id: options.appId ?? Id.generate.app(),
+      state: stateResult.data,
       type: type,
       name: nameValidationResult.output,
       createdAt: now,
@@ -112,12 +118,6 @@ export default class AppsCreate extends BackendUsecase<
       createdAt: now,
     };
 
-    const stateResult = makeInitialAppState(null, state, appVersion.id);
-    if (!stateResult.success) {
-      return stateResult;
-    }
-    app.state = stateResult.data;
-    appVersion.stateSchemaId = app.state?.schemaId;
     await this.repos.app.insert(app);
     await this.repos.appVersion.insert(appVersion);
 

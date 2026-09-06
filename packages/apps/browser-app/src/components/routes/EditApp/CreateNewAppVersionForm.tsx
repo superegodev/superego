@@ -27,7 +27,7 @@ interface FormValues {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
     permissions?: AppPermissions | undefined;
-    state?: AppStateDefinition | undefined;
+    state: AppStateDefinition;
   };
 }
 
@@ -72,9 +72,7 @@ export default function CreateNewAppVersionForm({
       appVersion: {
         targetCollectionIds: validTargetCollectionIds,
         permissions: app.latestVersion.permissions,
-        state: app.latestVersion.state
-          ? { ...app.latestVersion.state, migration: undefined }
-          : undefined,
+        state: { ...app.latestVersion.state, migration: undefined },
         files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
           app.latestVersion.files,
         ),
@@ -103,23 +101,19 @@ export default function CreateNewAppVersionForm({
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
       {
         permissions: appVersion.permissions,
-        state: isEqual(
-          appVersion.state,
-          app.latestVersion.state
-            ? { ...app.latestVersion.state, migration: undefined }
-            : undefined,
-        )
+        state: isEqual(appVersion.state, {
+          ...app.latestVersion.state,
+          migration: undefined,
+        })
           ? undefined
-          : (appVersion.state ?? null),
+          : appVersion.state,
       },
     );
     if (success) {
       reset({
         appVersion: {
           permissions: data.latestVersion.permissions,
-          state: data.latestVersion.state
-            ? { ...data.latestVersion.state, migration: undefined }
-            : undefined,
+          state: { ...data.latestVersion.state, migration: undefined },
           targetCollectionIds: data.latestVersion.targetCollections.map(
             ({ id }) => id,
           ),
@@ -160,7 +154,6 @@ export default function CreateNewAppVersionForm({
       <PersistentStateModal
         control={control}
         name="appVersion"
-        app={app}
         isOpen={isStateModalOpen}
         onClose={onStateModalClose}
       />

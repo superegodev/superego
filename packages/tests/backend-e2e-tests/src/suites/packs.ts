@@ -1,5 +1,6 @@
 import { AppType } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -39,6 +40,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           documents: [],
           apps: [
             {
+              state: emptyAppStateDefinition,
               type: AppType.CollectionView,
               name: "Valid App",
               targetCollectionIds: [],
@@ -341,6 +343,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         collections: [],
         apps: [
           {
+            state: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "Test App",
             targetCollectionIds: [Id.generate.protoCollection(99)],
@@ -716,6 +719,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         ],
         apps: [
           {
+            state: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "My App",
             targetCollectionIds: [Id.generate.protoCollection(0)],
@@ -861,6 +865,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         ],
         apps: [
           {
+            state: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "App",
             targetCollectionIds: [Id.generate.protoCollection(0)],
