@@ -26,5 +26,5 @@ export {
   httpOriginSchema,
   appStateSchema,
   isJsonValue,
-  appStateFailure,
+  appStateContentSchema,
 } from "./appCapabilities.js";

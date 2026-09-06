@@ -1,9 +1,10 @@
-import type { AppStateError } from "@superego/backend";
 import type {
   App,
   AppId,
   AppNameNotValid,
   AppNotFound,
+  AppStateContentNotValid,
+  AppStateSchemaNotValid,
   AppVersion,
   Backend,
   Collection,
@@ -80,7 +81,8 @@ export default class PacksInstall extends BackendUsecase<
     }),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
-      structuralSchemas.backend.errors.appStateError(),
+      structuralSchemas.backend.errors.appStateSchemaNotValid(),
+      structuralSchemas.backend.errors.appStateContentNotValid(),
       structuralSchemas.backend.errors.appNotFound(),
       structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
       structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
@@ -122,7 +124,8 @@ export default class PacksInstall extends BackendUsecase<
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
     | DefaultDocumentViewUiOptionsNotValid
-    | AppStateError
+    | AppStateSchemaNotValid
+    | AppStateContentNotValid
     | AppNameNotValid
     | CollectionNotFound
     | DocumentContentNotValid

@@ -10,6 +10,7 @@ import resultError from "../global/resultError.js";
 import unknownResultError from "../global/unknownResultError.js";
 import {
   appId,
+  appVersionId,
   backgroundJobId,
   collectionCategoryId,
   collectionId,
@@ -38,6 +39,104 @@ export const appNameNotValid = () =>
 
 export const appNotFound = () =>
   resultError("AppNotFound", v.strictObject({ appId: appId() }));
+
+export const appStateContentNotValid = () =>
+  resultError(
+    "AppStateContentNotValid",
+    v.strictObject({
+      appId: v.nullable(appId()),
+      schemaId: appVersionId(),
+      issues: issues(),
+    }),
+  );
+
+export const appStateMigrationFailed = () =>
+  resultError(
+    "AppStateMigrationFailed",
+    v.strictObject({
+      appId: appId(),
+      cause: v.union([
+        executingTypescriptFunctionFailed(),
+        appStateContentNotValid(),
+        unexpectedError(),
+      ]),
+    }),
+  );
+
+export const appStateMigrationNotValid = () =>
+  resultError(
+    "AppStateMigrationNotValid",
+    v.strictObject({
+      appId: appId(),
+      issues: issues(),
+    }),
+  );
+
+export const appStateMigrationRequired = () =>
+  resultError(
+    "AppStateMigrationRequired",
+    v.strictObject({
+      appId: appId(),
+      previousSchemaId: appVersionId(),
+      targetSchemaId: appVersionId(),
+      issues: issues(),
+    }),
+  );
+
+export const appStateNotDefined = () =>
+  resultError(
+    "AppStateNotDefined",
+    v.strictObject({
+      appId: appId(),
+    }),
+  );
+
+export const appStateRevisionNotMatching = () =>
+  resultError(
+    "AppStateRevisionNotMatching",
+    v.strictObject({
+      appId: appId(),
+      latestRevision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
+      suppliedRevision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
+    }),
+  );
+
+export const appStateSchemaIdNotMatching = () =>
+  resultError(
+    "AppStateSchemaIdNotMatching",
+    v.strictObject({
+      appId: appId(),
+      latestSchemaId: appVersionId(),
+      suppliedSchemaId: v.nullable(appVersionId()),
+    }),
+  );
+
+export const appStateSchemaNotValid = () =>
+  resultError(
+    "AppStateSchemaNotValid",
+    v.strictObject({
+      appId: v.nullable(appId()),
+      issues: issues(),
+    }),
+  );
+
+export const appStateSchemaRemovalNotAllowed = () =>
+  resultError(
+    "AppStateSchemaRemovalNotAllowed",
+    v.strictObject({
+      appId: appId(),
+    }),
+  );
+
+export const appVersionIdNotMatching = () =>
+  resultError(
+    "AppVersionIdNotMatching",
+    v.strictObject({
+      appId: appId(),
+      latestVersionId: appVersionId(),
+      suppliedVersionId: appVersionId(),
+    }),
+  );
 
 export const backgroundJobNotFound = () =>
   resultError(
@@ -425,21 +524,3 @@ export const writeTypescriptModuleToolNotCalled = () =>
       { generatedMessage: Message }
     >
   >;
-
-export const appStateError = () =>
-  resultError(
-    "AppStateError",
-    v.strictObject({
-      reason: v.picklist([
-        "StateNotDefined",
-        "SchemaNotValid",
-        "ContentNotValid",
-        "RevisionConflict",
-        "ObsoleteSchema",
-        "ObsoleteVersion",
-        "MigrationRequired",
-        "MigrationFailed",
-        "SchemaRemovalNotAllowed",
-      ]),
-    }),
-  );

@@ -3,7 +3,16 @@ import type { Schema } from "@superego/schema";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
-import type AppStateError from "./errors/AppStateError.js";
+import type AppStateContentNotValid from "./errors/AppStateContentNotValid.js";
+import type AppStateMigrationFailed from "./errors/AppStateMigrationFailed.js";
+import type AppStateMigrationNotValid from "./errors/AppStateMigrationNotValid.js";
+import type AppStateMigrationRequired from "./errors/AppStateMigrationRequired.js";
+import type AppStateNotDefined from "./errors/AppStateNotDefined.js";
+import type AppStateRevisionNotMatching from "./errors/AppStateRevisionNotMatching.js";
+import type AppStateSchemaIdNotMatching from "./errors/AppStateSchemaIdNotMatching.js";
+import type AppStateSchemaNotValid from "./errors/AppStateSchemaNotValid.js";
+import type AppStateSchemaRemovalNotAllowed from "./errors/AppStateSchemaRemovalNotAllowed.js";
+import type AppVersionIdNotMatching from "./errors/AppVersionIdNotMatching.js";
 import type ArgumentsNotValid from "./errors/ArgumentsNotValid.js";
 import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
@@ -558,7 +567,8 @@ export default interface Backend {
       definition: AppDefinition,
     ): ResultPromise<
       App,
-      | AppStateError
+      | AppStateSchemaNotValid
+      | AppStateContentNotValid
       | AppNameNotValid
       | CollectionNotFound
       | ArgumentsNotValid
@@ -584,7 +594,13 @@ export default interface Backend {
       },
     ): ResultPromise<
       App,
-      | AppStateError
+      | AppStateSchemaNotValid
+      | AppStateContentNotValid
+      | AppStateSchemaRemovalNotAllowed
+      | AppStateMigrationRequired
+      | AppStateMigrationNotValid
+      | AppStateMigrationFailed
+      | AppVersionIdNotMatching
       | AppNotFound
       | CollectionNotFound
       | ArgumentsNotValid
@@ -609,7 +625,12 @@ export default interface Backend {
       schemaId: AppVersionId | null,
     ): ResultPromise<
       AppState,
-      AppNotFound | AppStateError | ArgumentsNotValid | UnexpectedError
+      | AppNotFound
+      | AppStateNotDefined
+      | AppStateSchemaIdNotMatching
+      | AppVersionIdNotMatching
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
     updateState(
       id: AppId,
@@ -619,7 +640,14 @@ export default interface Backend {
       content: Record<string, unknown>,
     ): ResultPromise<
       AppState,
-      AppNotFound | AppStateError | ArgumentsNotValid | UnexpectedError
+      | AppNotFound
+      | AppStateNotDefined
+      | AppStateSchemaIdNotMatching
+      | AppVersionIdNotMatching
+      | AppStateRevisionNotMatching
+      | AppStateContentNotValid
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
   };
 
@@ -643,7 +671,8 @@ export default interface Backend {
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
       | DefaultDocumentViewUiOptionsNotValid
-      | AppStateError
+      | AppStateSchemaNotValid
+      | AppStateContentNotValid
       | AppNameNotValid
       | CollectionNotFound
       | DocumentContentNotValid

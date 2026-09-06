@@ -73,40 +73,78 @@ export interface AppState<Content> {
   revision: number;
   schemaId: string;
 }
-export interface AppStateError {
-  name: "AppStateError";
+export interface AppStateNotDefined {
+  name: "AppStateNotDefined";
+  details: { appId: string };
+}
+export interface AppStateSchemaIdNotMatching {
+  name: "AppStateSchemaIdNotMatching";
   details: {
-    reason:
-      | "SchemaNotValid"
-      | "MigrationRequired"
-      | "MigrationFailed"
-      | "SchemaRemovalNotAllowed"
-      | "StateNotDefined"
-      | "ContentNotValid"
-      | "RevisionConflict"
-      | "ObsoleteSchema"
-      | "ObsoleteVersion";
+    appId: string;
+    latestSchemaId: string;
+    suppliedSchemaId: string | null;
+  };
+}
+export interface AppVersionIdNotMatching {
+  name: "AppVersionIdNotMatching";
+  details: {
+    appId: string;
+    latestVersionId: string;
+    suppliedVersionId: string;
+  };
+}
+export interface AppStateRevisionNotMatching {
+  name: "AppStateRevisionNotMatching";
+  details: { appId: string; latestRevision: number; suppliedRevision: number };
+}
+export interface AppStateSchemaNotValid {
+  name: "AppStateSchemaNotValid";
+  details: {
+    appId: string | null;
+    issues: {
+      message: string;
+      path?: { key: string | number }[] | undefined;
+    }[];
+  };
+}
+export interface AppStateContentNotValid {
+  name: "AppStateContentNotValid";
+  details: {
+    appId: string | null;
+    schemaId: string;
+    issues: {
+      message: string;
+      path?: { key: string | number }[] | undefined;
+    }[];
   };
 }
 export interface AppBridgeError {
   name: "AppBridgeError";
   details: { reason: "InvalidArguments" | "TransportFailure" };
 }
-export type AppStateApiError =
-  | AppStateError
+export type GetAppStateError =
+  | AppStateNotDefined
+  | AppStateSchemaIdNotMatching
+  | AppVersionIdNotMatching
+  // Preview initialization can fail validation before any state exists.
+  | AppStateSchemaNotValid
+  | AppStateContentNotValid
   | AppBridgeError
   | {
       name: "AppNotFound" | "ArgumentsNotValid" | "UnexpectedError";
       details: unknown;
     };
+export type UpdateAppStateError =
+  | GetAppStateError
+  | AppStateRevisionNotMatching;
 export declare function useAppState<Content = Record<string, unknown>>(): {
   data: AppState<Content> | undefined;
-  error: AppStateApiError | null;
+  error: GetAppStateError | null;
   isLoading: boolean;
-  /** Reload saved state. Rejects with AppStateApiError on failure. */
+  /** Reload saved state. Rejects with GetAppStateError on failure. */
   refetch(): Promise<void>;
 };
-/** Returns an update function. Rejects with AppStateApiError on failure. */
+/** Returns an update function. Rejects with UpdateAppStateError on failure. */
 export declare function useUpdateAppState<
   Content extends Record<string, unknown> = Record<string, unknown>,
 >(): (update: {

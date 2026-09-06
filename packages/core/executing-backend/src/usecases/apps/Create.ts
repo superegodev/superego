@@ -1,9 +1,10 @@
-import type { AppStateError } from "@superego/backend";
 import type {
   App,
   AppDefinition,
   AppId,
   AppNameNotValid,
+  AppStateContentNotValid,
+  AppStateSchemaNotValid,
   Backend,
   CollectionNotFound,
   UnexpectedError,
@@ -19,12 +20,12 @@ import * as v from "valibot";
 import type AppEntity from "../../entities/AppEntity.js";
 import type AppVersionEntity from "../../entities/AppVersionEntity.js";
 import makeApp from "../../makers/makeApp.js";
+import makeInitialAppState from "../../makers/makeInitialAppState.js";
 import makeResultError from "../../makers/makeResultError.js";
 import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
 import assertCollectionVersionExists from "../../utils/assertCollectionVersionExists.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
-import transitionAppState from "../../utils/transitionAppState.js";
 
 interface AppsCreateOptions {
   appId?: AppId;
@@ -38,7 +39,8 @@ export default class AppsCreate extends BackendUsecase<
     structuralSchemas.backend.types.app(),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
-      structuralSchemas.backend.errors.appStateError(),
+      structuralSchemas.backend.errors.appStateSchemaNotValid(),
+      structuralSchemas.backend.errors.appStateContentNotValid(),
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
@@ -56,7 +58,11 @@ export default class AppsCreate extends BackendUsecase<
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
-    AppStateError | AppNameNotValid | CollectionNotFound | UnexpectedError
+    | AppStateSchemaNotValid
+    | AppStateContentNotValid
+    | AppNameNotValid
+    | CollectionNotFound
+    | UnexpectedError
   > {
     const nameValidationResult = v.safeParse(valibotSchemas.appName(), name);
     if (!nameValidationResult.success) {
@@ -106,13 +112,7 @@ export default class AppsCreate extends BackendUsecase<
       createdAt: now,
     };
 
-    const stateResult = await transitionAppState(
-      state,
-      undefined,
-      undefined,
-      appVersion.id,
-      this.javascriptSandbox,
-    );
+    const stateResult = makeInitialAppState(null, state, appVersion.id);
     if (!stateResult.success) {
       return stateResult;
     }

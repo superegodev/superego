@@ -1,11 +1,11 @@
-import type { AppPermissions, AppStateError } from "@superego/backend";
+import type { AppPermissions } from "@superego/backend";
 import {
   DataType,
+  type Schema,
   type AnyTypeDefinition,
   valibotSchemas as schemaSchemas,
 } from "@superego/schema";
 import * as v from "valibot";
-import makeUnsuccessfulResult from "./makeUnsuccessfulResult.js";
 
 export function normalizeHttpOrigin(value: string): string {
   const url = new URL(value);
@@ -117,9 +117,11 @@ export function isJsonValue(
   ancestors.delete(value);
   return valid;
 }
-export function appStateFailure(reason: AppStateError["details"]["reason"]) {
-  return makeUnsuccessfulResult<AppStateError>({
-    name: "AppStateError",
-    details: { reason },
-  });
+
+export function appStateContentSchema(schema: Schema) {
+  return v.pipe(
+    v.unknown(),
+    v.check(isJsonValue, "App state must be JSON-serializable."),
+    schemaSchemas.content(schema),
+  );
 }

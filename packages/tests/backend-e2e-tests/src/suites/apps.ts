@@ -725,8 +725,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Verify
       expect(invalid.error?.name).toBe("ArgumentsNotValid");
       expect(state.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "StateNotDefined" },
+        name: "AppStateNotDefined",
+        details: { appId: legacy.data.id },
       });
       expect(legacy.data.latestVersion.permissions).toBeUndefined();
     });
@@ -748,12 +748,25 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Verify
       expect(results.filter((result) => result.success)).toHaveLength(1);
       expect(results.find((result) => !result.success)?.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "RevisionConflict" },
+        name: "AppStateRevisionNotMatching",
+        details: {
+          appId: created.data.id,
+          latestRevision: 2,
+          suppliedRevision: 1,
+        },
       });
       expect(invalid.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "ContentNotValid" },
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          schemaId: created.data.latestVersion.stateSchemaId,
+          issues: [
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "count" }],
+            }),
+          ],
+        },
       });
       expect(saved.data?.revision).toBe(2);
     });
@@ -790,8 +803,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(state.data?.revision).toBe(write.success ? 3 : 2);
       if (!write.success) {
         expect(write.error).toEqual({
-          name: "AppStateError",
-          details: { reason: "ObsoleteSchema" },
+          name: "AppStateSchemaIdNotMatching",
+          details: {
+            appId: created.data.id,
+            latestSchemaId: version.data.latestVersion.stateSchemaId,
+            suppliedSchemaId: created.data.latestVersion.stateSchemaId,
+          },
         });
       }
     });
@@ -862,12 +879,28 @@ export default rd<GetDependencies>("Apps", (deps) => {
       );
       // Verify
       expect(missingMigration.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "MigrationRequired" },
+        name: "AppStateMigrationRequired",
+        details: {
+          appId: created.data.id,
+          previousSchemaId: created.data.latestVersion.stateSchemaId,
+          targetSchemaId: expect.stringMatching(/^AppVersion_/),
+          issues: expect.arrayContaining([
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "total" }],
+            }),
+          ]),
+        },
       });
       expect(failedMigration.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "MigrationFailed" },
+        name: "AppStateMigrationFailed",
+        details: {
+          appId: created.data.id,
+          cause: {
+            name: "ExecutingTypescriptFunctionFailed",
+            details: expect.objectContaining({ message: "failure" }),
+          },
+        },
       });
       expect(unchanged.data?.content).toEqual({ count: 0 });
       expect((await read(backend, version.data)).data).toEqual({
@@ -876,12 +909,16 @@ export default rd<GetDependencies>("Apps", (deps) => {
         schemaId: version.data.latestVersion.id,
       });
       expect(obsolete.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "ObsoleteSchema" },
+        name: "AppStateSchemaIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestSchemaId: version.data.latestVersion.stateSchemaId,
+          suppliedSchemaId: created.data.latestVersion.stateSchemaId,
+        },
       });
       expect(removal.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "SchemaRemovalNotAllowed" },
+        name: "AppStateSchemaRemovalNotAllowed",
+        details: { appId: created.data.id },
       });
     });
 
@@ -923,11 +960,244 @@ export default rd<GetDependencies>("Apps", (deps) => {
         count: 16,
       });
       expect(staleVersion.error).toEqual({
-        name: "AppStateError",
-        details: { reason: "ObsoleteVersion" },
+        name: "AppVersionIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
+        },
       });
-      expect(obsolete.error?.name).toBe("AppStateError");
+      expect(obsolete.error).toEqual({
+        name: "AppStateSchemaIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestSchemaId: version.data.latestVersion.stateSchemaId,
+          suppliedSchemaId: created.data.latestVersion.stateSchemaId,
+        },
+      });
       expect(version.data.latestVersion.permissions).toEqual({});
+    });
+
+    it("reports version conflicts for code-only updates without requiring state", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create({
+        ...definition,
+        state: undefined,
+      });
+      assert(created.success);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+      );
+      assert(version.success);
+
+      // Exercise
+      const conflict = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+      );
+      const missingState = await update(backend, version.data, 1, {});
+
+      // Verify
+      expect(conflict.error).toEqual({
+        name: "AppVersionIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
+        },
+      });
+      expect(missingState.error).toEqual({
+        name: "AppStateNotDefined",
+        details: { appId: created.data.id },
+      });
+    });
+
+    it("reports stale app versions separately from stale state schemas", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+      );
+      assert(version.success);
+
+      // Exercise
+      const staleRead = await read(backend, created.data);
+      const staleWrite = await update(backend, created.data, 1, { count: 1 });
+
+      // Verify
+      expect(staleRead.error).toEqual({
+        name: "AppVersionIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
+        },
+      });
+      expect(staleWrite.error).toEqual(staleRead.error);
+      expect((await read(backend, version.data)).data?.revision).toBe(1);
+    });
+
+    it("returns content validation issues for initialization and preserves existing state after invalid updates", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const invalidState = {
+        ...definition.state!,
+        initialState: { count: "invalid" },
+      };
+
+      // Exercise
+      const invalidCreation = await backend.apps.create({
+        ...definition,
+        state: invalidState,
+      });
+      const invalidVersion = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { state: invalidState },
+      );
+      const invalidWrite = await update(backend, created.data, 1, {
+        count: Number.NaN,
+      });
+      const saved = await read(backend, created.data);
+
+      // Verify
+      expect(invalidCreation.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          schemaId: expect.stringMatching(/^AppVersion_/),
+          issues: [
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "count" }],
+            }),
+          ],
+        },
+      });
+      expect(invalidVersion.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          schemaId: expect.stringMatching(/^AppVersion_/),
+          issues: [
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "count" }],
+            }),
+          ],
+        },
+      });
+      expect(invalidWrite.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          schemaId: created.data.latestVersion.stateSchemaId,
+          issues: [
+            expect.objectContaining({
+              message: "App state must be JSON-serializable.",
+            }),
+          ],
+        },
+      });
+      expect(saved.data).toEqual({
+        content: { count: 0 },
+        revision: 1,
+        schemaId: created.data.latestVersion.stateSchemaId,
+      });
+    });
+
+    it("distinguishes invalid migration modules from invalid migration output and rolls back both", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const invalidModule = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          state: {
+            ...definition.state!,
+            migration: { source: "", compiled: "export default 42;" },
+          },
+        },
+      );
+      const invalidOutput = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          state: {
+            ...definition.state!,
+            migration: {
+              source: "",
+              compiled: 'export default () => ({ count: "invalid" });',
+            },
+          },
+        },
+      );
+      const saved = await read(backend, created.data);
+      const apps = await backend.apps.list();
+
+      // Verify
+      expect(invalidModule.error).toEqual({
+        name: "AppStateMigrationNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            {
+              message:
+                "The default export of the migration TypescriptModule is not a function",
+            },
+          ],
+        },
+      });
+      expect(invalidOutput.error).toEqual({
+        name: "AppStateMigrationFailed",
+        details: {
+          appId: created.data.id,
+          cause: {
+            name: "AppStateContentNotValid",
+            details: {
+              appId: created.data.id,
+              schemaId: expect.stringMatching(/^AppVersion_/),
+              issues: [
+                expect.objectContaining({
+                  message: expect.any(String),
+                  path: [{ key: "count" }],
+                }),
+              ],
+            },
+          },
+        },
+      });
+      expect(saved.data).toEqual({
+        content: { count: 0 },
+        revision: 1,
+        schemaId: created.data.latestVersion.stateSchemaId,
+      });
+      expect(
+        apps.data?.find((app) => app.id === created.data.id)?.latestVersion.id,
+      ).toBe(created.data.latestVersion.id);
     });
 
     it("initializes existing apps, preserves compatible content, isolates apps and deletes state", async () => {
@@ -1004,8 +1274,15 @@ export default rd<GetDependencies>("Apps", (deps) => {
         });
         // Verify
         expect(result.error).toEqual({
-          name: "AppStateError",
-          details: { reason: "SchemaNotValid" },
+          name: "AppStateSchemaNotValid",
+          details: {
+            appId: null,
+            issues: expect.arrayContaining([
+              expect.objectContaining({
+                message: "App state cannot contain File or DocumentRef types.",
+              }),
+            ]),
+          },
         });
       },
     );

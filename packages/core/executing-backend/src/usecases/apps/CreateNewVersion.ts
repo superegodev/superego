@@ -1,17 +1,24 @@
-import type { AppStateError, AppVersionId } from "@superego/backend";
 import type {
   App,
   AppId,
   AppNotFound,
+  AppStateContentNotValid,
+  AppStateMigrationFailed,
+  AppStateMigrationNotValid,
+  AppStateMigrationRequired,
+  AppStateSchemaNotValid,
+  AppStateSchemaRemovalNotAllowed,
+  AppVersionId,
+  AppVersionIdNotMatching,
   Backend,
   CollectionId,
   CollectionNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { appPermissionsSchema, appStateFailure } from "@superego/shared-utils";
 import {
   Id,
+  appPermissionsSchema,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
 } from "@superego/shared-utils";
@@ -48,7 +55,13 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     structuralSchemas.backend.types.app(),
     [
       structuralSchemas.backend.errors.appNotFound(),
-      structuralSchemas.backend.errors.appStateError(),
+      structuralSchemas.backend.errors.appStateSchemaNotValid(),
+      structuralSchemas.backend.errors.appStateContentNotValid(),
+      structuralSchemas.backend.errors.appStateSchemaRemovalNotAllowed(),
+      structuralSchemas.backend.errors.appStateMigrationRequired(),
+      structuralSchemas.backend.errors.appStateMigrationNotValid(),
+      structuralSchemas.backend.errors.appStateMigrationFailed(),
+      structuralSchemas.backend.errors.appVersionIdNotMatching(),
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
@@ -62,7 +75,16 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     options: Parameters<Backend["apps"]["createNewVersion"]>[4] = {},
   ): ResultPromise<
     App,
-    AppStateError | AppNotFound | CollectionNotFound | UnexpectedError
+    | AppStateSchemaNotValid
+    | AppStateContentNotValid
+    | AppStateSchemaRemovalNotAllowed
+    | AppStateMigrationRequired
+    | AppStateMigrationNotValid
+    | AppStateMigrationFailed
+    | AppVersionIdNotMatching
+    | AppNotFound
+    | CollectionNotFound
+    | UnexpectedError
   > {
     const app = await this.repos.app.find(id);
     if (!app) {
@@ -76,7 +98,13 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     );
     assertAppVersionExists(app.id, previousVersion);
     if (latestVersionId !== previousVersion.id) {
-      return appStateFailure("ObsoleteVersion");
+      return makeUnsuccessfulResult(
+        makeResultError("AppVersionIdNotMatching", {
+          appId: id,
+          latestVersionId: previousVersion.id,
+          suppliedVersionId: latestVersionId,
+        }),
+      );
     }
 
     const targetCollections: AppVersionEntity["targetCollections"] = [];
@@ -117,6 +145,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     // Omitted state means a code/permissions update; do not replay an old migration.
     if (options.state !== undefined) {
       const stateResult = await transitionAppState(
+        app.id,
         options.state,
         previousVersion.state,
         app.state,

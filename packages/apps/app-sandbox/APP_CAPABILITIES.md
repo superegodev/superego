@@ -123,10 +123,11 @@ apply.
 
 State is shared by all instances of an app and survives reopen and code updates.
 Writes replace the full schema-valid object and require its revision. Conflicts
-return `AppStateError` with reason `RevisionConflict`; refetch and reconcile. No
-File or DocumentRef types are supported, including nested/named definitions.
-Other schema types use the existing JSON representation. Initial content is used
-only when the app first acquires a state schema and never resets saved state.
+return `AppStateRevisionNotMatching`, including the latest and supplied
+revisions; refetch and reconcile. No File or DocumentRef types are supported,
+including nested/named definitions. Other schema types use the existing JSON
+representation. Initial content is used only when the app first acquires a state
+schema and never resets saved state.
 
 New app versions require the expected previous version ID. Compatible state is
 preserved. If it is incompatible, supply a synchronous default-exported
@@ -135,8 +136,15 @@ semantic changes with an unchanged schema. Migrations run in the existing
 isolated JavaScript sandbox without networking or app-editing APIs. Version and
 state commit together or roll back together. Schema transitions reject obsolete
 contexts and advance the state revision and schema identity. Code-only versions
-preserve schema identity and do not replay earlier migrations. Removing a state
-schema is rejected; deleting the app deletes state.
+preserve schema identity and do not replay earlier migrations. State reads and
+writes report `AppStateNotDefined`, `AppStateSchemaIdNotMatching`, or
+`AppVersionIdNotMatching` when their context is unavailable or stale. Invalid
+content is `AppStateContentNotValid`, with validation issues. App version
+creation reports `AppStateSchemaNotValid`, `AppStateMigrationRequired`,
+`AppStateMigrationNotValid`, or `AppStateMigrationFailed` as appropriate.
+Migration failures include a typed cause with execution diagnostics or content
+validation issues. Removing a state schema returns
+`AppStateSchemaRemovalNotAllowed`; deleting the app deletes state.
 
 Permissions use the app version loaded by the host. Reload an app to pick up
 changes made elsewhere. There are no HTTP sessions, instance tokens, lifecycle

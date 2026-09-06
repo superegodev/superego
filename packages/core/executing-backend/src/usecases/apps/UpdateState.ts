@@ -1,18 +1,23 @@
 import type {
-  AppState,
   AppNotFound,
-  AppStateError,
+  AppState,
+  AppStateContentNotValid,
+  AppStateNotDefined,
+  AppStateRevisionNotMatching,
+  AppStateSchemaIdNotMatching,
+  AppVersionIdNotMatching,
+  Backend,
   UnexpectedError,
 } from "@superego/backend";
-import type { Backend } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { valibotSchemas } from "@superego/schema";
 import {
-  appStateFailure,
-  isJsonValue,
+  appStateContentSchema,
+  makeUnsuccessfulResult,
   makeSuccessfulResult,
 } from "@superego/shared-utils";
 import * as v from "valibot";
+import makeResultError from "../../makers/makeResultError.js";
+import makeValidationIssues from "../../makers/makeValidationIssues.js";
 import * as structuralSchemas from "../../structural-schemas/index.js";
 import BackendUsecase from "../../utils/BackendUsecase.js";
 import AppsGetState from "./GetState.js";
@@ -31,7 +36,11 @@ export default class AppsUpdateState extends BackendUsecase<
     structuralSchemas.backend.types.appState(),
     [
       structuralSchemas.backend.errors.appNotFound(),
-      structuralSchemas.backend.errors.appStateError(),
+      structuralSchemas.backend.errors.appStateNotDefined(),
+      structuralSchemas.backend.errors.appStateSchemaIdNotMatching(),
+      structuralSchemas.backend.errors.appVersionIdNotMatching(),
+      structuralSchemas.backend.errors.appStateRevisionNotMatching(),
+      structuralSchemas.backend.errors.appStateContentNotValid(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
@@ -39,24 +48,47 @@ export default class AppsUpdateState extends BackendUsecase<
     ...[id, versionId, schemaId, expectedRevision, content]: Parameters<
       Backend["apps"]["updateState"]
     >
-  ): ResultPromise<AppState, AppNotFound | AppStateError | UnexpectedError> {
+  ): ResultPromise<
+    AppState,
+    | AppNotFound
+    | AppStateNotDefined
+    | AppStateSchemaIdNotMatching
+    | AppVersionIdNotMatching
+    | AppStateRevisionNotMatching
+    | AppStateContentNotValid
+    | UnexpectedError
+  > {
     const result = await this.sub(AppsGetState).exec(id, versionId, schemaId);
     if (!result.success) {
       return result;
     }
     if (result.data.revision !== expectedRevision) {
-      return appStateFailure("RevisionConflict");
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateRevisionNotMatching", {
+          appId: id,
+          latestRevision: result.data.revision,
+          suppliedRevision: expectedRevision,
+        }),
+      );
     }
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);
     if (!version?.state) {
-      return appStateFailure("StateNotDefined");
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateNotDefined", { appId: id }),
+      );
     }
-    if (
-      !isJsonValue(content) ||
-      !v.safeParse(valibotSchemas.content(version.state.schema), content)
-        .success
-    ) {
-      return appStateFailure("ContentNotValid");
+    const contentValidationResult = v.safeParse(
+      appStateContentSchema(version.state.schema),
+      content,
+    );
+    if (!contentValidationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateContentNotValid", {
+          appId: id,
+          schemaId: result.data.schemaId,
+          issues: makeValidationIssues(contentValidationResult.issues),
+        }),
+      );
     }
     const app = (await this.repos.app.find(id))!;
     const state = {

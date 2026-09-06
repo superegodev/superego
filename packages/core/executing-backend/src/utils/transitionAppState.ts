@@ -1,51 +1,61 @@
 import type {
+  AppId,
   AppState,
+  AppStateContentNotValid,
   AppStateDefinition,
-  AppStateError,
+  AppStateMigrationFailed,
+  AppStateMigrationNotValid,
+  AppStateMigrationRequired,
+  AppStateSchemaNotValid,
+  AppStateSchemaRemovalNotAllowed,
   AppVersionId,
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
-import { valibotSchemas } from "@superego/schema";
 import {
-  appStateSchema,
-  appStateFailure,
-  isJsonValue,
+  appStateContentSchema,
+  extractErrorDetails,
   makeSuccessfulResult,
+  makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
 import * as v from "valibot";
+import makeExecutingTypescriptFunctionFailed from "../makers/makeExecutingTypescriptFunctionFailed.js";
+import makeInitialAppState from "../makers/makeInitialAppState.js";
+import makeResultError from "../makers/makeResultError.js";
+import makeValidationIssues from "../makers/makeValidationIssues.js";
 import type JavascriptSandbox from "../requirements/JavascriptSandbox.js";
 
 /** Caller holds the serializable transaction across migration and persistence. */
 export default async function transitionAppState(
-  definition: AppStateDefinition | null | undefined,
+  appId: AppId,
+  definition: AppStateDefinition | null,
   previousDefinition: AppStateDefinition | undefined,
   current: AppState | undefined,
   versionId: AppVersionId,
   javascriptSandbox: JavascriptSandbox,
-): ResultPromise<AppState | undefined, AppStateError> {
+): ResultPromise<
+  AppState | undefined,
+  | AppStateSchemaNotValid
+  | AppStateContentNotValid
+  | AppStateSchemaRemovalNotAllowed
+  | AppStateMigrationRequired
+  | AppStateMigrationNotValid
+  | AppStateMigrationFailed
+> {
   if (!definition) {
-    return current
-      ? appStateFailure("SchemaRemovalNotAllowed")
-      : makeSuccessfulResult(undefined);
+    if (current) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateSchemaRemovalNotAllowed", { appId }),
+      );
+    }
+    return makeSuccessfulResult(undefined);
   }
-  if (!v.safeParse(appStateSchema(), definition.schema).success) {
-    return appStateFailure("SchemaNotValid");
+
+  const initialStateResult = makeInitialAppState(appId, definition, versionId);
+  if (!initialStateResult.success || !current) {
+    return initialStateResult;
   }
-  const contentSchema = valibotSchemas.content(definition.schema);
-  if (
-    !isJsonValue(definition.initialState) ||
-    !v.safeParse(contentSchema, definition.initialState).success
-  ) {
-    return appStateFailure("ContentNotValid");
-  }
-  if (!current) {
-    return makeSuccessfulResult({
-      content: definition.initialState,
-      revision: 1,
-      schemaId: versionId,
-    });
-  }
+
   let content = current.content;
   if (definition.migration) {
     try {
@@ -54,25 +64,71 @@ export default async function transitionAppState(
           definition.migration,
         ))
       ) {
-        return appStateFailure("MigrationFailed");
+        return makeUnsuccessfulResult(
+          makeResultError("AppStateMigrationNotValid", {
+            appId,
+            issues: [
+              {
+                message:
+                  "The default export of the migration TypescriptModule is not a function",
+              },
+            ],
+          }),
+        );
       }
       const result = await javascriptSandbox.executeSyncFunction(
         definition.migration,
         [content],
       );
       if (!result.success) {
-        return appStateFailure("MigrationFailed");
+        return makeUnsuccessfulResult(
+          makeResultError("AppStateMigrationFailed", {
+            appId,
+            cause: makeExecutingTypescriptFunctionFailed(result.error),
+          }),
+        );
       }
       content = result.data;
-    } catch {
-      return appStateFailure("MigrationFailed");
+    } catch (error) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateMigrationFailed", {
+          appId,
+          cause: makeResultError("UnexpectedError", {
+            cause: extractErrorDetails(error),
+          }),
+        }),
+      );
     }
   }
-  if (!isJsonValue(content) || !v.safeParse(contentSchema, content).success) {
-    return appStateFailure(
-      definition.migration ? "MigrationFailed" : "MigrationRequired",
+
+  const contentValidationResult = v.safeParse(
+    appStateContentSchema(definition.schema),
+    content,
+  );
+  if (!contentValidationResult.success) {
+    const issues = makeValidationIssues(contentValidationResult.issues);
+    if (definition.migration) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateMigrationFailed", {
+          appId,
+          cause: makeResultError("AppStateContentNotValid", {
+            appId,
+            schemaId: versionId,
+            issues,
+          }),
+        }),
+      );
+    }
+    return makeUnsuccessfulResult(
+      makeResultError("AppStateMigrationRequired", {
+        appId,
+        previousSchemaId: current.schemaId,
+        targetSchemaId: versionId,
+        issues,
+      }),
     );
   }
+
   const transitioned =
     !!definition.migration ||
     !isEqual(definition.schema, previousDefinition?.schema);

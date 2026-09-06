@@ -1,10 +1,13 @@
 import type {
-  AppState,
-  AppStateError,
   AppNotFound,
+  AppState,
+  AppStateContentNotValid,
+  AppStateNotDefined,
+  AppStateRevisionNotMatching,
+  AppStateSchemaIdNotMatching,
+  AppStateSchemaNotValid,
+  AppVersionIdNotMatching,
   ArgumentsNotValid,
-} from "@superego/backend";
-import type {
   CollectionId,
   CollectionNotFound,
   Document,
@@ -27,12 +30,20 @@ export interface AppBridgeError {
   name: "AppBridgeError";
   details: { reason: "InvalidArguments" | "TransportFailure" };
 }
-export type AppStateApiError =
-  | AppStateError
+export type GetAppStateError =
+  | AppStateNotDefined
+  | AppStateSchemaIdNotMatching
+  | AppVersionIdNotMatching
+  // Preview initialization can fail validation before any state exists.
+  | AppStateSchemaNotValid
+  | AppStateContentNotValid
   | AppNotFound
   | ArgumentsNotValid
   | UnexpectedError
   | AppBridgeError;
+export type UpdateAppStateError =
+  | GetAppStateError
+  | AppStateRevisionNotMatching;
 
 export default class Backend {
   constructor(private sandboxIpc: SandboxIpc) {
@@ -101,13 +112,13 @@ export default class Backend {
 
   /** Each iframe owns one QueryClient and one host-established app context. */
   readonly stateQueryKey = ["appState", crypto.randomUUID()];
-  getState(): ResultPromise<AppState, AppStateApiError> {
+  getState(): ResultPromise<AppState, GetAppStateError> {
     return this.invokeMethod("state", "get", []);
   }
   updateState(
     expectedRevision: number,
     content: Record<string, unknown>,
-  ): ResultPromise<AppState, AppStateApiError> {
+  ): ResultPromise<AppState, UpdateAppStateError> {
     return this.invokeMethod("state", "update", [expectedRevision, content]);
   }
 

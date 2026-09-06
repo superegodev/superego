@@ -1,12 +1,12 @@
 import type { AppState } from "@superego/backend";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import type { AppStateApiError } from "../business-logic/backend/Backend.js";
+import type { GetAppStateError } from "../business-logic/backend/Backend.js";
 import useBackend from "../business-logic/backend/useBackend.js";
 import newestAppState from "./newestAppState.js";
 
 interface UseAppState<Content> {
   data: AppState<Content> | undefined;
-  error: AppStateApiError | null;
+  error: GetAppStateError | null;
   isLoading: boolean;
   refetch(): Promise<void>;
 }
@@ -18,7 +18,7 @@ export default function useAppState<
   const queryClient = useQueryClient();
   const { data, error, isLoading, refetch } = useQuery<
     AppState<Content>,
-    AppStateApiError
+    GetAppStateError
   >({
     queryKey: backend.stateQueryKey,
     queryFn: async () => {

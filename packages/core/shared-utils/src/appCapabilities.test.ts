@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   appPermissionsSchema,
   appStateSchema,
+  appStateContentSchema,
   normalizeHttpOrigin,
   isJsonValue,
 } from "./appCapabilities.js";
@@ -95,3 +96,51 @@ it.each([DataType.File, DataType.DocumentRef])(
     expect(result.success).toBe(false);
   },
 );
+
+it("validates JSON compatibility before traversing cyclic state content", () => {
+  // Setup SUT
+  const content: Record<string, unknown> = {};
+  content["self"] = content;
+  const schema = appStateContentSchema({
+    types: {
+      State: {
+        dataType: DataType.Struct,
+        properties: { count: { dataType: DataType.Number } },
+      },
+    },
+    rootType: "State",
+  });
+
+  // Exercise
+  const result = v.safeParse(schema, content);
+
+  // Verify
+  expect(result.success).toBe(false);
+  expect(result.issues).toEqual([
+    expect.objectContaining({
+      message: "App state must be JSON-serializable.",
+    }),
+  ]);
+});
+
+it("retains content schema paths for JSON-compatible invalid state", () => {
+  // Setup SUT
+  const schema = appStateContentSchema({
+    types: {
+      State: {
+        dataType: DataType.Struct,
+        properties: { count: { dataType: DataType.Number } },
+      },
+    },
+    rootType: "State",
+  });
+
+  // Exercise
+  const invalid = v.safeParse(schema, { count: "invalid" });
+  const valid = v.safeParse(schema, { count: 1 });
+
+  // Verify
+  expect(invalid.success).toBe(false);
+  expect(invalid.issues?.[0]?.path?.map(({ key }) => key)).toEqual(["count"]);
+  expect(valid.success).toBe(true);
+});

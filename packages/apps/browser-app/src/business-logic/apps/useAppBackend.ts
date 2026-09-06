@@ -6,8 +6,9 @@ import createPreviewState from "./createPreviewState.js";
 export default function useAppBackend(app: App, preview: boolean) {
   const backend = useBackend();
   const previewState = useMemo(
-    () => createPreviewState(app.latestVersion.state, app.latestVersion.id),
-    [app.latestVersion.state, app.latestVersion.id],
+    () =>
+      createPreviewState(app.id, app.latestVersion.state, app.latestVersion.id),
+    [app.id, app.latestVersion.state, app.latestVersion.id],
   );
   return {
     state: preview
