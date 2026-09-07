@@ -28,7 +28,7 @@ export default class AppsUpdateState extends BackendUsecase<
     structuralSchemas.backend.ids.appId(),
     structuralSchemas.backend.ids.appVersionId(),
     v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
-    v.record(v.string(), v.unknown()),
+    v.any(),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.appState(),

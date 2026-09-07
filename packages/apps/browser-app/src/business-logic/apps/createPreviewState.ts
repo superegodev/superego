@@ -71,7 +71,7 @@ export default function createPreviewState(
     },
     update: async (
       latestRevision: number,
-      content: Record<string, unknown>,
+      content: any,
     ): ResultPromise<
       AppState,
       | AppStateSchemaNotValid

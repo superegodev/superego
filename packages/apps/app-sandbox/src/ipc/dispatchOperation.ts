@@ -28,7 +28,7 @@ export interface HostBackend {
         >;
         update: (
           latestRevision: number,
-          content: Record<string, unknown>,
+          content: any,
         ) => ResultPromise<
           AppState,
           | Exclude<
@@ -109,10 +109,7 @@ export default async function dispatchOperation(
         objectAt(1) &&
         backend.state
       ) {
-        return backend.state.update(
-          args[0] as number,
-          args[1] as Record<string, unknown>,
-        );
+        return backend.state.update(args[0] as number, args[1]);
       }
       break;
   }

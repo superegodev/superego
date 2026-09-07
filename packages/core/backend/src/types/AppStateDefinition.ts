@@ -3,7 +3,7 @@ import type TypescriptModule from "./TypescriptModule.js";
 
 export default interface AppStateDefinition {
   schema: Schema;
-  initialState: Record<string, unknown>;
+  initialState: any;
   /** Default-exported synchronous (previousContent) => nextContent function. */
   migration: TypescriptModule | null;
 }

@@ -14,7 +14,7 @@ export default function useAppBackend(app: App, preview: boolean) {
       ? previewState
       : {
           get: () => backend.apps.getState(app.id, app.latestVersion.id),
-          update: (latestRevision: number, content: Record<string, unknown>) =>
+          update: (latestRevision: number, content: any) =>
             backend.apps.updateState(
               app.id,
               app.latestVersion.id,

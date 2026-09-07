@@ -113,7 +113,7 @@ export default class Backend {
   }
   updateState(
     latestRevision: number,
-    content: Record<string, unknown>,
+    content: any,
   ): ResultPromise<AppState, UpdateAppStateError> {
     return this.invokeMethod("state", "update", [latestRevision, content]);
   }

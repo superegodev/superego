@@ -121,7 +121,7 @@ export type GetAppStateError =
 export type UpdateAppStateError =
   | GetAppStateError
   | AppStateRevisionNotMatching;
-export declare function useAppState<Content = Record<string, unknown>>(): {
+export declare function useAppState<Content = any>(): {
   data: AppState<Content> | undefined;
   error: GetAppStateError | null;
   isLoading: boolean;
@@ -129,9 +129,7 @@ export declare function useAppState<Content = Record<string, unknown>>(): {
   refetch(): Promise<void>;
 };
 /** Returns an update function. Rejects with UpdateAppStateError on failure. */
-export declare function useUpdateAppState<
-  Content extends Record<string, unknown> = Record<string, unknown>,
->(): (update: {
+export declare function useUpdateAppState<Content = any>(): (update: {
   latestRevision: number;
   content: Content;
 }) => Promise<AppState<Content>>;

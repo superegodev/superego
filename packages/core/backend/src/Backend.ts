@@ -629,7 +629,7 @@ export default interface Backend {
       id: AppId,
       versionId: AppVersionId,
       latestRevision: number,
-      content: Record<string, unknown>,
+      content: any,
     ): ResultPromise<
       AppState,
       | AppNotFound

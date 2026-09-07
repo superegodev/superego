@@ -11,9 +11,7 @@ interface UseAppState<Content> {
   refetch(): Promise<void>;
 }
 
-export default function useAppState<
-  Content = Record<string, unknown>,
->(): UseAppState<Content> {
+export default function useAppState<Content = any>(): UseAppState<Content> {
   const backend = useBackend();
   const queryClient = useQueryClient();
   const { data, error, isLoading, refetch } = useQuery<

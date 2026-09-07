@@ -698,7 +698,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       backend: Backend,
       app: App,
       revision: number,
-      content: Record<string, unknown>,
+      content: any,
     ) =>
       backend.apps.updateState(app.id, app.latestVersion.id, revision, content);
 
@@ -1305,6 +1305,32 @@ export default rd<GetDependencies>("Apps", (deps) => {
         revision: 1,
       });
     });
+
+    it.each([null, 42, "invalid", []].map((content) => ({ content })))(
+      "rejects non-object state content through schema validation: %j",
+      async ({ content }) => {
+        // Setup SUT
+        const { backend } = deps();
+        const created = await backend.apps.create(definition);
+        assert(created.success);
+
+        // Exercise
+        const invalidCreation = await backend.apps.create({
+          ...definition,
+          stateDefinition: {
+            ...definition.stateDefinition,
+            initialState: content,
+          },
+        });
+        const invalidWrite = await update(backend, created.data, 1, content);
+        const saved = await read(backend, created.data);
+
+        // Verify
+        expect(invalidCreation.error?.name).toBe("AppStateContentNotValid");
+        expect(invalidWrite.error?.name).toBe("AppStateContentNotValid");
+        expect(saved.data).toEqual({ content: { count: 0 }, revision: 1 });
+      },
+    );
 
     it("distinguishes invalid migration modules from invalid migration output and rolls back both", async () => {
       // Setup SUT

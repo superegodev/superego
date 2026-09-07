@@ -1,4 +1,4 @@
-export default interface AppState<Content = Record<string, unknown>> {
+export default interface AppState<Content = any> {
   content: Content;
   revision: number;
 }

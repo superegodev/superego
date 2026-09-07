@@ -31,7 +31,7 @@ export function readStateSource(path: string) {
   }
   return {
     schema,
-    initialState: initialState as Record<string, unknown>,
+    initialState,
     migration: manifest.stateDefinition.migration
       ? readFileSync(join(path, manifest.stateDefinition.migration), "utf8")
       : null,

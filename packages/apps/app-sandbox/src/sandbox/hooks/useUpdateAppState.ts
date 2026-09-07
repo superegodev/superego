@@ -4,9 +4,7 @@ import { useCallback } from "react";
 import useBackend from "../business-logic/backend/useBackend.js";
 import newestAppState from "./newestAppState.js";
 
-export default function useUpdateAppState<
-  Content extends Record<string, unknown> = Record<string, unknown>,
->(): (update: {
+export default function useUpdateAppState<Content = any>(): (update: {
   latestRevision: number;
   content: Content;
 }) => Promise<AppState<Content>> {

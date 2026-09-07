@@ -83,7 +83,7 @@ export function appStateDefinition() {
   return v.strictObject({
     schema: schemaShape() as unknown as v.GenericSchema<unknown, Schema>,
     initialState: v.pipe(
-      v.record(v.string(), v.unknown()),
+      v.any(),
       v.check((value) => isJsonValue(value)),
     ),
     migration: v.nullable(typescriptModule()),
@@ -92,7 +92,7 @@ export function appStateDefinition() {
 export function appState() {
   return v.strictObject({
     content: v.pipe(
-      v.record(v.string(), v.unknown()),
+      v.any(),
       v.check((value) => isJsonValue(value)),
     ),
     revision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
