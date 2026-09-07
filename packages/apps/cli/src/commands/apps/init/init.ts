@@ -1,11 +1,11 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
-import * as structuralSchemas from "@superego/executing-backend/structural-schemas";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
+import appPermissionsSchema from "../common/appPermissionsSchema.js";
 import { readAppsArgs, requireArgsFile } from "../common/args.js";
 import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
@@ -19,7 +19,7 @@ import writeAppProject from "../common/writeAppProject.js";
 const argsSchema = v.strictObject({
   path: v.string(),
   name: v.optional(v.string()),
-  permissions: v.optional(structuralSchemas.backend.types.appPermissions()),
+  permissions: v.optional(appPermissionsSchema()),
   collection: v.optional(v.array(v.string())),
 });
 

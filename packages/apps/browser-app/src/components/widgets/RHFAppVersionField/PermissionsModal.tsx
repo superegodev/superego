@@ -1,5 +1,4 @@
 import type { AppPermissions } from "@superego/backend";
-import * as structuralSchemas from "@superego/executing-backend/structural-schemas";
 import { normalizeHttpOrigin } from "@superego/shared-utils";
 import { useRef } from "react";
 import {
@@ -40,10 +39,7 @@ export default function PermissionsModal<T extends FieldValues>({
   }
   const setOrigins = (allowedOrigins: string[]) =>
     permissionsField.onChange({ ...permissions, http: { allowedOrigins } });
-  const validation = v.safeParse(
-    structuralSchemas.backend.types.appPermissions(),
-    permissions,
-  );
+  const validation = v.safeParse(forms.schemas.appPermissions(), permissions);
   return (
     <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
       <ModalDialog.Heading>

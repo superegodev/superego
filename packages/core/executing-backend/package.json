@@ -7,9 +7,6 @@
     ".": {
       "import": "./src/index.ts"
     },
-    "./structural-schemas": {
-      "import": "./src/structural-schemas/index.ts"
-    },
     "./tests": {
       "import": "./src/testsIndex.ts"
     }

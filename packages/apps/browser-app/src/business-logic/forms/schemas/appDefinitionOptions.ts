@@ -1,12 +1,12 @@
-import * as structuralSchemas from "@superego/executing-backend/structural-schemas";
 import { valibotSchemas } from "@superego/shared-utils";
 import type { IntlShape } from "react-intl";
 import * as v from "valibot";
+import appPermissions from "./appPermissions.js";
 import typescriptModule from "./typescriptModule.js";
 
 export default function appDefinitionOptions(intl: IntlShape) {
   return {
-    permissions: structuralSchemas.backend.types.appPermissions(),
+    permissions: appPermissions(),
     stateDefinition: v.pipe(
       v.strictObject({
         schema: valibotSchemas.appStateSchema(),
