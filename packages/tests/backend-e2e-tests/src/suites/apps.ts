@@ -764,7 +764,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       permissions: {
         downloads: false,
         modals: true,
-        http: { allowedOrigins: ["https://EXAMPLE.com:443/"] },
+        http: { allowedOrigins: ["https://example.com"] },
       },
     };
     const read = (backend: Backend, app: App) =>
@@ -912,7 +912,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       );
     });
 
-    it("normalizes permissions, initializes once, preserves state and permissions on code updates", async () => {
+    it("initializes once and preserves state and permissions on code updates", async () => {
       // Setup SUT
       const { backend } = deps();
       // Exercise

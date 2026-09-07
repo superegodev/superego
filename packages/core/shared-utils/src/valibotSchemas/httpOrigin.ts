@@ -6,12 +6,10 @@ export default function httpOrigin() {
     v.string(),
     v.check((origin) => {
       try {
-        normalizeHttpOrigin(origin);
-        return true;
+        return normalizeHttpOrigin(origin) === origin;
       } catch {
         return false;
       }
-    }, "Expected an HTTP(S) origin."),
-    v.transform(normalizeHttpOrigin),
+    }, "Expected a normalized HTTP(S) origin without a trailing slash."),
   );
 }

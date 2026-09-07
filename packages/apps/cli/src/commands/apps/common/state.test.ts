@@ -44,7 +44,7 @@ it("round-trips permissions and state source independently of saved content", as
       permissions: {
         modals: false,
         downloads: true,
-        http: { allowedOrigins: ["HTTPS://EXAMPLE.COM:443"] },
+        http: { allowedOrigins: ["https://example.com"] },
       },
       stateDefinition: {
         schema: "state.schema.json",
