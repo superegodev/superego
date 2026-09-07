@@ -8,12 +8,11 @@ import DemoDataRepositories from "./DemoDataRepositories.js";
 import DemoConversationTextSearchIndex from "./repositories/DemoConversationTextSearchIndex.js";
 import DemoDocumentTextSearchIndex from "./repositories/DemoDocumentTextSearchIndex.js";
 import clone from "./utils/clone.js";
-import migrateAppState from "./utils/migrateAppState.js";
 
 const OVERWRITE = "OVERWRITE";
 
 export default class DemoDataRepositoriesManager implements DataRepositoriesManager {
-  private databaseVersion = 2;
+  private databaseVersion = 1;
   private objectStoreName = "data";
   private objectStoreDataKeyPath = "id";
   private objectStoreDataKeyValue = "data";
@@ -127,28 +126,6 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
     }
   }
 
-  private upgradeDatabase(event: IDBVersionChangeEvent) {
-    const request = event.target as IDBOpenDBRequest;
-    const database = request.result;
-    if (!database.objectStoreNames.contains(this.objectStoreName)) {
-      database.createObjectStore(this.objectStoreName, {
-        keyPath: this.objectStoreDataKeyPath,
-      });
-      return;
-    }
-    if (event.oldVersion < 2) {
-      const store = request.transaction!.objectStore(this.objectStoreName);
-      const read: IDBRequest<{ id: string; data: Data } | undefined> =
-        store.get(this.objectStoreDataKeyValue);
-      read.onsuccess = () => {
-        if (read.result) {
-          migrateAppState(read.result.data);
-          store.put(read.result);
-        }
-      };
-    }
-  }
-
   private async writeData(data: Data, initialVersion: string): Promise<void> {
     if (this.inMemory) {
       if (
@@ -164,7 +141,14 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
 
     return new Promise((resolve, reject) => {
       const openReq = indexedDB.open(this.databaseName, this.databaseVersion);
-      openReq.onupgradeneeded = (event) => this.upgradeDatabase(event);
+      openReq.onupgradeneeded = (evt) => {
+        const db = (evt.target as IDBOpenDBRequest).result;
+        if (!db.objectStoreNames.contains(this.objectStoreName)) {
+          db.createObjectStore(this.objectStoreName, {
+            keyPath: this.objectStoreDataKeyPath,
+          });
+        }
+      };
       openReq.onerror = (evt) => {
         this.logError(
           `Failed opening IndexedDb database ${this.databaseName} version ${this.databaseVersion}`,
@@ -248,7 +232,14 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
 
     return new Promise((resolve, reject) => {
       const openReq = indexedDB.open(this.databaseName, this.databaseVersion);
-      openReq.onupgradeneeded = (event) => this.upgradeDatabase(event);
+      openReq.onupgradeneeded = (evt) => {
+        const db = (evt.target as IDBOpenDBRequest).result;
+        if (!db.objectStoreNames.contains(this.objectStoreName)) {
+          db.createObjectStore(this.objectStoreName, {
+            keyPath: this.objectStoreDataKeyPath,
+          });
+        }
+      };
       openReq.onerror = (evt) => {
         this.logError(
           `Failed opening IndexedDb database ${this.databaseName} version ${this.databaseVersion}`,
