@@ -46,6 +46,7 @@ export type { default as TypescriptCompiler } from "./requirements/TypescriptCom
 // Usecases //
 //////////////
 
+export { default as AppsCreateNewVersion } from "./usecases/apps/CreateNewVersion.js";
 export { default as CollectionCategoriesCreate } from "./usecases/collection-categories/Create.js";
 export { default as CollectionCategoriesDelete } from "./usecases/collection-categories/Delete.js";
 export { default as CollectionCategoriesList } from "./usecases/collection-categories/List.js";

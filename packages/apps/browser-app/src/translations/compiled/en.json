@@ -4360,6 +4360,12 @@
       "value": "."
     }
   ],
+  "appDefinitionOptions.ts_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+    }
+  ],
   "appDefinitionOptions.ts_epKnft": [
     {
       "type": 0,

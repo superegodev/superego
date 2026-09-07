@@ -107,3 +107,35 @@ it("compiles an explicit null migration without a migration source file", async 
     rmSync(path, { recursive: true });
   }
 });
+
+it("rejects invalid permissions while reading local app state source", async () => {
+  // Setup SUT
+  const path = mkdtempSync(join(tmpdir(), "superego-app-sources-"));
+  try {
+    await writeManifest(path, {
+      name: "App",
+      type: AppType.CollectionView,
+      targetCollectionIds: [],
+      permissions: {
+        ...defaultAppPermissions,
+        http: { allowedOrigins: ["https://example.com/"] },
+      },
+      stateDefinition: {
+        schema: "state.schema.json",
+        initialState: "state.initial.json",
+        migration: null,
+      },
+    });
+    await writeStateSource(path, emptyAppStateDefinition);
+
+    // Exercise
+    const readSource = () => readStateSource(path);
+
+    // Verify
+    expect(readSource).toThrow(
+      "Expected a normalized HTTP(S) origin without a trailing slash.",
+    );
+  } finally {
+    rmSync(path, { recursive: true });
+  }
+});

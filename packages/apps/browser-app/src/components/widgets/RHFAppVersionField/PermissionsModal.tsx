@@ -1,5 +1,5 @@
 import type { AppPermissions } from "@superego/backend";
-import { normalizeHttpOrigin } from "@superego/shared-utils";
+import { normalizeHttpOrigin, valibotSchemas } from "@superego/shared-utils";
 import { useRef } from "react";
 import {
   useController,
@@ -39,7 +39,9 @@ export default function PermissionsModal<T extends FieldValues>({
   }
   const setOrigins = (allowedOrigins: string[]) =>
     permissionsField.onChange({ ...permissions, http: { allowedOrigins } });
-  const validation = v.safeParse(forms.schemas.appPermissions(), permissions);
+  const originsValid = origins.every((origin) =>
+    v.is(valibotSchemas.httpOrigin(), origin),
+  );
   return (
     <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
       <ModalDialog.Heading>
@@ -136,17 +138,13 @@ export default function PermissionsModal<T extends FieldValues>({
         </p>
       </fieldset>
 
-      {!validation.success ? (
+      {!originsValid ? (
         <p role="alert">
           <FormattedMessage defaultMessage="Enter a valid HTTP(S) origin without a path, query, or fragment." />
         </p>
       ) : null}
       <ModalDialog.Actions>
-        <Button
-          onPress={onClose}
-          isDisabled={!validation.success}
-          variant="primary"
-        >
+        <Button onPress={onClose} isDisabled={!originsValid} variant="primary">
           <FormattedMessage defaultMessage="Done" />
         </Button>
       </ModalDialog.Actions>

@@ -1,11 +1,12 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
+import { AppsCreateNewVersion } from "@superego/executing-backend";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
+import getUsecaseArgumentsSchema from "../../../utils/getUsecaseArgumentsSchema.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
-import appPermissionsSchema from "../common/appPermissionsSchema.js";
 import { readAppsArgs, requireArgsFile } from "../common/args.js";
 import assertEmptyTarget from "../common/assertEmptyTarget.js";
 import {
@@ -19,7 +20,9 @@ import writeAppProject from "../common/writeAppProject.js";
 const argsSchema = v.strictObject({
   path: v.string(),
   name: v.optional(v.string()),
-  permissions: v.optional(appPermissionsSchema()),
+  permissions: v.optional(
+    getUsecaseArgumentsSchema(AppsCreateNewVersion).items[4],
+  ),
   collection: v.optional(v.array(v.string())),
 });
 
