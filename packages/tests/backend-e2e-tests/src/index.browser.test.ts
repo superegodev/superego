@@ -60,13 +60,12 @@ registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
     ? { ...defaultGlobalSettings, inference: inferenceSettings }
     : defaultGlobalSettings;
 
-  const dataRepositoriesManager = new DemoDataRepositoriesManager(
-    effectiveGlobalSettings,
-    crypto.randomUUID(),
-  );
   return {
     backend: new ExecutingBackend(
-      dataRepositoriesManager,
+      new DemoDataRepositoriesManager(
+        effectiveGlobalSettings,
+        crypto.randomUUID(),
+      ),
       new FakeJavascriptSandbox(),
       new MonacoTypescriptCompiler(() => import("monaco-editor")),
       inferenceService
