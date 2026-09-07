@@ -7,7 +7,7 @@ import fuelLogsAppSource from "./fuelLogs.appSource.tsx?raw";
 export default {
   permissions: defaultAppPermissions,
   type: AppType.CollectionView,
-  state: emptyAppStateDefinition,
+  stateDefinition: emptyAppStateDefinition,
   name: "Fuel Stats",
   targetCollectionIds: ["ProtoCollection_0"],
   files: {

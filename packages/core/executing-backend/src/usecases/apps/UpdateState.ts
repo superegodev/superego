@@ -41,7 +41,7 @@ export default class AppsUpdateState extends BackendUsecase<
     ],
   );
   async exec(
-    ...[id, versionId, expectedRevision, content]: Parameters<
+    ...[id, versionId, latestRevision, content]: Parameters<
       Backend["apps"]["updateState"]
     >
   ): ResultPromise<
@@ -56,12 +56,12 @@ export default class AppsUpdateState extends BackendUsecase<
     if (!result.success) {
       return result;
     }
-    if (result.data.revision !== expectedRevision) {
+    if (result.data.revision !== latestRevision) {
       return makeUnsuccessfulResult(
         makeResultError("AppStateRevisionNotMatching", {
           appId: id,
           latestRevision: result.data.revision,
-          suppliedRevision: expectedRevision,
+          suppliedRevision: latestRevision,
         }),
       );
     }

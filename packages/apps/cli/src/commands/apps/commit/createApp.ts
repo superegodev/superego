@@ -17,7 +17,7 @@ export default async function createApp({
   const result = await backend.apps.create({
     type: manifest.type,
     permissions: manifest.permissions,
-    state: await compileState(path),
+    stateDefinition: await compileState(path),
     name: manifest.name,
     targetCollectionIds: manifest.targetCollectionIds,
     files: { "/main.tsx": mainModule },

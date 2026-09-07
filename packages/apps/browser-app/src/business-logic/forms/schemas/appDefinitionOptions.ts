@@ -11,7 +11,7 @@ import typescriptModule from "./typescriptModule.js";
 export default function appDefinitionOptions(intl: IntlShape) {
   return {
     permissions: appPermissionsSchema(),
-    state: v.pipe(
+    stateDefinition: v.pipe(
       v.strictObject({
         schema: appStateSchema(),
         initialState: v.pipe(
@@ -21,9 +21,11 @@ export default function appDefinitionOptions(intl: IntlShape) {
         migration: v.nullable(typescriptModule(intl)),
       }),
       v.check(
-        (state) =>
-          v.safeParse(valibotSchemas.content(state.schema), state.initialState)
-            .success,
+        (stateDefinition) =>
+          v.safeParse(
+            valibotSchemas.content(stateDefinition.schema),
+            stateDefinition.initialState,
+          ).success,
         intl.formatMessage({
           defaultMessage: "Initial state must match the state schema",
         }),

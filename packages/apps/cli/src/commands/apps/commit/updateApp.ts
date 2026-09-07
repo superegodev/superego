@@ -27,7 +27,7 @@ export default async function updateApp({
     changes.sourceChanged ||
     changes.targetCollectionsChanged ||
     changes.permissionsChanged ||
-    changes.stateChanged
+    changes.stateDefinitionChanged
   ) {
     app = await createAppVersion({
       backend,

@@ -22,16 +22,20 @@ export default function StateDefinitionFields({
   name: string;
 }) {
   const intl = useIntl();
-  const { field: stateField, fieldState: stateFieldState } = useController({
+  const { field: stateDefinitionField, fieldState: stateFieldState } =
+    useController({
+      control,
+      name: `${name}.stateDefinition`,
+    });
+  const stateDefinition: AppStateDefinition = useWatch({
     control,
-    name: `${name}.state`,
-  });
-  const state: AppStateDefinition = useWatch({
-    control,
-    name: `${name}.state`,
+    name: `${name}.stateDefinition`,
   });
   const [trialResult, setTrialResult] = useState<string>();
-  const stateValid = v.safeParse(appStateSchema(), state.schema).success;
+  const stateDefinitionValid = v.safeParse(
+    appStateSchema(),
+    stateDefinition.schema,
+  ).success;
   return (
     <>
       <fieldset className={cs.StateDefinitionFields.fieldset}>
@@ -44,12 +48,12 @@ export default function StateDefinitionFields({
           ))}
         <JsonField
           control={control}
-          name={`${name}.state.schema`}
+          name={`${name}.stateDefinition.schema`}
           label={intl.formatMessage({ defaultMessage: "State schema" })}
         />
         <JsonField
           control={control}
-          name={`${name}.state.initialState`}
+          name={`${name}.stateDefinition.initialState`}
           label={intl.formatMessage({ defaultMessage: "Initial state" })}
         />
         <p>
@@ -58,10 +62,10 @@ export default function StateDefinitionFields({
         <label>
           <input
             type="checkbox"
-            checked={!!state.migration}
+            checked={!!stateDefinition.migration}
             onChange={(event) =>
-              stateField.onChange({
-                ...state,
+              stateDefinitionField.onChange({
+                ...stateDefinition,
                 migration: event.target.checked
                   ? {
                       source:
@@ -75,18 +79,18 @@ export default function StateDefinitionFields({
           />
           <FormattedMessage defaultMessage="Apply an explicit state migration" />
         </label>
-        {state.migration ? (
+        {stateDefinition.migration ? (
           <>
             <RHFTypescriptModuleField
               control={control}
-              name={`${name}.state.migration`}
+              name={`${name}.stateDefinition.migration`}
               language="typescript"
               typescriptLibs={
-                stateValid
+                stateDefinitionValid
                   ? [
                       {
                         path: "/app-state.ts",
-                        source: codegen(state.schema),
+                        source: codegen(stateDefinition.schema),
                       },
                     ]
                   : []
@@ -101,15 +105,15 @@ export default function StateDefinitionFields({
                   new QuickjsJavascriptSandbox());
                 try {
                   const result = await sandbox.executeSyncFunction(
-                    state.migration!,
-                    [state.initialState],
+                    stateDefinition.migration!,
+                    [stateDefinition.initialState],
                   );
                   setTrialResult(
                     result.success &&
-                      stateValid &&
+                      stateDefinitionValid &&
                       isJsonValue(result.data) &&
                       v.safeParse(
-                        valibotSchemas.content(state.schema),
+                        valibotSchemas.content(stateDefinition.schema),
                         result.data,
                       ).success
                       ? JSON.stringify(result.data, null, 2)

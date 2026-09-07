@@ -7,7 +7,7 @@ import cycleDayLogsAppSource from "./cycleDayLogs.appSource.tsx?raw";
 export default {
   permissions: defaultAppPermissions,
   type: AppType.CollectionView,
-  state: emptyAppStateDefinition,
+  stateDefinition: emptyAppStateDefinition,
   name: "Cycle Calendar",
   targetCollectionIds: ["ProtoCollection_0"],
   files: {

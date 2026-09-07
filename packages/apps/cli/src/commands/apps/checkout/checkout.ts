@@ -47,10 +47,10 @@ export default useMarkdownHelp(
         {
           name: app.name,
           permissions: app.latestVersion.permissions,
-          state: {
+          stateDefinition: {
             schema: "state.schema.json",
             initialState: "state.initial.json",
-            migration: app.latestVersion.state.migration
+            migration: app.latestVersion.stateDefinition.migration
               ? "state.migration.ts"
               : null,
           },
@@ -62,7 +62,7 @@ export default useMarkdownHelp(
         app.latestVersion.files["/main.tsx"].source,
         targetCollections,
         buildLock(app),
-        app.latestVersion.state,
+        app.latestVersion.stateDefinition,
       );
       return { path: projectPath, appId: app.id };
     });

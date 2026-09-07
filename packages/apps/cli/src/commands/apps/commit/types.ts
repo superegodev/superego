@@ -15,7 +15,7 @@ export interface ExistingAppCommitContext extends CommitContext {
 export interface AppChanges {
   sourceChanged: boolean;
   permissionsChanged: boolean;
-  stateChanged: boolean;
+  stateDefinitionChanged: boolean;
   targetCollectionsChanged: boolean;
   mainModule: TypescriptModule | null;
 }

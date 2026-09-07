@@ -117,7 +117,7 @@ async function createCollectionApp(
         downloads: false,
         http: { allowedOrigins: [] },
       },
-      state: {
+      stateDefinition: {
         schema: {
           types: { State: { dataType: "Struct", properties: {} } },
           rootType: "State",

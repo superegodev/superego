@@ -50,14 +50,19 @@ export default useMarkdownHelp(
           stale,
         });
 
-        const localState = readStateSource(path);
-        const remoteState = stateSourceOf(app.latestVersion.state);
+        const localStateDefinition = readStateSource(path);
+        const remoteStateDefinition = stateSourceOf(
+          app.latestVersion.stateDefinition,
+        );
         const permissionsChanged = !isEqual(
           manifest.permissions,
           app.latestVersion.permissions,
         );
-        const stateChanged = !isEqual(localState, remoteState);
-        if (permissionsChanged || stateChanged) {
+        const stateDefinitionChanged = !isEqual(
+          localStateDefinition,
+          remoteStateDefinition,
+        );
+        if (permissionsChanged || stateDefinitionChanged) {
           const cleanIndex = status.indexOf("clean");
           if (cleanIndex !== -1) {
             status.splice(cleanIndex, 1);
@@ -66,7 +71,7 @@ export default useMarkdownHelp(
         if (permissionsChanged) {
           status.push("permissions changed");
         }
-        if (stateChanged) {
+        if (stateDefinitionChanged) {
           status.push("state definition changed");
         }
         return {
@@ -75,10 +80,10 @@ export default useMarkdownHelp(
             local: manifest.permissions,
             remote: app.latestVersion.permissions,
           },
-          state: {
-            changed: stateChanged,
-            local: localState,
-            remote: remoteState,
+          stateDefinition: {
+            changed: stateDefinitionChanged,
+            local: localStateDefinition,
+            remote: remoteStateDefinition,
           },
           status,
           appId: lock.appId,

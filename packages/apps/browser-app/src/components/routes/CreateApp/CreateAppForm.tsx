@@ -32,7 +32,7 @@ interface FormValues {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
     permissions: AppPermissions;
-    state: AppStateDefinition;
+    stateDefinition: AppStateDefinition;
   };
 }
 
@@ -69,7 +69,7 @@ export default function CreateAppForm({
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       appVersion: {
-        state: emptyAppStateDefinition,
+        stateDefinition: emptyAppStateDefinition,
         permissions: defaultAppPermissions,
         targetCollectionIds: initialTargetCollections.map(({ id }) => id),
         files: forms.defaults.collectionViewAppFiles(initialTargetCollections),
@@ -96,7 +96,7 @@ export default function CreateAppForm({
       type: AppType.CollectionView,
       name,
       permissions: appVersion.permissions,
-      state: appVersion.state,
+      stateDefinition: appVersion.stateDefinition,
       targetCollectionIds: appVersion.targetCollectionIds,
       files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
     });
@@ -123,7 +123,7 @@ export default function CreateAppForm({
         if (errors.appVersion?.permissions) {
           onSetNameAndSaveModalClose();
           onPermissionsModalOpen();
-        } else if (errors.appVersion?.state) {
+        } else if (errors.appVersion?.stateDefinition) {
           onSetNameAndSaveModalClose();
           onStateModalOpen();
         }

@@ -7,7 +7,7 @@ import portfolioDashboardAppSource from "./portfolioDashboard.appSource.tsx?raw"
 export default {
   permissions: defaultAppPermissions,
   type: AppType.CollectionView,
-  state: emptyAppStateDefinition,
+  stateDefinition: emptyAppStateDefinition,
   name: "Portfolio Dashboard",
   targetCollectionIds: [
     "ProtoCollection_1",

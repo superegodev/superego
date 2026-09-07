@@ -27,7 +27,7 @@ export interface HostBackend {
           | AppStateContentNotValid
         >;
         update: (
-          expectedRevision: number,
+          latestRevision: number,
           content: Record<string, unknown>,
         ) => ResultPromise<
           AppState,

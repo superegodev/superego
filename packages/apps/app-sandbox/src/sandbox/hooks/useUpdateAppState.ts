@@ -7,20 +7,20 @@ import newestAppState from "./newestAppState.js";
 export default function useUpdateAppState<
   Content extends Record<string, unknown> = Record<string, unknown>,
 >(): (update: {
-  expectedRevision: number;
+  latestRevision: number;
   content: Content;
 }) => Promise<AppState<Content>> {
   const backend = useBackend();
   const queryClient = useQueryClient();
   return useCallback(
     async ({
-      expectedRevision,
+      latestRevision,
       content,
     }: {
-      expectedRevision: number;
+      latestRevision: number;
       content: Content;
     }) => {
-      const result = await backend.updateState(expectedRevision, content);
+      const result = await backend.updateState(latestRevision, content);
       if (!result.success) {
         throw result.error;
       }

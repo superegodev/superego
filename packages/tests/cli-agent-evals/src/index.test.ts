@@ -280,7 +280,7 @@ describeWithAgent("CLI agent evals", () => {
     const collection = await seedExpensesCollection(backend);
     const createAppResult = await backend.apps.create({
       permissions: defaultAppPermissions,
-      state: emptyAppStateDefinition,
+      stateDefinition: emptyAppStateDefinition,
       type: AppType.CollectionView,
       name: "Expenses Dashboard",
       targetCollectionIds: [collection.id],

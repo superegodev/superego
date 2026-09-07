@@ -112,10 +112,10 @@ export default class Backend {
     return this.invokeMethod("state", "get", []);
   }
   updateState(
-    expectedRevision: number,
+    latestRevision: number,
     content: Record<string, unknown>,
   ): ResultPromise<AppState, UpdateAppStateError> {
-    return this.invokeMethod("state", "update", [expectedRevision, content]);
+    return this.invokeMethod("state", "update", [latestRevision, content]);
   }
 
   private invokeMethod(entity: string, method: string, args: any[]) {

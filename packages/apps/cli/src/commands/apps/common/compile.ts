@@ -16,13 +16,13 @@ export async function compileApp(
   targetCollections: TargetCollection[],
 ): Promise<TypescriptModule> {
   const source = readMainSource(path);
-  const state = readStateSource(path);
+  const stateDefinition = readStateSource(path);
   const result = await new TscTypescriptCompiler().compile(
     { path: "/main.tsx", source },
     [
       ...typescriptLibs,
       ...getCollectionTypescriptLibs(targetCollections),
-      { path: "/app-state.ts", source: codegen(state.schema) },
+      { path: "/app-state.ts", source: codegen(stateDefinition.schema) },
     ],
   );
   if (!result.success) {

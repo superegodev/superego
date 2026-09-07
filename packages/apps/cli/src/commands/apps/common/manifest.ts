@@ -17,17 +17,17 @@ export function readManifest(path: string): AppManifest {
     throw new Error("app.json is invalid.");
   }
   const permissions = v.parse(appPermissionsSchema(), data["permissions"]);
-  const state = v.parse(
+  const stateDefinition = v.parse(
     v.strictObject({
       schema: v.literal("state.schema.json"),
       initialState: v.literal("state.initial.json"),
       migration: v.nullable(v.literal("state.migration.ts")),
     }),
-    data["state"],
+    data["stateDefinition"],
   );
   return {
     permissions,
-    state,
+    stateDefinition,
     name: data["name"],
     type: AppType.CollectionView,
     targetCollectionIds: data["targetCollectionIds"] as CollectionId[],

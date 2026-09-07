@@ -42,7 +42,7 @@ export default useMarkdownHelp(
         collection as CollectionId[],
       );
       const manifest: AppManifest = {
-        state: {
+        stateDefinition: {
           schema: "state.schema.json",
           initialState: "state.initial.json",
           migration: null,

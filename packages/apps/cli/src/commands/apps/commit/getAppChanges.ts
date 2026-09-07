@@ -34,15 +34,15 @@ export default async function getAppChanges({
     manifest.permissions,
     app.latestVersion.permissions,
   );
-  const stateChanged = !isEqual(
+  const stateDefinitionChanged = !isEqual(
     readStateSource(path),
-    stateSourceOf(app.latestVersion.state),
+    stateSourceOf(app.latestVersion.stateDefinition),
   );
   const mainModule =
     sourceChanged ||
     targetCollectionsChanged ||
     permissionsChanged ||
-    stateChanged
+    stateDefinitionChanged
       ? await compileApp(
           path,
           await resolveLatestTargetCollections(
@@ -56,7 +56,7 @@ export default async function getAppChanges({
     sourceChanged,
     targetCollectionsChanged,
     permissionsChanged,
-    stateChanged,
+    stateDefinitionChanged,
     mainModule,
   };
 }

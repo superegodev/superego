@@ -12,7 +12,7 @@ export default async function writeAppProject(
   mainSource: string,
   targetCollections: TargetCollection[],
   lock: AppLock | null,
-  state: AppStateDefinition,
+  stateDefinition: AppStateDefinition,
 ): Promise<void> {
   await mkdir(path, { recursive: true });
   await writeJson(join(path, "app.json"), manifest);
@@ -20,6 +20,6 @@ export default async function writeAppProject(
     await writeJson(join(path, "app.lock.json"), lock);
   }
   await writeFile(join(path, "main.tsx"), mainSource, "utf-8");
-  await writeStateSource(path, state);
+  await writeStateSource(path, stateDefinition);
   await regenerateGeneratedFiles(path, targetCollections);
 }

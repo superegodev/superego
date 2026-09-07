@@ -21,22 +21,22 @@ const invalidCompiledValues = new Set([
 
 interface Props {
   mainTsx: TypescriptModule;
-  state: AppStateDefinition;
+  stateDefinition: AppStateDefinition;
   targetCollections: Collection[];
   className: string;
 }
 export default function Preview({
   mainTsx,
-  state,
+  stateDefinition,
   targetCollections,
   className,
 }: Props) {
   const appCompilationFailed =
     mainTsx.compiled === forms.constants.COMPILATION_FAILED;
   const app = useMemo(() => {
-    const app = getApp(mainTsx, targetCollections, state);
+    const app = getApp(mainTsx, targetCollections, stateDefinition);
     return app;
-  }, [mainTsx, targetCollections, state]);
+  }, [mainTsx, targetCollections, stateDefinition]);
   return (
     <div
       className={classnames(
@@ -64,7 +64,7 @@ export default function Preview({
 function getApp(
   mainTsx: TypescriptModule,
   targetCollections: Collection[],
-  state: AppStateDefinition,
+  stateDefinition: AppStateDefinition,
 ): App | null {
   return !invalidCompiledValues.has(mainTsx.compiled)
     ? {
@@ -73,7 +73,7 @@ function getApp(
         name: "New App Preview",
         latestVersion: {
           permissions: defaultAppPermissions,
-          state,
+          stateDefinition,
           id: Id.generate.appVersion(),
           targetCollections: targetCollections.map((collection) => ({
             id: collection.id,

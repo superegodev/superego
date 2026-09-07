@@ -7,7 +7,7 @@ import calendarAppSource from "./calendar.appSource.tsx?raw";
 export default {
   permissions: defaultAppPermissions,
   type: AppType.CollectionView,
-  state: emptyAppStateDefinition,
+  stateDefinition: emptyAppStateDefinition,
   name: "Calendar",
   targetCollectionIds: ["ProtoCollection_1"],
   files: {

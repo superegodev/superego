@@ -233,7 +233,7 @@ export default class PacksInstall extends BackendUsecase<
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
           permissions: definition.permissions,
-          state: definition.state,
+          stateDefinition: definition.stateDefinition,
           files: PacksInstall.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,

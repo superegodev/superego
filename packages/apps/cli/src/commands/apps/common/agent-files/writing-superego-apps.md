@@ -78,7 +78,7 @@ commits a new app version. The supported configuration is:
       "allowedOrigins": ["https://api.example.com", "http://127.0.0.1:8080"]
     }
   },
-  "state": {
+  "stateDefinition": {
     "schema": "state.schema.json",
     "initialState": "state.initial.json",
     "migration": "state.migration.ts"
@@ -95,8 +95,8 @@ migration source. `apps checkout` writes those source files; `apps status`,
 schema and exports its root type. Saved content and revision are database data
 and are never checked out or exported with the app. An app definition outside
 the CLI embeds
-`state: { schema, initialState, migration: { source, compiled } | null }` and
-the same permissions object.
+`stateDefinition: { schema, initialState, migration: { source, compiled } | null }`
+and the same permissions object.
 
 All permission fields are required. Existing apps are migrated to restrictive
 defaults. The modals capability permits printing, alert, confirm, prompt and
@@ -121,7 +121,7 @@ async function save(nextState: State) {
     return;
   }
   await updateState({
-    expectedRevision: state.data.revision,
+    latestRevision: state.data.revision,
     content: nextState,
   });
 }

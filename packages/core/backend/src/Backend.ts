@@ -628,7 +628,7 @@ export default interface Backend {
     updateState(
       id: AppId,
       versionId: AppVersionId,
-      expectedRevision: number,
+      latestRevision: number,
       content: Record<string, unknown>,
     ): ResultPromise<
       AppState,

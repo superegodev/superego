@@ -70,7 +70,7 @@ export default function createPreviewState(
       return makeSuccessfulResult(structuredClone(state));
     },
     update: async (
-      expectedRevision: number,
+      latestRevision: number,
       content: Record<string, unknown>,
     ): ResultPromise<
       AppState,
@@ -81,13 +81,13 @@ export default function createPreviewState(
       if (initializationError) {
         return makeUnsuccessfulResult(initializationError);
       }
-      if (expectedRevision !== state.revision) {
+      if (latestRevision !== state.revision) {
         return makeUnsuccessfulResult<AppStateRevisionNotMatching>({
           name: "AppStateRevisionNotMatching",
           details: {
             appId,
             latestRevision: state.revision,
-            suppliedRevision: expectedRevision,
+            suppliedRevision: latestRevision,
           },
         });
       }

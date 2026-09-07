@@ -7,7 +7,7 @@ import tasksAppSource from "./tasks.appSource.tsx?raw";
 export default {
   permissions: defaultAppPermissions,
   type: AppType.CollectionView,
-  state: emptyAppStateDefinition,
+  stateDefinition: emptyAppStateDefinition,
   name: "Kanban Board",
   targetCollectionIds: ["ProtoCollection_2"],
   files: {

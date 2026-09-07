@@ -1790,7 +1790,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createCollectionCategoryResult.success);
       const createAppResult = await backend.apps.create({
         permissions: defaultAppPermissions,
-        state: emptyAppStateDefinition,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "app",
         targetCollectionIds: [],
@@ -3622,7 +3622,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create({
         permissions: defaultAppPermissions,
-        state: emptyAppStateDefinition,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "collection view",
         targetCollectionIds: [createCollectionResult.data.id],

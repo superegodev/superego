@@ -132,6 +132,6 @@ export declare function useAppState<Content = Record<string, unknown>>(): {
 export declare function useUpdateAppState<
   Content extends Record<string, unknown> = Record<string, unknown>,
 >(): (update: {
-  expectedRevision: number;
+  latestRevision: number;
   content: Content;
 }) => Promise<AppState<Content>>;

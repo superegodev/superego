@@ -18,9 +18,11 @@ export function readStateSource(path: string) {
   const manifest = readManifest(path);
   const schema = v.parse(
     appStateSchema(),
-    readJson(join(path, manifest.state.schema)),
+    readJson(join(path, manifest.stateDefinition.schema)),
   );
-  const initialState = readJson(join(path, manifest.state.initialState));
+  const initialState = readJson(
+    join(path, manifest.stateDefinition.initialState),
+  );
   if (
     !isJsonValue(initialState) ||
     !v.safeParse(valibotSchemas.content(schema), initialState).success
@@ -30,8 +32,8 @@ export function readStateSource(path: string) {
   return {
     schema,
     initialState: initialState as Record<string, unknown>,
-    migration: manifest.state.migration
-      ? readFileSync(join(path, manifest.state.migration), "utf8")
+    migration: manifest.stateDefinition.migration
+      ? readFileSync(join(path, manifest.stateDefinition.migration), "utf8")
       : null,
   };
 }

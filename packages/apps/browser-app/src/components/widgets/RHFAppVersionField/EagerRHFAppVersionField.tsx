@@ -54,11 +54,14 @@ export default function EagerRHFAppVersionField({
     [collections, targetCollectionIds],
   );
 
-  const state = useWatch({
+  const stateDefinition = useWatch({
     control,
-    name: `${name}.state`,
+    name: `${name}.stateDefinition`,
   });
-  const typescriptLibs = useTypescriptLibs(targetCollections, state?.schema);
+  const typescriptLibs = useTypescriptLibs(
+    targetCollections,
+    stateDefinition?.schema,
+  );
 
   const { isPending, mutate } = useSttAndImplement(
     targetCollections,
@@ -123,7 +126,7 @@ export default function EagerRHFAppVersionField({
         {isPending ? <ImplementingSpinner /> : null}
         <Preview
           mainTsx={mainTsx}
-          state={state}
+          stateDefinition={stateDefinition}
           targetCollections={targetCollections}
           className={
             cs.EagerRHFAppVersionField.preview[

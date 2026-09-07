@@ -42,7 +42,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
           apps: [
             {
               permissions: defaultAppPermissions,
-              state: emptyAppStateDefinition,
+              stateDefinition: emptyAppStateDefinition,
               type: AppType.CollectionView,
               name: "Valid App",
               targetCollectionIds: [],
@@ -54,7 +54,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
               name: "Invalid App",
               targetCollectionIds: [],
               files: { "/main.tsx": { source: "", compiled: "" } },
-              state: {
+              stateDefinition: {
                 migration: null,
                 schema: {
                   types: {
@@ -348,7 +348,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         apps: [
           {
             permissions: defaultAppPermissions,
-            state: emptyAppStateDefinition,
+            stateDefinition: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "Test App",
             targetCollectionIds: [Id.generate.protoCollection(99)],
@@ -725,7 +725,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         apps: [
           {
             permissions: defaultAppPermissions,
-            state: emptyAppStateDefinition,
+            stateDefinition: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "My App",
             targetCollectionIds: [Id.generate.protoCollection(0)],
@@ -872,7 +872,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
         apps: [
           {
             permissions: defaultAppPermissions,
-            state: emptyAppStateDefinition,
+            stateDefinition: emptyAppStateDefinition,
             type: AppType.CollectionView,
             name: "App",
             targetCollectionIds: [Id.generate.protoCollection(0)],

@@ -1,4 +1,4 @@
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { AppType, type AppStateDefinition } from "@superego/backend";
@@ -19,7 +19,7 @@ import {
 it("round-trips permissions and state source independently of saved content", async () => {
   // Setup SUT
   const path = mkdtempSync(join(tmpdir(), "superego-app-sources-"));
-  const state: AppStateDefinition = {
+  const stateDefinition: AppStateDefinition = {
     schema: {
       types: {
         State: {
@@ -46,14 +46,17 @@ it("round-trips permissions and state source independently of saved content", as
         downloads: true,
         http: { allowedOrigins: ["HTTPS://EXAMPLE.COM:443"] },
       },
-      state: {
+      stateDefinition: {
         schema: "state.schema.json",
         initialState: "state.initial.json",
         migration: "state.migration.ts",
       },
     });
-    await writeStateSource(path, state);
+    await writeStateSource(path, stateDefinition);
     const manifest = readManifest(path);
+    const manifestJson = JSON.parse(
+      readFileSync(join(path, "app.json"), "utf8"),
+    );
     const source = readStateSource(path);
     // Verify
     expect(manifest.permissions).toEqual({
@@ -61,7 +64,14 @@ it("round-trips permissions and state source independently of saved content", as
       downloads: true,
       http: { allowedOrigins: ["https://example.com"] },
     });
-    expect(source).toEqual(stateSourceOf(state));
+    expect(manifest.stateDefinition).toEqual({
+      schema: "state.schema.json",
+      initialState: "state.initial.json",
+      migration: "state.migration.ts",
+    });
+    expect(manifestJson.stateDefinition).toEqual(manifest.stateDefinition);
+    expect(manifestJson).not.toHaveProperty("state");
+    expect(source).toEqual(stateSourceOf(stateDefinition));
     expect(source).not.toHaveProperty("revision");
     expect(source).not.toHaveProperty("schemaId");
     expect(source).not.toHaveProperty("content");
@@ -79,7 +89,7 @@ it("compiles an explicit null migration without a migration source file", async 
       type: AppType.CollectionView,
       targetCollectionIds: [],
       permissions: defaultAppPermissions,
-      state: {
+      stateDefinition: {
         schema: "state.schema.json",
         initialState: "state.initial.json",
         migration: null,
@@ -92,7 +102,7 @@ it("compiles an explicit null migration without a migration source file", async 
 
     // Verify
     expect(stateDefinition).toEqual(emptyAppStateDefinition);
-    expect(readManifest(path).state.migration).toBeNull();
+    expect(readManifest(path).stateDefinition.migration).toBeNull();
   } finally {
     rmSync(path, { recursive: true });
   }

@@ -8,7 +8,7 @@ import {
 export interface AppManifest {
   name: string;
   permissions: AppPermissions;
-  state: {
+  stateDefinition: {
     schema: "state.schema.json";
     initialState: "state.initial.json";
     migration: "state.migration.ts" | null;

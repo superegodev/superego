@@ -44,7 +44,7 @@ export default useMarkdownHelp(
         if (
           !isEqual(
             readStateSource(path),
-            stateSourceOf(app.latestVersion.state),
+            stateSourceOf(app.latestVersion.stateDefinition),
           )
         ) {
           status.push("state definition changed");

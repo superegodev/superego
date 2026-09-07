@@ -18,7 +18,7 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
   async (change) => {
     // Setup SUT
     const path = mkdtempSync(join(tmpdir(), "superego-app-changes-"));
-    const state: AppStateDefinition = {
+    const stateDefinition: AppStateDefinition = {
       schema: {
         types: {
           State: {
@@ -51,20 +51,22 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
           http: { allowedOrigins: [] },
           modals: true,
         },
-        state,
+        stateDefinition,
       },
     };
     try {
       writeFileSync(join(path, "main.tsx"), "source");
-      const changedState = structuredClone(state);
+      const changedStateDefinition = structuredClone(stateDefinition);
       if (change === "initialState") {
-        changedState.initialState = { count: 1 };
+        changedStateDefinition.initialState = { count: 1 };
       }
       if (change === "migration") {
-        changedState.migration!.source = "export default () => ({ count: 2 });";
+        changedStateDefinition.migration!.source =
+          "export default () => ({ count: 2 });";
       }
       if (change === "schema") {
-        changedState.schema.types["State"]!.description = "Updated schema";
+        changedStateDefinition.schema.types["State"]!.description =
+          "Updated schema";
       }
       await writeManifest(path, {
         name: app.name,
@@ -75,13 +77,13 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
           http: { allowedOrigins: [] },
           modals: change !== "permissions",
         },
-        state: {
+        stateDefinition: {
           schema: "state.schema.json",
           initialState: "state.initial.json",
           migration: "state.migration.ts",
         },
       });
-      await writeStateSource(path, changedState);
+      await writeStateSource(path, changedStateDefinition);
       // Exercise
       const changes = await getAppChanges({
         backend: {} as CliBackend,
@@ -93,7 +95,7 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
       expect(changes.sourceChanged).toBe(false);
       expect(changes.targetCollectionsChanged).toBe(false);
       expect(changes.permissionsChanged).toBe(change === "permissions");
-      expect(changes.stateChanged).toBe(
+      expect(changes.stateDefinitionChanged).toBe(
         ["schema", "initialState", "migration"].includes(change),
       );
       expect(changes.mainModule !== null).toBe(change !== "unchanged");

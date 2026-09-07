@@ -26,7 +26,7 @@ interface FormValues {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
     permissions: AppPermissions;
-    state: AppStateDefinition;
+    stateDefinition: AppStateDefinition;
   };
 }
 
@@ -71,7 +71,10 @@ export default function CreateNewAppVersionForm({
       appVersion: {
         targetCollectionIds: validTargetCollectionIds,
         permissions: app.latestVersion.permissions,
-        state: { ...app.latestVersion.state, migration: null },
+        stateDefinition: {
+          ...app.latestVersion.stateDefinition,
+          migration: null,
+        },
         files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
           app.latestVersion.files,
         ),
@@ -99,13 +102,16 @@ export default function CreateNewAppVersionForm({
       appVersion.targetCollectionIds,
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
       appVersion.permissions,
-      appVersion.state,
+      appVersion.stateDefinition,
     );
     if (success) {
       reset({
         appVersion: {
           permissions: data.latestVersion.permissions,
-          state: { ...data.latestVersion.state, migration: null },
+          stateDefinition: {
+            ...data.latestVersion.stateDefinition,
+            migration: null,
+          },
           targetCollectionIds: data.latestVersion.targetCollections.map(
             ({ id }) => id,
           ),
@@ -131,7 +137,7 @@ export default function CreateNewAppVersionForm({
       onSubmit={handleSubmit(onSubmit, (errors) => {
         if (errors.appVersion?.permissions) {
           onPermissionsModalOpen();
-        } else if (errors.appVersion?.state) {
+        } else if (errors.appVersion?.stateDefinition) {
           onStateModalOpen();
         }
       })}

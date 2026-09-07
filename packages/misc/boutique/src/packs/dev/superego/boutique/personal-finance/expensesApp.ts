@@ -7,7 +7,7 @@ import expensesAppSource from "./expenses.appSource.tsx?raw";
 export default {
   permissions: defaultAppPermissions,
   type: AppType.CollectionView,
-  state: emptyAppStateDefinition,
+  stateDefinition: emptyAppStateDefinition,
   name: "Expense Stats",
   targetCollectionIds: ["ProtoCollection_0"],
   files: {

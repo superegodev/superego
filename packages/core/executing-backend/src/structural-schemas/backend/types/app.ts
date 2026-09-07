@@ -20,7 +20,7 @@ import { typescriptModule } from "./typescript.js";
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
     permissions: appPermissionsSchema(),
-    state: appStateDefinition(),
+    stateDefinition: appStateDefinition(),
     id: appVersionId(),
     targetCollections: v.array(
       v.strictObject({
@@ -52,7 +52,7 @@ export function appDefinition(): v.GenericSchema<
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
     permissions: appPermissionsSchema(),
-    state: appStateDefinition(),
+    stateDefinition: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
     files: v.strictObject({
@@ -68,7 +68,7 @@ export function protoAppDefinition(): v.GenericSchema<
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
     permissions: appPermissionsSchema(),
-    state: appStateDefinition(),
+    stateDefinition: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(
       v.union([protoCollectionId(), collectionId()]),

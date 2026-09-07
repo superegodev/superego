@@ -54,7 +54,7 @@ export default class AppsCreate extends BackendUsecase<
       targetCollectionIds,
       files,
       permissions,
-      state: stateDefinition,
+      stateDefinition,
     }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
