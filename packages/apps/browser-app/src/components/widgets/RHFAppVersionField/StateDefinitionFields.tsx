@@ -1,6 +1,6 @@
 import type { AppStateDefinition } from "@superego/backend";
-import { codegen, valibotSchemas } from "@superego/schema";
-import { appStateSchema, isJsonValue } from "@superego/shared-utils";
+import { codegen } from "@superego/schema";
+import { valibotSchemas } from "@superego/shared-utils";
 import { useState } from "react";
 import { useController, useWatch, type Control } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,7 +33,7 @@ export default function StateDefinitionFields({
   });
   const [trialResult, setTrialResult] = useState<string>();
   const stateDefinitionValid = v.safeParse(
-    appStateSchema(),
+    valibotSchemas.appStateSchema(),
     stateDefinition.schema,
   ).success;
   return (
@@ -111,9 +111,8 @@ export default function StateDefinitionFields({
                   setTrialResult(
                     result.success &&
                       stateDefinitionValid &&
-                      isJsonValue(result.data) &&
                       v.safeParse(
-                        valibotSchemas.content(stateDefinition.schema),
+                        valibotSchemas.appStateContent(stateDefinition.schema),
                         result.data,
                       ).success
                       ? JSON.stringify(result.data, null, 2)

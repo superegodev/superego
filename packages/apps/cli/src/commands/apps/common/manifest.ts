@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
-import { appPermissionsSchema } from "@superego/shared-utils";
+import * as structuralSchemas from "@superego/executing-backend/structural-schemas";
 import * as v from "valibot";
 import { isRecord, readJson, writeJson } from "./json.js";
 import type { AppManifest } from "./types.js";
@@ -16,7 +16,10 @@ export function readManifest(path: string): AppManifest {
   ) {
     throw new Error("app.json is invalid.");
   }
-  const permissions = v.parse(appPermissionsSchema(), data["permissions"]);
+  const permissions = v.parse(
+    structuralSchemas.backend.types.appPermissions(),
+    data["permissions"],
+  );
   const stateDefinition = v.parse(
     v.strictObject({
       schema: v.literal("state.schema.json"),

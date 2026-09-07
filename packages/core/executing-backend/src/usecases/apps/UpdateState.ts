@@ -9,9 +9,9 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
-  appStateContentSchema,
   makeUnsuccessfulResult,
   makeSuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import makeResultError from "../../makers/makeResultError.js";
@@ -68,7 +68,7 @@ export default class AppsUpdateState extends BackendUsecase<
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);
     assertAppVersionExists(id, version);
     const contentValidationResult = v.safeParse(
-      appStateContentSchema(version.stateDefinition.schema),
+      valibotSchemas.appStateContent(version.stateDefinition.schema),
       content,
     );
     if (!contentValidationResult.success) {

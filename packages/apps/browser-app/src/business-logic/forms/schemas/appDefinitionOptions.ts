@@ -1,29 +1,22 @@
-import { valibotSchemas } from "@superego/schema";
-import {
-  appPermissionsSchema,
-  appStateSchema,
-  isJsonValue,
-} from "@superego/shared-utils";
+import * as structuralSchemas from "@superego/executing-backend/structural-schemas";
+import { valibotSchemas } from "@superego/shared-utils";
 import type { IntlShape } from "react-intl";
 import * as v from "valibot";
 import typescriptModule from "./typescriptModule.js";
 
 export default function appDefinitionOptions(intl: IntlShape) {
   return {
-    permissions: appPermissionsSchema(),
+    permissions: structuralSchemas.backend.types.appPermissions(),
     stateDefinition: v.pipe(
       v.strictObject({
-        schema: appStateSchema(),
-        initialState: v.pipe(
-          v.record(v.string(), v.unknown()),
-          v.check((value) => isJsonValue(value)),
-        ),
+        schema: valibotSchemas.appStateSchema(),
+        initialState: v.record(v.string(), v.unknown()),
         migration: v.nullable(typescriptModule(intl)),
       }),
       v.check(
         (stateDefinition) =>
           v.safeParse(
-            valibotSchemas.content(stateDefinition.schema),
+            valibotSchemas.appStateContent(stateDefinition.schema),
             stateDefinition.initialState,
           ).success,
         intl.formatMessage({

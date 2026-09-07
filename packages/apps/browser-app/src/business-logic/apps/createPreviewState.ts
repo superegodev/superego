@@ -9,10 +9,9 @@ import type {
 } from "@superego/backend";
 import type { ResultPromise } from "@superego/global-types";
 import {
-  appStateContentSchema,
-  appStateSchema,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 
@@ -30,7 +29,7 @@ export default function createPreviewState(
     | AppStateContentNotValid
     | undefined;
   const schemaValidationResult = v.safeParse(
-    appStateSchema(),
+    valibotSchemas.appStateSchema(),
     definition.schema,
   );
   if (!schemaValidationResult.success) {
@@ -43,7 +42,7 @@ export default function createPreviewState(
     };
   } else {
     const contentValidationResult = v.safeParse(
-      appStateContentSchema(definition.schema),
+      valibotSchemas.appStateContent(definition.schema),
       definition.initialState,
     );
     if (!contentValidationResult.success) {
@@ -92,7 +91,7 @@ export default function createPreviewState(
         });
       }
       const contentValidationResult = v.safeParse(
-        appStateContentSchema(definition.schema),
+        valibotSchemas.appStateContent(definition.schema),
         content,
       );
       if (!contentValidationResult.success) {

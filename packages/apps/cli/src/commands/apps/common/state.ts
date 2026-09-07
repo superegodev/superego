@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { AppStateDefinition } from "@superego/backend";
-import { codegen, valibotSchemas } from "@superego/schema";
-import { appStateSchema, isJsonValue } from "@superego/shared-utils";
+import { codegen } from "@superego/schema";
+import { valibotSchemas } from "@superego/shared-utils";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import * as v from "valibot";
 import { readJson, writeJson } from "./json.js";
@@ -17,15 +17,14 @@ export const stateFiles = {
 export function readStateSource(path: string) {
   const manifest = readManifest(path);
   const schema = v.parse(
-    appStateSchema(),
+    valibotSchemas.appStateSchema(),
     readJson(join(path, manifest.stateDefinition.schema)),
   );
   const initialState = readJson(
     join(path, manifest.stateDefinition.initialState),
   );
   if (
-    !isJsonValue(initialState) ||
-    !v.safeParse(valibotSchemas.content(schema), initialState).success
+    !v.safeParse(valibotSchemas.appStateContent(schema), initialState).success
   ) {
     throw new Error("Initial state must match the state schema.");
   }

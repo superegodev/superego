@@ -1,11 +1,12 @@
 import {
   type App,
+  type AppPermissions,
   type AppDefinition,
   AppType,
   type AppVersion,
 } from "@superego/backend";
 import { type Schema } from "@superego/schema";
-import { appPermissionsSchema, isJsonValue } from "@superego/shared-utils";
+import { valibotSchemas } from "@superego/shared-utils";
 import * as v from "valibot";
 import { schemaShape } from "../../schema/index.js";
 import {
@@ -19,7 +20,7 @@ import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
-    permissions: appPermissionsSchema(),
+    permissions: appPermissions(),
     stateDefinition: appStateDefinition(),
     id: appVersionId(),
     targetCollections: v.array(
@@ -51,7 +52,7 @@ export function appDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
-    permissions: appPermissionsSchema(),
+    permissions: appPermissions(),
     stateDefinition: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
@@ -67,7 +68,7 @@ export function protoAppDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
-    permissions: appPermissionsSchema(),
+    permissions: appPermissions(),
     stateDefinition: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(
@@ -82,19 +83,26 @@ export function protoAppDefinition(): v.GenericSchema<
 export function appStateDefinition() {
   return v.strictObject({
     schema: schemaShape() as unknown as v.GenericSchema<unknown, Schema>,
-    initialState: v.pipe(
-      v.any(),
-      v.check((value) => isJsonValue(value)),
-    ),
+    initialState: v.any(),
     migration: v.nullable(typescriptModule()),
   });
 }
 export function appState() {
   return v.strictObject({
-    content: v.pipe(
-      v.any(),
-      v.check((value) => isJsonValue(value)),
-    ),
+    content: v.any(),
     revision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
+  });
+}
+
+export function appPermissions(): v.GenericSchema<
+  AppPermissions,
+  AppPermissions
+> {
+  return v.strictObject({
+    modals: v.boolean(),
+    downloads: v.boolean(),
+    http: v.strictObject({
+      allowedOrigins: v.array(valibotSchemas.httpOrigin()),
+    }),
   });
 }

@@ -20,13 +20,6 @@ export { default as globalSettingsValibotSchema } from "./valibotSchemas/globalS
 export { default as valibotSchemas } from "./valibotSchemas/valibotSchemas.js";
 export { default as validateInferenceOptions } from "./validators/validateInferenceOptions.js";
 
-export {
-  normalizeHttpOrigin,
-  appPermissionsSchema,
-  httpOriginSchema,
-  appStateSchema,
-  isJsonValue,
-  appStateContentSchema,
-} from "./appCapabilities.js";
 export { default as defaultAppPermissions } from "./defaultAppPermissions.js";
 export { default as emptyAppStateDefinition } from "./emptyAppStateDefinition.js";
+export { default as normalizeHttpOrigin } from "./normalizeHttpOrigin.js";

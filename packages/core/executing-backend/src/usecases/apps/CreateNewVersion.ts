@@ -19,12 +19,10 @@ import type {
 import type { ResultPromise } from "@superego/global-types";
 import {
   Id,
-  appPermissionsSchema,
-  appStateSchema,
-  appStateContentSchema,
   extractErrorDetails,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
 import * as v from "valibot";
@@ -48,7 +46,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     v.strictObject({
       "/main.tsx": structuralSchemas.backend.types.typescriptModule(),
     }),
-    appPermissionsSchema(),
+    structuralSchemas.backend.types.appPermissions(),
     structuralSchemas.backend.types.appStateDefinition(),
   ]);
   resultSchema = structuralSchemas.global.result(
@@ -128,7 +126,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
 
     // Validate state schema.
     const schemaValidationResult = v.safeParse(
-      appStateSchema(),
+      valibotSchemas.appStateSchema(),
       stateDefinition.schema,
     );
     if (!schemaValidationResult.success) {
@@ -142,7 +140,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
 
     // Validate initial state.
     const initialStateValidationResult = v.safeParse(
-      appStateContentSchema(stateDefinition.schema),
+      valibotSchemas.appStateContent(stateDefinition.schema),
       stateDefinition.initialState,
     );
     if (!initialStateValidationResult.success) {
@@ -205,7 +203,7 @@ export default class AppsCreateNewVersion extends BackendUsecase<
 
     // Validate saved state against the new schema, even without a migration.
     const contentValidationResult = v.safeParse(
-      appStateContentSchema(stateDefinition.schema),
+      valibotSchemas.appStateContent(stateDefinition.schema),
       content,
     );
     if (!contentValidationResult.success) {

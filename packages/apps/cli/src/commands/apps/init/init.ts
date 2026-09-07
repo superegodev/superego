@@ -1,9 +1,7 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
-import {
-  appPermissionsSchema,
-  emptyAppStateDefinition,
-} from "@superego/shared-utils";
+import * as structuralSchemas from "@superego/executing-backend/structural-schemas";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
@@ -21,7 +19,7 @@ import writeAppProject from "../common/writeAppProject.js";
 const argsSchema = v.strictObject({
   path: v.string(),
   name: v.optional(v.string()),
-  permissions: v.optional(appPermissionsSchema()),
+  permissions: v.optional(structuralSchemas.backend.types.appPermissions()),
   collection: v.optional(v.array(v.string())),
 });
 

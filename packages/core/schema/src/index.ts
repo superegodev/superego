@@ -13,6 +13,7 @@ import parsePath from "./utils/parsePath.js";
 import replaceSelfCollectionId from "./utils/replaceSelfCollectionId.js";
 import RHFProtoFile from "./utils/RHFProtoFile.js";
 import content from "./valibot-schemas/content/content.js";
+import jsonValue from "./valibot-schemas/jsonValue/jsonValue.js";
 import schema from "./valibot-schemas/schema/schema.js";
 
 export { default as codegen } from "./codegen/codegen.js";
@@ -30,7 +31,7 @@ export type { default as JsonObject } from "./types/JsonObject.js";
 export type { default as ProtoFile } from "./types/ProtoFile.js";
 export type { default as RHFProtoFile } from "./types/RHFProtoFile.js";
 export type { TextChunks } from "./utils/extractTextChunks/extractTextChunks.js";
-export const valibotSchemas = { schema, content };
+export const valibotSchemas = { schema, content, jsonValue };
 export const utils = {
   getRootType,
   getType,

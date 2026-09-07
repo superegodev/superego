@@ -1370,7 +1370,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           appId: created.data.id,
           issues: [
             expect.objectContaining({
-              message: "App state must be JSON-serializable.",
+              message: "Invalid JSON value: not JSON-invariant",
             }),
           ],
         },
@@ -1380,6 +1380,66 @@ export default rd<GetDependencies>("Apps", (deps) => {
         revision: 1,
       });
     });
+
+    it.each([
+      { name: "undefined", content: () => ({ count: undefined }) },
+      { name: "infinity", content: () => ({ count: Infinity }) },
+      { name: "Date", content: () => ({ count: new Date() }) },
+      {
+        name: "cycle",
+        content: () => {
+          const content: Record<string, unknown> = {};
+          content["count"] = content;
+          return content;
+        },
+      },
+    ])(
+      "returns a domain error for $name state during creation, versioning and updates",
+      async ({ content }) => {
+        // Setup SUT
+        const { backend } = deps();
+        const created = await backend.apps.create(definition);
+        assert(created.success);
+        const invalidStateDefinition = {
+          ...definition.stateDefinition,
+          initialState: content(),
+        };
+
+        // Exercise
+        const invalidCreation = await backend.apps.create({
+          ...definition,
+          stateDefinition: invalidStateDefinition,
+        });
+        const invalidVersion = await backend.apps.createNewVersion(
+          created.data.id,
+          created.data.latestVersion.id,
+          [],
+          definition.files,
+          created.data.latestVersion.permissions,
+          invalidStateDefinition,
+        );
+        const invalidWrite = await update(backend, created.data, 1, content());
+        const saved = await read(backend, created.data);
+        const apps = await backend.apps.list();
+
+        // Verify
+        for (const result of [invalidCreation, invalidVersion, invalidWrite]) {
+          expect(result.error).toEqual({
+            name: "AppStateContentNotValid",
+            details: {
+              appId: result === invalidCreation ? null : created.data.id,
+              issues: [
+                expect.objectContaining({
+                  message: "Invalid JSON value: not JSON-invariant",
+                }),
+              ],
+            },
+          });
+        }
+        expect(saved.data).toEqual({ content: { count: 0 }, revision: 1 });
+        expect(apps.data).toEqual([created.data]);
+      },
+    );
 
     it.each([null, 42, "invalid", []].map((content) => ({ content })))(
       "rejects non-object state content through schema validation: %j",

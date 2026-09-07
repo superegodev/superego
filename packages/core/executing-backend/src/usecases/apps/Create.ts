@@ -12,8 +12,6 @@ import type {
 import type { ResultPromise } from "@superego/global-types";
 import {
   Id,
-  appStateSchema,
-  appStateContentSchema,
   makeSuccessfulResult,
   makeUnsuccessfulResult,
   valibotSchemas,
@@ -97,7 +95,7 @@ export default class AppsCreate extends BackendUsecase<
 
     // Validate state schema.
     const schemaValidationResult = v.safeParse(
-      appStateSchema(),
+      valibotSchemas.appStateSchema(),
       stateDefinition.schema,
     );
     if (!schemaValidationResult.success) {
@@ -111,7 +109,7 @@ export default class AppsCreate extends BackendUsecase<
 
     // Validate initial state.
     const initialStateValidationResult = v.safeParse(
-      appStateContentSchema(stateDefinition.schema),
+      valibotSchemas.appStateContent(stateDefinition.schema),
       stateDefinition.initialState,
     );
     if (!initialStateValidationResult.success) {
