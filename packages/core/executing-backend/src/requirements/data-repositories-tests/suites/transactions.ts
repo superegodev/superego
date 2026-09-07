@@ -97,37 +97,97 @@ export default rd<GetDependencies>("Transactions", (deps) => {
     expect(collectionCategories).toEqual([]);
   });
 
-  it("when changes are erroneously made AFTER the transaction has been completed, an error is thrown and no change is made", async () => {
-    // Setup SUT
-    const { dataRepositoriesManager } = deps();
+  it.each(["rollback", "throw"] as const)(
+    "after a transaction ends with %s, a subsequent write succeeds",
+    async (outcome) => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+      const collectionCategory: CollectionCategoryEntity = {
+        id: Id.generate.collectionCategory(),
+        name: "name",
+        icon: null,
+        parentId: null,
+        createdAt: new Date(),
+      };
+      const failure = new Error("Transaction failed");
 
-    // Exercise
-    let reposRef: DataRepositories;
-    await dataRepositoriesManager.runInSerializableTransaction(
-      async (repos) => {
-        reposRef = repos;
-        return { action: "commit", returnValue: null };
-      },
-    );
-    const insertPromise = reposRef!.collectionCategory.insert({
-      id: Id.generate.collectionCategory(),
-      name: "name",
-      icon: null,
-      parentId: null,
-      createdAt: new Date(),
-    });
-
-    // Verify
-    await expect(insertPromise).rejects.toThrow();
-    const collectionCategories =
+      // Exercise
+      const transaction = dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.collectionCategory.insert(collectionCategory);
+          if (outcome === "throw") {
+            throw failure;
+          }
+          return { action: "rollback", returnValue: null };
+        },
+      );
+      const transactionError = await transaction.catch((error) => error);
+      const subsequentCollectionCategory = {
+        ...collectionCategory,
+        id: Id.generate.collectionCategory(),
+        name: "subsequent name",
+      };
       await dataRepositoriesManager.runInSerializableTransaction(
+        async (repos) => {
+          await repos.collectionCategory.insert(subsequentCollectionCategory);
+          return { action: "commit", returnValue: null };
+        },
+      );
+
+      // Verify
+      expect(transactionError).toEqual(outcome === "throw" ? failure : null);
+      const found = await dataRepositoriesManager.runInSerializableTransaction(
         async (repos) => ({
           action: "commit",
           returnValue: await repos.collectionCategory.findAll(),
         }),
       );
-    expect(collectionCategories).toEqual([]);
-  });
+      expect(found).toEqual([subsequentCollectionCategory]);
+    },
+  );
+
+  it.each(["commit", "rollback", "throw"] as const)(
+    "when changes are erroneously made AFTER the transaction ends with %s, an error is thrown and no change is made",
+    async (outcome) => {
+      // Setup SUT
+      const { dataRepositoriesManager } = deps();
+
+      // Exercise
+      let reposRef: DataRepositories;
+      const transactionError = await dataRepositoriesManager
+        .runInSerializableTransaction(async (repos) => {
+          reposRef = repos;
+          if (outcome === "throw") {
+            throw new Error("Transaction failed");
+          }
+          return { action: outcome, returnValue: null };
+        })
+        .catch((error) => error);
+      const insertPromise = reposRef!.collectionCategory.insert({
+        id: Id.generate.collectionCategory(),
+        name: "name",
+        icon: null,
+        parentId: null,
+        createdAt: new Date(),
+      });
+
+      // Verify
+      if (outcome === "throw") {
+        expect(transactionError).toEqual(new Error("Transaction failed"));
+      } else {
+        expect(transactionError).toBeNull();
+      }
+      await expect(insertPromise).rejects.toThrow();
+      const collectionCategories =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: await repos.collectionCategory.findAll(),
+          }),
+        );
+      expect(collectionCategories).toEqual([]);
+    },
+  );
 
   it("uncommitted changes are not visible to other transactions", async () => {
     // Setup SUT

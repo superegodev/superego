@@ -670,6 +670,81 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
     });
   });
+  describe("getState", () => {
+    it.each([
+      ["not-a-valid-id", Id.generate.appVersion()],
+      [Id.generate.app(), "not-a-valid-id"],
+    ])("error: ArgumentsNotValid for ids %s, %s", async (appId, versionId) => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.apps.getState(
+        appId as any,
+        versionId as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+  });
+
+  describe("updateState", () => {
+    it.each([
+      ["not-a-valid-id", Id.generate.appVersion(), 1],
+      [Id.generate.app(), "not-a-valid-id", 1],
+      [Id.generate.app(), Id.generate.appVersion(), "1"],
+      [Id.generate.app(), Id.generate.appVersion(), 0],
+      [Id.generate.app(), Id.generate.appVersion(), -1],
+      [Id.generate.app(), Id.generate.appVersion(), 1.5],
+      [
+        Id.generate.app(),
+        Id.generate.appVersion(),
+        Number.MAX_SAFE_INTEGER + 1,
+      ],
+    ])(
+      "error: ArgumentsNotValid for ids %s, %s and revision %s",
+      async (appId, versionId, revision) => {
+        // Setup SUT
+        const { backend } = deps();
+
+        // Exercise
+        const result = await backend.apps.updateState(
+          appId as any,
+          versionId as any,
+          revision as any,
+          {},
+        );
+
+        // Verify
+        assert(!result.success);
+        expect(result.error.name).toBe("ArgumentsNotValid");
+      },
+    );
+
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const appId = Id.generate.app();
+      const result = await backend.apps.updateState(
+        appId,
+        Id.generate.appVersion(),
+        1,
+        {},
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: { name: "AppNotFound", details: { appId } },
+      });
+    });
+  });
+
   describe("permissions and persistent state", () => {
     const schema: Schema = {
       types: {

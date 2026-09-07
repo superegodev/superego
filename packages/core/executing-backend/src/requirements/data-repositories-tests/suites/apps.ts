@@ -61,7 +61,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       name: "updated name",
       state: {
         content: { remembered: true },
-        revision: 1,
+        revision: 2,
       },
     };
     await dataRepositoriesManager.runInSerializableTransaction(

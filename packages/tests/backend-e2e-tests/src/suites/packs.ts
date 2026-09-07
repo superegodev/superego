@@ -1,4 +1,8 @@
-import { AppType } from "@superego/backend";
+import {
+  type AppPermissions,
+  type AppStateDefinition,
+  AppType,
+} from "@superego/backend";
 import { DataType } from "@superego/schema";
 import { defaultAppPermissions } from "@superego/shared-utils";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
@@ -680,6 +684,24 @@ export default rd<GetDependencies>("Packs", (deps) => {
     it("success: installs pack with apps referencing collections", async () => {
       // Setup SUT
       const { backend } = deps();
+      const permissions: AppPermissions = {
+        modals: true,
+        downloads: true,
+        http: { allowedOrigins: ["https://example.com"] },
+      };
+      const stateDefinition: AppStateDefinition = {
+        schema: {
+          types: {
+            State: {
+              dataType: DataType.Struct,
+              properties: { count: { dataType: DataType.Number } },
+            },
+          },
+          rootType: "State",
+        },
+        initialState: { count: 7 },
+        migration: null,
+      };
 
       // Exercise
       const result = await backend.packs.install({
@@ -724,8 +746,8 @@ export default rd<GetDependencies>("Packs", (deps) => {
         ],
         apps: [
           {
-            permissions: defaultAppPermissions,
-            stateDefinition: emptyAppStateDefinition,
+            permissions,
+            stateDefinition,
             type: AppType.CollectionView,
             name: "My App",
             targetCollectionIds: [Id.generate.protoCollection(0)],
@@ -744,9 +766,24 @@ export default rd<GetDependencies>("Packs", (deps) => {
       expect(result.data.apps[0]!.latestVersion.targetCollections[0]!.id).toBe(
         result.data.collections[0]!.id,
       );
+      expect(result.data.apps[0]!.latestVersion.permissions).toEqual(
+        permissions,
+      );
+      expect(result.data.apps[0]!.latestVersion.stateDefinition).toEqual(
+        stateDefinition,
+      );
       const listResult = await backend.apps.list();
       assert.isTrue(listResult.success);
-      expect(listResult.data).toHaveLength(1);
+      expect(listResult.data).toEqual(result.data.apps);
+      const stateResult = await backend.apps.getState(
+        result.data.apps[0]!.id,
+        result.data.apps[0]!.latestVersion.id,
+      );
+      expect(stateResult).toEqual({
+        success: true,
+        data: { content: stateDefinition.initialState, revision: 1 },
+        error: null,
+      });
     });
 
     it("success: installs pack with documents", async () => {
