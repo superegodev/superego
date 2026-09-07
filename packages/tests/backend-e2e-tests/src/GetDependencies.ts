@@ -1,9 +1,5 @@
 import type { Backend, InferenceSettings } from "@superego/backend";
-import type {
-  Config,
-  DataRepositoriesManager,
-  InferenceService,
-} from "@superego/executing-backend";
+import type { Config, InferenceService } from "@superego/executing-backend";
 
 type GetDependencies = (overrides?: {
   inferenceService?: InferenceService;
@@ -11,6 +7,5 @@ type GetDependencies = (overrides?: {
   config?: Partial<Config>;
 }) => {
   backend: Backend;
-  dataRepositoriesManager: DataRepositoriesManager;
 };
 export default GetDependencies;

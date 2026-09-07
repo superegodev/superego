@@ -80,7 +80,6 @@ registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
   dataRepositoriesManager.runMigrations();
 
   return {
-    dataRepositoriesManager,
     backend: new ExecutingBackend(
       dataRepositoriesManager,
       new QuickjsJavascriptSandbox(),

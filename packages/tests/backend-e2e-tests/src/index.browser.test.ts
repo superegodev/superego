@@ -65,7 +65,6 @@ registerTests(({ inferenceService, inferenceSettings, config } = {}) => {
     crypto.randomUUID(),
   );
   return {
-    dataRepositoriesManager,
     backend: new ExecutingBackend(
       dataRepositoriesManager,
       new FakeJavascriptSandbox(),
