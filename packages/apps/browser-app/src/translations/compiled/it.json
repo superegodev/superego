@@ -4334,13 +4334,13 @@
       "value": "."
     }
   ],
-  "appDefinitionOptions.ts_+Ynh/m": [
+  "appPermissions.ts_+Ynh/m": [
     {
       "type": 0,
       "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
     }
   ],
-  "appDefinitionOptions.ts_epKnft": [
+  "appStateDefinition.ts_epKnft": [
     {
       "type": 0,
       "value": "Lo stato iniziale deve rispettare lo schema dello stato"

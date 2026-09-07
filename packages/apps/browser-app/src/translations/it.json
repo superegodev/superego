@@ -1733,10 +1733,10 @@
   "StateDefinitionFields.tsx_sEQMlq": {
     "defaultMessage": "Applica una migrazione esplicita dello stato"
   },
-  "appDefinitionOptions.ts_+Ynh/m": {
+  "appPermissions.ts_+Ynh/m": {
     "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
   },
-  "appDefinitionOptions.ts_epKnft": {
+  "appStateDefinition.ts_epKnft": {
     "defaultMessage": "Lo stato iniziale deve rispettare lo schema dello stato"
   }
 }

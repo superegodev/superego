@@ -2,28 +2,29 @@ import type { DatabaseSync } from "node:sqlite";
 import { encode } from "@msgpack/msgpack";
 
 export default function migrateAppDefinitions(database: DatabaseSync) {
-  database.exec(`
-    ALTER TABLE "apps" ADD COLUMN "state" BLOB;
-    ALTER TABLE "app_versions" ADD COLUMN "definition_options" BLOB;
-  `);
-  database
-    .prepare("UPDATE apps SET state = ?")
-    .run(encode({ content: {}, revision: 1 }));
-  database.prepare("UPDATE app_versions SET definition_options = ?").run(
+  const initialStateHex = Buffer.from(
+    encode({ content: {}, revision: 1 }),
+  ).toString("hex");
+  const permissionsHex = Buffer.from(
     encode({
-      permissions: {
-        modals: false,
-        downloads: false,
-        http: { allowedOrigins: [] },
-      },
-      stateDefinition: {
-        schema: {
-          types: { State: { dataType: "Struct", properties: {} } },
-          rootType: "State",
-        },
-        initialState: {},
-        migration: null,
-      },
+      modals: false,
+      downloads: false,
+      http: { allowedOrigins: [] },
     }),
-  );
+  ).toString("hex");
+  const stateDefinitionHex = Buffer.from(
+    encode({
+      schema: {
+        types: { State: { dataType: "Struct", properties: {} } },
+        rootType: "State",
+      },
+      initialState: {},
+      migration: null,
+    }),
+  ).toString("hex");
+  database.exec(`
+    ALTER TABLE "apps" ADD COLUMN "state" BLOB NOT NULL DEFAULT X'${initialStateHex}';
+    ALTER TABLE "app_versions" ADD COLUMN "permissions" BLOB NOT NULL DEFAULT X'${permissionsHex}';
+    ALTER TABLE "app_versions" ADD COLUMN "state_definition" BLOB NOT NULL DEFAULT X'${stateDefinitionHex}';
+  `);
 }

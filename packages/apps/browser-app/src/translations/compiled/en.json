@@ -4360,13 +4360,13 @@
       "value": "."
     }
   ],
-  "appDefinitionOptions.ts_+Ynh/m": [
+  "appPermissions.ts_+Ynh/m": [
     {
       "type": 0,
       "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
     }
   ],
-  "appDefinitionOptions.ts_epKnft": [
+  "appStateDefinition.ts_epKnft": [
     {
       "type": 0,
       "value": "Initial state must match the state schema"

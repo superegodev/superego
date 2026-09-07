@@ -1559,10 +1559,10 @@
   "Welcome.tsx_mNIlLz": {
     "defaultMessage": "<createAppLink>Create your first app</createAppLink>."
   },
-  "appDefinitionOptions.ts_+Ynh/m": {
+  "appPermissions.ts_+Ynh/m": {
     "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
   },
-  "appDefinitionOptions.ts_epKnft": {
+  "appStateDefinition.ts_epKnft": {
     "defaultMessage": "Initial state must match the state schema"
   },
   "downloadFile.ts_sG8Krh": {

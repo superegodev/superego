@@ -40,10 +40,15 @@ export default rd<GetDependencies>("App versions", (deps) => {
       },
       stateDefinition: {
         schema: {
-          types: { State: { dataType: DataType.Struct, properties: {} } },
+          types: {
+            State: {
+              dataType: DataType.Struct,
+              properties: { count: { dataType: DataType.Number } },
+            },
+          },
           rootType: "State",
         },
-        initialState: {},
+        initialState: { count: 42 },
         migration: { source: "source", compiled: "compiled" },
       },
       createdAt: new Date(),
@@ -83,8 +88,24 @@ export default rd<GetDependencies>("App versions", (deps) => {
         createdAt: new Date(),
       };
       const appVersion2: AppVersionEntity = {
-        permissions: defaultAppPermissions,
-        stateDefinition: emptyAppStateDefinition,
+        permissions: {
+          modals: true,
+          downloads: true,
+          http: { allowedOrigins: ["https://example.com"] },
+        },
+        stateDefinition: {
+          schema: {
+            types: {
+              State: {
+                dataType: DataType.Struct,
+                properties: { count: { dataType: DataType.Number } },
+              },
+            },
+            rootType: "State",
+          },
+          initialState: { count: 10 },
+          migration: null,
+        },
         id: Id.generate.appVersion(),
         previousVersionId: appVersion1.id,
         appId,
@@ -110,6 +131,14 @@ export default rd<GetDependencies>("App versions", (deps) => {
 
       // Verify
       expect(found).toEqual(appVersion2);
+      const allLatests =
+        await dataRepositoriesManager.runInSerializableTransaction(
+          async (repos) => ({
+            action: "commit",
+            returnValue: await repos.appVersion.findAllLatests(),
+          }),
+        );
+      expect(allLatests).toEqual([appVersion2]);
     });
 
     it("case: doesn't exist => returns null", async () => {

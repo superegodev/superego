@@ -937,7 +937,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Verify
       expect(initial.data.content).toEqual({ count: 0 });
       expect(
-        created.data.latestVersion.permissions?.http?.allowedOrigins,
+        created.data.latestVersion.permissions.http.allowedOrigins,
       ).toEqual(["https://example.com"]);
       expect(saved.success).toBe(true);
       expect(after).toEqual(saved);
@@ -1046,7 +1046,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           definition.files,
           created.data.latestVersion.permissions,
           {
-            ...definition.stateDefinition!,
+            ...definition.stateDefinition,
             migration: {
               source: "",
               compiled:
@@ -1194,7 +1194,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         definition.files,
         { modals: false, downloads: false, http: { allowedOrigins: [] } },
         {
-          ...definition.stateDefinition!,
+          ...definition.stateDefinition,
           migration: {
             source: "",
             compiled:
@@ -1317,7 +1317,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const created = await backend.apps.create(definition);
       assert(created.success);
       const invalidState = {
-        ...definition.stateDefinition!,
+        ...definition.stateDefinition,
         initialState: { count: "invalid" },
       };
 
@@ -1481,7 +1481,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         definition.files,
         created.data.latestVersion.permissions,
         {
-          ...definition.stateDefinition!,
+          ...definition.stateDefinition,
           migration: { source: "", compiled: "export default 42;" },
         },
       );
@@ -1492,7 +1492,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         definition.files,
         created.data.latestVersion.permissions,
         {
-          ...definition.stateDefinition!,
+          ...definition.stateDefinition,
           migration: {
             source: "",
             compiled: 'export default () => ({ count: "invalid" });',

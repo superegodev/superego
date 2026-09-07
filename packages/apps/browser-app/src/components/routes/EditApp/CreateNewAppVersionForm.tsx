@@ -10,7 +10,6 @@ import * as v from "valibot";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useCreateNewAppVersion } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import appDefinitionOptions from "../../../business-logic/forms/schemas/appDefinitionOptions.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import toasts from "../../../business-logic/toasts/toasts.js";
@@ -84,7 +83,8 @@ export default function CreateNewAppVersionForm({
     resolver: standardSchemaResolver(
       v.strictObject({
         appVersion: v.strictObject({
-          ...appDefinitionOptions(intl),
+          permissions: forms.schemas.appPermissions(intl),
+          stateDefinition: forms.schemas.appStateDefinition(intl),
           targetCollectionIds: v.pipe(
             v.array(valibotSchemas.id.collection()),
             v.minLength(1),

@@ -14,7 +14,6 @@ import { useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateApp } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
-import appDefinitionOptions from "../../../business-logic/forms/schemas/appDefinitionOptions.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
@@ -80,7 +79,8 @@ export default function CreateAppForm({
       v.strictObject({
         name: valibotSchemas.appName(),
         appVersion: v.strictObject({
-          ...appDefinitionOptions(intl),
+          permissions: forms.schemas.appPermissions(intl),
+          stateDefinition: forms.schemas.appStateDefinition(intl),
           targetCollectionIds: v.pipe(
             v.array(valibotSchemas.id.collection()),
             v.minLength(1),
