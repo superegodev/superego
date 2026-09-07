@@ -87,6 +87,7 @@ export function appStateDefinition() {
     migration: v.nullable(typescriptModule()),
   });
 }
+
 export function appState() {
   return v.strictObject({
     content: v.any(),

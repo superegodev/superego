@@ -40,6 +40,7 @@ export default class AppsUpdateState extends BackendUsecase<
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
+
   async exec(
     ...[id, versionId, latestRevision, content]: Parameters<
       Backend["apps"]["updateState"]
@@ -56,6 +57,7 @@ export default class AppsUpdateState extends BackendUsecase<
     if (!result.success) {
       return result;
     }
+
     if (result.data.revision !== latestRevision) {
       return makeUnsuccessfulResult(
         makeResultError("AppStateRevisionNotMatching", {
@@ -65,8 +67,10 @@ export default class AppsUpdateState extends BackendUsecase<
         }),
       );
     }
+
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);
     assertAppVersionExists(id, version);
+
     const contentValidationResult = v.safeParse(
       valibotSchemas.appStateContent(version.stateDefinition.schema),
       content,
@@ -79,12 +83,14 @@ export default class AppsUpdateState extends BackendUsecase<
         }),
       );
     }
+
     const app = (await this.repos.app.find(id))!;
     const state = {
       content,
       revision: result.data.revision + 1,
     };
     await this.repos.app.replace({ ...app, state });
+
     return makeSuccessfulResult(state);
   }
 }

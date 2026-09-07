@@ -31,6 +31,7 @@ export default class AppsGetState extends BackendUsecase<
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
+
   async exec(
     ...[id, versionId]: Parameters<Backend["apps"]["getState"]>
   ): ResultPromise<
@@ -38,11 +39,13 @@ export default class AppsGetState extends BackendUsecase<
     AppNotFound | AppVersionIdNotMatching | UnexpectedError
   > {
     const app = await this.repos.app.find(id);
+
     if (!app) {
       return makeUnsuccessfulResult(
         makeResultError("AppNotFound", { appId: id }),
       );
     }
+
     const version = await this.repos.appVersion.findLatestWhereAppIdEq(id);
     assertAppVersionExists(id, version);
     if (version.id !== versionId) {
@@ -54,6 +57,7 @@ export default class AppsGetState extends BackendUsecase<
         }),
       );
     }
+
     return makeSuccessfulResult(app.state);
   }
 }

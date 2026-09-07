@@ -670,6 +670,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
     });
   });
+
   describe("getState", () => {
     it.each([
       ["not-a-valid-id", Id.generate.appVersion()],

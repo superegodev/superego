@@ -7,10 +7,12 @@ it("accepts explicit restrictive permissions and rejects unknown permissions", (
   // Exercise
   const valid = v.parse(appPermissions(), defaultAppPermissions);
   const invalid = v.safeParse(appPermissions(), { scripts: true });
+
   // Verify
   expect(valid).toEqual(defaultAppPermissions);
   expect(invalid.success).toBe(false);
 });
+
 it.each([
   undefined,
   {},
