@@ -7,7 +7,10 @@ import {
 } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
 import { readMainSource } from "../common/mainSource.js";
-import { readStateSource, stateSourceOf } from "../common/state.js";
+import {
+  readStateDefinitionSource,
+  stateDefinitionSourceOf,
+} from "../common/stateDefinition.js";
 import type { AppManifest } from "../common/types.js";
 import getTargetCollectionIds from "./getTargetCollectionIds.js";
 import type { AppChanges } from "./types.js";
@@ -35,8 +38,8 @@ export default async function getAppChanges({
     app.latestVersion.permissions,
   );
   const stateDefinitionChanged = !isEqual(
-    readStateSource(path),
-    stateSourceOf(app.latestVersion.stateDefinition),
+    readStateDefinitionSource(path),
+    stateDefinitionSourceOf(app.latestVersion.stateDefinition),
   );
   const mainModule =
     sourceChanged ||

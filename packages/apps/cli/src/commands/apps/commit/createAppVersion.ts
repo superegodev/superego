@@ -1,6 +1,6 @@
 import type { App, TypescriptModule } from "@superego/backend";
 import type { CliBackend } from "../common/commandUtils.js";
-import { compileState } from "../common/state.js";
+import { compileStateDefinition } from "../common/stateDefinition.js";
 import type { AppManifest } from "../common/types.js";
 
 export default async function createAppVersion({
@@ -22,7 +22,7 @@ export default async function createAppVersion({
     manifest.targetCollectionIds,
     { "/main.tsx": mainModule },
     manifest.permissions,
-    await compileState(path),
+    await compileStateDefinition(path),
   );
   if (!result.success) {
     throw new Error(JSON.stringify(result.error));

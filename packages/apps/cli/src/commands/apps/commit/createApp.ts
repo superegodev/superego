@@ -1,7 +1,7 @@
 import { resolveLatestTargetCollections } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
 import { buildLock, writeLock } from "../common/lock.js";
-import { compileState } from "../common/state.js";
+import { compileStateDefinition } from "../common/stateDefinition.js";
 import type { CommitContext, CommitResult } from "./types.js";
 
 export default async function createApp({
@@ -17,7 +17,7 @@ export default async function createApp({
   const result = await backend.apps.create({
     type: manifest.type,
     permissions: manifest.permissions,
-    stateDefinition: await compileState(path),
+    stateDefinition: await compileStateDefinition(path),
     name: manifest.name,
     targetCollectionIds: manifest.targetCollectionIds,
     files: { "/main.tsx": mainModule },

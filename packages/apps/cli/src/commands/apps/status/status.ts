@@ -10,7 +10,10 @@ import {
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
-import { readStateSource, stateSourceOf } from "../common/state.js";
+import {
+  readStateDefinitionSource,
+  stateDefinitionSourceOf,
+} from "../common/stateDefinition.js";
 
 export default useMarkdownHelp(
   new Command("status")
@@ -43,8 +46,8 @@ export default useMarkdownHelp(
         }
         if (
           !isEqual(
-            readStateSource(path),
-            stateSourceOf(app.latestVersion.stateDefinition),
+            readStateDefinitionSource(path),
+            stateDefinitionSourceOf(app.latestVersion.stateDefinition),
           )
         ) {
           status.push("state definition changed");

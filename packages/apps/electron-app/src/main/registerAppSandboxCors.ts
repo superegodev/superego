@@ -21,7 +21,7 @@ export default function registerAppSandboxCors(session: Session): void {
   // Chromium checks the document's connect-src before issuing either fetch or
   // its preflight. Only requests to CSP-permitted destinations reach this code;
   // do not try to recover permissions from the app's mutable DOM or Origin.
-  // Electron 43.1.1 supplies the requesting frame for OPTIONS as well as fetch.
+  // Electron supplies the requesting frame for OPTIONS as well as fetch.
   session.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
     requests.delete(details.id);
     if (isAppSandboxRequest(details, hostUrl) && details.frame) {

@@ -9,12 +9,13 @@ import * as v from "valibot";
 import { readJson, writeJson } from "./json.js";
 import { readManifest } from "./manifest.js";
 
-export const stateFiles = {
+export const stateDefinitionFiles = {
   schema: "state.schema.json",
   initialState: "state.initial.json",
   migration: "state.migration.ts",
 } as const;
-export function readStateSource(path: string) {
+
+export function readStateDefinitionSource(path: string) {
   const manifest = readManifest(path);
   const schema = v.parse(
     valibotSchemas.appStateSchema(),
@@ -36,15 +37,19 @@ export function readStateSource(path: string) {
       : null,
   };
 }
-export function stateSourceOf(definition: AppStateDefinition) {
+
+export function stateDefinitionSourceOf(definition: AppStateDefinition) {
   return {
     schema: definition.schema,
     initialState: definition.initialState,
     migration: definition.migration?.source ?? null,
   };
 }
-export async function compileState(path: string): Promise<AppStateDefinition> {
-  const source = readStateSource(path);
+
+export async function compileStateDefinition(
+  path: string,
+): Promise<AppStateDefinition> {
+  const source = readStateDefinitionSource(path);
   if (source.migration === null) {
     return { ...source, migration: null };
   }
@@ -60,15 +65,19 @@ export async function compileState(path: string): Promise<AppStateDefinition> {
     migration: { source: source.migration, compiled: result.data },
   };
 }
-export async function writeStateSource(
+
+export async function writeStateDefinitionSource(
   path: string,
   definition: AppStateDefinition,
 ) {
-  await writeJson(join(path, stateFiles.schema), definition.schema);
-  await writeJson(join(path, stateFiles.initialState), definition.initialState);
+  await writeJson(join(path, stateDefinitionFiles.schema), definition.schema);
+  await writeJson(
+    join(path, stateDefinitionFiles.initialState),
+    definition.initialState,
+  );
   if (definition.migration) {
     await writeFile(
-      join(path, stateFiles.migration),
+      join(path, stateDefinitionFiles.migration),
       definition.migration.source,
       "utf8",
     );

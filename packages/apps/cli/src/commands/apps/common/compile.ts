@@ -8,7 +8,7 @@ import type {
 import { codegen } from "@superego/schema";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
 import { readMainSource } from "./mainSource.js";
-import { readStateSource } from "./state.js";
+import { readStateDefinitionSource } from "./stateDefinition.js";
 import type { TargetCollection } from "./types.js";
 
 export async function compileApp(
@@ -16,7 +16,7 @@ export async function compileApp(
   targetCollections: TargetCollection[],
 ): Promise<TypescriptModule> {
   const source = readMainSource(path);
-  const stateDefinition = readStateSource(path);
+  const stateDefinition = readStateDefinitionSource(path);
   const result = await new TscTypescriptCompiler().compile(
     { path: "/main.tsx", source },
     [

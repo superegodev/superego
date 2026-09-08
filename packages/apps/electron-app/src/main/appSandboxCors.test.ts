@@ -47,70 +47,133 @@ describe("app sandbox request attribution", () => {
     expect(result).toBe(true);
   });
 
-  it.each([
-    "missing frame",
-    "destroyed frame",
-    "host request",
-    "unrelated frame",
-    "nested frame",
-    "untrusted host",
-    "navigation",
-    "non-HTTP",
-    "other sandbox path",
-  ])("rejects %s", (scenario) => {
-    // Setup SUT
-    const details: Pick<
-      OnBeforeSendHeadersListenerDetails,
-      "frame" | "resourceType" | "url"
-    > = appRequest();
-    switch (scenario) {
-      case "missing frame":
-        details.frame = null;
-        break;
-      case "destroyed frame":
-        details.frame = {
-          ...details.frame,
-          isDestroyed: () => true,
-        } as WebFrameMain;
-        break;
-      case "host request":
-        details.frame = { ...details.frame, url: hostUrl } as WebFrameMain;
-        break;
-      case "unrelated frame":
-        details.frame = {
-          ...details.frame,
-          url: "https://example.com",
-        } as WebFrameMain;
-        break;
-      case "nested frame":
-        details.frame = { ...details.frame, parent: {} } as WebFrameMain;
-        break;
-      case "untrusted host": {
-        const parent = { url: "file:///other.html" } as WebFrameMain;
-        details.frame = {
-          ...details.frame,
-          parent,
-          top: parent,
-        } as WebFrameMain;
-        break;
-      }
-      case "navigation":
-        details.resourceType = "subFrame";
-        break;
-      case "non-HTTP":
-        details.url = "file:///secret";
-        break;
-      case "other sandbox path":
-        details.frame = {
-          ...details.frame,
-          url: "dev.superego.app-sandbox://localhost/other.html",
-        } as WebFrameMain;
-        break;
-    }
-    // Exercise
-    const result = isAppSandboxRequest(details, hostUrl);
-    // Verify
-    expect(result).toBe(false);
+  describe("rejects requests outside the app sandbox", () => {
+    it("case: missing frame", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.frame = null;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: destroyed frame", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.frame = {
+        ...details.frame,
+        isDestroyed: () => true,
+      } as WebFrameMain;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: host request", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.frame = { ...details.frame, url: hostUrl } as WebFrameMain;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: unrelated frame", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.frame = {
+        ...details.frame,
+        url: "https://example.com",
+      } as WebFrameMain;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: nested frame", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.frame = { ...details.frame, parent: {} } as WebFrameMain;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: untrusted host", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      const parent = { url: "file:///other.html" } as WebFrameMain;
+      details.frame = { ...details.frame, parent, top: parent } as WebFrameMain;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: navigation", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.resourceType = "subFrame";
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: non-HTTP", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.url = "file:///secret";
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
+
+    it("case: other sandbox path", () => {
+      // Setup SUT
+      const details: Pick<
+        OnBeforeSendHeadersListenerDetails,
+        "frame" | "resourceType" | "url"
+      > = appRequest();
+      details.frame = {
+        ...details.frame,
+        url: "dev.superego.app-sandbox://localhost/other.html",
+      } as WebFrameMain;
+      // Exercise
+      const result = isAppSandboxRequest(details, hostUrl);
+      // Verify
+      expect(result).toBe(false);
+    });
   });
 });
 
@@ -148,12 +211,11 @@ describe("app sandbox CORS headers", () => {
     });
   });
 
-  it.each(["GET", "POST", "OPTIONS"])(
-    "preserves actual %s status and exposes response headers",
-    (method) => {
+  describe("preserves actual request status and exposes response headers", () => {
+    it("case: GET", () => {
       // Setup SUT
       const request = getCorsRequest({
-        method,
+        method: "GET",
         requestHeaders: { Origin: "null" },
       });
       // Exercise
@@ -172,8 +234,56 @@ describe("app sandbox CORS headers", () => {
       expect(
         response.responseHeaders["Access-Control-Allow-Methods"],
       ).toBeUndefined();
-    },
-  );
+    });
+
+    it("case: POST", () => {
+      // Setup SUT
+      const request = getCorsRequest({
+        method: "POST",
+        requestHeaders: { Origin: "null" },
+      });
+      // Exercise
+      const response = makeCorsResponse(request!, {
+        "X-Service-Header": ["value"],
+      });
+      // Verify
+      expect(response.statusLine).toBeUndefined();
+      expect(response.responseHeaders["X-Service-Header"]).toEqual(["value"]);
+      expect(response.responseHeaders["Access-Control-Allow-Origin"]).toEqual([
+        "null",
+      ]);
+      expect(
+        response.responseHeaders["Access-Control-Expose-Headers"]?.[0],
+      ).toContain("X-Service-Header");
+      expect(
+        response.responseHeaders["Access-Control-Allow-Methods"],
+      ).toBeUndefined();
+    });
+
+    it("case: OPTIONS", () => {
+      // Setup SUT
+      const request = getCorsRequest({
+        method: "OPTIONS",
+        requestHeaders: { Origin: "null" },
+      });
+      // Exercise
+      const response = makeCorsResponse(request!, {
+        "X-Service-Header": ["value"],
+      });
+      // Verify
+      expect(response.statusLine).toBeUndefined();
+      expect(response.responseHeaders["X-Service-Header"]).toEqual(["value"]);
+      expect(response.responseHeaders["Access-Control-Allow-Origin"]).toEqual([
+        "null",
+      ]);
+      expect(
+        response.responseHeaders["Access-Control-Expose-Headers"]?.[0],
+      ).toContain("X-Service-Header");
+      expect(
+        response.responseHeaders["Access-Control-Allow-Methods"],
+      ).toBeUndefined();
+    });
+  });
 
   it("ignores requests without an Origin header", () => {
     // Exercise

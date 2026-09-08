@@ -3,7 +3,7 @@ import { join } from "node:path";
 import type { AppStateDefinition } from "@superego/backend";
 import { regenerateGeneratedFiles } from "./generatedFiles.js";
 import { writeJson } from "./json.js";
-import { writeStateSource } from "./state.js";
+import { writeStateDefinitionSource } from "./stateDefinition.js";
 import type { AppLock, AppManifest, TargetCollection } from "./types.js";
 
 export default async function writeAppProject(
@@ -20,6 +20,6 @@ export default async function writeAppProject(
     await writeJson(join(path, "app.lock.json"), lock);
   }
   await writeFile(join(path, "main.tsx"), mainSource, "utf-8");
-  await writeStateSource(path, stateDefinition);
+  await writeStateDefinitionSource(path, stateDefinition);
   await regenerateGeneratedFiles(path, targetCollections);
 }

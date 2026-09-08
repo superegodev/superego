@@ -6,7 +6,10 @@ import { getLockedApp, runAppCommand } from "../common/commandUtils.js";
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
-import { readStateSource, stateSourceOf } from "../common/state.js";
+import {
+  readStateDefinitionSource,
+  stateDefinitionSourceOf,
+} from "../common/stateDefinition.js";
 import getStatus from "./getStatus.js";
 import makeArrayFieldDiff from "./makeArrayFieldDiff.js";
 import makeFieldDiff from "./makeFieldDiff.js";
@@ -50,8 +53,8 @@ export default useMarkdownHelp(
           stale,
         });
 
-        const localStateDefinition = readStateSource(path);
-        const remoteStateDefinition = stateSourceOf(
+        const localStateDefinition = readStateDefinitionSource(path);
+        const remoteStateDefinition = stateDefinitionSourceOf(
           app.latestVersion.stateDefinition,
         );
         const permissionsChanged = !isEqual(

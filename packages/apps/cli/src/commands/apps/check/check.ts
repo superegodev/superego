@@ -9,7 +9,7 @@ import { compileApp } from "../common/compile.js";
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
-import { compileState } from "../common/state.js";
+import { compileStateDefinition } from "../common/stateDefinition.js";
 
 export default useMarkdownHelp(
   new Command("check")
@@ -26,7 +26,7 @@ export default useMarkdownHelp(
           manifest.targetCollectionIds,
         );
         await compileApp(path, targetCollections);
-        await compileState(path);
+        await compileStateDefinition(path);
         return {
           path,
           targetCollectionIds: manifest.targetCollectionIds,

@@ -3,22 +3,24 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { AppType, type App, type AppStateDefinition } from "@superego/backend";
 import { DataType } from "@superego/schema";
-import { expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CliBackend } from "../common/commandUtils.js";
 import { readManifest, writeManifest } from "../common/manifest.js";
-import { writeStateSource } from "../common/state.js";
+import { writeStateDefinitionSource } from "../common/stateDefinition.js";
 import getAppChanges from "./getAppChanges.js";
 
 vi.mock("../common/compile.js", () => ({
   compileApp: vi.fn(async () => ({ source: "source", compiled: "compiled" })),
 }));
 
-it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
-  "detects %s independently of compiled output and saved state",
-  async (change) => {
-    // Setup SUT
-    const path = mkdtempSync(join(tmpdir(), "superego-app-changes-"));
-    const stateDefinition: AppStateDefinition = {
+describe("getAppChanges", () => {
+  let path: string;
+  let stateDefinition: AppStateDefinition;
+  let app: App;
+
+  beforeEach(async () => {
+    path = mkdtempSync(join(tmpdir(), "superego-app-changes-"));
+    stateDefinition = {
       schema: {
         types: {
           State: {
@@ -34,7 +36,7 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
         compiled: "compiled",
       },
     };
-    const app: App = {
+    app = {
       id: "App_test",
       name: "App",
       type: AppType.CollectionView,
@@ -54,53 +56,133 @@ it.each(["unchanged", "permissions", "schema", "initialState", "migration"])(
         stateDefinition,
       },
     };
-    try {
-      writeFileSync(join(path, "main.tsx"), "source");
-      const changedStateDefinition = structuredClone(stateDefinition);
-      if (change === "initialState") {
-        changedStateDefinition.initialState = { count: 1 };
-      }
-      if (change === "migration") {
-        changedStateDefinition.migration!.source =
-          "export default () => ({ count: 2 });";
-      }
-      if (change === "schema") {
-        changedStateDefinition.schema.types["State"]!.description =
-          "Updated schema";
-      }
-      await writeManifest(path, {
-        name: app.name,
-        type: app.type,
-        targetCollectionIds: [],
-        permissions: {
-          downloads: false,
-          http: { allowedOrigins: [] },
-          modals: change !== "permissions",
-        },
-        stateDefinition: {
-          schema: "state.schema.json",
-          initialState: "state.initial.json",
-          migration: "state.migration.ts",
-        },
-      });
-      await writeStateSource(path, changedStateDefinition);
-      // Exercise
-      const changes = await getAppChanges({
-        backend: {} as CliBackend,
-        path,
-        manifest: readManifest(path),
-        app,
-      });
-      // Verify
-      expect(changes.sourceChanged).toBe(false);
-      expect(changes.targetCollectionsChanged).toBe(false);
-      expect(changes.permissionsChanged).toBe(change === "permissions");
-      expect(changes.stateDefinitionChanged).toBe(
-        ["schema", "initialState", "migration"].includes(change),
-      );
-      expect(changes.mainModule !== null).toBe(change !== "unchanged");
-    } finally {
-      rmSync(path, { recursive: true });
-    }
-  },
-);
+    writeFileSync(join(path, "main.tsx"), "source");
+    await writeManifest(path, {
+      name: app.name,
+      type: app.type,
+      targetCollectionIds: [],
+      permissions: {
+        downloads: false,
+        http: { allowedOrigins: [] },
+        modals: true,
+      },
+      stateDefinition: {
+        schema: "state.schema.json",
+        initialState: "state.initial.json",
+        migration: "state.migration.ts",
+      },
+    });
+    await writeStateDefinitionSource(path, stateDefinition);
+  });
+
+  afterEach(() => {
+    rmSync(path, { recursive: true });
+  });
+
+  it("reports no changes when only compiled output differs", async () => {
+    // Exercise
+    const changes = await getAppChanges({
+      backend: {} as CliBackend,
+      path,
+      manifest: readManifest(path),
+      app,
+    });
+
+    // Verify
+    expect(changes.sourceChanged).toBe(false);
+    expect(changes.targetCollectionsChanged).toBe(false);
+    expect(changes.permissionsChanged).toBe(false);
+    expect(changes.stateDefinitionChanged).toBe(false);
+    expect(changes.mainModule).toBeNull();
+  });
+
+  it("detects changed permissions independently of compiled output", async () => {
+    // Setup SUT
+    const manifest = readManifest(path);
+    manifest.permissions.modals = false;
+    await writeManifest(path, manifest);
+
+    // Exercise
+    const changes = await getAppChanges({
+      backend: {} as CliBackend,
+      path,
+      manifest: readManifest(path),
+      app,
+    });
+
+    // Verify
+    expect(changes.sourceChanged).toBe(false);
+    expect(changes.targetCollectionsChanged).toBe(false);
+    expect(changes.permissionsChanged).toBe(true);
+    expect(changes.stateDefinitionChanged).toBe(false);
+    expect(changes.mainModule).not.toBeNull();
+  });
+
+  it("detects a changed state schema independently of compiled output", async () => {
+    // Setup SUT
+    const changedStateDefinition = structuredClone(stateDefinition);
+    changedStateDefinition.schema.types["State"]!.description =
+      "Updated schema";
+    await writeStateDefinitionSource(path, changedStateDefinition);
+
+    // Exercise
+    const changes = await getAppChanges({
+      backend: {} as CliBackend,
+      path,
+      manifest: readManifest(path),
+      app,
+    });
+
+    // Verify
+    expect(changes.sourceChanged).toBe(false);
+    expect(changes.targetCollectionsChanged).toBe(false);
+    expect(changes.permissionsChanged).toBe(false);
+    expect(changes.stateDefinitionChanged).toBe(true);
+    expect(changes.mainModule).not.toBeNull();
+  });
+
+  it("detects a changed initial state independently of compiled output", async () => {
+    // Setup SUT
+    const changedStateDefinition = structuredClone(stateDefinition);
+    changedStateDefinition.initialState = { count: 1 };
+    await writeStateDefinitionSource(path, changedStateDefinition);
+
+    // Exercise
+    const changes = await getAppChanges({
+      backend: {} as CliBackend,
+      path,
+      manifest: readManifest(path),
+      app,
+    });
+
+    // Verify
+    expect(changes.sourceChanged).toBe(false);
+    expect(changes.targetCollectionsChanged).toBe(false);
+    expect(changes.permissionsChanged).toBe(false);
+    expect(changes.stateDefinitionChanged).toBe(true);
+    expect(changes.mainModule).not.toBeNull();
+  });
+
+  it("detects changed migration source independently of compiled output", async () => {
+    // Setup SUT
+    const changedStateDefinition = structuredClone(stateDefinition);
+    changedStateDefinition.migration!.source =
+      "export default () => ({ count: 2 });";
+    await writeStateDefinitionSource(path, changedStateDefinition);
+
+    // Exercise
+    const changes = await getAppChanges({
+      backend: {} as CliBackend,
+      path,
+      manifest: readManifest(path),
+      app,
+    });
+
+    // Verify
+    expect(changes.sourceChanged).toBe(false);
+    expect(changes.targetCollectionsChanged).toBe(false);
+    expect(changes.permissionsChanged).toBe(false);
+    expect(changes.stateDefinitionChanged).toBe(true);
+    expect(changes.mainModule).not.toBeNull();
+  });
+});

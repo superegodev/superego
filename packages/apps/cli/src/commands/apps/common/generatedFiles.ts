@@ -7,7 +7,7 @@ import appAgentsContent from "./agent-files/AGENTS.md?raw";
 import appSkillContent from "./agent-files/writing-superego-apps.md?raw";
 import { getCollectionTypescriptSource } from "./compile.js";
 import { writeJson } from "./json.js";
-import { readStateSource } from "./state.js";
+import { readStateDefinitionSource } from "./stateDefinition.js";
 import tsconfig from "./tsconfig.js";
 import type { TargetCollection } from "./types.js";
 
@@ -16,7 +16,7 @@ export async function regenerateGeneratedFiles(
   targetCollections: TargetCollection[],
 ): Promise<void> {
   removeGeneratedCollectionFiles(path);
-  const stateDefinition = readStateSource(path);
+  const stateDefinition = readStateDefinitionSource(path);
   await writeFile(
     join(path, "app-state.ts"),
     codegen(stateDefinition.schema),
