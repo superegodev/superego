@@ -31,15 +31,6 @@
     "react/no-array-index-key": "warn",
     "react-hooks/exhaustive-deps": "warn",
 
-    // The Oxlint upgrade enables these React Compiler checks through correctness.
-    // Keep findings visible; enforcing them needs a separate frontend migration.
-    "react/immutability": "warn",
-    "react/incompatible-library": "warn",
-    "react/purity": "warn",
-    "react/refs": "warn",
-    "react/set-state-in-effect": "warn",
-    "react/static-components": "warn",
-
     "unicorn/no-array-for-each": "off",
     "unicorn/no-empty-file": "off",
     "unicorn/prefer-number-properties": "error",

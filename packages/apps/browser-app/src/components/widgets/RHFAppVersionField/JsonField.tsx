@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useController, type Control } from "react-hook-form";
 import CodeInput from "../CodeInput/CodeInput.js";
 import * as cs from "./RHFAppVersionField.css.js";
@@ -28,7 +28,9 @@ export default function JsonField({
     },
     [onFieldChange],
   );
-  useEffect(() => {
+  const [previousValue, setPreviousValue] = useState(field.value);
+  if (previousValue !== field.value) {
+    setPreviousValue(field.value);
     setText((previous) => {
       if (previous === field.value) {
         return previous;
@@ -44,7 +46,7 @@ export default function JsonField({
       }
       return JSON.stringify(field.value, null, 2) ?? "";
     });
-  }, [field.value]);
+  }
   return (
     <div className={cs.JsonField.root}>
       <label>{label}</label>

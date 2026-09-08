@@ -12,17 +12,22 @@ interface Props {
   ref?: Ref<HTMLImageElement>;
 }
 export default function Image({ image, alt, className, ref }: Props) {
-  const [src, setSrc] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<{
+    image: Props["image"];
+    url: string;
+  } | null>(null);
+  const src = imageUrl?.image === image ? imageUrl?.url : null;
 
   useEffect(() => {
     if (!image) {
-      setSrc(null);
       return;
     }
     const url = URL.createObjectURL(
       new Blob([image.content], { type: image.mimeType }),
     );
-    setSrc(url);
+    // Object URLs are external resources created after commit and revoked on cleanup.
+    // oxlint-disable-next-line react/set-state-in-effect
+    setImageUrl({ image, url });
     return () => URL.revokeObjectURL(url);
   }, [image]);
 

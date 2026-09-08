@@ -20,7 +20,10 @@ export default function Default({
   autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   return (
     <TextField
       id={field.name}
@@ -49,7 +52,7 @@ export default function Default({
           label={label}
         />
       ) : null}
-      <Input ref={field.ref} placeholder="null" />
+      <Input ref={fieldRef} placeholder="null" />
       <FieldError>{fieldState.error?.message}</FieldError>
     </TextField>
   );

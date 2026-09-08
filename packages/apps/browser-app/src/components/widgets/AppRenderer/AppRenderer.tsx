@@ -17,7 +17,7 @@ import {
   defaultAppPermissions,
   makeSuccessfulResult,
 } from "@superego/shared-utils";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import useAppBackend from "../../../business-logic/apps/useAppBackend.js";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
@@ -83,9 +83,11 @@ export default function AppRenderer({ app, preview = false }: Props) {
 
   const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
     useState(false);
-  useEffect(() => {
+  const [previousAppId, setPreviousAppId] = useState(app.id);
+  if (previousAppId !== app.id) {
+    setPreviousAppId(app.id);
     setIncompatibilityWarningDismissed(false);
-  }, [app.id]);
+  }
 
   const settings: Settings = useMemo(() => ({ theme }), [theme]);
   const intlMessages: IntlMessages = useMemo(

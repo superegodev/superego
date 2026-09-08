@@ -24,8 +24,9 @@ export default function ListSkeleton({
             className={cs.ListSkeleton.item}
             style={{
               height: itemHeight,
+              // Deterministic variation keeps widths stable across renders.
               width: randomizeItemWidth
-                ? `${Math.round(Math.random() * 100)}%`
+                ? `${(index * 37 + 23) % 101}%`
                 : "100%",
             }}
           />

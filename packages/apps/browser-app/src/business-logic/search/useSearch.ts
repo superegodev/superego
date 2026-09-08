@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useBackend from "../backend/useBackend.js";
 import type SearchParams from "./SearchParams.js";
 import type SearchState from "./SearchState.js";
@@ -27,17 +27,24 @@ export default function useSearch(): UseSearch {
   const [searchState, setSearchState] =
     useState<SearchState>(initialSearchState);
 
-  const latestSearchIdRef = useRef(0);
-  useEffect(() => {
-    if (searchParams.query.trim().length < 2) {
+  const updateSearchParams = useCallback((params: SearchParams) => {
+    setSearchParams(params);
+    if (params.query.trim().length < 2) {
       setSearchState({
-        searchType: searchParams.searchType,
+        searchType: params.searchType,
         isSearching: false,
         results: null,
       });
+    }
+  }, []);
+
+  const latestSearchIdRef = useRef(0);
+  useEffect(() => {
+    if (searchParams.query.trim().length < 2) {
       return;
     }
 
+    let cancelled = false;
     const timeoutId = setTimeout(async () => {
       const searchId = latestSearchIdRef.current + 1;
       latestSearchIdRef.current = searchId;
@@ -57,7 +64,7 @@ export default function useSearch(): UseSearch {
           searchParams.query,
           { limit: 10 },
         );
-        if (searchId === latestSearchIdRef.current) {
+        if (!cancelled && searchId === latestSearchIdRef.current) {
           setSearchState({
             searchType: SearchType.Documents,
             isSearching: false,
@@ -78,7 +85,7 @@ export default function useSearch(): UseSearch {
           searchParams.query,
           { limit: 10 },
         );
-        if (searchId === latestSearchIdRef.current) {
+        if (!cancelled && searchId === latestSearchIdRef.current) {
           setSearchState({
             searchType: SearchType.Conversations,
             isSearching: false,
@@ -88,7 +95,10 @@ export default function useSearch(): UseSearch {
       }
     }, 300);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      cancelled = true;
+      clearTimeout(timeoutId);
+    };
   }, [
     backend,
     searchParams.searchType,
@@ -98,8 +108,8 @@ export default function useSearch(): UseSearch {
 
   return {
     searchParams: searchParams,
-    setSearchParams: setSearchParams,
-    resetSearchParams: () => setSearchParams(initialSearchParams),
+    setSearchParams: updateSearchParams,
+    resetSearchParams: () => updateSearchParams(initialSearchParams),
     searchState: searchState,
   };
 }

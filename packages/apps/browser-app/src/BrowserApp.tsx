@@ -47,7 +47,7 @@ export default function BrowserApp({ backend, queryClient }: Props) {
                     <h1>
                       <FormattedMessage defaultMessage="Error loading app" />
                     </h1>
-                    <ResultErrors errors={errors} />
+                    <ResultErrors errors={errors} highlightDetails={false} />
                   </>
                 )}
               >

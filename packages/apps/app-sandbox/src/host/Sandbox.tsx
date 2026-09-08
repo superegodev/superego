@@ -1,6 +1,6 @@
 import type { AppPermissions } from "@superego/backend";
 import { normalizeHttpOrigin } from "@superego/shared-utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import dispatchOperation, {
   type HostBackend,
 } from "../ipc/dispatchOperation.js";
@@ -39,9 +39,11 @@ export default function Sandbox({
   const hostIpcRef = useRef<HostIpc>(null);
 
   const backendRef = useRef(backend);
-  backendRef.current = backend;
   const navigateToRef = useRef(navigateTo);
-  navigateToRef.current = navigateTo;
+  useLayoutEffect(() => {
+    backendRef.current = backend;
+    navigateToRef.current = navigateTo;
+  }, [backend, navigateTo]);
 
   const [sandboxReady, setSandboxReady] = useState(false);
 

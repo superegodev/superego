@@ -63,7 +63,10 @@ export default function RHFTypescriptModuleField<T extends FieldValues>({
   className,
   codeInputClassName,
 }: Props<T>) {
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const value = field.value as Record<string, unknown> | null;
   const isInvalid =
     fieldState.invalid &&
@@ -93,7 +96,7 @@ export default function RHFTypescriptModuleField<T extends FieldValues>({
         assistantImplementation={assistantImplementation}
         maxHeight={maxHeight ?? vars.spacing._160}
         className={codeInputClassName}
-        ref={field.ref}
+        ref={fieldRef}
       />
       <FieldErrorContext
         value={{

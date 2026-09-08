@@ -13,15 +13,19 @@ interface Props {
 
 export default function TrayFile({ file, onRemove, isRemoveDisabled }: Props) {
   const intl = useIntl();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [preview, setPreview] = useState<{ file: File; url: string } | null>(
+    null,
+  );
+  const imageUrl = preview?.file === file ? preview.url : null;
 
   useEffect(() => {
     if (file.type.startsWith("image/")) {
       const url = URL.createObjectURL(file);
-      setImageUrl(url);
+      // Object URLs are external resources created after commit and revoked on cleanup.
+      // oxlint-disable-next-line react/set-state-in-effect
+      setPreview({ file, url });
       return () => URL.revokeObjectURL(url);
     }
-    setImageUrl(null);
     return;
   }, [file]);
 

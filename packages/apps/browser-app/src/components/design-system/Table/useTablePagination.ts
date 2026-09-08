@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useCalculatedPageSize from "./useCalculatedPageSize.js";
 
 interface UseTablePaginationOptions<Item> {
@@ -32,9 +32,11 @@ export default function useTablePagination<Item>({
     pageSize: isPaginating ? pageSize : items.length,
   });
 
-  useEffect(() => {
+  const [previousItems, setPreviousItems] = useState(items);
+  if (previousItems !== items) {
+    setPreviousItems(items);
     setActivePage(1);
-  }, [items]);
+  }
 
   const totalPages = isPaginating
     ? calculatedPageSize === 0

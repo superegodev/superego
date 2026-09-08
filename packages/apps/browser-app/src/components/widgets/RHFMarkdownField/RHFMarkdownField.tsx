@@ -38,7 +38,10 @@ export default function RHFMarkdownField<
   placeholder,
   ...props
 }: Props<TFieldValues, TName, TTransformedValues>) {
-  const { field, fieldState } = useController(props);
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController(props);
   const fieldOnChange = field.onChange;
   const onChange = useCallback(
     (newValue: string) =>
@@ -63,7 +66,7 @@ export default function RHFMarkdownField<
         isReadOnly={isReadOnly}
         showToolbar={showToolbar}
         placeholder={placeholder}
-        ref={field.ref}
+        ref={fieldRef}
       />
       <FieldError>{fieldState.error?.message}</FieldError>
       {description ? <Description>{description}</Description> : null}

@@ -30,7 +30,10 @@ export default function ExcalidrawDrawing({
 }: Props) {
   const { isReadOnly, documentId } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const fieldOnChange = field.onChange;
 
   const localStorageKey = documentId
@@ -108,7 +111,7 @@ export default function ExcalidrawDrawing({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         autoFocus={autoFocus}
-        ref={field.ref}
+        ref={fieldRef}
         className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
       <FieldErrorContext

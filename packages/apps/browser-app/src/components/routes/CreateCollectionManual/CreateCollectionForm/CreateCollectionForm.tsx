@@ -4,7 +4,7 @@ import { valibotSchemas as schemaValibotSchemas } from "@superego/schema";
 import { valibotSchemas as backendUtilsValibotSchemas } from "@superego/shared-utils";
 import { useEffect, useMemo, useRef } from "react";
 import { Form } from "react-aria-components";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateCollection } from "../../../../business-logic/backend/hooks.js";
@@ -35,7 +35,7 @@ export default function CreateCollectionForm() {
     () => forms.defaults.contentSummaryGetter(defaultSchema),
     [],
   );
-  const { control, handleSubmit, setValue, getValues, watch, formState } =
+  const { control, handleSubmit, setValue, getValues, formState } =
     useForm<CreateCollectionFormValues>({
       defaultValues: {
         name: "",
@@ -99,7 +99,7 @@ export default function CreateCollectionForm() {
     }
   };
 
-  const schema = watch("schema");
+  const schema = useWatch({ control, name: "schema" });
   const isSchemaValid = !(
     typeof schema === "string" || formState.errors.schema
   );

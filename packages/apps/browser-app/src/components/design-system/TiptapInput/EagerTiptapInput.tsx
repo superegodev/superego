@@ -89,6 +89,8 @@ export default function EagerTiptapInput({
     autofocus: autoFocus ?? false,
     editable: !isReadOnly,
     onUpdate: (() => {
+      // debounce creates a callback here; it only accesses refs on editor updates.
+      // oxlint-disable-next-line react/refs
       const debouncedOnChange = debounce(({ editor }: { editor: Editor }) => {
         hasPendingLocalChangesRef.current = false;
         const newValue = editor.getJSON();

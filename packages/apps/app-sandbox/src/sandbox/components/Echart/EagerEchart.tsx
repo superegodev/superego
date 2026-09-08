@@ -24,6 +24,8 @@ export default function Echart({ option, width, height }: Props) {
     try {
       chart.setOption(resolvedOption);
     } catch (error) {
+      // The error comes from initializing an external chart after the DOM commits.
+      // oxlint-disable-next-line react/set-state-in-effect
       setRenderingError(error);
     }
     const resizeObserver = new ResizeObserver(() => chart.resize());

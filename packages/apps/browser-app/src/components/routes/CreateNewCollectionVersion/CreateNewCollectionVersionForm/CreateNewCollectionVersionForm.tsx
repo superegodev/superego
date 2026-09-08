@@ -6,7 +6,7 @@ import { valibotSchemas as sharedUtilsValibotSchemas } from "@superego/shared-ut
 import { isEqual } from "es-toolkit";
 import { useEffect, useMemo, useRef } from "react";
 import { Form } from "react-aria-components";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateNewCollectionVersion } from "../../../../business-logic/backend/hooks.js";
@@ -41,7 +41,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
       ),
     [collection.latestVersion.schema],
   );
-  const { control, handleSubmit, watch, setValue, getValues, formState } =
+  const { control, handleSubmit, setValue, getValues, formState } =
     useForm<CreateNewCollectionVersionFormValues>({
       defaultValues: {
         schema: collection.latestVersion.schema,
@@ -115,7 +115,7 @@ export default function CreateNewCollectionVersionForm({ collection }: Props) {
   // whether the user has customized the source.
   const lastDefaultMigrationSourceRef = useRef(defaultMigration?.source);
 
-  const schema = watch("schema");
+  const schema = useWatch({ control, name: "schema" });
   const isSchemaDirty =
     formState.dirtyFields.schema &&
     !isEqual(collection.latestVersion.schema, schema);

@@ -1,5 +1,5 @@
 import { DataType } from "@superego/schema";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useController } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import classnames from "../../../../../utils/classnames.js";
@@ -25,15 +25,20 @@ export default function Default({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const [jsonValue, setJsonValue] = useState(() =>
     getJsonValueFromValue(field.value),
   );
-  useEffect(() => {
+  const [previousValue, setPreviousValue] = useState(field.value);
+  if (previousValue !== field.value) {
+    setPreviousValue(field.value);
     if (field.value === null) {
       setJsonValue("");
     }
-  }, [field.value]);
+  }
   return (
     <TextField
       id={field.name}
@@ -82,7 +87,7 @@ export default function Default({
         />
       ) : null}
       <TextArea
-        ref={field.ref}
+        ref={fieldRef}
         placeholder={field.value === null ? "null" : undefined}
         className={classnames(
           cs.JsonObjectField.Default.textArea,

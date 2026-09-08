@@ -32,7 +32,10 @@ export default function GeoJSON({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const fieldOnChange = field.onChange;
   const { __dataType, ...value } =
     field.value ?? forms.defaults.geoJsonFeatureCollection();
@@ -75,7 +78,7 @@ export default function GeoJSON({
         onBlur={field.onBlur}
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
-        ref={field.ref}
+        ref={fieldRef}
         className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
       <FieldErrorContext

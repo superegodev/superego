@@ -1,6 +1,6 @@
 import type { AppPermissions } from "@superego/backend";
 import { normalizeHttpOrigin, valibotSchemas } from "@superego/shared-utils";
-import { useRef } from "react";
+import { useState } from "react";
 import {
   useController,
   type Control,
@@ -32,10 +32,23 @@ export default function PermissionsModal<T extends FieldValues>({
   const { field: permissionsField, fieldState: permissionsFieldState } =
     useController({ control, name });
   const permissions: AppPermissions = permissionsField.value;
-  const originKeys = useRef<string[]>([]);
   const origins = permissions.http.allowedOrigins;
-  while (originKeys.current.length < origins.length) {
-    originKeys.current.push(crypto.randomUUID());
+  const [storedOriginKeys, setOriginKeys] = useState(() =>
+    origins.map((_, index) => index),
+  );
+  const nextKey = (storedOriginKeys.at(-1) ?? -1) + 1;
+  const originKeys =
+    storedOriginKeys.length < origins.length
+      ? [
+          ...storedOriginKeys,
+          ...Array.from(
+            { length: origins.length - storedOriginKeys.length },
+            (_, index) => nextKey + index,
+          ),
+        ]
+      : storedOriginKeys;
+  if (originKeys !== storedOriginKeys) {
+    setOriginKeys(originKeys);
   }
   const setOrigins = (allowedOrigins: string[]) =>
     permissionsField.onChange({ ...permissions, http: { allowedOrigins } });
@@ -83,7 +96,7 @@ export default function PermissionsModal<T extends FieldValues>({
         {origins.map((origin, index) => (
           <div
             className={cs.PermissionsModal.destination}
-            key={originKeys.current[index]}
+            key={originKeys[index]}
           >
             <input
               className={cs.PermissionsModal.origin}
@@ -114,7 +127,9 @@ export default function PermissionsModal<T extends FieldValues>({
             <Button
               type="button"
               onPress={() => {
-                originKeys.current.splice(index, 1);
+                setOriginKeys(
+                  originKeys.filter((_, position) => position !== index),
+                );
                 setOrigins(origins.filter((_, position) => position !== index));
               }}
             >

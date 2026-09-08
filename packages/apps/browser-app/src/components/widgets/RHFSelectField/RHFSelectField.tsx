@@ -47,7 +47,10 @@ export default function RHFSelectField<
   placeholder,
   className,
 }: Props<TFieldValues, TName, TTransformedValues>) {
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
 
   if (isReadOnly) {
     const selectedOption = options.find((opt) => opt.id === field.value);
@@ -60,7 +63,7 @@ export default function RHFSelectField<
         className={className}
       >
         <Label>{label}</Label>
-        <Input ref={field.ref} placeholder={placeholder} />
+        <Input ref={fieldRef} placeholder={placeholder} />
         <FieldError>{fieldState.error?.message}</FieldError>
         {description ? <Description>{description}</Description> : null}
       </TextField>
