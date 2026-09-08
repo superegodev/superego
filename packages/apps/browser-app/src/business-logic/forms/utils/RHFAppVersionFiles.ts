@@ -8,9 +8,11 @@ type DotsToUnderscores<S extends string> =
     : S;
 
 export type RHFAppVersionFiles = {
-  [K in keyof AppVersion["files"] as K extends string
-    ? DotsToUnderscores<K>
-    : K]: AppVersion["files"][K];
+  [
+    K in keyof AppVersion["files"] as K extends string
+      ? DotsToUnderscores<K>
+      : K
+  ]: AppVersion["files"][K];
 };
 
 export default {

@@ -23,17 +23,18 @@
     "@superego/schema": "workspace:*",
     "@superego/shared-utils": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "es-toolkit": "^1.49.0",
+    "es-toolkit": "^1.52.0",
     "fast-json-patch": "^3.1.1",
     "luxon": "^3.7.2",
-    "p-map": "^7.0.5",
+    "p-map": "^7.0.7",
     "valibot": "^1.4.2",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "devDependencies": {
     "@fast-check/vitest": "^0.4.1",
     "@types/json-schema": "^7.0.15",
-    "@types/luxon": "^3.7.2",
-    "typescript": "^6.0.3"
+    "@types/luxon": "^3.7.5",
+    "typescript": "^6.0.3",
+    "vite": "^8.2.2"
   }
 }

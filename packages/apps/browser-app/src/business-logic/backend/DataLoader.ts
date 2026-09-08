@@ -9,9 +9,9 @@ import useBackend from "./useBackend.js";
 type ExtractBackendQueryData<
   DataLoaderQueries extends readonly BackendQuery<any>[],
 > = {
-  [Index in keyof DataLoaderQueries]: DataLoaderQueries[Index] extends BackendQuery<
-    infer QueryResult
-  >
+  [
+    Index in keyof DataLoaderQueries
+  ]: DataLoaderQueries[Index] extends BackendQuery<infer QueryResult>
     ? QueryResult extends Result<infer Data, any>
       ? NonNullable<Data>
       : never

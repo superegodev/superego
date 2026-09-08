@@ -17,12 +17,13 @@
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
     "luxon": "^3.7.2",
-    "p-map": "^7.0.5",
-    "vitest": "^4.1.10"
+    "p-map": "^7.0.7",
+    "vitest": "^5.0.0"
   },
   "devDependencies": {
-    "@types/luxon": "^3.7.2",
-    "@types/node": "^26.1.1",
-    "typescript": "^6.0.3"
+    "@types/luxon": "^3.7.5",
+    "@types/node": "^26.4.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.2.2"
   }
 }

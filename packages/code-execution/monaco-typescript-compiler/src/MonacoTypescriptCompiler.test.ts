@@ -1,8 +1,8 @@
 import { registerTypescriptCompilerTests } from "@superego/executing-backend/tests";
 import { getMonacoTypescriptCompilerOptions } from "@superego/shared-utils";
 import * as monaco from "monaco-editor";
-import editorWorker from "monaco-editor/esm/vs/editor/editor.worker.js?worker";
-import tsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker.js?worker";
+import editorWorker from "monaco-editor/editor/editor.worker.js?worker";
+import tsWorker from "monaco-editor/languages/features/typescript/ts.worker.js?worker";
 import MonacoTypescriptCompiler from "./MonacoTypescriptCompiler.js";
 
 (self as any).MonacoEnvironment = {

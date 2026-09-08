@@ -1,8 +1,12 @@
 import { DataType, type Schema } from "@superego/schema";
-import { bench } from "vitest";
+import { test } from "vitest";
 import findFileNodes from "./findFileNodes.js";
 
-bench("complex schema", () => {
+test("complex schema", async ({ bench }) => {
+  await bench("complex schema", benchmarkComplexSchema).run();
+});
+
+function benchmarkComplexSchema() {
   const schema: Schema = {
     types: {
       Enum: {
@@ -192,4 +196,4 @@ bench("complex schema", () => {
     },
   };
   findFileNodes(schema, value);
-});
+}

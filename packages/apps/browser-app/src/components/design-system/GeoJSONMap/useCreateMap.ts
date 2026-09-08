@@ -1,10 +1,14 @@
 import { escapeHtml } from "@superego/shared-utils";
-import maplibregl from "maplibre-gl";
+import type { GeoJSON } from "geojson";
+import * as maplibregl from "maplibre-gl";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { useEffect, useRef, useState } from "react";
 import useTheme from "../../../business-logic/theme/useTheme.js";
 import { vars } from "../../../themes.css.js";
 import getCenterAndZoom from "../../../utils/getCenterAndZoom.js";
 import getMapStyle from "../../../utils/getMapStyle.js";
+
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 export default function useCreateMap(geoJSON: {
   type: string;
@@ -54,7 +58,7 @@ export default function useCreateMap(geoJSON: {
       try {
         map.addSource("geojson-data", {
           type: "geojson",
-          data: geoJSON as unknown as GeoJSON.GeoJSON,
+          data: geoJSON as unknown as GeoJSON,
         });
 
         map.addLayer({
@@ -167,7 +171,7 @@ export default function useCreateMap(geoJSON: {
       | maplibregl.GeoJSONSource
       | undefined;
     if (source) {
-      source.setData(geoJSON as unknown as GeoJSON.GeoJSON);
+      source.setData(geoJSON as unknown as GeoJSON);
     }
     // oxlint-disable-next-line react/exhaustive-deps -- depend on stringified geoJSON for deep comparison.
   }, [isLoaded, JSON.stringify(geoJSON)]);

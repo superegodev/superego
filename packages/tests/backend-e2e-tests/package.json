@@ -20,15 +20,16 @@
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
     "@superego/vitest-registered": "workspace:*",
-    "@vitest/browser": "^4.1.10",
-    "@vitest/browser-playwright": "^4.1.10",
-    "es-toolkit": "^1.49.0",
-    "monaco-editor": "^0.55.1",
-    "playwright": "^1.61.1",
-    "vitest": "^4.1.10"
+    "@vitest/browser": "^5.0.0",
+    "@vitest/browser-playwright": "^5.0.0",
+    "es-toolkit": "^1.52.0",
+    "monaco-editor": "^0.56.0",
+    "playwright": "^1.63.0",
+    "vitest": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
-    "typescript": "^6.0.3"
+    "@types/node": "^26.4.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.2.2"
   }
 }
