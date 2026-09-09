@@ -1191,7 +1191,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("error: CollectionSettingsNotValid leaves no collections created", async () => {
+    it("error: no collections created if one fails validation (atomicity)", async () => {
       // Setup SUT
       const { backend } = deps();
 
