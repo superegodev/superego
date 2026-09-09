@@ -44,9 +44,6 @@ export default function Preview({
         className,
       )}
     >
-      <p>
-        <FormattedMessage defaultMessage="Preview state is temporary. Browser dialogs, printing, and downloads are disabled, and no HTTP destinations are added. Run the saved app to test permissions." />
-      </p>
       {app ? (
         <AppRenderer
           key={targetCollections.map(({ id }) => id).join(",")}

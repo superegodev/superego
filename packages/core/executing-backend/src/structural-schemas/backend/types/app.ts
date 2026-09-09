@@ -1,6 +1,5 @@
 import {
   type App,
-  type AppPermissions,
   type AppDefinition,
   AppType,
   type AppVersion,
@@ -40,7 +39,7 @@ export function app(): v.GenericSchema<unknown, App> {
     id: appId(),
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
-    permissions: appPermissions(),
+    permissions: valibotSchemas.appPermissions(),
     latestVersion: appVersion(),
     createdAt: v.date(),
   });
@@ -52,7 +51,7 @@ export function appDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
-    permissions: appPermissions(),
+    permissions: valibotSchemas.appPermissions(),
     stateDefinition: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(collectionId()),
@@ -68,7 +67,7 @@ export function protoAppDefinition(): v.GenericSchema<
 > {
   return v.strictObject({
     type: v.picklist(Object.values(AppType)),
-    permissions: appPermissions(),
+    permissions: valibotSchemas.appPermissions(),
     stateDefinition: appStateDefinition(),
     name: v.string(),
     targetCollectionIds: v.array(
@@ -92,18 +91,5 @@ export function appState() {
   return v.strictObject({
     content: v.any(),
     revision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
-  });
-}
-
-export function appPermissions(): v.GenericSchema<
-  AppPermissions,
-  AppPermissions
-> {
-  return v.strictObject({
-    modals: v.boolean(),
-    downloads: v.boolean(),
-    http: v.strictObject({
-      allowedOrigins: v.array(valibotSchemas.httpOrigin()),
-    }),
   });
 }

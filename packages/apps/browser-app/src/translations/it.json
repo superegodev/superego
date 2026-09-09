@@ -581,9 +581,6 @@
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Crea nuova versione"
   },
-  "EditApp.tsx_Vva+Yr": {
-    "defaultMessage": "Modifica nome"
-  },
   "EditingToolbar.tsx_1hhuuF": {
     "defaultMessage": "Anteprima app"
   },
@@ -1511,21 +1508,6 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
   },
-  "UpdateNameModalForm.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "UpdateNameModalForm.tsx_BWpuKl": {
-    "defaultMessage": "Aggiorna"
-  },
-  "UpdateNameModalForm.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "UpdateNameModalForm.tsx_J1XXSx": {
-    "defaultMessage": "La mia fantastica app"
-  },
-  "UpdateNameModalForm.tsx_btR6aV": {
-    "defaultMessage": "Aggiorna il nome dell'app"
-  },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Riproduci"
   },
@@ -1658,50 +1640,14 @@
   "EditApp.tsx_B02JHP": {
     "defaultMessage": "Stato persistente"
   },
-  "EditApp.tsx_SFuk1v": {
-    "defaultMessage": "Permessi"
-  },
-  "RHFAppPermissionsField.tsx_+Ynh/m": {
-    "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
-  },
-  "RHFAppPermissionsField.tsx_5g9TrD": {
-    "defaultMessage": "Consenti finestre di dialogo del browser e stampa"
-  },
-  "RHFAppPermissionsField.tsx_mJRnEG": {
-    "defaultMessage": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
-  },
-  "RHFAppPermissionsField.tsx_JV06rg": {
-    "defaultMessage": "Consenti richieste HTTP verso queste destinazioni:"
-  },
-  "RHFAppPermissionsField.tsx_HQU5ER": {
-    "defaultMessage": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
-  },
   "PermissionsModal.tsx_JXdbo8": {
     "defaultMessage": "Fatto"
-  },
-  "RHFAppPermissionsField.tsx_QpiApO": {
-    "defaultMessage": "Rimuovi destinazione"
   },
   "PermissionsModal.tsx_SFuk1v": {
     "defaultMessage": "Permessi"
   },
-  "RHFAppPermissionsField.tsx_i05XEx": {
-    "defaultMessage": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
-  },
-  "RHFAppPermissionsField.tsx_kgdY08": {
-    "defaultMessage": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
-  },
   "PermissionsModal.tsx_xq0PjV": {
     "defaultMessage": "Questi permessi si applicano quando crei l’app."
-  },
-  "RHFAppPermissionsField.tsx_wwiDxb": {
-    "defaultMessage": "Aggiungi destinazione"
-  },
-  "RHFAppPermissionsField.tsx_xj9V0+": {
-    "defaultMessage": "Consenti download di file"
-  },
-  "RHFAppPermissionsField.tsx_xv5gU1": {
-    "defaultMessage": "Origine HTTP"
   },
   "PersistentStateModal.tsx_B02JHP": {
     "defaultMessage": "Stato persistente"
@@ -1711,9 +1657,6 @@
   },
   "PersistentStateModal.tsx_P3pJ2z": {
     "defaultMessage": "Le modifiche alla definizione dello stato vengono applicate quando salvi la versione dell’app."
-  },
-  "Preview.tsx_xLZaIs": {
-    "defaultMessage": "Lo stato dell’anteprima è temporaneo. Le finestre di dialogo del browser, la stampa e i download sono disabilitati e non vengono aggiunte destinazioni HTTP. Esegui l’app salvata per provare i permessi."
   },
   "StateDefinitionFields.tsx_3bEK6S": {
     "defaultMessage": "Lo stato iniziale viene usato solo alla prima creazione dello stato. Lo stato già salvato viene conservato. I tipi File e DocumentRef non sono supportati."
@@ -1739,13 +1682,55 @@
   "appStateDefinition.ts_epKnft": {
     "defaultMessage": "Lo stato iniziale deve rispettare lo schema dello stato"
   },
-  "UpdatePermissionsModalForm.tsx_47FYwb": {
+  "DownloadsField.tsx_xj9V0+": {
+    "defaultMessage": "Consenti download di file"
+  },
+  "HttpOriginField.tsx_H8n1Sy": {
+    "defaultMessage": "Origine HTTP numero {itemNumber}"
+  },
+  "HttpOriginsField.tsx_JV06rg": {
+    "defaultMessage": "Consenti richieste HTTP verso queste destinazioni:"
+  },
+  "ModalsField.tsx_5g9TrD": {
+    "defaultMessage": "Consenti finestre di dialogo del browser e stampa"
+  },
+  "ModalsField.tsx_kgdY08": {
+    "defaultMessage": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+  },
+  "HttpOriginField.tsx_+Ynh/m": {
+    "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+  },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Aggiungi"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Elemento {number}"
+  },
+  "EditApp.tsx_RsXx1A": {
+    "defaultMessage": "Impostazioni app"
+  },
+  "UpdateSettingsModalForm.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "UpdatePermissionsModalForm.tsx_SFuk1v": {
+  "UpdateSettingsModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "UpdateSettingsModalForm.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "UpdateSettingsModalForm.tsx_RsXx1A": {
+    "defaultMessage": "Impostazioni app"
+  },
+  "UpdateSettingsModalForm.tsx_jvo0vs": {
+    "defaultMessage": "Salva"
+  },
+  "UpdateSettingsModalForm.tsx_SFuk1v": {
     "defaultMessage": "Permessi"
   },
-  "UpdatePermissionsModalForm.tsx_jvo0vs": {
-    "defaultMessage": "Salva"
+  "RHFTextListField.tsx_pUcgkI": {
+    "defaultMessage": "Non ci sono elementi nell'elenco"
   }
 }

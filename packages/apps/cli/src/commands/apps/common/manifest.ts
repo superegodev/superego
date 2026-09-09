@@ -1,8 +1,7 @@
 import { join } from "node:path";
 import { AppType } from "@superego/backend";
-import { AppsUpdatePermissions } from "@superego/executing-backend";
+import { valibotSchemas } from "@superego/shared-utils";
 import * as v from "valibot";
-import getUsecaseArgumentsSchema from "../../../utils/getUsecaseArgumentsSchema.js";
 import { readJson, writeJson } from "./json.js";
 import type { AppManifest } from "./types.js";
 
@@ -13,7 +12,7 @@ export function readManifest(path: string): AppManifest {
       name: v.string(),
       type: v.literal(AppType.CollectionView),
       targetCollectionIds: v.array(v.string()),
-      permissions: getUsecaseArgumentsSchema(AppsUpdatePermissions).items[1],
+      permissions: valibotSchemas.appPermissions(),
       stateDefinition: v.strictObject({
         schema: v.literal("state.schema.json"),
         initialState: v.literal("state.initial.json"),

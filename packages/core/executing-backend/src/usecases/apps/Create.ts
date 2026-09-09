@@ -123,12 +123,12 @@ export default class AppsCreate extends BackendUsecase<
 
     const now = new Date();
     const app: AppEntity = {
-      permissions,
       id: options.appId ?? Id.generate.app(),
-      state: { content: stateDefinition.initialState, revision: 1 },
       type: type,
       name: nameValidationResult.output,
       createdAt: now,
+      state: { content: stateDefinition.initialState, revision: 1 },
+      permissions,
     };
     const appVersion: AppVersionEntity = {
       id: Id.generate.appVersion(),

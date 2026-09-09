@@ -1324,6 +1324,12 @@
       "value": "ID"
     }
   ],
+  "DownloadsField.tsx_xj9V0+": [
+    {
+      "type": 0,
+      "value": "Consenti download di file"
+    }
+  ],
   "DuplicateDocumentDetectedModal.tsx_47FYwb": [
     {
       "type": 0,
@@ -1422,22 +1428,16 @@
       "value": " » Modifica"
     }
   ],
-  "EditApp.tsx_SFuk1v": [
+  "EditApp.tsx_RsXx1A": [
     {
       "type": 0,
-      "value": "Permessi"
+      "value": "Impostazioni app"
     }
   ],
   "EditApp.tsx_Vl13tq": [
     {
       "type": 0,
       "value": "Crea nuova versione"
-    }
-  ],
-  "EditApp.tsx_Vva+Yr": [
-    {
-      "type": 0,
-      "value": "Modifica nome"
     }
   ],
   "EditingToolbar.tsx_1hhuuF": [
@@ -2068,6 +2068,28 @@
       "value": "Cronologia delle versioni"
     }
   ],
+  "HttpOriginField.tsx_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+    }
+  ],
+  "HttpOriginField.tsx_H8n1Sy": [
+    {
+      "type": 0,
+      "value": "Origine HTTP numero "
+    },
+    {
+      "type": 1,
+      "value": "itemNumber"
+    }
+  ],
+  "HttpOriginsField.tsx_JV06rg": [
+    {
+      "type": 0,
+      "value": "Consenti richieste HTTP verso queste destinazioni:"
+    }
+  ],
   "ImplementWithAssistantButton.tsx_40hUOu": [
     {
       "type": 0,
@@ -2448,6 +2470,18 @@
       ]
     }
   ],
+  "ModalsField.tsx_5g9TrD": [
+    {
+      "type": 0,
+      "value": "Consenti finestre di dialogo del browser e stampa"
+    }
+  ],
+  "ModalsField.tsx_kgdY08": [
+    {
+      "type": 0,
+      "value": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+    }
+  ],
   "Model.tsx_G/yZLu": [
     {
       "type": 0,
@@ -2798,12 +2832,6 @@
       "value": "Compilazione dell'app non riuscita."
     }
   ],
-  "Preview.tsx_xLZaIs": [
-    {
-      "type": 0,
-      "value": "Lo stato dell’anteprima è temporaneo. Le finestre di dialogo del browser, la stampa e i download sono disabilitati e non vengono aggiunte destinazioni HTTP. Esegui l’app salvata per provare i permessi."
-    }
-  ],
   "PrimarySidebarPanel.tsx_D3idYv": [
     {
       "type": 0,
@@ -2886,72 +2914,6 @@
     {
       "type": 0,
       "value": "Provider"
-    }
-  ],
-  "RHFAppPermissionsField.tsx_+Ynh/m": [
-    {
-      "type": 0,
-      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
-    }
-  ],
-  "RHFAppPermissionsField.tsx_5g9TrD": [
-    {
-      "type": 0,
-      "value": "Consenti finestre di dialogo del browser e stampa"
-    }
-  ],
-  "RHFAppPermissionsField.tsx_HQU5ER": [
-    {
-      "type": 0,
-      "value": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
-    }
-  ],
-  "RHFAppPermissionsField.tsx_JV06rg": [
-    {
-      "type": 0,
-      "value": "Consenti richieste HTTP verso queste destinazioni:"
-    }
-  ],
-  "RHFAppPermissionsField.tsx_QpiApO": [
-    {
-      "type": 0,
-      "value": "Rimuovi destinazione"
-    }
-  ],
-  "RHFAppPermissionsField.tsx_i05XEx": [
-    {
-      "type": 0,
-      "value": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
-    }
-  ],
-  "RHFAppPermissionsField.tsx_kgdY08": [
-    {
-      "type": 0,
-      "value": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
-    }
-  ],
-  "RHFAppPermissionsField.tsx_mJRnEG": [
-    {
-      "type": 0,
-      "value": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
-    }
-  ],
-  "RHFAppPermissionsField.tsx_wwiDxb": [
-    {
-      "type": 0,
-      "value": "Aggiungi destinazione"
-    }
-  ],
-  "RHFAppPermissionsField.tsx_xj9V0+": [
-    {
-      "type": 0,
-      "value": "Consenti download di file"
-    }
-  ],
-  "RHFAppPermissionsField.tsx_xv5gU1": [
-    {
-      "type": 0,
-      "value": "Origine HTTP"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -3324,6 +3286,34 @@
     {
       "type": 0,
       "value": "Definisce la \"forma\" del contenuto dei documenti in questa collezione."
+    }
+  ],
+  "RHFTextListField.tsx_2/2yg+": [
+    {
+      "type": 0,
+      "value": "Aggiungi"
+    }
+  ],
+  "RHFTextListField.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Rimuovi"
+    }
+  ],
+  "RHFTextListField.tsx_OT7vQx": [
+    {
+      "type": 0,
+      "value": "Elemento "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "RHFTextListField.tsx_pUcgkI": [
+    {
+      "type": 0,
+      "value": "Non ci sono elementi nell'elenco"
     }
   ],
   "ReasoningEffortSelect.tsx_2X1lvg": [
@@ -4174,49 +4164,37 @@
       "value": "Errore durante il salvataggio delle impostazioni globali"
     }
   ],
-  "UpdateNameModalForm.tsx_47FYwb": [
+  "UpdateSettingsModalForm.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Annulla"
     }
   ],
-  "UpdateNameModalForm.tsx_BWpuKl": [
-    {
-      "type": 0,
-      "value": "Aggiorna"
-    }
-  ],
-  "UpdateNameModalForm.tsx_HAlOn1": [
+  "UpdateSettingsModalForm.tsx_HAlOn1": [
     {
       "type": 0,
       "value": "Nome"
     }
   ],
-  "UpdateNameModalForm.tsx_J1XXSx": [
+  "UpdateSettingsModalForm.tsx_J1XXSx": [
     {
       "type": 0,
       "value": "La mia fantastica app"
     }
   ],
-  "UpdateNameModalForm.tsx_btR6aV": [
+  "UpdateSettingsModalForm.tsx_RsXx1A": [
     {
       "type": 0,
-      "value": "Aggiorna il nome dell'app"
+      "value": "Impostazioni app"
     }
   ],
-  "UpdatePermissionsModalForm.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "UpdatePermissionsModalForm.tsx_SFuk1v": [
+  "UpdateSettingsModalForm.tsx_SFuk1v": [
     {
       "type": 0,
       "value": "Permessi"
     }
   ],
-  "UpdatePermissionsModalForm.tsx_jvo0vs": [
+  "UpdateSettingsModalForm.tsx_jvo0vs": [
     {
       "type": 0,
       "value": "Salva"

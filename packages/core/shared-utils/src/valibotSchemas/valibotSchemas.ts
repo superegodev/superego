@@ -1,4 +1,5 @@
 import appName from "./appName.js";
+import appPermissions from "./appPermissions.js";
 import appStateContent from "./appStateContent.js";
 import appStateSchema from "./appStateSchema.js";
 import collectionCategoryName from "./collectionCategoryName.js";
@@ -12,6 +13,7 @@ import id from "./id.js";
 
 export default {
   appName,
+  appPermissions,
   appStateContent,
   appStateSchema,
   collectionCategoryName,

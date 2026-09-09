@@ -536,6 +536,9 @@
   "DocumentsTable.tsx_kGGU2D": {
     "defaultMessage": "Id"
   },
+  "DownloadsField.tsx_xj9V0+": {
+    "defaultMessage": "Allow file downloads"
+  },
   "DuplicateDocumentDetectedModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
@@ -581,14 +584,11 @@
   "EditApp.tsx_LVy7EO": {
     "defaultMessage": "🧩 {app} » Edit"
   },
-  "EditApp.tsx_SFuk1v": {
-    "defaultMessage": "Permissions"
+  "EditApp.tsx_RsXx1A": {
+    "defaultMessage": "App settings"
   },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Create new version"
-  },
-  "EditApp.tsx_Vva+Yr": {
-    "defaultMessage": "Edit name"
   },
   "EditingToolbar.tsx_1hhuuF": {
     "defaultMessage": "App preview"
@@ -833,6 +833,15 @@
   "History.tsx_nT6w+N": {
     "defaultMessage": "Versions history"
   },
+  "HttpOriginField.tsx_+Ynh/m": {
+    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+  },
+  "HttpOriginField.tsx_H8n1Sy": {
+    "defaultMessage": "HTTP origin number {itemNumber}"
+  },
+  "HttpOriginsField.tsx_JV06rg": {
+    "defaultMessage": "Allow HTTP requests to these destinations:"
+  },
   "ImplementWithAssistantButton.tsx_40hUOu": {
     "defaultMessage": "Implement with assistant"
   },
@@ -971,6 +980,12 @@
   "ModalContent.tsx_qjTjxw": {
     "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
   },
+  "ModalsField.tsx_5g9TrD": {
+    "defaultMessage": "Allow browser dialogs and printing"
+  },
+  "ModalsField.tsx_kgdY08": {
+    "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
+  },
   "Model.tsx_G/yZLu": {
     "defaultMessage": "Remove"
   },
@@ -1070,9 +1085,6 @@
   "Preview.tsx_Dd6cIb": {
     "defaultMessage": "App compilation failed."
   },
-  "Preview.tsx_xLZaIs": {
-    "defaultMessage": "Preview state is temporary. Browser dialogs, printing, and downloads are disabled, and no HTTP destinations are added. Run the saved app to test permissions."
-  },
   "PrimarySidebarPanel.tsx_D3idYv": {
     "defaultMessage": "Settings"
   },
@@ -1114,39 +1126,6 @@
   },
   "Providers.tsx_IL1Uey": {
     "defaultMessage": "Providers"
-  },
-  "RHFAppPermissionsField.tsx_+Ynh/m": {
-    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
-  },
-  "RHFAppPermissionsField.tsx_5g9TrD": {
-    "defaultMessage": "Allow browser dialogs and printing"
-  },
-  "RHFAppPermissionsField.tsx_HQU5ER": {
-    "defaultMessage": "Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access."
-  },
-  "RHFAppPermissionsField.tsx_JV06rg": {
-    "defaultMessage": "Allow HTTP requests to these destinations:"
-  },
-  "RHFAppPermissionsField.tsx_QpiApO": {
-    "defaultMessage": "Remove destination"
-  },
-  "RHFAppPermissionsField.tsx_i05XEx": {
-    "defaultMessage": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
-  },
-  "RHFAppPermissionsField.tsx_kgdY08": {
-    "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
-  },
-  "RHFAppPermissionsField.tsx_mJRnEG": {
-    "defaultMessage": "Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available."
-  },
-  "RHFAppPermissionsField.tsx_wwiDxb": {
-    "defaultMessage": "Add destination"
-  },
-  "RHFAppPermissionsField.tsx_xj9V0+": {
-    "defaultMessage": "Allow file downloads"
-  },
-  "RHFAppPermissionsField.tsx_xv5gU1": {
-    "defaultMessage": "HTTP origin"
   },
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
     "defaultMessage": "Content blocking keys getter"
@@ -1195,6 +1174,18 @@
   },
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
+  },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Add"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Item {number}"
+  },
+  "RHFTextListField.tsx_pUcgkI": {
+    "defaultMessage": "There are no items in the list"
   },
   "ReasoningEffortSelect.tsx_2X1lvg": {
     "defaultMessage": "Reasoning effort"
@@ -1511,28 +1502,22 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Error saving global settings"
   },
-  "UpdateNameModalForm.tsx_47FYwb": {
+  "UpdateSettingsModalForm.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "UpdateNameModalForm.tsx_BWpuKl": {
-    "defaultMessage": "Update"
-  },
-  "UpdateNameModalForm.tsx_HAlOn1": {
+  "UpdateSettingsModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "UpdateNameModalForm.tsx_J1XXSx": {
+  "UpdateSettingsModalForm.tsx_J1XXSx": {
     "defaultMessage": "My Awesome App"
   },
-  "UpdateNameModalForm.tsx_btR6aV": {
-    "defaultMessage": "Update app name"
+  "UpdateSettingsModalForm.tsx_RsXx1A": {
+    "defaultMessage": "App settings"
   },
-  "UpdatePermissionsModalForm.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "UpdatePermissionsModalForm.tsx_SFuk1v": {
+  "UpdateSettingsModalForm.tsx_SFuk1v": {
     "defaultMessage": "Permissions"
   },
-  "UpdatePermissionsModalForm.tsx_jvo0vs": {
+  "UpdateSettingsModalForm.tsx_jvo0vs": {
     "defaultMessage": "Save"
   },
   "UserMessage.tsx_J3ca41": {

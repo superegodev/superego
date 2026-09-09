@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { vars } from "../../../themes.css.js";
 
 export const MarkdownInput = {
@@ -19,6 +19,16 @@ export const MarkdownInput = {
     },
   }),
 };
+
+// OverType renders its own placeholder over the native textarea placeholder.
+globalStyle(`${MarkdownInput.root} .overtype-input::placeholder`, {
+  opacity: 0,
+});
+
+globalStyle(`${MarkdownInput.root} .overtype-placeholder`, {
+  whiteSpace: "pre-wrap",
+  overflowWrap: "break-word",
+});
 
 export const FormattingToolbar = {
   root: style({

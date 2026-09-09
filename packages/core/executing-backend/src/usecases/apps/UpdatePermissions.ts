@@ -10,6 +10,7 @@ import type { ResultPromise } from "@superego/global-types";
 import {
   makeSuccessfulResult,
   makeUnsuccessfulResult,
+  valibotSchemas,
 } from "@superego/shared-utils";
 import * as v from "valibot";
 import type AppEntity from "../../entities/AppEntity.js";
@@ -24,7 +25,7 @@ export default class AppsUpdatePermissions extends BackendUsecase<
 > {
   argumentsSchema = v.tuple([
     structuralSchemas.backend.ids.appId(),
-    structuralSchemas.backend.types.appPermissions(),
+    valibotSchemas.appPermissions(),
   ]);
   resultSchema = structuralSchemas.global.result(
     structuralSchemas.backend.types.app(),

@@ -234,11 +234,13 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     const stateChanged =
       stateDefinition.migration !== null ||
       !isEqual(stateDefinition.schema, previousVersion.stateDefinition.schema);
-    app.state = {
-      content,
-      revision: app.state.revision + (stateChanged ? 1 : 0),
-    };
-    await this.repos.app.replace(app);
+    if (stateChanged) {
+      app.state = {
+        content,
+        revision: app.state.revision + 1,
+      };
+      await this.repos.app.replace(app);
+    }
     await this.repos.appVersion.insert(appVersion);
 
     return makeSuccessfulResult(makeApp(app, appVersion));

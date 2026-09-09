@@ -25,73 +25,129 @@ export default rd<GetDependencies>("Packs", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
-    it.each(["schema", "content"] as const)(
-      "error: app state %s validation rolls back pack installation",
-      async (invalidPart) => {
-        // Setup SUT
-        const { backend } = deps();
+    it("error: app state schema validation rolls back pack installation", async () => {
+      // Setup SUT
+      const { backend } = deps();
 
-        // Exercise
-        const result = await backend.packs.install({
-          id: "Pack_com.example.state",
-          info: {
-            name: "State Pack",
-            shortDescription: "State validation",
-            longDescription: "State validation",
-            screenshots: [],
+      // Exercise
+      const result = await backend.packs.install({
+        id: "Pack_com.example.state",
+        info: {
+          name: "State Pack",
+          shortDescription: "State validation",
+          longDescription: "State validation",
+          screenshots: [],
+        },
+        collectionCategories: [],
+        collections: [],
+        documents: [],
+        apps: [
+          {
+            permissions: defaultAppPermissions,
+            stateDefinition: emptyAppStateDefinition,
+            type: AppType.CollectionView,
+            name: "Valid App",
+            targetCollectionIds: [],
+            files: { "/main.tsx": { source: "", compiled: "" } },
           },
-          collectionCategories: [],
-          collections: [],
-          documents: [],
-          apps: [
-            {
-              permissions: defaultAppPermissions,
-              stateDefinition: emptyAppStateDefinition,
-              type: AppType.CollectionView,
-              name: "Valid App",
-              targetCollectionIds: [],
-              files: { "/main.tsx": { source: "", compiled: "" } },
-            },
-            {
-              permissions: defaultAppPermissions,
-              type: AppType.CollectionView,
-              name: "Invalid App",
-              targetCollectionIds: [],
-              files: { "/main.tsx": { source: "", compiled: "" } },
-              stateDefinition: {
-                migration: null,
-                schema: {
-                  types: {
-                    State: {
-                      dataType: DataType.Struct,
-                      properties: { count: { dataType: DataType.Number } },
-                    },
+          {
+            permissions: defaultAppPermissions,
+            type: AppType.CollectionView,
+            name: "Invalid App",
+            targetCollectionIds: [],
+            files: { "/main.tsx": { source: "", compiled: "" } },
+            stateDefinition: {
+              migration: null,
+              schema: {
+                types: {
+                  State: {
+                    dataType: DataType.Struct,
+                    properties: { count: { dataType: DataType.Number } },
                   },
-                  rootType: invalidPart === "schema" ? "Missing" : "State",
                 },
-                initialState: { count: "invalid" },
+                rootType: "Missing",
               },
+              initialState: { count: 0 },
             },
-          ],
-        });
-        const apps = await backend.apps.list();
-
-        // Verify
-        expect(result.error).toMatchObject({
-          name:
-            invalidPart === "schema"
-              ? "AppStateSchemaNotValid"
-              : "AppStateContentNotValid",
-          details: {
-            appId: null,
-            issues: expect.arrayContaining([
-              expect.objectContaining({ message: expect.any(String) }),
-            ]),
           },
-        });
-        expect(apps.data).toEqual([]);
-      },
-    );
+        ],
+      });
+      const apps = await backend.apps.list();
+
+      // Verify
+      expect(result.error).toMatchObject({
+        name: "AppStateSchemaNotValid",
+        details: {
+          appId: null,
+          issues: expect.arrayContaining([
+            expect.objectContaining({ message: expect.any(String) }),
+          ]),
+        },
+      });
+      expect(apps.data).toEqual([]);
+    });
+
+    it("error: app state content validation rolls back pack installation", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.packs.install({
+        id: "Pack_com.example.state",
+        info: {
+          name: "State Pack",
+          shortDescription: "State validation",
+          longDescription: "State validation",
+          screenshots: [],
+        },
+        collectionCategories: [],
+        collections: [],
+        documents: [],
+        apps: [
+          {
+            permissions: defaultAppPermissions,
+            stateDefinition: emptyAppStateDefinition,
+            type: AppType.CollectionView,
+            name: "Valid App",
+            targetCollectionIds: [],
+            files: { "/main.tsx": { source: "", compiled: "" } },
+          },
+          {
+            permissions: defaultAppPermissions,
+            type: AppType.CollectionView,
+            name: "Invalid App",
+            targetCollectionIds: [],
+            files: { "/main.tsx": { source: "", compiled: "" } },
+            stateDefinition: {
+              migration: null,
+              schema: {
+                types: {
+                  State: {
+                    dataType: DataType.Struct,
+                    properties: { count: { dataType: DataType.Number } },
+                  },
+                },
+                rootType: "State",
+              },
+              initialState: { count: "invalid" },
+            },
+          },
+        ],
+      });
+      const apps = await backend.apps.list();
+
+      // Verify
+      expect(result.error).toMatchObject({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          issues: expect.arrayContaining([
+            expect.objectContaining({ message: expect.any(String) }),
+          ]),
+        },
+      });
+      expect(apps.data).toEqual([]);
+    });
 
     it("error: PackNotValid when proto collection category parent references future index", async () => {
       // Setup SUT
