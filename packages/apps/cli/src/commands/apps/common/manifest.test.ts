@@ -108,7 +108,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid: Invalid type:");
   });
 
   it("rejects a non-string name", () => {
@@ -119,7 +119,25 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow(
+      "app.json is invalid: name: Invalid type: Expected string but received 123",
+    );
+  });
+
+  it("reports every invalid field and preserves the validation details", () => {
+    // Setup SUT
+    writeManifestJson({ ...manifest, name: 123, targetCollectionIds: [456] });
+
+    // Exercise
+    const read = () => readManifest(path);
+
+    // Verify
+    expect(read).toThrow(
+      "app.json is invalid: name: Invalid type: Expected string but received 123; targetCollectionIds.0: Invalid type: Expected string but received 456",
+    );
+    expect(read).toThrow(
+      expect.objectContaining({ cause: expect.any(ValiError) }),
+    );
   });
 
   it("rejects an unsupported app type", () => {
@@ -130,7 +148,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("rejects a non-array target collection list", () => {
@@ -141,7 +159,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("rejects non-string target collection IDs", () => {
@@ -152,7 +170,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid: targetCollectionIds.0:");
   });
 
   it("rejects missing permissions", () => {
@@ -163,7 +181,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("preserves the validation error for invalid HTTP origins", () => {
@@ -181,7 +199,7 @@ describe("readManifest", () => {
 
     // Verify
     expect(read).toThrow(
-      "Expected a normalized HTTP(S) origin without a trailing slash.",
+      "app.json is invalid: permissions.http.allowedOrigins.0: Expected a normalized HTTP(S) origin without a trailing slash.",
     );
   });
 
@@ -196,7 +214,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("rejects an incorrect initial state file", () => {
@@ -213,7 +231,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("rejects an incorrect migration file", () => {
@@ -227,7 +245,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("rejects a missing migration declaration", () => {
@@ -241,7 +259,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("rejects unexpected state definition fields", () => {
@@ -255,7 +273,7 @@ describe("readManifest", () => {
     const read = () => readManifest(path);
 
     // Verify
-    expect(read).toThrow(ValiError);
+    expect(read).toThrow("app.json is invalid:");
   });
 
   it("preserves JSON syntax errors", () => {

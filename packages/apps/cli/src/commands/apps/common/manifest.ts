@@ -8,7 +8,7 @@ import type { AppManifest } from "./types.js";
 
 export function readManifest(path: string): AppManifest {
   const data = readJson(join(path, "app.json"));
-  v.parse(
+  const result = v.safeParse(
     v.object({
       name: v.string(),
       type: v.literal(AppType.CollectionView),
@@ -22,6 +22,15 @@ export function readManifest(path: string): AppManifest {
     }),
     data,
   );
+  if (!result.success) {
+    const issues = result.issues.map((issue) => {
+      const fieldPath = v.getDotPath(issue);
+      return fieldPath ? `${fieldPath}: ${issue.message}` : issue.message;
+    });
+    throw new Error(`app.json is invalid: ${issues.join("; ")}`, {
+      cause: new v.ValiError(result.issues),
+    });
+  }
   return data as AppManifest;
 }
 
