@@ -572,6 +572,11 @@ export default interface Backend {
       | UnexpectedError
     >;
 
+    updatePermissions(
+      id: AppId,
+      permissions: AppPermissions,
+    ): ResultPromise<App, AppNotFound | ArgumentsNotValid | UnexpectedError>;
+
     updateName(
       id: AppId,
       name: string,
@@ -585,7 +590,6 @@ export default interface Backend {
       latestVersionId: AppVersionId,
       targetCollectionIds: CollectionId[],
       files: AppVersion["files"],
-      permissions: AppPermissions,
       stateDefinition: AppStateDefinition,
     ): ResultPromise<
       App,

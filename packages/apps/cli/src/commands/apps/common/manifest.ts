@@ -1,6 +1,6 @@
 import { join } from "node:path";
 import { AppType } from "@superego/backend";
-import { AppsCreateNewVersion } from "@superego/executing-backend";
+import { AppsUpdatePermissions } from "@superego/executing-backend";
 import * as v from "valibot";
 import getUsecaseArgumentsSchema from "../../../utils/getUsecaseArgumentsSchema.js";
 import { readJson, writeJson } from "./json.js";
@@ -13,7 +13,7 @@ export function readManifest(path: string): AppManifest {
       name: v.string(),
       type: v.literal(AppType.CollectionView),
       targetCollectionIds: v.array(v.string()),
-      permissions: getUsecaseArgumentsSchema(AppsCreateNewVersion).items[4],
+      permissions: getUsecaseArgumentsSchema(AppsUpdatePermissions).items[1],
       stateDefinition: v.strictObject({
         schema: v.literal("state.schema.json"),
         initialState: v.literal("state.initial.json"),

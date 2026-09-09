@@ -19,18 +19,18 @@ import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppV
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
 import AppUtils from "../../../utils/AppUtils.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
-import PermissionsModal from "../../widgets/RHFAppVersionField/PermissionsModal.js";
 import PersistentStateModal from "../../widgets/RHFAppVersionField/PersistentStateModal.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./CreateApp.css.js";
+import PermissionsModal from "./PermissionsModal.js";
 import SetNameAndSaveModal from "./SetNameAndSaveModal.js";
 
 interface FormValues {
   name: string;
+  permissions: AppPermissions;
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
-    permissions: AppPermissions;
     stateDefinition: AppStateDefinition;
   };
 }
@@ -67,9 +67,9 @@ export default function CreateAppForm({
   const formId = useId();
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
+      permissions: defaultAppPermissions,
       appVersion: {
         stateDefinition: emptyAppStateDefinition,
-        permissions: defaultAppPermissions,
         targetCollectionIds: initialTargetCollections.map(({ id }) => id),
         files: forms.defaults.collectionViewAppFiles(initialTargetCollections),
       },
@@ -78,8 +78,8 @@ export default function CreateAppForm({
     resolver: standardSchemaResolver(
       v.strictObject({
         name: valibotSchemas.appName(),
+        permissions: forms.schemas.appPermissions(intl),
         appVersion: v.strictObject({
-          permissions: forms.schemas.appPermissions(intl),
           stateDefinition: forms.schemas.appStateDefinition(intl),
           targetCollectionIds: v.pipe(
             v.array(valibotSchemas.id.collection()),
@@ -91,11 +91,11 @@ export default function CreateAppForm({
     ),
   });
 
-  const onSubmit = async ({ name, appVersion }: FormValues) => {
+  const onSubmit = async ({ name, permissions, appVersion }: FormValues) => {
     const { success, data } = await mutate({
       type: AppType.CollectionView,
       name,
-      permissions: appVersion.permissions,
+      permissions,
       stateDefinition: appVersion.stateDefinition,
       targetCollectionIds: appVersion.targetCollectionIds,
       files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
@@ -120,7 +120,7 @@ export default function CreateAppForm({
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, (errors) => {
-        if (errors.appVersion?.permissions) {
+        if (errors.permissions) {
           onSetNameAndSaveModalClose();
           onPermissionsModalOpen();
         } else if (errors.appVersion?.stateDefinition) {
@@ -140,7 +140,7 @@ export default function CreateAppForm({
       />
       <PermissionsModal
         control={control}
-        name="appVersion.permissions"
+        name="permissions"
         isOpen={isPermissionsModalOpen}
         onClose={onPermissionsModalClose}
       />

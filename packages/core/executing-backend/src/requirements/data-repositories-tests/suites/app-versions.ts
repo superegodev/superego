@@ -1,6 +1,5 @@
 import type { AppVersionEntity } from "@superego/executing-backend";
 import { DataType } from "@superego/schema";
-import { defaultAppPermissions } from "@superego/shared-utils";
 import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
@@ -33,11 +32,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
       appId: Id.generate.app(),
       targetCollections: targetCollections,
       files: appVersionFiles,
-      permissions: {
-        modals: true,
-        downloads: false,
-        http: { allowedOrigins: ["http://127.0.0.1:8080"] },
-      },
       stateDefinition: {
         schema: {
           types: {
@@ -78,7 +72,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
       const { dataRepositoriesManager } = deps();
       const appId = Id.generate.app();
       const appVersion1: AppVersionEntity = {
-        permissions: defaultAppPermissions,
         stateDefinition: emptyAppStateDefinition,
         id: Id.generate.appVersion(),
         previousVersionId: null,
@@ -88,11 +81,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
         createdAt: new Date(),
       };
       const appVersion2: AppVersionEntity = {
-        permissions: {
-          modals: true,
-          downloads: true,
-          http: { allowedOrigins: ["https://example.com"] },
-        },
         stateDefinition: {
           schema: {
             types: {
@@ -166,7 +154,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
     const app1Id = Id.generate.app();
     const app2Id = Id.generate.app();
     const appVersion1: AppVersionEntity = {
-      permissions: defaultAppPermissions,
       stateDefinition: emptyAppStateDefinition,
       id: Id.generate.appVersion(),
       previousVersionId: null,
@@ -176,7 +163,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
       createdAt: new Date(),
     };
     const appVersion2: AppVersionEntity = {
-      permissions: defaultAppPermissions,
       stateDefinition: emptyAppStateDefinition,
       id: Id.generate.appVersion(),
       previousVersionId: appVersion1.id,
@@ -186,7 +172,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
       createdAt: new Date(),
     };
     const appVersion3: AppVersionEntity = {
-      permissions: defaultAppPermissions,
       stateDefinition: emptyAppStateDefinition,
       id: Id.generate.appVersion(),
       previousVersionId: null,
@@ -247,7 +232,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
       const app1Id = Id.generate.app();
       const app2Id = Id.generate.app();
       const appVersion1: AppVersionEntity = {
-        permissions: defaultAppPermissions,
         stateDefinition: emptyAppStateDefinition,
         id: Id.generate.appVersion(),
         previousVersionId: null,
@@ -257,7 +241,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
         createdAt: new Date(),
       };
       const appVersion2: AppVersionEntity = {
-        permissions: defaultAppPermissions,
         stateDefinition: emptyAppStateDefinition,
         id: Id.generate.appVersion(),
         previousVersionId: appVersion1.id,
@@ -267,7 +250,6 @@ export default rd<GetDependencies>("App versions", (deps) => {
         createdAt: new Date(),
       };
       const appVersion3: AppVersionEntity = {
-        permissions: defaultAppPermissions,
         stateDefinition: emptyAppStateDefinition,
         id: Id.generate.appVersion(),
         previousVersionId: null,

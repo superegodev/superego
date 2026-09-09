@@ -59,7 +59,7 @@ export default useMarkdownHelp(
         );
         const permissionsChanged = !isEqual(
           manifest.permissions,
-          app.latestVersion.permissions,
+          app.permissions,
         );
         const stateDefinitionChanged = !isEqual(
           localStateDefinition,
@@ -81,7 +81,7 @@ export default useMarkdownHelp(
           permissions: {
             changed: permissionsChanged,
             local: manifest.permissions,
-            remote: app.latestVersion.permissions,
+            remote: app.permissions,
           },
           stateDefinition: {
             changed: stateDefinitionChanged,

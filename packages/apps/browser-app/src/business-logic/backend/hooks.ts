@@ -315,6 +315,12 @@ export const useCreateApp = makeUseBackendMutation("apps", "create", () => [
   ["listApps"],
 ]);
 
+export const useUpdateAppPermissions = makeUseBackendMutation(
+  "apps",
+  "updatePermissions",
+  () => [["listApps"]],
+);
+
 export const useUpdateAppName = makeUseBackendMutation(
   "apps",
   "updateName",

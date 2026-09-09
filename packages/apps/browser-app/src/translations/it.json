@@ -1661,46 +1661,46 @@
   "EditApp.tsx_SFuk1v": {
     "defaultMessage": "Permessi"
   },
-  "PermissionsModal.tsx_+Ynh/m": {
+  "RHFAppPermissionsField.tsx_+Ynh/m": {
     "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
   },
-  "PermissionsModal.tsx_5g9TrD": {
+  "RHFAppPermissionsField.tsx_5g9TrD": {
     "defaultMessage": "Consenti finestre di dialogo del browser e stampa"
   },
-  "PermissionsModal.tsx_mJRnEG": {
+  "RHFAppPermissionsField.tsx_mJRnEG": {
     "defaultMessage": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
   },
-  "PermissionsModal.tsx_JV06rg": {
+  "RHFAppPermissionsField.tsx_JV06rg": {
     "defaultMessage": "Consenti richieste HTTP verso queste destinazioni:"
   },
-  "PermissionsModal.tsx_HQU5ER": {
+  "RHFAppPermissionsField.tsx_HQU5ER": {
     "defaultMessage": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
   },
   "PermissionsModal.tsx_JXdbo8": {
     "defaultMessage": "Fatto"
   },
-  "PermissionsModal.tsx_QpiApO": {
+  "RHFAppPermissionsField.tsx_QpiApO": {
     "defaultMessage": "Rimuovi destinazione"
   },
   "PermissionsModal.tsx_SFuk1v": {
     "defaultMessage": "Permessi"
   },
-  "PermissionsModal.tsx_i05XEx": {
+  "RHFAppPermissionsField.tsx_i05XEx": {
     "defaultMessage": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
   },
-  "PermissionsModal.tsx_kgdY08": {
+  "RHFAppPermissionsField.tsx_kgdY08": {
     "defaultMessage": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
   },
-  "PermissionsModal.tsx_t+/rfR": {
-    "defaultMessage": "Le modifiche ai permessi vengono applicate quando salvi la versione dell’app."
+  "PermissionsModal.tsx_xq0PjV": {
+    "defaultMessage": "Questi permessi si applicano quando crei l’app."
   },
-  "PermissionsModal.tsx_wwiDxb": {
+  "RHFAppPermissionsField.tsx_wwiDxb": {
     "defaultMessage": "Aggiungi destinazione"
   },
-  "PermissionsModal.tsx_xj9V0+": {
+  "RHFAppPermissionsField.tsx_xj9V0+": {
     "defaultMessage": "Consenti download di file"
   },
-  "PermissionsModal.tsx_xv5gU1": {
+  "RHFAppPermissionsField.tsx_xv5gU1": {
     "defaultMessage": "Origine HTTP"
   },
   "PersistentStateModal.tsx_B02JHP": {
@@ -1738,5 +1738,14 @@
   },
   "appStateDefinition.ts_epKnft": {
     "defaultMessage": "Lo stato iniziale deve rispettare lo schema dello stato"
+  },
+  "UpdatePermissionsModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "UpdatePermissionsModalForm.tsx_SFuk1v": {
+    "defaultMessage": "Permessi"
+  },
+  "UpdatePermissionsModalForm.tsx_jvo0vs": {
+    "defaultMessage": "Salva"
   }
 }

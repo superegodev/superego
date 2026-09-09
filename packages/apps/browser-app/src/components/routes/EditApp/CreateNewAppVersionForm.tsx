@@ -1,5 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { AppPermissions, AppStateDefinition } from "@superego/backend";
+import type { AppStateDefinition } from "@superego/backend";
 import type { App, CollectionId } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
 import { useMemo } from "react";
@@ -15,7 +15,6 @@ import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppV
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
-import PermissionsModal from "../../widgets/RHFAppVersionField/PermissionsModal.js";
 import PersistentStateModal from "../../widgets/RHFAppVersionField/PersistentStateModal.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./EditApp.css.js";
@@ -24,7 +23,6 @@ interface FormValues {
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
-    permissions: AppPermissions;
     stateDefinition: AppStateDefinition;
   };
 }
@@ -33,9 +31,6 @@ interface Props {
   isStateModalOpen: boolean;
   onStateModalClose: () => void;
   onStateModalOpen: () => void;
-  isPermissionsModalOpen: boolean;
-  onPermissionsModalClose: () => void;
-  onPermissionsModalOpen: () => void;
   app: App;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
@@ -44,9 +39,6 @@ export default function CreateNewAppVersionForm({
   isStateModalOpen,
   onStateModalClose,
   onStateModalOpen,
-  isPermissionsModalOpen,
-  onPermissionsModalClose,
-  onPermissionsModalOpen,
   app,
   formId,
   setSubmitDisabled,
@@ -69,7 +61,6 @@ export default function CreateNewAppVersionForm({
     defaultValues: {
       appVersion: {
         targetCollectionIds: validTargetCollectionIds,
-        permissions: app.latestVersion.permissions,
         stateDefinition: {
           ...app.latestVersion.stateDefinition,
           migration: null,
@@ -83,7 +74,6 @@ export default function CreateNewAppVersionForm({
     resolver: standardSchemaResolver(
       v.strictObject({
         appVersion: v.strictObject({
-          permissions: forms.schemas.appPermissions(intl),
           stateDefinition: forms.schemas.appStateDefinition(intl),
           targetCollectionIds: v.pipe(
             v.array(valibotSchemas.id.collection()),
@@ -101,13 +91,11 @@ export default function CreateNewAppVersionForm({
       app.latestVersion.id,
       appVersion.targetCollectionIds,
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
-      appVersion.permissions,
       appVersion.stateDefinition,
     );
     if (success) {
       reset({
         appVersion: {
-          permissions: data.latestVersion.permissions,
           stateDefinition: {
             ...data.latestVersion.stateDefinition,
             migration: null,
@@ -135,9 +123,7 @@ export default function CreateNewAppVersionForm({
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, (errors) => {
-        if (errors.appVersion?.permissions) {
-          onPermissionsModalOpen();
-        } else if (errors.appVersion?.stateDefinition) {
+        if (errors.appVersion?.stateDefinition) {
           onStateModalOpen();
         }
       })}
@@ -154,12 +140,6 @@ export default function CreateNewAppVersionForm({
         name="appVersion"
         isOpen={isStateModalOpen}
         onClose={onStateModalClose}
-      />
-      <PermissionsModal
-        control={control}
-        name="appVersion.permissions"
-        isOpen={isPermissionsModalOpen}
-        onClose={onPermissionsModalClose}
       />
       <RHFAppVersionField
         control={control}

@@ -1,4 +1,9 @@
-import type { AppId, AppType, AppState } from "@superego/backend";
+import type {
+  AppId,
+  AppType,
+  AppState,
+  AppPermissions,
+} from "@superego/backend";
 
 export default interface AppEntity {
   id: AppId;
@@ -6,4 +11,5 @@ export default interface AppEntity {
   name: string;
   createdAt: Date;
   state: AppState;
+  permissions: AppPermissions;
 }

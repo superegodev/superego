@@ -69,7 +69,15 @@ Recovering stale checkouts:
 
 ## Permissions
 
-Declare all permission fields in `app.json` and commit to apply them:
+Permissions are app configuration, independent of code versions. Declare all
+permission fields in `app.json` and commit to apply them. A permissions-only
+commit updates the app without compiling code or creating a version. In the app
+editor, use Permissions and Save to update them independently.
+
+The manifest is authoritative when committing: check `apps diff` first if
+permissions may have been changed in the app since checkout.
+
+For example:
 
 ```json
 {

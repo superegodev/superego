@@ -11,6 +11,7 @@ export default function makeApp(
     id: app.id,
     type: app.type,
     name: app.name,
+    permissions: app.permissions,
     latestVersion: makeAppVersion(latestVersion),
     createdAt: app.createdAt,
   };

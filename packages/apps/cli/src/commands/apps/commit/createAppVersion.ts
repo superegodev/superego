@@ -21,7 +21,6 @@ export default async function createAppVersion({
     app.latestVersion.id,
     manifest.targetCollectionIds,
     { "/main.tsx": mainModule },
-    manifest.permissions,
     await compileStateDefinition(path),
   );
   if (!result.success) {

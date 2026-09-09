@@ -46,7 +46,7 @@ export default useMarkdownHelp(
         projectPath,
         {
           name: app.name,
-          permissions: app.latestVersion.permissions,
+          permissions: app.permissions,
           stateDefinition: {
             schema: "state.schema.json",
             initialState: "state.initial.json",

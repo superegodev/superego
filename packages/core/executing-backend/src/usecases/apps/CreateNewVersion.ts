@@ -2,7 +2,6 @@ import type {
   App,
   AppId,
   AppNotFound,
-  AppPermissions,
   AppStateDefinition,
   AppStateContentNotValid,
   AppStateMigrationFailed,
@@ -46,7 +45,6 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     v.strictObject({
       "/main.tsx": structuralSchemas.backend.types.typescriptModule(),
     }),
-    structuralSchemas.backend.types.appPermissions(),
     structuralSchemas.backend.types.appStateDefinition(),
   ]);
   resultSchema = structuralSchemas.global.result(
@@ -69,7 +67,6 @@ export default class AppsCreateNewVersion extends BackendUsecase<
     latestVersionId: AppVersionId,
     targetCollectionIds: CollectionId[],
     files: AppVersionEntity["files"],
-    permissions: AppPermissions,
     stateDefinition: AppStateDefinition,
   ): ResultPromise<
     App,
@@ -231,7 +228,6 @@ export default class AppsCreateNewVersion extends BackendUsecase<
       appId: app.id,
       targetCollections,
       files,
-      permissions,
       stateDefinition,
       createdAt: new Date(),
     };

@@ -14,9 +14,9 @@ export default class SqliteAppRepository implements AppRepository {
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "type", "name", "created_at", "state")
+          ("id", "type", "name", "created_at", "state", "permissions")
         VALUES
-          (?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?)
       `)
       .run(
         app.id,
@@ -24,6 +24,7 @@ export default class SqliteAppRepository implements AppRepository {
         app.name,
         app.createdAt.toISOString(),
         encode(app.state),
+        encode(app.permissions),
       );
   }
 
@@ -35,6 +36,7 @@ export default class SqliteAppRepository implements AppRepository {
           "type" = ?,
           "name" = ?,
           "state" = ?,
+          "permissions" = ?,
           "created_at" = ?
         WHERE "id" = ?
       `)
@@ -42,6 +44,7 @@ export default class SqliteAppRepository implements AppRepository {
         app.type,
         app.name,
         encode(app.state),
+        encode(app.permissions),
         app.createdAt.toISOString(),
         app.id,
       );

@@ -20,7 +20,6 @@ import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
-    permissions: appPermissions(),
     stateDefinition: appStateDefinition(),
     id: appVersionId(),
     targetCollections: v.array(
@@ -41,6 +40,7 @@ export function app(): v.GenericSchema<unknown, App> {
     id: appId(),
     type: v.picklist(Object.values(AppType)),
     name: v.string(),
+    permissions: appPermissions(),
     latestVersion: appVersion(),
     createdAt: v.date(),
   });

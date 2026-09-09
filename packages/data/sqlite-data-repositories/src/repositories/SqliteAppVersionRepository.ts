@@ -31,12 +31,11 @@ export default class SqliteAppVersionRepository implements AppVersionRepository 
             "target_collections",
             "files",
             "created_at",
-            "permissions",
             "state_definition",
             "is_latest"
           )
         VALUES
-          (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?, ?, ?)
       `)
       .run(
         appVersion.id,
@@ -45,7 +44,6 @@ export default class SqliteAppVersionRepository implements AppVersionRepository 
         encode(appVersion.targetCollections),
         encode(appVersion.files),
         appVersion.createdAt.toISOString(),
-        encode(appVersion.permissions),
         encode(appVersion.stateDefinition),
         1,
       );

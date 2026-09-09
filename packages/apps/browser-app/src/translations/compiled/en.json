@@ -2764,40 +2764,10 @@
       "value": "Close sidebar"
     }
   ],
-  "PermissionsModal.tsx_+Ynh/m": [
-    {
-      "type": 0,
-      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
-    }
-  ],
-  "PermissionsModal.tsx_5g9TrD": [
-    {
-      "type": 0,
-      "value": "Allow browser dialogs and printing"
-    }
-  ],
-  "PermissionsModal.tsx_HQU5ER": [
-    {
-      "type": 0,
-      "value": "Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access."
-    }
-  ],
-  "PermissionsModal.tsx_JV06rg": [
-    {
-      "type": 0,
-      "value": "Allow HTTP requests to these destinations:"
-    }
-  ],
   "PermissionsModal.tsx_JXdbo8": [
     {
       "type": 0,
       "value": "Done"
-    }
-  ],
-  "PermissionsModal.tsx_QpiApO": [
-    {
-      "type": 0,
-      "value": "Remove destination"
     }
   ],
   "PermissionsModal.tsx_SFuk1v": [
@@ -2806,46 +2776,10 @@
       "value": "Permissions"
     }
   ],
-  "PermissionsModal.tsx_i05XEx": [
+  "PermissionsModal.tsx_xq0PjV": [
     {
       "type": 0,
-      "value": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
-    }
-  ],
-  "PermissionsModal.tsx_kgdY08": [
-    {
-      "type": 0,
-      "value": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
-    }
-  ],
-  "PermissionsModal.tsx_mJRnEG": [
-    {
-      "type": 0,
-      "value": "Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available."
-    }
-  ],
-  "PermissionsModal.tsx_t+/rfR": [
-    {
-      "type": 0,
-      "value": "Permission changes apply when you save the app version."
-    }
-  ],
-  "PermissionsModal.tsx_wwiDxb": [
-    {
-      "type": 0,
-      "value": "Add destination"
-    }
-  ],
-  "PermissionsModal.tsx_xj9V0+": [
-    {
-      "type": 0,
-      "value": "Allow file downloads"
-    }
-  ],
-  "PermissionsModal.tsx_xv5gU1": [
-    {
-      "type": 0,
-      "value": "HTTP origin"
+      "value": "These permissions apply when you create the app."
     }
   ],
   "PersistentStateModal.tsx_B02JHP": [
@@ -2960,6 +2894,72 @@
     {
       "type": 0,
       "value": "Providers"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_5g9TrD": [
+    {
+      "type": 0,
+      "value": "Allow browser dialogs and printing"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_HQU5ER": [
+    {
+      "type": 0,
+      "value": "Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_JV06rg": [
+    {
+      "type": 0,
+      "value": "Allow HTTP requests to these destinations:"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_QpiApO": [
+    {
+      "type": 0,
+      "value": "Remove destination"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_i05XEx": [
+    {
+      "type": 0,
+      "value": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_kgdY08": [
+    {
+      "type": 0,
+      "value": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_mJRnEG": [
+    {
+      "type": 0,
+      "value": "Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_wwiDxb": [
+    {
+      "type": 0,
+      "value": "Add destination"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_xj9V0+": [
+    {
+      "type": 0,
+      "value": "Allow file downloads"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_xv5gU1": [
+    {
+      "type": 0,
+      "value": "HTTP origin"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -4224,6 +4224,24 @@
     {
       "type": 0,
       "value": "Update app name"
+    }
+  ],
+  "UpdatePermissionsModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "UpdatePermissionsModalForm.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permissions"
+    }
+  ],
+  "UpdatePermissionsModalForm.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "UserMessage.tsx_J3ca41": [

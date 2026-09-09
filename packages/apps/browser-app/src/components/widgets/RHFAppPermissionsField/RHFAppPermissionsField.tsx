@@ -13,20 +13,15 @@ import { electronMainWorld } from "../../../business-logic/electron/electron.js"
 import forms from "../../../business-logic/forms/forms.js";
 import Button from "../../design-system/Button/Button.js";
 import Switch from "../../design-system/forms/Switch.js";
-import ModalDialog from "../../design-system/ModalDialog/ModalDialog.js";
-import * as cs from "./RHFAppVersionField.css.js";
+import * as cs from "./RHFAppPermissionsField.css.js";
 
 interface Props<T extends FieldValues> {
   control: Control<T>;
   name: FieldPath<T>;
-  isOpen: boolean;
-  onClose: () => void;
 }
-export default function PermissionsModal<T extends FieldValues>({
+export default function RHFAppPermissionsField<T extends FieldValues>({
   control,
   name,
-  isOpen,
-  onClose,
 }: Props<T>) {
   const intl = useIntl();
   const { field: permissionsField, fieldState: permissionsFieldState } =
@@ -56,14 +51,8 @@ export default function PermissionsModal<T extends FieldValues>({
     v.is(valibotSchemas.httpOrigin(), origin),
   );
   return (
-    <ModalDialog isDismissable={true} isOpen={isOpen} onOpenChange={onClose}>
-      <ModalDialog.Heading>
-        <FormattedMessage defaultMessage="Permissions" />
-      </ModalDialog.Heading>
-      <p>
-        <FormattedMessage defaultMessage="Permission changes apply when you save the app version." />
-      </p>
-      <fieldset className={cs.PermissionsModal.fieldset}>
+    <>
+      <fieldset className={cs.RHFAppPermissionsField.fieldset}>
         {forms.utils
           .flattenError(permissionsFieldState.error)
           .map(({ message, path }) => (
@@ -95,11 +84,11 @@ export default function PermissionsModal<T extends FieldValues>({
         </p>
         {origins.map((origin, index) => (
           <div
-            className={cs.PermissionsModal.destination}
+            className={cs.RHFAppPermissionsField.destination}
             key={originKeys[index]}
           >
             <input
-              className={cs.PermissionsModal.origin}
+              className={cs.RHFAppPermissionsField.origin}
               aria-label={intl.formatMessage({ defaultMessage: "HTTP origin" })}
               value={origin}
               placeholder="https://api.example.com"
@@ -158,11 +147,6 @@ export default function PermissionsModal<T extends FieldValues>({
           <FormattedMessage defaultMessage="Enter a valid HTTP(S) origin without a path, query, or fragment." />
         </p>
       ) : null}
-      <ModalDialog.Actions>
-        <Button onPress={onClose} isDisabled={!originsValid} variant="primary">
-          <FormattedMessage defaultMessage="Done" />
-        </Button>
-      </ModalDialog.Actions>
-    </ModalDialog>
+    </>
   );
 }

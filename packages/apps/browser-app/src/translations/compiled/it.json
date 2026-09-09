@@ -2756,40 +2756,10 @@
       "value": "Chiudi barra laterale"
     }
   ],
-  "PermissionsModal.tsx_+Ynh/m": [
-    {
-      "type": 0,
-      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
-    }
-  ],
-  "PermissionsModal.tsx_5g9TrD": [
-    {
-      "type": 0,
-      "value": "Consenti finestre di dialogo del browser e stampa"
-    }
-  ],
-  "PermissionsModal.tsx_HQU5ER": [
-    {
-      "type": 0,
-      "value": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
-    }
-  ],
-  "PermissionsModal.tsx_JV06rg": [
-    {
-      "type": 0,
-      "value": "Consenti richieste HTTP verso queste destinazioni:"
-    }
-  ],
   "PermissionsModal.tsx_JXdbo8": [
     {
       "type": 0,
       "value": "Fatto"
-    }
-  ],
-  "PermissionsModal.tsx_QpiApO": [
-    {
-      "type": 0,
-      "value": "Rimuovi destinazione"
     }
   ],
   "PermissionsModal.tsx_SFuk1v": [
@@ -2798,46 +2768,10 @@
       "value": "Permessi"
     }
   ],
-  "PermissionsModal.tsx_i05XEx": [
+  "PermissionsModal.tsx_xq0PjV": [
     {
       "type": 0,
-      "value": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
-    }
-  ],
-  "PermissionsModal.tsx_kgdY08": [
-    {
-      "type": 0,
-      "value": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
-    }
-  ],
-  "PermissionsModal.tsx_mJRnEG": [
-    {
-      "type": 0,
-      "value": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
-    }
-  ],
-  "PermissionsModal.tsx_t+/rfR": [
-    {
-      "type": 0,
-      "value": "Le modifiche ai permessi vengono applicate quando salvi la versione dell’app."
-    }
-  ],
-  "PermissionsModal.tsx_wwiDxb": [
-    {
-      "type": 0,
-      "value": "Aggiungi destinazione"
-    }
-  ],
-  "PermissionsModal.tsx_xj9V0+": [
-    {
-      "type": 0,
-      "value": "Consenti download di file"
-    }
-  ],
-  "PermissionsModal.tsx_xv5gU1": [
-    {
-      "type": 0,
-      "value": "Origine HTTP"
+      "value": "Questi permessi si applicano quando crei l’app."
     }
   ],
   "PersistentStateModal.tsx_B02JHP": [
@@ -2952,6 +2886,72 @@
     {
       "type": 0,
       "value": "Provider"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_5g9TrD": [
+    {
+      "type": 0,
+      "value": "Consenti finestre di dialogo del browser e stampa"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_HQU5ER": [
+    {
+      "type": 0,
+      "value": "Usa origini HTTP(S) senza percorso, come https://api.example.com o http://localhost:8080. Un URL di servizio salvato nello stato non concede l’accesso."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_JV06rg": [
+    {
+      "type": 0,
+      "value": "Consenti richieste HTTP verso queste destinazioni:"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_QpiApO": [
+    {
+      "type": 0,
+      "value": "Rimuovi destinazione"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_i05XEx": [
+    {
+      "type": 0,
+      "value": "Stai usando Superego nel browser. Se le richieste vengono bloccate da CORS, configura un’estensione del browser per consentirle."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_kgdY08": [
+    {
+      "type": 0,
+      "value": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_mJRnEG": [
+    {
+      "type": 0,
+      "value": "Le destinazioni consentite si applicano alle connessioni delle app. Le risorse integrate della sandbox e le tessere delle mappe rimangono disponibili."
+    }
+  ],
+  "RHFAppPermissionsField.tsx_wwiDxb": [
+    {
+      "type": 0,
+      "value": "Aggiungi destinazione"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_xj9V0+": [
+    {
+      "type": 0,
+      "value": "Consenti download di file"
+    }
+  ],
+  "RHFAppPermissionsField.tsx_xv5gU1": [
+    {
+      "type": 0,
+      "value": "Origine HTTP"
     }
   ],
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": [
@@ -4202,6 +4202,24 @@
     {
       "type": 0,
       "value": "Aggiorna il nome dell'app"
+    }
+  ],
+  "UpdatePermissionsModalForm.tsx_47FYwb": [
+    {
+      "type": 0,
+      "value": "Annulla"
+    }
+  ],
+  "UpdatePermissionsModalForm.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permessi"
+    }
+  ],
+  "UpdatePermissionsModalForm.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Salva"
     }
   ],
   "UserMessage.tsx_J3ca41": [

@@ -16,6 +16,7 @@ import CreateNewAppVersionForm from "./CreateNewAppVersionForm.js";
 import DeleteAppModalForm from "./DeleteAppModalForm.js";
 import * as cs from "./EditApp.css.js";
 import UpdateNameModalForm from "./UpdateNameModalForm.js";
+import UpdatePermissionsModalForm from "./UpdatePermissionsModalForm.js";
 
 interface Props {
   appId: AppId;
@@ -38,7 +39,15 @@ export default function EditApp({ appId }: Props) {
   ] = useState(true);
 
   const createNewVersionFormId = useId();
-  useSaveShortcut(createNewVersionFormId, isCreateNewVersionFormSubmitDisabled);
+  const permissionsFormId = useId();
+  const [isPermissionsFormSubmitDisabled, setIsPermissionsFormSubmitDisabled] =
+    useState(true);
+  useSaveShortcut(
+    isPermissionsModalOpen ? permissionsFormId : createNewVersionFormId,
+    isPermissionsModalOpen
+      ? isPermissionsFormSubmitDisabled
+      : isCreateNewVersionFormSubmitDisabled,
+  );
 
   const app = AppUtils.findApp(apps, appId);
 
@@ -88,13 +97,18 @@ export default function EditApp({ appId }: Props) {
           isStateModalOpen={isStateModalOpen}
           onStateModalClose={() => setIsStateModalOpen(false)}
           onStateModalOpen={() => setIsStateModalOpen(true)}
-          isPermissionsModalOpen={isPermissionsModalOpen}
-          onPermissionsModalClose={() => setIsPermissionsModalOpen(false)}
-          onPermissionsModalOpen={() => setIsPermissionsModalOpen(true)}
           app={app}
           formId={createNewVersionFormId}
           setSubmitDisabled={setIsCreateNewVersionFormSubmitDisabled}
         />
+        {isPermissionsModalOpen ? (
+          <UpdatePermissionsModalForm
+            app={app}
+            formId={permissionsFormId}
+            setSubmitDisabled={setIsPermissionsFormSubmitDisabled}
+            onClose={() => setIsPermissionsModalOpen(false)}
+          />
+        ) : null}
         <UpdateNameModalForm
           app={app}
           isOpen={isUpdateNameModalFormOpen}

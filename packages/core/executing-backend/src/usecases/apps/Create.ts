@@ -123,6 +123,7 @@ export default class AppsCreate extends BackendUsecase<
 
     const now = new Date();
     const app: AppEntity = {
+      permissions,
       id: options.appId ?? Id.generate.app(),
       state: { content: stateDefinition.initialState, revision: 1 },
       type: type,
@@ -135,7 +136,6 @@ export default class AppsCreate extends BackendUsecase<
       appId: app.id,
       targetCollections: targetCollections,
       files: files,
-      permissions,
       stateDefinition,
       createdAt: now,
     };

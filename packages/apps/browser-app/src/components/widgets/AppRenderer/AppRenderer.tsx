@@ -42,6 +42,7 @@ interface Props {
 }
 export default function AppRenderer({ app, preview = false }: Props) {
   const appBackend = useAppBackend(app, preview);
+  const permissions = preview ? defaultAppPermissions : app.permissions;
   const intl = useIntl();
   const theme = useTheme();
   const { navigateTo } = useNavigationState();
@@ -128,11 +129,9 @@ export default function AppRenderer({ app, preview = false }: Props) {
       >
         {(...documentsLists) => (
           <Sandbox
-            key={`${app.id}:${app.latestVersion.id}`}
+            key={`${app.id}:${app.latestVersion.id}:${JSON.stringify(permissions)}`}
             backend={backend}
-            permissions={
-              preview ? defaultAppPermissions : app.latestVersion.permissions
-            }
+            permissions={permissions}
             navigateTo={sandboxNavigateTo}
             iframeSrc={
               import.meta.env["VITE_SANDBOX_URL"] ??

@@ -1049,47 +1049,14 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
-  "PermissionsModal.tsx_+Ynh/m": {
-    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
-  },
-  "PermissionsModal.tsx_5g9TrD": {
-    "defaultMessage": "Allow browser dialogs and printing"
-  },
-  "PermissionsModal.tsx_HQU5ER": {
-    "defaultMessage": "Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access."
-  },
-  "PermissionsModal.tsx_JV06rg": {
-    "defaultMessage": "Allow HTTP requests to these destinations:"
-  },
   "PermissionsModal.tsx_JXdbo8": {
     "defaultMessage": "Done"
-  },
-  "PermissionsModal.tsx_QpiApO": {
-    "defaultMessage": "Remove destination"
   },
   "PermissionsModal.tsx_SFuk1v": {
     "defaultMessage": "Permissions"
   },
-  "PermissionsModal.tsx_i05XEx": {
-    "defaultMessage": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
-  },
-  "PermissionsModal.tsx_kgdY08": {
-    "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
-  },
-  "PermissionsModal.tsx_mJRnEG": {
-    "defaultMessage": "Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available."
-  },
-  "PermissionsModal.tsx_t+/rfR": {
-    "defaultMessage": "Permission changes apply when you save the app version."
-  },
-  "PermissionsModal.tsx_wwiDxb": {
-    "defaultMessage": "Add destination"
-  },
-  "PermissionsModal.tsx_xj9V0+": {
-    "defaultMessage": "Allow file downloads"
-  },
-  "PermissionsModal.tsx_xv5gU1": {
-    "defaultMessage": "HTTP origin"
+  "PermissionsModal.tsx_xq0PjV": {
+    "defaultMessage": "These permissions apply when you create the app."
   },
   "PersistentStateModal.tsx_B02JHP": {
     "defaultMessage": "Persistent state"
@@ -1147,6 +1114,39 @@
   },
   "Providers.tsx_IL1Uey": {
     "defaultMessage": "Providers"
+  },
+  "RHFAppPermissionsField.tsx_+Ynh/m": {
+    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+  },
+  "RHFAppPermissionsField.tsx_5g9TrD": {
+    "defaultMessage": "Allow browser dialogs and printing"
+  },
+  "RHFAppPermissionsField.tsx_HQU5ER": {
+    "defaultMessage": "Use HTTP(S) origins with no path, such as https://api.example.com or http://localhost:8080. A service URL stored in state does not grant access."
+  },
+  "RHFAppPermissionsField.tsx_JV06rg": {
+    "defaultMessage": "Allow HTTP requests to these destinations:"
+  },
+  "RHFAppPermissionsField.tsx_QpiApO": {
+    "defaultMessage": "Remove destination"
+  },
+  "RHFAppPermissionsField.tsx_i05XEx": {
+    "defaultMessage": "You are running Superego in the browser. If requests are blocked by CORS, configure a browser extension to allow them."
+  },
+  "RHFAppPermissionsField.tsx_kgdY08": {
+    "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
+  },
+  "RHFAppPermissionsField.tsx_mJRnEG": {
+    "defaultMessage": "Allowed destinations apply to app connections. Built-in sandbox resources and map tiles remain available."
+  },
+  "RHFAppPermissionsField.tsx_wwiDxb": {
+    "defaultMessage": "Add destination"
+  },
+  "RHFAppPermissionsField.tsx_xj9V0+": {
+    "defaultMessage": "Allow file downloads"
+  },
+  "RHFAppPermissionsField.tsx_xv5gU1": {
+    "defaultMessage": "HTTP origin"
   },
   "RHFContentBlockingKeysGetterField.tsx_83T8Y+": {
     "defaultMessage": "Content blocking keys getter"
@@ -1525,6 +1525,15 @@
   },
   "UpdateNameModalForm.tsx_btR6aV": {
     "defaultMessage": "Update app name"
+  },
+  "UpdatePermissionsModalForm.tsx_47FYwb": {
+    "defaultMessage": "Cancel"
+  },
+  "UpdatePermissionsModalForm.tsx_SFuk1v": {
+    "defaultMessage": "Permissions"
+  },
+  "UpdatePermissionsModalForm.tsx_jvo0vs": {
+    "defaultMessage": "Save"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"

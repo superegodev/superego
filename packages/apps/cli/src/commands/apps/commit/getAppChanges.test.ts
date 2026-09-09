@@ -41,17 +41,17 @@ describe("getAppChanges", () => {
       name: "App",
       type: AppType.CollectionView,
       createdAt: new Date(),
+      permissions: {
+        downloads: false,
+        http: { allowedOrigins: [] },
+        modals: true,
+      },
       latestVersion: {
         id: "AppVersion_test",
         createdAt: new Date(),
         targetCollections: [],
         files: {
           "/main.tsx": { source: "source", compiled: "different compilation" },
-        },
-        permissions: {
-          downloads: false,
-          http: { allowedOrigins: [] },
-          modals: true,
         },
         stateDefinition,
       },
@@ -96,7 +96,7 @@ describe("getAppChanges", () => {
     expect(changes.mainModule).toBeNull();
   });
 
-  it("detects changed permissions independently of compiled output", async () => {
+  it("detects changed permissions without recompiling the app", async () => {
     // Setup SUT
     const manifest = readManifest(path);
     manifest.permissions.modals = false;
@@ -115,7 +115,7 @@ describe("getAppChanges", () => {
     expect(changes.targetCollectionsChanged).toBe(false);
     expect(changes.permissionsChanged).toBe(true);
     expect(changes.stateDefinitionChanged).toBe(false);
-    expect(changes.mainModule).not.toBeNull();
+    expect(changes.mainModule).toBeNull();
   });
 
   it("detects a changed state schema independently of compiled output", async () => {

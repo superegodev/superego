@@ -8,7 +8,6 @@ export default function makeAppVersion(
     id: appVersion.id,
     targetCollections: appVersion.targetCollections,
     files: appVersion.files,
-    permissions: appVersion.permissions,
     stateDefinition: appVersion.stateDefinition,
     createdAt: appVersion.createdAt,
   };

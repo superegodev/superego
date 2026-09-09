@@ -766,9 +766,7 @@ export default rd<GetDependencies>("Packs", (deps) => {
       expect(result.data.apps[0]!.latestVersion.targetCollections[0]!.id).toBe(
         result.data.collections[0]!.id,
       );
-      expect(result.data.apps[0]!.latestVersion.permissions).toEqual(
-        permissions,
-      );
+      expect(result.data.apps[0]!.permissions).toEqual(permissions);
       expect(result.data.apps[0]!.latestVersion.stateDefinition).toEqual(
         stateDefinition,
       );

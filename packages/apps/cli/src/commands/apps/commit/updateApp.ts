@@ -26,7 +26,6 @@ export default async function updateApp({
   if (
     changes.sourceChanged ||
     changes.targetCollectionsChanged ||
-    changes.permissionsChanged ||
     changes.stateDefinitionChanged
   ) {
     app = await createAppVersion({
@@ -37,6 +36,18 @@ export default async function updateApp({
       path,
     });
     operations.push("created new version");
+  }
+
+  if (changes.permissionsChanged) {
+    const result = await backend.apps.updatePermissions(
+      app.id,
+      manifest.permissions,
+    );
+    if (!result.success) {
+      throw new Error(JSON.stringify(result.error));
+    }
+    app = result.data;
+    operations.push("updated permissions");
   }
 
   if (operations.length === 0) {

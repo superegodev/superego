@@ -71,8 +71,8 @@ function getApp(
         id: Id.generate.app(),
         type: AppType.CollectionView,
         name: "New App Preview",
+        permissions: defaultAppPermissions,
         latestVersion: {
-          permissions: defaultAppPermissions,
           stateDefinition,
           id: Id.generate.appVersion(),
           targetCollections: targetCollections.map((collection) => ({
