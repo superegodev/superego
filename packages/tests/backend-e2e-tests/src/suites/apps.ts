@@ -278,15 +278,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
   });
 
   describe("updatePermissions", () => {
-    const definition: AppDefinition = {
-      type: AppType.CollectionView,
-      name: "Devices",
-      targetCollectionIds: [],
-      files: { "/main.tsx": { source: "", compiled: "" } },
-      stateDefinition: emptyAppStateDefinition,
-      permissions: defaultAppPermissions,
-    };
-
     it("error: AppNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -309,7 +300,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
     it("error: ArgumentsNotValid (case: invalid HTTP origin)", async () => {
       // Setup SUT
       const { backend } = deps();
-      const created = await backend.apps.create(definition);
+      const created = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "Devices",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      });
       assert(created.success);
 
       // Exercise
@@ -327,7 +325,11 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
-        ...definition,
+        type: AppType.CollectionView,
+        name: "Devices",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
         permissions: {
           modals: true,
           downloads: false,
