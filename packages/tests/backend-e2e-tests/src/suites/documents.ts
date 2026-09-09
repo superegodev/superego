@@ -970,7 +970,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       });
     });
 
-    it("atomicity: no documents created if one fails validation", async () => {
+    it("error: DocumentContentNotValid leaves no documents created", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create({
@@ -3210,7 +3210,7 @@ export default rd<GetDependencies>("Documents", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
-    it("success", async () => {
+    it("success: executes the TypeScript function", async () => {
       // Setup SUT
       const { backend } = deps();
       const createCollectionResult = await backend.collections.create({

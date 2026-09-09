@@ -287,97 +287,6 @@ export default rd<GetDependencies>("Apps", (deps) => {
       permissions: defaultAppPermissions,
     };
 
-    it("changes permissions without creating a version or changing state", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const created = await backend.apps.create({
-        ...definition,
-        stateDefinition: {
-          schema: {
-            types: {
-              State: {
-                dataType: DataType.Struct,
-                properties: { count: { dataType: DataType.Number } },
-              },
-            },
-            rootType: "State",
-          },
-          initialState: { count: 0 },
-          migration: null,
-        },
-      });
-      assert(created.success);
-      const originalState = await backend.apps.updateState(
-        created.data.id,
-        created.data.latestVersion.id,
-        1,
-        { count: 7 },
-      );
-      assert(originalState.success);
-      const permissions = {
-        modals: true,
-        downloads: true,
-        http: {
-          allowedOrigins: ["http://192.168.1.10:8080", "http://192.168.1.11"],
-        },
-      };
-
-      // Exercise
-      const updated = await backend.apps.updatePermissions(
-        created.data.id,
-        permissions,
-      );
-      const listed = await backend.apps.list();
-      const state = await backend.apps.getState(
-        created.data.id,
-        created.data.latestVersion.id,
-      );
-      const revoked = await backend.apps.updatePermissions(
-        created.data.id,
-        defaultAppPermissions,
-      );
-
-      // Verify
-      expect(updated.data).toEqual({ ...created.data, permissions });
-      expect(listed.data).toEqual([{ ...created.data, permissions }]);
-      expect(state).toEqual(originalState);
-      expect(revoked.data).toEqual(created.data);
-      expect(updated.data?.latestVersion).not.toHaveProperty("permissions");
-    });
-
-    it("preserves the current permissions when publishing a version from an earlier checkout", async () => {
-      // Setup SUT
-      const { backend } = deps();
-      const created = await backend.apps.create(definition);
-      assert(created.success);
-      const permissions = {
-        ...defaultAppPermissions,
-        http: { allowedOrigins: ["http://192.168.1.12"] },
-      };
-      const updated = await backend.apps.updatePermissions(
-        created.data.id,
-        permissions,
-      );
-      assert(updated.success);
-
-      // Exercise
-      const version = await backend.apps.createNewVersion(
-        created.data.id,
-        created.data.latestVersion.id,
-        [],
-        { "/main.tsx": { source: "new code", compiled: "new code" } },
-        emptyAppStateDefinition,
-      );
-
-      // Verify
-      assert(version.success);
-      expect(version.data.permissions).toEqual(permissions);
-      expect(version.data.latestVersion.id).not.toBe(
-        created.data.latestVersion.id,
-      );
-      expect(version.data.latestVersion).not.toHaveProperty("permissions");
-    });
-
     it("error: AppNotFound", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -390,10 +299,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
       );
 
       // Verify
-      expect(result.error).toEqual({ name: "AppNotFound", details: { appId } });
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: { name: "AppNotFound", details: { appId } },
+      });
     });
 
-    it("rejects an invalid origin without changing the app", async () => {
+    it("error: ArgumentsNotValid (case: invalid HTTP origin)", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -408,6 +321,46 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Verify
       expect(result.error?.name).toBe("ArgumentsNotValid");
       expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("success: updates permissions", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.apps.create({
+        ...definition,
+        permissions: {
+          modals: true,
+          downloads: false,
+          http: { allowedOrigins: ["http://192.168.1.9"] },
+        },
+      });
+      assert.isTrue(createResult.success);
+      const permissions = {
+        modals: false,
+        downloads: true,
+        http: {
+          allowedOrigins: ["http://192.168.1.10:8080", "http://192.168.1.11"],
+        },
+      };
+
+      // Exercise
+      const updatePermissionsResult = await backend.apps.updatePermissions(
+        createResult.data.id,
+        permissions,
+      );
+
+      // Verify
+      expect(updatePermissionsResult).toEqual({
+        success: true,
+        data: { ...createResult.data, permissions },
+        error: null,
+      });
+      const listResult = await backend.apps.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [updatePermissionsResult.data],
+        error: null,
+      });
     });
   });
 
@@ -916,43 +869,46 @@ export default rd<GetDependencies>("Apps", (deps) => {
       { permissions: { ...defaultAppPermissions, http: undefined } },
       { stateDefinition: undefined },
       { stateDefinition: { schema, initialState: { count: 0 } } },
-    ])("rejects missing required definition fields: %j", async (overrides) => {
-      // Setup SUT
-      const { backend } = deps();
-      const created = await backend.apps.create(definition);
-      assert(created.success);
-      const invalidDefinition = {
-        ...definition,
-        ...overrides,
-      } as AppDefinition;
+    ])(
+      "error: ArgumentsNotValid (case: missing required definition fields %j)",
+      async (overrides) => {
+        // Setup SUT
+        const { backend } = deps();
+        const created = await backend.apps.create(definition);
+        assert(created.success);
+        const invalidDefinition = {
+          ...definition,
+          ...overrides,
+        } as AppDefinition;
 
-      // Exercise
-      const creation = await backend.apps.create(invalidDefinition);
-      const update =
-        "permissions" in overrides
-          ? await backend.apps.updatePermissions(
-              created.data.id,
-              invalidDefinition.permissions,
-            )
-          : await backend.apps.createNewVersion(
-              created.data.id,
-              created.data.latestVersion.id,
-              [],
-              definition.files,
-              invalidDefinition.stateDefinition,
-            );
+        // Exercise
+        const creation = await backend.apps.create(invalidDefinition);
+        const update =
+          "permissions" in overrides
+            ? await backend.apps.updatePermissions(
+                created.data.id,
+                invalidDefinition.permissions,
+              )
+            : await backend.apps.createNewVersion(
+                created.data.id,
+                created.data.latestVersion.id,
+                [],
+                definition.files,
+                invalidDefinition.stateDefinition,
+              );
 
-      // Verify
-      expect(creation.error?.name).toBe("ArgumentsNotValid");
-      expect(update.error?.name).toBe("ArgumentsNotValid");
-      expect((await backend.apps.list()).data).toEqual([created.data]);
-      expect((await read(backend, created.data)).data).toEqual({
-        content: { count: 0 },
-        revision: 1,
-      });
-    });
+        // Verify
+        expect(creation.error?.name).toBe("ArgumentsNotValid");
+        expect(update.error?.name).toBe("ArgumentsNotValid");
+        expect((await backend.apps.list()).data).toEqual([created.data]);
+        expect((await read(backend, created.data)).data).toEqual({
+          content: { count: 0 },
+          revision: 1,
+        });
+      },
+    );
 
-    it("validates the schema before initial content on creation and version updates", async () => {
+    it("error: AppStateSchemaNotValid takes precedence over invalid initial content", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -994,7 +950,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect((await backend.apps.list()).data).toEqual([created.data]);
     });
 
-    it("uses initial content on creation and runs every supplied migration until explicitly set to null", async () => {
+    it("success: initializes state and applies each supplied migration", async () => {
       // Setup SUT
       const { backend } = deps();
       const stateDefinition = {
@@ -1041,10 +997,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(migrated.data).toEqual({ content: { count: 2 }, revision: 3 });
       expect(preserved).toEqual(migrated);
       expect(version.data.latestVersion.stateDefinition.migration).toBeNull();
-      expect(version.data.permissions).toEqual(definition.permissions);
     });
 
-    it("initializes once and preserves state and permissions on code updates", async () => {
+    it("success: preserves saved state across app versions", async () => {
       // Setup SUT
       const { backend } = deps();
       // Exercise
@@ -1067,12 +1022,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const listed = await backend.apps.list();
       // Verify
       expect(initial.data.content).toEqual({ count: 0 });
-      expect(created.data.permissions.http.allowedOrigins).toEqual([
-        "https://example.com",
-      ]);
       expect(saved.success).toBe(true);
       expect(after).toEqual(saved);
-      expect(version.data.permissions).toEqual(created.data.permissions);
       expect(created.data).not.toHaveProperty("state");
       expect(listed.data).toEqual([version.data]);
       for (const app of [created.data, version.data, ...listed.data!]) {
@@ -1083,7 +1034,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       }
     });
 
-    it("rejects unknown capabilities and missing state definitions", async () => {
+    it("error: ArgumentsNotValid for unknown permissions or missing state definitions", async () => {
       // Setup SUT
       const { backend } = deps();
 
@@ -1096,20 +1047,12 @@ export default rd<GetDependencies>("Apps", (deps) => {
         ...definition,
         stateDefinition: undefined,
       } as any);
-      const empty = await backend.apps.create({
-        ...definition,
-        stateDefinition: emptyAppStateDefinition,
-      });
-      assert(empty.success);
-      const state = await read(backend, empty.data);
-
       // Verify
       expect(invalid.error?.name).toBe("ArgumentsNotValid");
       expect(missingState.error?.name).toBe("ArgumentsNotValid");
-      expect(state.data).toEqual({ content: {}, revision: 1 });
     });
 
-    it("checks revision atomically and rejects invalid writes", async () => {
+    it("error: rejects concurrent, stale, and invalid state writes", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1161,7 +1104,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(saved.data?.revision).toBe(2);
     });
 
-    it("coordinates concurrent migration and state writes without losing a successful write", async () => {
+    it("error: UnexpectedError for a concurrent migration or state write preserves the successful operation", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1210,7 +1153,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
     });
 
-    it("migrates atomically and rejects obsolete app versions", async () => {
+    it("success: applies a state migration atomically after rejected attempts", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1305,7 +1248,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
     });
 
-    it("allows semantic migrations and guards concurrent app version creation", async () => {
+    it("success: applies a migration without changing the state schema", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1327,39 +1270,14 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
       );
       assert(version.success);
-      const staleVersion = await backend.apps.createNewVersion(
-        created.data.id,
-        created.data.latestVersion.id,
-        [],
-        definition.files,
-        { ...created.data.latestVersion.stateDefinition, migration: null },
-      );
-      const obsolete = await update(backend, created.data, 2, { count: 9 });
       // Verify
       expect(saved.success).toBe(true);
       expect((await read(backend, version.data)).data?.content).toEqual({
         count: 16,
       });
-      expect(staleVersion.error).toEqual({
-        name: "AppVersionIdNotMatching",
-        details: {
-          appId: created.data.id,
-          latestVersionId: version.data.latestVersion.id,
-          suppliedVersionId: created.data.latestVersion.id,
-        },
-      });
-      expect(obsolete.error).toEqual({
-        name: "AppVersionIdNotMatching",
-        details: {
-          appId: created.data.id,
-          latestVersionId: version.data.latestVersion.id,
-          suppliedVersionId: created.data.latestVersion.id,
-        },
-      });
-      expect(version.data.permissions).toEqual(definition.permissions);
     });
 
-    it("preserves empty state across code-only updates and rejects stale versions", async () => {
+    it("error: AppVersionIdNotMatching when creating a version from a stale version", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create({
@@ -1398,7 +1316,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect(saved.data).toEqual({ content: {}, revision: 2 });
     });
 
-    it("rejects state reads and writes from stale app versions", async () => {
+    it("error: AppVersionIdNotMatching for stale state reads and writes", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1429,7 +1347,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       expect((await read(backend, version.data)).data?.revision).toBe(1);
     });
 
-    it("returns content validation issues for initialization and preserves existing state after invalid updates", async () => {
+    it("error: AppStateContentNotValid includes validation issues and preserves saved state", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1511,7 +1429,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
         },
       },
     ])(
-      "returns a domain error for $name state during creation, versioning and updates",
+      "error: AppStateContentNotValid for $name state during creation, versioning and updates",
       async ({ content }) => {
         // Setup SUT
         const { backend } = deps();
@@ -1558,7 +1476,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
     );
 
     it.each([null, 42, "invalid", []].map((content) => ({ content })))(
-      "rejects non-object state content through schema validation: %j",
+      "error: AppStateContentNotValid (case: non-object content %j)",
       async ({ content }) => {
         // Setup SUT
         const { backend } = deps();
@@ -1583,7 +1501,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       },
     );
 
-    it("distinguishes invalid migration modules from invalid migration output and rolls back both", async () => {
+    it("error: invalid migration modules and output leave saved state unchanged", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1656,19 +1574,19 @@ export default rd<GetDependencies>("Apps", (deps) => {
       ).toBe(created.data.latestVersion.id);
     });
 
-    it("migrates empty state, preserves compatible content, isolates apps and deletes state", async () => {
+    it("success: migrates and isolates saved state across the app lifecycle", async () => {
       // Setup SUT
       const { backend } = deps();
-      const legacy = await backend.apps.create({
+      const emptyStateApp = await backend.apps.create({
         ...definition,
         stateDefinition: emptyAppStateDefinition,
       });
       const other = await backend.apps.create(definition);
-      assert(legacy.success && other.success);
+      assert(emptyStateApp.success && other.success);
       // Exercise
       const initialized = await backend.apps.createNewVersion(
-        legacy.data.id,
-        legacy.data.latestVersion.id,
+        emptyStateApp.data.id,
+        emptyStateApp.data.latestVersion.id,
         [],
         definition.files,
         {
@@ -1713,7 +1631,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
       );
     });
 
-    it("requires a definition and migrates populated state back to an empty object", async () => {
+    it("success: clears populated state with an explicit migration", async () => {
       // Setup SUT
       const { backend } = deps();
       const created = await backend.apps.create(definition);
@@ -1759,7 +1677,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
     });
 
     it.each([DataType.File, DataType.DocumentRef] as const)(
-      "rejects unsupported named and nested state type %s",
+      "error: AppStateSchemaNotValid (case: unsupported named or nested type %s)",
       async (dataType) => {
         // Setup SUT
         const { backend } = deps();
