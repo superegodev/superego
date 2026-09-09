@@ -19,6 +19,13 @@
 - **Always use braces** for `if`/`else`/`for`/`while` blocks, even single-line
   bodies.
 
+## Data migrations
+
+- **Demo repositories NEVER need migrations.** The demo database is recreated
+  from scratch for each different commit. Do not add data migrations or
+  backward-compatibility migration logic to
+  `packages/data/demo-data-repositories`.
+
 ## Testing
 
 What to test and how:

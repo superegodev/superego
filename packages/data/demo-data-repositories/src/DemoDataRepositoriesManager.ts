@@ -8,7 +8,6 @@ import DemoDataRepositories from "./DemoDataRepositories.js";
 import DemoConversationTextSearchIndex from "./repositories/DemoConversationTextSearchIndex.js";
 import DemoDocumentTextSearchIndex from "./repositories/DemoDocumentTextSearchIndex.js";
 import clone from "./utils/clone.js";
-import migrateAppPermissions from "./utils/migrateAppPermissions.js";
 
 const OVERWRITE = "OVERWRITE";
 
@@ -63,9 +62,6 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
         shouldAbort = true;
       }
     };
-    if (migrateAppPermissions(transactionData)) {
-      onWrite();
-    }
     const savepoints: { [name: string]: Data } = {};
     const createSavepoint = async () => {
       const name = crypto.randomUUID();

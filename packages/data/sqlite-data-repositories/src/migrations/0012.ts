@@ -24,7 +24,7 @@ export default function migrateAppDefinitions(database: DatabaseSync) {
   ).toString("hex");
   database.exec(`
     ALTER TABLE "apps" ADD COLUMN "state" BLOB NOT NULL DEFAULT X'${initialStateHex}';
-    ALTER TABLE "app_versions" ADD COLUMN "permissions" BLOB NOT NULL DEFAULT X'${permissionsHex}';
+    ALTER TABLE "apps" ADD COLUMN "permissions" BLOB NOT NULL DEFAULT X'${permissionsHex}';
     ALTER TABLE "app_versions" ADD COLUMN "state_definition" BLOB NOT NULL DEFAULT X'${stateDefinitionHex}';
   `);
 }
