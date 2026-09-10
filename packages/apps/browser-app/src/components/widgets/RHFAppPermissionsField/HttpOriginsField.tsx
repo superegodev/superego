@@ -1,11 +1,11 @@
-import type { Control, FieldPath, FieldValues } from "react-hook-form";
+import type { Control, FieldArrayPath, FieldValues } from "react-hook-form";
 import { FormattedMessage } from "react-intl";
 import RHFTextListField from "../../design-system/RHFTextListField/RHFTextListField.js";
 import HttpOriginField from "./HttpOriginField.js";
 
 interface Props<T extends FieldValues> {
   control: Control<T>;
-  name: FieldPath<T>;
+  name: FieldArrayPath<T>;
 }
 export default function HttpOriginsField<T extends FieldValues>({
   control,

@@ -655,12 +655,6 @@
       "value": "Persistent state"
     }
   ],
-  "CreateApp.tsx_SFuk1v": [
-    {
-      "type": 0,
-      "value": "Permissions"
-    }
-  ],
   "CreateApp.tsx_VzzYJk": [
     {
       "type": 0,
@@ -2798,24 +2792,6 @@
       "value": "Close sidebar"
     }
   ],
-  "PermissionsModal.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Done"
-    }
-  ],
-  "PermissionsModal.tsx_SFuk1v": [
-    {
-      "type": 0,
-      "value": "Permissions"
-    }
-  ],
-  "PermissionsModal.tsx_xq0PjV": [
-    {
-      "type": 0,
-      "value": "These permissions apply when you create the app."
-    }
-  ],
   "PersistentStateModal.tsx_B02JHP": [
     {
       "type": 0,
@@ -3774,31 +3750,37 @@
       "value": "Add model w/ audio understanding to use voice"
     }
   ],
-  "SetNameAndSaveModal.tsx_47FYwb": [
+  "SettingsModal.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Cancel"
     }
   ],
-  "SetNameAndSaveModal.tsx_HAlOn1": [
+  "SettingsModal.tsx_HAlOn1": [
     {
       "type": 0,
       "value": "Name"
     }
   ],
-  "SetNameAndSaveModal.tsx_J1XXSx": [
+  "SettingsModal.tsx_J1XXSx": [
     {
       "type": 0,
       "value": "My Awesome App"
     }
   ],
-  "SetNameAndSaveModal.tsx_VzzYJk": [
+  "SettingsModal.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permissions"
+    }
+  ],
+  "SettingsModal.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Create"
     }
   ],
-  "SetNameAndSaveModal.tsx_r+ksJu": [
+  "SettingsModal.tsx_r+ksJu": [
     {
       "type": 0,
       "value": "Create app"
@@ -4356,12 +4338,6 @@
       "value": "."
     }
   ],
-  "appPermissions.ts_+Ynh/m": [
-    {
-      "type": 0,
-      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
-    }
-  ],
   "appStateDefinition.ts_epKnft": [
     {
       "type": 0,
@@ -4747,6 +4723,12 @@
     {
       "type": 0,
       "value": "Opening file failed"
+    }
+  ],
+  "rhfAppPermissions.ts_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
     }
   ],
   "typescriptModule.ts_MZNYNj": [

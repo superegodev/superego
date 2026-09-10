@@ -1,5 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { App, AppPermissions } from "@superego/backend";
+import type { App } from "@superego/backend";
 import type { ResultError } from "@superego/global-types";
 import { valibotSchemas } from "@superego/shared-utils";
 import { isEqual } from "es-toolkit";
@@ -12,6 +12,8 @@ import {
   useUpdateAppPermissions,
 } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import type { RHFAppPermissions } from "../../../business-logic/forms/utils/RHFAppPermissions.js";
+import RHFAppPermissionsUtils from "../../../business-logic/forms/utils/RHFAppPermissions.js";
 import Button from "../../design-system/Button/Button.js";
 import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
 import Fieldset from "../../design-system/Fieldset/Fieldset.js";
@@ -25,7 +27,7 @@ import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
 
 interface FormValues {
   name: string;
-  permissions: AppPermissions;
+  permissions: RHFAppPermissions;
 }
 interface Props {
   app: App;
@@ -49,12 +51,15 @@ export default function UpdateSettingsModalForm({
     resetField,
     formState: { isSubmitting },
   } = useForm<FormValues>({
-    defaultValues: { name: app.name, permissions: app.permissions },
+    defaultValues: {
+      name: app.name,
+      permissions: RHFAppPermissionsUtils.toRhfAppPermissions(app.permissions),
+    },
     mode: "all",
     resolver: standardSchemaResolver(
       v.strictObject({
         name: valibotSchemas.appName(),
-        permissions: forms.schemas.appPermissions(intl),
+        permissions: forms.schemas.rhfAppPermissions(intl),
       }),
     ),
   });
@@ -68,8 +73,10 @@ export default function UpdateSettingsModalForm({
       }
       resetField("name", { defaultValue: result.data.name });
     }
-    if (!isEqual(permissions, app.permissions)) {
-      const result = await updatePermissions(app.id, permissions);
+    const appPermissions =
+      RHFAppPermissionsUtils.fromRhfAppPermissions(permissions);
+    if (!isEqual(appPermissions, app.permissions)) {
+      const result = await updatePermissions(app.id, appPermissions);
       if (!result.success) {
         setError(result.error);
         return;

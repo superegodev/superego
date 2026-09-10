@@ -1,4 +1,9 @@
-import type { Control, FieldValues, FieldPath } from "react-hook-form";
+import type {
+  Control,
+  FieldValues,
+  FieldPath,
+  FieldArrayPath,
+} from "react-hook-form";
 import DownloadsField from "./DownloadsField.js";
 import HttpOriginsField from "./HttpOriginsField.js";
 import ModalsField from "./ModalsField.js";
@@ -21,7 +26,7 @@ export default function RHFAppPermissionsField<T extends FieldValues>({
       />
       <HttpOriginsField
         control={control}
-        name={`${name}.http.allowedOrigins` as FieldPath<T>}
+        name={`${name}.http.allowedOrigins` as FieldArrayPath<T>}
       />
     </div>
   );

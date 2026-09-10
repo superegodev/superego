@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import {
   type Control,
+  type FieldArrayPath,
   type FieldPath,
   type FieldValues,
-  useController,
-  useWatch,
+  useFieldArray,
 } from "react-hook-form";
 import { PiBackspace, PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,7 +17,7 @@ import * as cs from "./RHFTextListField.css.js";
 
 interface Props<T extends FieldValues> {
   control: Control<T>;
-  name: FieldPath<T>;
+  name: FieldArrayPath<T>;
   label: ReactNode;
   description?: ReactNode | undefined;
   isDisabled?: boolean | undefined;
@@ -40,9 +40,10 @@ export default function RHFTextListField<T extends FieldValues>({
   renderItem,
 }: Props<T>) {
   const intl = useIntl();
-  const { field } = useController({ control, name });
-  const currentValue = useWatch({ control, name });
-  const value: string[] = Array.isArray(currentValue) ? currentValue : [];
+  const { fields, append, remove } = useFieldArray<FieldValues>({
+    control: control as Control<FieldValues>,
+    name,
+  });
   const hideActions = isDisabled || isReadOnly;
   return (
     <Fieldset
@@ -56,7 +57,7 @@ export default function RHFTextListField<T extends FieldValues>({
           !hideActions ? (
             <FieldLabel.Action
               label={intl.formatMessage({ defaultMessage: "Add" })}
-              onPress={() => field.onChange([...value, ""])}
+              onPress={() => append({ value: "" })}
             >
               <PiPlus />
             </FieldLabel.Action>
@@ -66,33 +67,30 @@ export default function RHFTextListField<T extends FieldValues>({
         {label}
       </FieldLabel>
       <Fieldset.Fields className={cs.RHFTextListField.fields}>
-        {value.length === 0 ? (
+        {fields.length === 0 ? (
           <div className={cs.RHFTextListField.emptyItemsPlaceholder}>
             <FormattedMessage defaultMessage="There are no items in the list" />
           </div>
         ) : null}
-        {value.map((_, index) => (
-          <div
-            key={`${value.length}${index}`}
-            className={cs.RHFTextListField.item}
-          >
+        {fields.map((field, index) => (
+          <div key={field.id} className={cs.RHFTextListField.item}>
             {renderItem ? (
               renderItem(
-                `${name}.${index}` as FieldPath<T>,
+                `${name}.${index}.value` as FieldPath<T>,
                 index,
-                !hideActions && index === value.length - 1,
+                !hideActions && index === fields.length - 1,
               )
             ) : (
               <RHFTextField
                 control={control}
-                name={`${name}.${index}` as FieldPath<T>}
+                name={`${name}.${index}.value` as FieldPath<T>}
                 isDisabled={isDisabled}
                 isReadOnly={isReadOnly}
                 ariaLabel={intl.formatMessage(
                   { defaultMessage: "Item {number}" },
                   { number: index + 1 },
                 )}
-                autoFocus={!hideActions && index === value.length - 1}
+                autoFocus={!hideActions && index === fields.length - 1}
                 placeholder={placeholder}
                 className={cs.RHFTextListField.itemTextField}
               />
@@ -100,7 +98,7 @@ export default function RHFTextListField<T extends FieldValues>({
             {!hideActions && (
               <IconButton
                 variant="invisible"
-                onPress={() => field.onChange(value.toSpliced(index, 1))}
+                onPress={() => remove(index)}
                 label={intl.formatMessage({ defaultMessage: "Remove" })}
                 isDisabled={isDisabled}
                 className={cs.RHFTextListField.itemRemoveButton}

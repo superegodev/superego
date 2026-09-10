@@ -287,9 +287,6 @@
   "CreateApp.tsx_B02JHP": {
     "defaultMessage": "Persistent state"
   },
-  "CreateApp.tsx_SFuk1v": {
-    "defaultMessage": "Permissions"
-  },
   "CreateApp.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
@@ -1064,15 +1061,6 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
-  "PermissionsModal.tsx_JXdbo8": {
-    "defaultMessage": "Done"
-  },
-  "PermissionsModal.tsx_SFuk1v": {
-    "defaultMessage": "Permissions"
-  },
-  "PermissionsModal.tsx_xq0PjV": {
-    "defaultMessage": "These permissions apply when you create the app."
-  },
   "PersistentStateModal.tsx_B02JHP": {
     "defaultMessage": "Persistent state"
   },
@@ -1331,19 +1319,22 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Add model w/ audio understanding to use voice"
   },
-  "SetNameAndSaveModal.tsx_47FYwb": {
+  "SettingsModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "SetNameAndSaveModal.tsx_HAlOn1": {
+  "SettingsModal.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "SetNameAndSaveModal.tsx_J1XXSx": {
+  "SettingsModal.tsx_J1XXSx": {
     "defaultMessage": "My Awesome App"
   },
-  "SetNameAndSaveModal.tsx_VzzYJk": {
+  "SettingsModal.tsx_SFuk1v": {
+    "defaultMessage": "Permissions"
+  },
+  "SettingsModal.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "SetNameAndSaveModal.tsx_r+ksJu": {
+  "SettingsModal.tsx_r+ksJu": {
     "defaultMessage": "Create app"
   },
   "StateDefinitionFields.tsx_3bEK6S": {
@@ -1553,9 +1544,6 @@
   "Welcome.tsx_mNIlLz": {
     "defaultMessage": "<createAppLink>Create your first app</createAppLink>."
   },
-  "appPermissions.ts_+Ynh/m": {
-    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
-  },
   "appStateDefinition.ts_epKnft": {
     "defaultMessage": "Initial state must match the state schema"
   },
@@ -1723,6 +1711,9 @@
   },
   "openFileWithNativeApp.ts_Blh3UZ": {
     "defaultMessage": "Opening file failed"
+  },
+  "rhfAppPermissions.ts_+Ynh/m": {
+    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
   },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"

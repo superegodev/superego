@@ -1247,19 +1247,19 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Aggiungi un modello con comprensione audio per usare la voce"
   },
-  "SetNameAndSaveModal.tsx_47FYwb": {
+  "SettingsModal.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "SetNameAndSaveModal.tsx_HAlOn1": {
+  "SettingsModal.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
-  "SetNameAndSaveModal.tsx_J1XXSx": {
+  "SettingsModal.tsx_J1XXSx": {
     "defaultMessage": "La mia fantastica app"
   },
-  "SetNameAndSaveModal.tsx_VzzYJk": {
+  "SettingsModal.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
-  "SetNameAndSaveModal.tsx_r+ksJu": {
+  "SettingsModal.tsx_r+ksJu": {
     "defaultMessage": "Crea app"
   },
   "StructField.tsx_BPj/Jo": {
@@ -1634,20 +1634,11 @@
   "CreateApp.tsx_B02JHP": {
     "defaultMessage": "Stato persistente"
   },
-  "CreateApp.tsx_SFuk1v": {
-    "defaultMessage": "Permessi"
-  },
   "EditApp.tsx_B02JHP": {
     "defaultMessage": "Stato persistente"
   },
-  "PermissionsModal.tsx_JXdbo8": {
-    "defaultMessage": "Fatto"
-  },
-  "PermissionsModal.tsx_SFuk1v": {
+  "SettingsModal.tsx_SFuk1v": {
     "defaultMessage": "Permessi"
-  },
-  "PermissionsModal.tsx_xq0PjV": {
-    "defaultMessage": "Questi permessi si applicano quando crei l’app."
   },
   "PersistentStateModal.tsx_B02JHP": {
     "defaultMessage": "Stato persistente"
@@ -1676,7 +1667,7 @@
   "StateDefinitionFields.tsx_sEQMlq": {
     "defaultMessage": "Applica una migrazione esplicita dello stato"
   },
-  "appPermissions.ts_+Ynh/m": {
+  "rhfAppPermissions.ts_+Ynh/m": {
     "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
   },
   "appStateDefinition.ts_epKnft": {

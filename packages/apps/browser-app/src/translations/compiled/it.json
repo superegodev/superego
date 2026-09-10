@@ -651,12 +651,6 @@
       "value": "Stato persistente"
     }
   ],
-  "CreateApp.tsx_SFuk1v": [
-    {
-      "type": 0,
-      "value": "Permessi"
-    }
-  ],
   "CreateApp.tsx_VzzYJk": [
     {
       "type": 0,
@@ -2790,24 +2784,6 @@
       "value": "Chiudi barra laterale"
     }
   ],
-  "PermissionsModal.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Fatto"
-    }
-  ],
-  "PermissionsModal.tsx_SFuk1v": [
-    {
-      "type": 0,
-      "value": "Permessi"
-    }
-  ],
-  "PermissionsModal.tsx_xq0PjV": [
-    {
-      "type": 0,
-      "value": "Questi permessi si applicano quando crei l’app."
-    }
-  ],
   "PersistentStateModal.tsx_B02JHP": [
     {
       "type": 0,
@@ -3752,31 +3728,37 @@
       "value": "Aggiungi un modello con comprensione audio per usare la voce"
     }
   ],
-  "SetNameAndSaveModal.tsx_47FYwb": [
+  "SettingsModal.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Annulla"
     }
   ],
-  "SetNameAndSaveModal.tsx_HAlOn1": [
+  "SettingsModal.tsx_HAlOn1": [
     {
       "type": 0,
       "value": "Nome"
     }
   ],
-  "SetNameAndSaveModal.tsx_J1XXSx": [
+  "SettingsModal.tsx_J1XXSx": [
     {
       "type": 0,
       "value": "La mia fantastica app"
     }
   ],
-  "SetNameAndSaveModal.tsx_VzzYJk": [
+  "SettingsModal.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permessi"
+    }
+  ],
+  "SettingsModal.tsx_VzzYJk": [
     {
       "type": 0,
       "value": "Crea"
     }
   ],
-  "SetNameAndSaveModal.tsx_r+ksJu": [
+  "SettingsModal.tsx_r+ksJu": [
     {
       "type": 0,
       "value": "Crea app"
@@ -4330,12 +4312,6 @@
       "value": "."
     }
   ],
-  "appPermissions.ts_+Ynh/m": [
-    {
-      "type": 0,
-      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
-    }
-  ],
   "appStateDefinition.ts_epKnft": [
     {
       "type": 0,
@@ -4721,6 +4697,12 @@
     {
       "type": 0,
       "value": "Apertura del file non riuscita"
+    }
+  ],
+  "rhfAppPermissions.ts_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
     }
   ],
   "typescriptModule.ts_MZNYNj": [

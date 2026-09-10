@@ -1,5 +1,5 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { AppPermissions, AppStateDefinition } from "@superego/backend";
+import type { AppStateDefinition } from "@superego/backend";
 import { AppType, type Collection, type CollectionId } from "@superego/backend";
 import { CollectionRouteView, RouteName } from "@superego/routing";
 import {
@@ -14,6 +14,8 @@ import { useIntl } from "react-intl";
 import * as v from "valibot";
 import { useCreateApp } from "../../../business-logic/backend/hooks.js";
 import forms from "../../../business-logic/forms/forms.js";
+import type { RHFAppPermissions } from "../../../business-logic/forms/utils/RHFAppPermissions.js";
+import RHFAppPermissionsUtils from "../../../business-logic/forms/utils/RHFAppPermissions.js";
 import type { RHFAppVersionFiles } from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppVersionFiles.js";
 import useNavigationState from "../../../business-logic/navigation/useNavigationState.js";
@@ -22,12 +24,11 @@ import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js
 import PersistentStateModal from "../../widgets/RHFAppVersionField/PersistentStateModal.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./CreateApp.css.js";
-import PermissionsModal from "./PermissionsModal.js";
-import SetNameAndSaveModal from "./SetNameAndSaveModal.js";
+import SettingsModal from "./SettingsModal.js";
 
 interface FormValues {
   name: string;
-  permissions: AppPermissions;
+  permissions: RHFAppPermissions;
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
@@ -39,25 +40,19 @@ interface Props {
   isStateModalOpen: boolean;
   onStateModalClose: () => void;
   onStateModalOpen: () => void;
-  isPermissionsModalOpen: boolean;
-  onPermissionsModalClose: () => void;
-  onPermissionsModalOpen: () => void;
   collections: Collection[];
   initialTargetCollections: Collection[];
-  isSetNameAndSaveModalOpen: boolean;
-  onSetNameAndSaveModalClose: () => void;
+  isSettingsModalOpen: boolean;
+  onSettingsModalClose: () => void;
 }
 export default function CreateAppForm({
   isStateModalOpen,
   onStateModalClose,
   onStateModalOpen,
-  isPermissionsModalOpen,
-  onPermissionsModalClose,
-  onPermissionsModalOpen,
   collections,
   initialTargetCollections,
-  isSetNameAndSaveModalOpen,
-  onSetNameAndSaveModalClose,
+  isSettingsModalOpen,
+  onSettingsModalClose,
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
@@ -67,7 +62,9 @@ export default function CreateAppForm({
   const formId = useId();
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
-      permissions: defaultAppPermissions,
+      permissions: RHFAppPermissionsUtils.toRhfAppPermissions(
+        defaultAppPermissions,
+      ),
       appVersion: {
         stateDefinition: emptyAppStateDefinition,
         targetCollectionIds: initialTargetCollections.map(({ id }) => id),
@@ -78,7 +75,7 @@ export default function CreateAppForm({
     resolver: standardSchemaResolver(
       v.strictObject({
         name: valibotSchemas.appName(),
-        permissions: forms.schemas.appPermissions(intl),
+        permissions: forms.schemas.rhfAppPermissions(intl),
         appVersion: v.strictObject({
           stateDefinition: forms.schemas.appStateDefinition(intl),
           targetCollectionIds: v.pipe(
@@ -95,7 +92,7 @@ export default function CreateAppForm({
     const { success, data } = await mutate({
       type: AppType.CollectionView,
       name,
-      permissions,
+      permissions: RHFAppPermissionsUtils.fromRhfAppPermissions(permissions),
       stateDefinition: appVersion.stateDefinition,
       targetCollectionIds: appVersion.targetCollectionIds,
       files: RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
@@ -120,11 +117,11 @@ export default function CreateAppForm({
   return (
     <Form
       onSubmit={handleSubmit(onSubmit, (errors) => {
-        if (errors.permissions) {
-          onSetNameAndSaveModalClose();
-          onPermissionsModalOpen();
-        } else if (errors.appVersion?.stateDefinition) {
-          onSetNameAndSaveModalClose();
+        if (errors.name || errors.permissions) {
+          return;
+        }
+        if (errors.appVersion?.stateDefinition) {
+          onSettingsModalClose();
           onStateModalOpen();
         }
       })}
@@ -138,24 +135,18 @@ export default function CreateAppForm({
         isOpen={isStateModalOpen}
         onClose={onStateModalClose}
       />
-      <PermissionsModal
-        control={control}
-        name="permissions"
-        isOpen={isPermissionsModalOpen}
-        onClose={onPermissionsModalClose}
-      />
       <RHFAppVersionField
         control={control}
         name="appVersion"
         app={null}
         collections={collections}
       />
-      <SetNameAndSaveModal
+      <SettingsModal
         control={control}
         formId={formId}
         result={result}
-        isOpen={isSetNameAndSaveModalOpen}
-        onClose={onSetNameAndSaveModalClose}
+        isOpen={isSettingsModalOpen}
+        onClose={onSettingsModalClose}
       />
     </Form>
   );
