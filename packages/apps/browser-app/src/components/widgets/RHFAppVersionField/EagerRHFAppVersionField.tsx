@@ -7,7 +7,7 @@ import type {
   TypescriptModule,
 } from "@superego/backend";
 import { useMemo, useState } from "react";
-import { useController, useWatch } from "react-hook-form";
+import { useController } from "react-hook-form";
 import { useIntl } from "react-intl";
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
@@ -54,13 +54,9 @@ export default function EagerRHFAppVersionField({
     [collections, targetCollectionIds],
   );
 
-  const stateDefinition = useWatch({
-    control,
-    name: `${name}.stateDefinition`,
-  });
   const typescriptLibs = useTypescriptLibs(
     targetCollections,
-    stateDefinition?.schema,
+    app.latestVersion.stateDefinition.schema,
   );
 
   const { isPending, mutate } = useSttAndImplement(
@@ -116,17 +112,15 @@ export default function EagerRHFAppVersionField({
         className={cs.EagerRHFAppVersionField.editingToolbar}
       />
       <div className={cs.EagerRHFAppVersionField.content}>
-        {app ? (
-          <ResolveIncompatibilityModal
-            app={app}
-            targetCollections={targetCollections}
-            onResolveWithAssistant={onSend}
-          />
-        ) : null}
+        <ResolveIncompatibilityModal
+          app={app}
+          targetCollections={targetCollections}
+          onResolveWithAssistant={onSend}
+        />
         {isPending ? <ImplementingSpinner /> : null}
         <Preview
           mainTsx={mainTsx}
-          stateDefinition={stateDefinition}
+          app={app}
           targetCollections={targetCollections}
           className={
             cs.EagerRHFAppVersionField.preview[

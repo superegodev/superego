@@ -14,6 +14,7 @@ import {
   PiWatchFill,
 } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
+import useCreateAndEditApp from "../../../business-logic/apps/useCreateAndEditApp.js";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
@@ -40,6 +41,7 @@ export default function Collection(props: Props) {
   const { collectionId } = props;
   const intl = useIntl();
   const screenSize = useScreenSize();
+  const { createAndEditApp, isCreating } = useCreateAndEditApp();
   const { apps, collections } = useGlobalData();
 
   const collection = CollectionUtils.findCollection(collections, collectionId);
@@ -146,10 +148,8 @@ export default function Collection(props: Props) {
                     <FormattedMessage defaultMessage="Create new" />
                   </span>
                 ),
-                to: {
-                  name: RouteName.CreateApp,
-                  initialCollectionIds: [collection.id],
-                },
+                onAction: () => createAndEditApp([collection]),
+                isDisabled: isCreating,
               },
             ],
           },

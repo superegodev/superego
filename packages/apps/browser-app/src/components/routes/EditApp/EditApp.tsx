@@ -1,6 +1,6 @@
 import type { AppId } from "@superego/backend";
 import { useId, useState } from "react";
-import { PiGear, PiDatabase, PiFloppyDisk, PiTrash } from "react-icons/pi";
+import { PiGear, PiFloppyDisk, PiTrash } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import useSaveShortcut from "../../../business-logic/forms/useSaveShortcut.js";
@@ -16,7 +16,6 @@ interface Props {
 }
 export default function EditApp({ appId }: Props) {
   const intl = useIntl();
-  const [isStateModalOpen, setIsStateModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const { apps } = useGlobalData();
 
@@ -54,11 +53,6 @@ export default function EditApp({ appId }: Props) {
         )}
         actions={[
           {
-            icon: <PiDatabase />,
-            label: intl.formatMessage({ defaultMessage: "Persistent state" }),
-            onPress: () => setIsStateModalOpen(true),
-          },
-          {
             icon: <PiGear />,
             label: intl.formatMessage({ defaultMessage: "App settings" }),
             onPress: () => setIsSettingsModalOpen(true),
@@ -79,9 +73,6 @@ export default function EditApp({ appId }: Props) {
       />
       <Shell.Panel.Content fullWidth={true} className={cs.EditApp.panelContent}>
         <CreateNewAppVersionForm
-          isStateModalOpen={isStateModalOpen}
-          onStateModalClose={() => setIsStateModalOpen(false)}
-          onStateModalOpen={() => setIsStateModalOpen(true)}
           app={app}
           formId={createNewVersionFormId}
           setSubmitDisabled={setIsCreateNewVersionFormSubmitDisabled}

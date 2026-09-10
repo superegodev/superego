@@ -8,7 +8,6 @@ import Collection from "../Collection/Collection.js";
 import CollectionSettings from "../CollectionSettings/CollectionSettings.js";
 import Conversation from "../Conversation/Conversation.js";
 import Conversations from "../Conversations/Conversations.js";
-import CreateApp from "../CreateApp/CreateApp.js";
 import CreateCollectionAssisted from "../CreateCollectionAssisted/CreateCollectionAssisted.js";
 import CreateCollectionManual from "../CreateCollectionManual/CreateCollectionManual.js";
 import CreateDocument from "../CreateDocument/CreateDocument.js";
@@ -54,12 +53,8 @@ export default function MainPanel() {
           documentVersionId={activeRoute.documentVersionId}
         />
       );
-    case RouteName.CreateApp:
-      return (
-        <CreateApp initialCollectionIds={activeRoute.initialCollectionIds} />
-      );
     case RouteName.EditApp:
-      return <EditApp appId={activeRoute.appId} />;
+      return <EditApp key={activeRoute.appId} appId={activeRoute.appId} />;
     case RouteName.Boutique:
       return <Boutique />;
     case RouteName.Pack:

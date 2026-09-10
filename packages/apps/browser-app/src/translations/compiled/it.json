@@ -645,24 +645,6 @@
       "value": "Assistente"
     }
   ],
-  "CreateApp.tsx_B02JHP": [
-    {
-      "type": 0,
-      "value": "Stato persistente"
-    }
-  ],
-  "CreateApp.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Crea"
-    }
-  ],
-  "CreateApp.tsx_dtELK2": [
-    {
-      "type": 0,
-      "value": "Crea app"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -1394,12 +1376,6 @@
     {
       "type": 0,
       "value": "Scrivi..."
-    }
-  ],
-  "EditApp.tsx_B02JHP": [
-    {
-      "type": 0,
-      "value": "Stato persistente"
     }
   ],
   "EditApp.tsx_K3r6DQ": [
@@ -2784,24 +2760,6 @@
       "value": "Chiudi barra laterale"
     }
   ],
-  "PersistentStateModal.tsx_B02JHP": [
-    {
-      "type": 0,
-      "value": "Stato persistente"
-    }
-  ],
-  "PersistentStateModal.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Fatto"
-    }
-  ],
-  "PersistentStateModal.tsx_P3pJ2z": [
-    {
-      "type": 0,
-      "value": "Le modifiche alla definizione dello stato vengono applicate quando salvi la versione dell’app."
-    }
-  ],
   "Preview.tsx_Dd6cIb": [
     {
       "type": 0,
@@ -3728,78 +3686,6 @@
       "value": "Aggiungi un modello con comprensione audio per usare la voce"
     }
   ],
-  "SetSettingsAndCreateModal.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Annulla"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_HAlOn1": [
-    {
-      "type": 0,
-      "value": "Nome"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_J1XXSx": [
-    {
-      "type": 0,
-      "value": "La mia fantastica app"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_SFuk1v": [
-    {
-      "type": 0,
-      "value": "Permessi"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Crea"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_r+ksJu": [
-    {
-      "type": 0,
-      "value": "Crea app"
-    }
-  ],
-  "StateDefinitionFields.tsx_3bEK6S": [
-    {
-      "type": 0,
-      "value": "Lo stato iniziale viene usato solo alla prima creazione dello stato. Lo stato già salvato viene conservato. I tipi File e DocumentRef non sono supportati."
-    }
-  ],
-  "StateDefinitionFields.tsx_G5kF2d": [
-    {
-      "type": 0,
-      "value": "Stato iniziale"
-    }
-  ],
-  "StateDefinitionFields.tsx_MdY8XX": [
-    {
-      "type": 0,
-      "value": "Prova di migrazione non riuscita"
-    }
-  ],
-  "StateDefinitionFields.tsx_V4WF+5": [
-    {
-      "type": 0,
-      "value": "Schema dello stato"
-    }
-  ],
-  "StateDefinitionFields.tsx_g/qEMW": [
-    {
-      "type": 0,
-      "value": "Prova la migrazione sullo stato iniziale dell'anteprima"
-    }
-  ],
-  "StateDefinitionFields.tsx_sEQMlq": [
-    {
-      "type": 0,
-      "value": "Applica una migrazione esplicita dello stato"
-    }
-  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4312,12 +4198,6 @@
       "value": "."
     }
   ],
-  "appStateDefinition.ts_epKnft": [
-    {
-      "type": 0,
-      "value": "Lo stato iniziale deve rispettare lo schema dello stato"
-    }
-  ],
   "downloadFile.ts_sG8Krh": [
     {
       "type": 0,
@@ -4721,6 +4601,18 @@
     {
       "type": 0,
       "value": "Compilazione TypeScript non riuscita"
+    }
+  ],
+  "useCreateAndEditApp.ts_NhuEyZ": [
+    {
+      "type": 0,
+      "value": "Errore durante la creazione dell'app"
+    }
+  ],
+  "useCreateAndEditApp.ts_SbVBaN": [
+    {
+      "type": 0,
+      "value": "Nuova app"
     }
   ]
 }

@@ -284,15 +284,6 @@
   "ConversationsTable.tsx_wSAvhu": {
     "defaultMessage": "Assistant"
   },
-  "CreateApp.tsx_B02JHP": {
-    "defaultMessage": "Persistent state"
-  },
-  "CreateApp.tsx_VzzYJk": {
-    "defaultMessage": "Create"
-  },
-  "CreateApp.tsx_dtELK2": {
-    "defaultMessage": "Create App"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Go to manual mode"
   },
@@ -571,9 +562,6 @@
   },
   "EagerTiptapInput.tsx_0he+1r": {
     "defaultMessage": "Write..."
-  },
-  "EditApp.tsx_B02JHP": {
-    "defaultMessage": "Persistent state"
   },
   "EditApp.tsx_K3r6DQ": {
     "defaultMessage": "Delete"
@@ -1061,15 +1049,6 @@
   "PanelHeader.tsx_HyS0qp": {
     "defaultMessage": "Close sidebar"
   },
-  "PersistentStateModal.tsx_B02JHP": {
-    "defaultMessage": "Persistent state"
-  },
-  "PersistentStateModal.tsx_JXdbo8": {
-    "defaultMessage": "Done"
-  },
-  "PersistentStateModal.tsx_P3pJ2z": {
-    "defaultMessage": "State definition changes apply when you save the app version."
-  },
   "Preview.tsx_Dd6cIb": {
     "defaultMessage": "App compilation failed."
   },
@@ -1319,42 +1298,6 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Add model w/ audio understanding to use voice"
   },
-  "SetSettingsAndCreateModal.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "SetSettingsAndCreateModal.tsx_HAlOn1": {
-    "defaultMessage": "Name"
-  },
-  "SetSettingsAndCreateModal.tsx_J1XXSx": {
-    "defaultMessage": "My Awesome App"
-  },
-  "SetSettingsAndCreateModal.tsx_SFuk1v": {
-    "defaultMessage": "Permissions"
-  },
-  "SetSettingsAndCreateModal.tsx_VzzYJk": {
-    "defaultMessage": "Create"
-  },
-  "SetSettingsAndCreateModal.tsx_r+ksJu": {
-    "defaultMessage": "Create app"
-  },
-  "StateDefinitionFields.tsx_3bEK6S": {
-    "defaultMessage": "Initial state is used only when state is first created. Existing saved state is preserved. File and DocumentRef types are not supported."
-  },
-  "StateDefinitionFields.tsx_G5kF2d": {
-    "defaultMessage": "Initial state"
-  },
-  "StateDefinitionFields.tsx_MdY8XX": {
-    "defaultMessage": "Migration trial failed"
-  },
-  "StateDefinitionFields.tsx_V4WF+5": {
-    "defaultMessage": "State schema"
-  },
-  "StateDefinitionFields.tsx_g/qEMW": {
-    "defaultMessage": "Try migration on preview initial state"
-  },
-  "StateDefinitionFields.tsx_sEQMlq": {
-    "defaultMessage": "Apply an explicit state migration"
-  },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"
   },
@@ -1544,9 +1487,6 @@
   "Welcome.tsx_mNIlLz": {
     "defaultMessage": "<createAppLink>Create your first app</createAppLink>."
   },
-  "appStateDefinition.ts_epKnft": {
-    "defaultMessage": "Initial state must match the state schema"
-  },
   "downloadFile.ts_sG8Krh": {
     "defaultMessage": "Downloading file failed"
   },
@@ -1723,5 +1663,11 @@
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "TypeScript compilation failed"
+  },
+  "useCreateAndEditApp.ts_NhuEyZ": {
+    "defaultMessage": "Error creating app"
+  },
+  "useCreateAndEditApp.ts_SbVBaN": {
+    "defaultMessage": "New app"
   }
 }

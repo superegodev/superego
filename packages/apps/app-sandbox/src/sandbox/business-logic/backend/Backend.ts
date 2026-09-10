@@ -3,7 +3,6 @@ import type {
   AppState,
   AppStateContentNotValid,
   AppStateRevisionNotMatching,
-  AppStateSchemaNotValid,
   AppVersionIdNotMatching,
   ArgumentsNotValid,
   CollectionId,
@@ -30,15 +29,13 @@ export interface AppBridgeError {
 }
 export type GetAppStateError =
   | AppVersionIdNotMatching
-  // Preview initialization can fail validation before any state exists.
-  | AppStateSchemaNotValid
-  | AppStateContentNotValid
   | AppNotFound
   | ArgumentsNotValid
   | UnexpectedError
   | AppBridgeError;
 export type UpdateAppStateError =
   | GetAppStateError
+  | AppStateContentNotValid
   | AppStateRevisionNotMatching;
 
 export default class Backend {

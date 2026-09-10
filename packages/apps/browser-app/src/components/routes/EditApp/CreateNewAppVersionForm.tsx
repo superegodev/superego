@@ -1,8 +1,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
-import type { AppStateDefinition } from "@superego/backend";
 import type { App, CollectionId } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -15,7 +14,6 @@ import RHFAppVersionFilesUtils from "../../../business-logic/forms/utils/RHFAppV
 import toasts from "../../../business-logic/toasts/toasts.js";
 import ToastType from "../../../business-logic/toasts/ToastType.js";
 import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js";
-import PersistentStateModal from "../../widgets/RHFAppVersionField/PersistentStateModal.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./EditApp.css.js";
 
@@ -23,27 +21,21 @@ interface FormValues {
   appVersion: {
     targetCollectionIds: CollectionId[];
     files: RHFAppVersionFiles;
-    stateDefinition: AppStateDefinition;
   };
 }
 
 interface Props {
-  isStateModalOpen: boolean;
-  onStateModalClose: () => void;
-  onStateModalOpen: () => void;
   app: App;
   formId: string;
   setSubmitDisabled: (isDisabled: boolean) => void;
 }
 export default function CreateNewAppVersionForm({
-  isStateModalOpen,
-  onStateModalClose,
-  onStateModalOpen,
   app,
   formId,
   setSubmitDisabled,
 }: Props) {
   const intl = useIntl();
+  const [savedAppVersion, setSavedAppVersion] = useState(app.latestVersion);
   const { collections } = useGlobalData();
 
   const { mutate } = useCreateNewAppVersion();
@@ -61,10 +53,6 @@ export default function CreateNewAppVersionForm({
     defaultValues: {
       appVersion: {
         targetCollectionIds: validTargetCollectionIds,
-        stateDefinition: {
-          ...app.latestVersion.stateDefinition,
-          migration: null,
-        },
         files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
           app.latestVersion.files,
         ),
@@ -74,7 +62,6 @@ export default function CreateNewAppVersionForm({
     resolver: standardSchemaResolver(
       v.strictObject({
         appVersion: v.strictObject({
-          stateDefinition: forms.schemas.appStateDefinition(intl),
           targetCollectionIds: v.pipe(
             v.array(valibotSchemas.id.collection()),
             v.minLength(1),
@@ -88,18 +75,15 @@ export default function CreateNewAppVersionForm({
   const onSubmit = async ({ appVersion }: FormValues) => {
     const { success, data, error } = await mutate(
       app.id,
-      app.latestVersion.id,
+      savedAppVersion.id,
       appVersion.targetCollectionIds,
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
-      appVersion.stateDefinition,
+      { ...savedAppVersion.stateDefinition, migration: null },
     );
     if (success) {
+      setSavedAppVersion(data.latestVersion);
       reset({
         appVersion: {
-          stateDefinition: {
-            ...data.latestVersion.stateDefinition,
-            migration: null,
-          },
           targetCollectionIds: data.latestVersion.targetCollections.map(
             ({ id }) => id,
           ),
@@ -122,11 +106,7 @@ export default function CreateNewAppVersionForm({
 
   return (
     <Form
-      onSubmit={handleSubmit(onSubmit, (errors) => {
-        if (errors.appVersion?.stateDefinition) {
-          onStateModalOpen();
-        }
-      })}
+      onSubmit={handleSubmit(onSubmit)}
       id={formId}
       className={cs.CreateNewAppVersionForm.root}
     >
@@ -135,16 +115,10 @@ export default function CreateNewAppVersionForm({
         setSubmitDisabled={setSubmitDisabled}
         triggerExitWarningWhenDirty={true}
       />
-      <PersistentStateModal
-        control={control}
-        name="appVersion"
-        isOpen={isStateModalOpen}
-        onClose={onStateModalClose}
-      />
       <RHFAppVersionField
         control={control}
         name="appVersion"
-        app={app}
+        app={{ ...app, latestVersion: savedAppVersion }}
         collections={collections}
       />
     </Form>

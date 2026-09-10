@@ -649,24 +649,6 @@
       "value": "Assistant"
     }
   ],
-  "CreateApp.tsx_B02JHP": [
-    {
-      "type": 0,
-      "value": "Persistent state"
-    }
-  ],
-  "CreateApp.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Create"
-    }
-  ],
-  "CreateApp.tsx_dtELK2": [
-    {
-      "type": 0,
-      "value": "Create App"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -1402,12 +1384,6 @@
     {
       "type": 0,
       "value": "Write..."
-    }
-  ],
-  "EditApp.tsx_B02JHP": [
-    {
-      "type": 0,
-      "value": "Persistent state"
     }
   ],
   "EditApp.tsx_K3r6DQ": [
@@ -2792,24 +2768,6 @@
       "value": "Close sidebar"
     }
   ],
-  "PersistentStateModal.tsx_B02JHP": [
-    {
-      "type": 0,
-      "value": "Persistent state"
-    }
-  ],
-  "PersistentStateModal.tsx_JXdbo8": [
-    {
-      "type": 0,
-      "value": "Done"
-    }
-  ],
-  "PersistentStateModal.tsx_P3pJ2z": [
-    {
-      "type": 0,
-      "value": "State definition changes apply when you save the app version."
-    }
-  ],
   "Preview.tsx_Dd6cIb": [
     {
       "type": 0,
@@ -3750,78 +3708,6 @@
       "value": "Add model w/ audio understanding to use voice"
     }
   ],
-  "SetSettingsAndCreateModal.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_HAlOn1": [
-    {
-      "type": 0,
-      "value": "Name"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_J1XXSx": [
-    {
-      "type": 0,
-      "value": "My Awesome App"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_SFuk1v": [
-    {
-      "type": 0,
-      "value": "Permissions"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Create"
-    }
-  ],
-  "SetSettingsAndCreateModal.tsx_r+ksJu": [
-    {
-      "type": 0,
-      "value": "Create app"
-    }
-  ],
-  "StateDefinitionFields.tsx_3bEK6S": [
-    {
-      "type": 0,
-      "value": "Initial state is used only when state is first created. Existing saved state is preserved. File and DocumentRef types are not supported."
-    }
-  ],
-  "StateDefinitionFields.tsx_G5kF2d": [
-    {
-      "type": 0,
-      "value": "Initial state"
-    }
-  ],
-  "StateDefinitionFields.tsx_MdY8XX": [
-    {
-      "type": 0,
-      "value": "Migration trial failed"
-    }
-  ],
-  "StateDefinitionFields.tsx_V4WF+5": [
-    {
-      "type": 0,
-      "value": "State schema"
-    }
-  ],
-  "StateDefinitionFields.tsx_g/qEMW": [
-    {
-      "type": 0,
-      "value": "Try migration on preview initial state"
-    }
-  ],
-  "StateDefinitionFields.tsx_sEQMlq": [
-    {
-      "type": 0,
-      "value": "Apply an explicit state migration"
-    }
-  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4338,12 +4224,6 @@
       "value": "."
     }
   ],
-  "appStateDefinition.ts_epKnft": [
-    {
-      "type": 0,
-      "value": "Initial state must match the state schema"
-    }
-  ],
   "downloadFile.ts_sG8Krh": [
     {
       "type": 0,
@@ -4747,6 +4627,18 @@
     {
       "type": 0,
       "value": "TypeScript compilation failed"
+    }
+  ],
+  "useCreateAndEditApp.ts_NhuEyZ": [
+    {
+      "type": 0,
+      "value": "Error creating app"
+    }
+  ],
+  "useCreateAndEditApp.ts_SbVBaN": [
+    {
+      "type": 0,
+      "value": "New app"
     }
   ]
 }

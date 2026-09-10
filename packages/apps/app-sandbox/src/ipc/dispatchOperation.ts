@@ -1,9 +1,4 @@
-import type {
-  AppState,
-  AppStateContentNotValid,
-  AppStateSchemaNotValid,
-  Backend,
-} from "@superego/backend";
+import type { AppState, Backend } from "@superego/backend";
 import type { Result, ResultPromise } from "@superego/global-types";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
 
@@ -16,26 +11,22 @@ export interface HostBackend {
   files: { getContent: Backend["files"]["getContent"] };
   state?:
     | {
-        // Preview initialization can also fail schema or content validation.
         get: () => ResultPromise<
           AppState,
-          | Exclude<
-              Awaited<ReturnType<Backend["apps"]["getState"]>>["error"],
-              null
-            >
-          | AppStateSchemaNotValid
-          | AppStateContentNotValid
+          Exclude<
+            Awaited<ReturnType<Backend["apps"]["getState"]>>["error"],
+            null
+          >
         >;
         update: (
           latestRevision: number,
           content: any,
         ) => ResultPromise<
           AppState,
-          | Exclude<
-              Awaited<ReturnType<Backend["apps"]["updateState"]>>["error"],
-              null
-            >
-          | AppStateSchemaNotValid
+          Exclude<
+            Awaited<ReturnType<Backend["apps"]["updateState"]>>["error"],
+            null
+          >
         >;
       }
     | undefined;

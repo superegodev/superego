@@ -19,7 +19,6 @@ export enum RouteName {
   CollectionSettings = "CollectionSettings",
   CreateDocument = "CreateDocument",
   Document = "Document",
-  CreateApp = "CreateApp",
   EditApp = "EditApp",
   Boutique = "Boutique",
   Pack = "Pack",
@@ -85,10 +84,6 @@ type Route =
       documentId: DocumentId;
       documentVersionId?: DocumentVersionId;
       redirectIfLatest?: boolean;
-    }
-  | {
-      name: RouteName.CreateApp;
-      initialCollectionIds: CollectionId[];
     }
   | {
       name: RouteName.EditApp;

@@ -13,13 +13,9 @@ import type {
 } from "@superego/backend";
 import { DocumentContentChangeType } from "@superego/backend";
 import { fromHref, RouteName, toHref } from "@superego/routing";
-import {
-  defaultAppPermissions,
-  makeSuccessfulResult,
-} from "@superego/shared-utils";
+import { makeSuccessfulResult } from "@superego/shared-utils";
 import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
-import useAppBackend from "../../../business-logic/apps/useAppBackend.js";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import {
@@ -38,11 +34,10 @@ import IncompatibilityWarning from "./IncompatibilityWarning.js";
 
 interface Props {
   app: App;
-  preview?: boolean;
 }
-export default function AppRenderer({ app, preview = false }: Props) {
-  const appBackend = useAppBackend(app, preview);
-  const permissions = preview ? defaultAppPermissions : app.permissions;
+export default function AppRenderer({ app }: Props) {
+  const appBackend = useBackend();
+  const permissions = app.permissions;
   const intl = useIntl();
   const theme = useTheme();
   const { navigateTo } = useNavigationState();
@@ -56,7 +51,16 @@ export default function AppRenderer({ app, preview = false }: Props) {
   const createNewDocumentVersionMutation = useCreateNewDocumentVersion();
 
   const backend = {
-    ...appBackend,
+    state: {
+      get: () => appBackend.apps.getState(app.id, app.latestVersion.id),
+      update: (latestRevision: number, content: any) =>
+        appBackend.apps.updateState(
+          app.id,
+          app.latestVersion.id,
+          latestRevision,
+          content,
+        ),
+    },
     // Pass these as mutation so the query cache is automatically invalidated.
     documents: {
       create: useCreateDocument().mutate,
@@ -78,7 +82,7 @@ export default function AppRenderer({ app, preview = false }: Props) {
       },
     },
     files: {
-      getContent: useBackend().files.getContent,
+      getContent: appBackend.files.getContent,
     },
   };
 

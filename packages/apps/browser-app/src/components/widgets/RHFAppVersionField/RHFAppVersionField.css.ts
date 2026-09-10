@@ -139,16 +139,3 @@ export const ImplementingSpinner = {
     },
   }),
 };
-
-export const StateDefinitionFields = {
-  fieldset: style({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    gap: vars.spacing._2,
-    marginTop: vars.spacing._2,
-    border: 0,
-  }),
-};
-
-export const JsonField = { root: style({ width: "100%", minWidth: 0 }) };

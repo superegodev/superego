@@ -275,12 +275,6 @@
   "ConversationsTable.tsx_wSAvhu": {
     "defaultMessage": "Assistente"
   },
-  "CreateApp.tsx_VzzYJk": {
-    "defaultMessage": "Crea"
-  },
-  "CreateApp.tsx_dtELK2": {
-    "defaultMessage": "Crea app"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Vai alla modalità manuale"
   },
@@ -1247,21 +1241,6 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Aggiungi un modello con comprensione audio per usare la voce"
   },
-  "SetSettingsAndCreateModal.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "SetSettingsAndCreateModal.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "SetSettingsAndCreateModal.tsx_J1XXSx": {
-    "defaultMessage": "La mia fantastica app"
-  },
-  "SetSettingsAndCreateModal.tsx_VzzYJk": {
-    "defaultMessage": "Crea"
-  },
-  "SetSettingsAndCreateModal.tsx_r+ksJu": {
-    "defaultMessage": "Crea app"
-  },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"
   },
@@ -1631,47 +1610,8 @@
   "Explainer.tsx_2ouWR4": {
     "defaultMessage": "<p> Qui nella Boutique puoi trovare collezioni e app già pronte, raggruppate in <b>pack</b> tematici che puoi installare con un click. </p>"
   },
-  "CreateApp.tsx_B02JHP": {
-    "defaultMessage": "Stato persistente"
-  },
-  "EditApp.tsx_B02JHP": {
-    "defaultMessage": "Stato persistente"
-  },
-  "SetSettingsAndCreateModal.tsx_SFuk1v": {
-    "defaultMessage": "Permessi"
-  },
-  "PersistentStateModal.tsx_B02JHP": {
-    "defaultMessage": "Stato persistente"
-  },
-  "PersistentStateModal.tsx_JXdbo8": {
-    "defaultMessage": "Fatto"
-  },
-  "PersistentStateModal.tsx_P3pJ2z": {
-    "defaultMessage": "Le modifiche alla definizione dello stato vengono applicate quando salvi la versione dell’app."
-  },
-  "StateDefinitionFields.tsx_3bEK6S": {
-    "defaultMessage": "Lo stato iniziale viene usato solo alla prima creazione dello stato. Lo stato già salvato viene conservato. I tipi File e DocumentRef non sono supportati."
-  },
-  "StateDefinitionFields.tsx_G5kF2d": {
-    "defaultMessage": "Stato iniziale"
-  },
-  "StateDefinitionFields.tsx_MdY8XX": {
-    "defaultMessage": "Prova di migrazione non riuscita"
-  },
-  "StateDefinitionFields.tsx_V4WF+5": {
-    "defaultMessage": "Schema dello stato"
-  },
-  "StateDefinitionFields.tsx_g/qEMW": {
-    "defaultMessage": "Prova la migrazione sullo stato iniziale dell'anteprima"
-  },
-  "StateDefinitionFields.tsx_sEQMlq": {
-    "defaultMessage": "Applica una migrazione esplicita dello stato"
-  },
   "rhfAppPermissions.ts_+Ynh/m": {
     "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
-  },
-  "appStateDefinition.ts_epKnft": {
-    "defaultMessage": "Lo stato iniziale deve rispettare lo schema dello stato"
   },
   "DownloadsField.tsx_xj9V0+": {
     "defaultMessage": "Consenti download di file"
@@ -1723,5 +1663,11 @@
   },
   "RHFTextListField.tsx_pUcgkI": {
     "defaultMessage": "Non ci sono elementi nell'elenco"
+  },
+  "useCreateAndEditApp.ts_NhuEyZ": {
+    "defaultMessage": "Errore durante la creazione dell'app"
+  },
+  "useCreateAndEditApp.ts_SbVBaN": {
+    "defaultMessage": "Nuova app"
   }
 }

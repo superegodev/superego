@@ -197,8 +197,7 @@ reported diagnostics or validation issues. For later code-only updates, set
 `migration` back to `null` so the earlier migration is not replayed. To stop
 storing content, migrate to `{}` and an empty Struct schema.
 
-Previews use temporary state initialized from the definition. Migration trials
-run on preview initial content, so test with representative previous content;
-they do not test or change saved state. Previews disable browser dialogs,
-printing, and downloads, and add no HTTP destinations. Run the saved app to test
-permissions.
+The integrated editor changes app code and target collections only. Use the CLI
+to change the state definition or migrate saved state. Editor previews use the
+saved app's state definition, permissions, and real persisted state. Preview
+state changes persist even when code edits are discarded.

@@ -54,12 +54,6 @@ export function toHref(route: Route): string {
           : "";
       return `${basePath}${versionPath}${search}`;
     }
-    case RouteName.CreateApp: {
-      const search = new URLSearchParams(
-        route.initialCollectionIds.map((id) => ["collectionId", id]),
-      );
-      return `/apps/new?${search}`;
-    }
     case RouteName.EditApp:
       return `/apps/${route.appId}/edit`;
     case RouteName.Boutique:
@@ -278,15 +272,6 @@ const routeMatchers: RouteMatcher[] = [
       name: RouteName.NotFound,
       route:
         new URLSearchParams(match.search.input).get("route") ?? "/not-found",
-    }),
-  },
-  {
-    pattern: new URLPattern({ pathname: "/apps/new{/}?" }),
-    toRoute: (match) => ({
-      name: RouteName.CreateApp,
-      initialCollectionIds: new URLSearchParams(match.search.input).getAll(
-        "collectionId",
-      ) as CollectionId[],
     }),
   },
   {

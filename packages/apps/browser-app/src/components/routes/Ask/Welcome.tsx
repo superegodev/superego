@@ -2,6 +2,7 @@ import { RouteName } from "@superego/routing";
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import useCreateAndEditApp from "../../../business-logic/apps/useCreateAndEditApp.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { electronMainWorld } from "../../../business-logic/electron/electron.js";
 import isEmpty from "../../../utils/isEmpty.js";
@@ -12,6 +13,7 @@ import WelcomeStep from "./WelcomeStep.js";
 
 export default function Welcome() {
   const { globalSettings, collections, apps } = useGlobalData();
+  const { createAndEditApp, isCreating } = useCreateAndEditApp();
 
   const [isCliInstalled, setIsCliInstalled] = useState(
     !electronMainWorld.isElectron,
@@ -107,17 +109,14 @@ export default function Welcome() {
                 isStep3Complete ? (
                   chunks
                 ) : (
-                  <Link
-                    to={{
-                      name: RouteName.CreateApp,
-                      initialCollectionIds: collections.map(
-                        (collection) => collection.id,
-                      ),
-                    }}
-                    className={cs.Welcome.stepLink}
+                  <button
+                    type="button"
+                    onClick={() => createAndEditApp(collections)}
+                    disabled={!isStep3Enabled || isCreating}
+                    className={cs.Welcome.stepButton}
                   >
                     {chunks}
-                  </Link>
+                  </button>
                 ),
             }}
           />
