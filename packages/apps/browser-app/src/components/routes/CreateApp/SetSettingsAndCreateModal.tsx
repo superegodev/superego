@@ -17,7 +17,7 @@ interface Props<T extends FieldValues = FieldValues> {
   isOpen: boolean;
   onClose: () => void;
 }
-export default function SettingsModal<T extends FieldValues>({
+export default function SetSettingsAndCreateModal<T extends FieldValues>({
   control,
   formId,
   result,

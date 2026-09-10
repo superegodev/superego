@@ -1319,22 +1319,22 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Add model w/ audio understanding to use voice"
   },
-  "SettingsModal.tsx_47FYwb": {
+  "SetSettingsAndCreateModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "SettingsModal.tsx_HAlOn1": {
+  "SetSettingsAndCreateModal.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "SettingsModal.tsx_J1XXSx": {
+  "SetSettingsAndCreateModal.tsx_J1XXSx": {
     "defaultMessage": "My Awesome App"
   },
-  "SettingsModal.tsx_SFuk1v": {
+  "SetSettingsAndCreateModal.tsx_SFuk1v": {
     "defaultMessage": "Permissions"
   },
-  "SettingsModal.tsx_VzzYJk": {
+  "SetSettingsAndCreateModal.tsx_VzzYJk": {
     "defaultMessage": "Create"
   },
-  "SettingsModal.tsx_r+ksJu": {
+  "SetSettingsAndCreateModal.tsx_r+ksJu": {
     "defaultMessage": "Create app"
   },
   "StateDefinitionFields.tsx_3bEK6S": {

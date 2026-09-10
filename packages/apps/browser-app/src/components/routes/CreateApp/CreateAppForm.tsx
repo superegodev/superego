@@ -24,7 +24,7 @@ import FormStateEffects from "../../widgets/FormStateEffects/FormStateEffects.js
 import PersistentStateModal from "../../widgets/RHFAppVersionField/PersistentStateModal.js";
 import RHFAppVersionField from "../../widgets/RHFAppVersionField/RHFAppVersionField.js";
 import * as cs from "./CreateApp.css.js";
-import SettingsModal from "./SettingsModal.js";
+import SetSettingsAndCreateModal from "./SetSettingsAndCreateModal.js";
 
 interface FormValues {
   name: string;
@@ -42,8 +42,8 @@ interface Props {
   onStateModalOpen: () => void;
   collections: Collection[];
   initialTargetCollections: Collection[];
-  isSettingsModalOpen: boolean;
-  onSettingsModalClose: () => void;
+  isSetSettingsAndCreateModalOpen: boolean;
+  onSetSettingsAndCreateModalClose: () => void;
 }
 export default function CreateAppForm({
   isStateModalOpen,
@@ -51,8 +51,8 @@ export default function CreateAppForm({
   onStateModalOpen,
   collections,
   initialTargetCollections,
-  isSettingsModalOpen,
-  onSettingsModalClose,
+  isSetSettingsAndCreateModalOpen,
+  onSetSettingsAndCreateModalClose,
 }: Props) {
   const intl = useIntl();
   const { navigateTo } = useNavigationState();
@@ -121,7 +121,7 @@ export default function CreateAppForm({
           return;
         }
         if (errors.appVersion?.stateDefinition) {
-          onSettingsModalClose();
+          onSetSettingsAndCreateModalClose();
           onStateModalOpen();
         }
       })}
@@ -141,12 +141,12 @@ export default function CreateAppForm({
         app={null}
         collections={collections}
       />
-      <SettingsModal
+      <SetSettingsAndCreateModal
         control={control}
         formId={formId}
         result={result}
-        isOpen={isSettingsModalOpen}
-        onClose={onSettingsModalClose}
+        isOpen={isSetSettingsAndCreateModalOpen}
+        onClose={onSetSettingsAndCreateModalClose}
       />
     </Form>
   );

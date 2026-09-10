@@ -8,11 +8,11 @@ import {
 } from "react-hook-form";
 import { PiBackspace, PiPlus } from "react-icons/pi";
 import { FormattedMessage, useIntl } from "react-intl";
-import RHFTextField from "../../widgets/RHFTextField/RHFTextField.js";
-import FieldLabel from "../FieldLabel/FieldLabel.js";
-import Fieldset from "../Fieldset/Fieldset.js";
-import { Description } from "../forms/forms.js";
-import IconButton from "../IconButton/IconButton.js";
+import FieldLabel from "../../design-system/FieldLabel/FieldLabel.js";
+import Fieldset from "../../design-system/Fieldset/Fieldset.js";
+import { Description } from "../../design-system/forms/forms.js";
+import IconButton from "../../design-system/IconButton/IconButton.js";
+import RHFTextField from "../RHFTextField/RHFTextField.js";
 import * as cs from "./RHFTextListField.css.js";
 
 interface Props<T extends FieldValues> {

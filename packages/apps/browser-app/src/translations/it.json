@@ -1247,19 +1247,19 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Aggiungi un modello con comprensione audio per usare la voce"
   },
-  "SettingsModal.tsx_47FYwb": {
+  "SetSettingsAndCreateModal.tsx_47FYwb": {
     "defaultMessage": "Annulla"
   },
-  "SettingsModal.tsx_HAlOn1": {
+  "SetSettingsAndCreateModal.tsx_HAlOn1": {
     "defaultMessage": "Nome"
   },
-  "SettingsModal.tsx_J1XXSx": {
+  "SetSettingsAndCreateModal.tsx_J1XXSx": {
     "defaultMessage": "La mia fantastica app"
   },
-  "SettingsModal.tsx_VzzYJk": {
+  "SetSettingsAndCreateModal.tsx_VzzYJk": {
     "defaultMessage": "Crea"
   },
-  "SettingsModal.tsx_r+ksJu": {
+  "SetSettingsAndCreateModal.tsx_r+ksJu": {
     "defaultMessage": "Crea app"
   },
   "StructField.tsx_BPj/Jo": {
@@ -1637,7 +1637,7 @@
   "EditApp.tsx_B02JHP": {
     "defaultMessage": "Stato persistente"
   },
-  "SettingsModal.tsx_SFuk1v": {
+  "SetSettingsAndCreateModal.tsx_SFuk1v": {
     "defaultMessage": "Permessi"
   },
   "PersistentStateModal.tsx_B02JHP": {

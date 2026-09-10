@@ -14,7 +14,8 @@ interface Props {
 export default function CreateApp({ initialCollectionIds }: Props) {
   const intl = useIntl();
   const [isStateModalOpen, setIsStateModalOpen] = useState(false);
-  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [isSetSettingsAndCreateModalOpen, setIsSetSettingsAndCreateModalOpen] =
+    useState(false);
 
   const { collections } = useGlobalData();
   const initialTargetCollections = useMemo(
@@ -34,7 +35,7 @@ export default function CreateApp({ initialCollectionIds }: Props) {
           {
             label: intl.formatMessage({ defaultMessage: "Create" }),
             icon: <PiFloppyDisk />,
-            onPress: () => setIsSettingsModalOpen(true),
+            onPress: () => setIsSetSettingsAndCreateModalOpen(true),
           },
         ]}
       />
@@ -48,8 +49,10 @@ export default function CreateApp({ initialCollectionIds }: Props) {
           onStateModalOpen={() => setIsStateModalOpen(true)}
           collections={collections}
           initialTargetCollections={initialTargetCollections}
-          isSettingsModalOpen={isSettingsModalOpen}
-          onSettingsModalClose={() => setIsSettingsModalOpen(false)}
+          isSetSettingsAndCreateModalOpen={isSetSettingsAndCreateModalOpen}
+          onSetSettingsAndCreateModalClose={() =>
+            setIsSetSettingsAndCreateModalOpen(false)
+          }
         />
       </Shell.Panel.Content>
     </Shell.Panel>
