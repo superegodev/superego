@@ -19,7 +19,6 @@ import { typescriptModule } from "./typescript.js";
 
 export function appVersion(): v.GenericSchema<unknown, AppVersion> {
   return v.strictObject({
-    stateDefinition: appStateDefinition(),
     id: appVersionId(),
     targetCollections: v.array(
       v.strictObject({
@@ -31,6 +30,7 @@ export function appVersion(): v.GenericSchema<unknown, AppVersion> {
       "/main.tsx": typescriptModule(),
     }),
     createdAt: v.date(),
+    stateDefinition: appStateDefinition(),
   });
 }
 
