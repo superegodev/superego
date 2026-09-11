@@ -9,34 +9,23 @@ import type {
   CollectionNotFound,
   Document,
   DocumentContentNotValid,
+  DocumentContentPatchNotValid,
   DocumentDefinition,
   DocumentId,
   DocumentNotFound,
   DocumentVersionId,
   DocumentVersionIdNotMatching,
+  DuplicateDocumentDetected,
   FileId,
   FileNotFound,
   FilesNotFound,
+  MakingContentBlockingKeysFailed,
+  ReferencedDocumentsNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { Result, ResultPromise } from "@superego/global-types";
 import MessageType from "../../../ipc/MessageType.js";
 import type SandboxIpc from "../../../ipc/SandboxIpc.js";
-
-export interface AppBridgeError {
-  name: "AppBridgeError";
-  details: { reason: "InvalidArguments" | "TransportFailure" };
-}
-export type GetAppStateError =
-  | AppVersionIdNotMatching
-  | AppNotFound
-  | ArgumentsNotValid
-  | UnexpectedError
-  | AppBridgeError;
-export type UpdateAppStateError =
-  | GetAppStateError
-  | AppStateContentNotValid
-  | AppStateRevisionNotMatching;
 
 export default class Backend {
   constructor(private sandboxIpc: SandboxIpc) {
@@ -63,6 +52,10 @@ export default class Backend {
     | CollectionNotFound
     | DocumentContentNotValid
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | MakingContentBlockingKeysFailed
+    | DuplicateDocumentDetected
+    | ArgumentsNotValid
     | UnexpectedError
   > {
     return this.invokeMethod("documents", "create", [definition]);
@@ -78,8 +71,12 @@ export default class Backend {
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
+    | MakingContentBlockingKeysFailed
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | ArgumentsNotValid
     | UnexpectedError
   > {
     return this.invokeMethod("documents", "createNewVersion", [
@@ -93,46 +90,45 @@ export default class Backend {
   deleteDocument(
     collectionId: CollectionId,
     id: DocumentId,
-  ): ResultPromise<null, UnexpectedError> {
+  ): ResultPromise<null, ArgumentsNotValid | UnexpectedError> {
     return this.invokeMethod("documents", "delete", [collectionId, id]);
   }
 
   getFileContent(
     id: FileId,
-  ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {
+  ): ResultPromise<
+    Uint8Array<ArrayBuffer>,
+    FileNotFound | ArgumentsNotValid | UnexpectedError
+  > {
     return this.invokeMethod("files", "getContent", [id]);
   }
 
-  /** Each iframe owns one QueryClient and one host-established app context. */
-  readonly stateQueryKey = ["appState", crypto.randomUUID()];
-  getState(): ResultPromise<AppState, GetAppStateError> {
+  getState(): ResultPromise<
+    AppState,
+    AppVersionIdNotMatching | AppNotFound | ArgumentsNotValid | UnexpectedError
+  > {
     return this.invokeMethod("state", "get", []);
   }
+
   updateState(
     latestRevision: number,
     content: any,
-  ): ResultPromise<AppState, UpdateAppStateError> {
+  ): ResultPromise<
+    AppState,
+    | AppVersionIdNotMatching
+    | AppNotFound
+    | ArgumentsNotValid
+    | UnexpectedError
+    | AppStateContentNotValid
+    | AppStateRevisionNotMatching
+  > {
     return this.invokeMethod("state", "update", [latestRevision, content]);
   }
 
   private invokeMethod(entity: string, method: string, args: any[]) {
     const invocationId = crypto.randomUUID();
     return new Promise<Result<any, any>>((resolve) => {
-      const timeout = setTimeout(() => {
-        this.invocations.delete(invocationId);
-        resolve({
-          success: false,
-          data: null,
-          error: {
-            name: "AppBridgeError",
-            details: { reason: "TransportFailure" },
-          },
-        });
-      }, 35_000);
-      this.invocations.set(invocationId, (result) => {
-        clearTimeout(timeout);
-        resolve(result);
-      });
+      this.invocations.set(invocationId, resolve);
       this.sandboxIpc.send({
         type: MessageType.InvokeBackendMethod,
         payload: { invocationId, entity, method, args },

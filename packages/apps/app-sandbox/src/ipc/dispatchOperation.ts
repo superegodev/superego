@@ -1,4 +1,4 @@
-import type { AppState, Backend } from "@superego/backend";
+import type { AppState, ArgumentsNotValid, Backend } from "@superego/backend";
 import type { Result, ResultPromise } from "@superego/global-types";
 import { makeUnsuccessfulResult } from "@superego/shared-utils";
 
@@ -31,11 +31,6 @@ export interface HostBackend {
       }
     | undefined;
 }
-export const invalidBridgeArguments = () =>
-  makeUnsuccessfulResult({
-    name: "AppBridgeError",
-    details: { reason: "InvalidArguments" },
-  });
 /** Explicit dispatch: neither prototype properties nor app editing APIs are callable. */
 export default async function dispatchOperation(
   backend: HostBackend,
@@ -49,7 +44,7 @@ export default async function dispatchOperation(
     !Array.isArray(args) ||
     !isBridgeValue(args)
   ) {
-    return invalidBridgeArguments();
+    return invalidArguments("Invalid backend operation or arguments.");
   }
   const stringAt = (index: number) => typeof args[index] === "string";
   const objectAt = (index: number) =>
@@ -104,7 +99,16 @@ export default async function dispatchOperation(
       }
       break;
   }
-  return invalidBridgeArguments();
+  return invalidArguments(
+    `Unsupported backend operation or invalid arguments for ${entity}.${method}.`,
+  );
+}
+
+function invalidArguments(message: string) {
+  return makeUnsuccessfulResult<ArgumentsNotValid>({
+    name: "ArgumentsNotValid",
+    details: { issues: [{ message }] },
+  });
 }
 
 function isBridgeValue(value: unknown, ancestors = new Set<object>()): boolean {

@@ -1,4 +1,5 @@
 import type {
+  ArgumentsNotValid,
   CollectionId,
   DocumentId,
   UnexpectedError,
@@ -12,14 +13,14 @@ interface UseDeleteDocument {
   isPending: boolean;
   isError: boolean;
   isSuccess: boolean;
-  error: UnexpectedError | null;
+  error: ArgumentsNotValid | UnexpectedError | null;
   data: null;
 }
 export default function useDeleteDocument(): UseDeleteDocument {
   const backend = useBackend();
   const { mutate, isIdle, isPending, isError, isSuccess, error } = useMutation<
     null,
-    UnexpectedError,
+    ArgumentsNotValid | UnexpectedError,
     [collectionId: CollectionId, id: DocumentId]
   >({
     mutationFn: async (args) => {

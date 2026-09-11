@@ -1,5 +1,9 @@
-import type { AppPermissions } from "@superego/backend";
-import { normalizeHttpOrigin } from "@superego/shared-utils";
+import type { AppPermissions, UnexpectedError } from "@superego/backend";
+import {
+  extractErrorDetails,
+  makeUnsuccessfulResult,
+  normalizeHttpOrigin,
+} from "@superego/shared-utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import dispatchOperation, {
   type HostBackend,
@@ -65,15 +69,11 @@ export default function Sandbox({
             payload.method,
             payload.args,
           );
-        } catch {
-          result = {
-            success: false as const,
-            data: null,
-            error: {
-              name: "AppBridgeError",
-              details: { reason: "TransportFailure" },
-            },
-          };
+        } catch (error) {
+          result = makeUnsuccessfulResult<UnexpectedError>({
+            name: "UnexpectedError",
+            details: { cause: extractErrorDetails(error) },
+          });
         }
         if (!active) {
           return;

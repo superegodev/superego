@@ -143,11 +143,11 @@ import type { State } from "./app-state.js";
 const state = useAppState<State>();
 const updateState = useUpdateAppState<State>();
 
-async function save(nextState: State) {
-  if (!state.data) {
+function save(nextState: State) {
+  if (!state.data || updateState.isPending) {
     return;
   }
-  await updateState({
+  updateState.mutate({
     latestRevision: state.data.revision,
     content: nextState,
   });
@@ -157,7 +157,14 @@ async function save(nextState: State) {
 `useAppState` returns `data`, `isLoading`, `error`, and `refetch()`; `data`
 contains `content` and `revision`. Show loading and error states before using
 the content. Updates replace the entire content and must match the schema.
-Handle rejected updates and refetches with `try/catch`:
+
+`useUpdateAppState` returns `mutate`, `isIdle`, `isPending`, `isError`,
+`isSuccess`, `error`, and `data` (always `null`), like the document mutation
+hooks. Call `mutate` to start an update, use `isPending` to disable saving while
+it runs, and handle failures through `error`. Read the saved content from
+`useAppState`. Handle rejected `refetch()` calls with `try/catch`.
+
+Common state errors:
 
 - `AppStateRevisionNotMatching`: another instance changed the state. Refetch,
   reconcile the user's changes with the latest content, and retry.

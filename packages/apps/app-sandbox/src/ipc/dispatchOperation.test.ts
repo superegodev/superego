@@ -13,7 +13,16 @@ describe("app bridge dispatch", () => {
     // Exercise
     const result = await dispatchOperation(backend, entity!, method!, []);
     // Verify
-    expect(result.error?.name).toBe("AppBridgeError");
+    expect(result).toEqual({
+      success: false,
+      data: null,
+      error: {
+        name: "ArgumentsNotValid",
+        details: {
+          issues: [{ message: expect.any(String) }],
+        },
+      },
+    });
   });
   it("rejects identity claims and malformed state arguments", async () => {
     // Setup mocks
@@ -26,10 +35,41 @@ describe("app bridge dispatch", () => {
       dispatchOperation(backend, "state", "update", ["1", {}]),
     ]);
     // Verify
-    expect(
-      results.every((result) => result.error?.name === "AppBridgeError"),
-    ).toBe(true);
+    for (const result of results) {
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: {
+          name: "ArgumentsNotValid",
+          details: {
+            issues: [{ message: expect.any(String) }],
+          },
+        },
+      });
+    }
     expect(get).not.toHaveBeenCalled();
     expect(update).not.toHaveBeenCalled();
+  });
+
+  it("rejects arguments that cannot be passed to the backend", async () => {
+    // Setup mocks
+    const create = vi.fn();
+    const backend = { documents: { create } } as unknown as HostBackend;
+    // Exercise
+    const result = await dispatchOperation(backend, "documents", "create", [
+      { content: { value: Number.NaN } },
+    ]);
+    // Verify
+    expect(result).toEqual({
+      success: false,
+      data: null,
+      error: {
+        name: "ArgumentsNotValid",
+        details: {
+          issues: [{ message: expect.any(String) }],
+        },
+      },
+    });
+    expect(create).not.toHaveBeenCalled();
   });
 });
