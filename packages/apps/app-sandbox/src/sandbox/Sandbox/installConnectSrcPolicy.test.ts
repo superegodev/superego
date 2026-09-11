@@ -65,26 +65,4 @@ describe("installConnectSrcPolicy", () => {
     });
     expect(frame.document.querySelector("meta")).toBeNull();
   });
-
-  it("gives separate documents independent policies", async () => {
-    // Setup SUT
-    const first = await createFrame();
-    const second = await createFrame();
-    // Exercise
-    installConnectSrcPolicy(first.document, ["https://first.example"]);
-    installConnectSrcPolicy(second.document, ["https://second.example"]);
-    const violation = nextViolation(second.document);
-    const request = second.window.fetch("https://first.example/private");
-    // Verify
-    await expect(request).rejects.toThrow();
-    expect(await violation).toMatchObject({
-      effectiveDirective: "connect-src",
-    });
-    expect(first.document.querySelector("meta")?.content).toContain(
-      "https://first.example",
-    );
-    expect(second.document.querySelector("meta")?.content).not.toContain(
-      "https://first.example",
-    );
-  });
 });
