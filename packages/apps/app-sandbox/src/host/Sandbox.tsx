@@ -1,13 +1,18 @@
-import type { AppPermissions, UnexpectedError } from "@superego/backend";
+import type {
+  AppPermissions,
+  Backend,
+  CollectionId,
+  DocumentId,
+  DocumentVersionId,
+  UnexpectedError,
+} from "@superego/backend";
+import type { Result } from "@superego/global-types";
 import {
   extractErrorDetails,
   makeUnsuccessfulResult,
   normalizeHttpOrigin,
 } from "@superego/shared-utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import dispatchOperation, {
-  type HostBackend,
-} from "../ipc/dispatchOperation.js";
 import HostIpc from "../ipc/HostIpc.js";
 import MessageType from "../ipc/MessageType.js";
 import type AppComponentProps from "../types/AppComponentProps.js";
@@ -16,7 +21,31 @@ import type Settings from "../types/Settings.js";
 
 interface Props {
   /** Backend methods exposed to sandboxed apps. */
-  backend: HostBackend;
+  backend: {
+    documents: {
+      create: Backend["documents"]["create"];
+      createNewVersion: (
+        collectionId: CollectionId,
+        documentId: DocumentId,
+        latestVersionId: DocumentVersionId,
+        content: any,
+      ) => ReturnType<Backend["documents"]["createNewVersion"]>;
+      delete: (
+        collectionId: CollectionId,
+        documentId: DocumentId,
+      ) => Result<null, never>;
+    };
+    files: { getContent: Backend["files"]["getContent"] };
+    state?:
+      | {
+          get: () => ReturnType<Backend["apps"]["getState"]>;
+          update: (
+            latestRevision: number,
+            content: any,
+          ) => ReturnType<Backend["apps"]["updateState"]>;
+        }
+      | undefined;
+  };
   permissions: AppPermissions;
   navigateTo: (href: string) => void;
   iframeSrc: string;
@@ -63,12 +92,9 @@ export default function Sandbox({
       [MessageType.InvokeBackendMethod]: async ({ payload }) => {
         let result;
         try {
-          result = await dispatchOperation(
-            backendRef.current,
-            payload.entity,
-            payload.method,
-            payload.args,
-          );
+          result = await (backendRef.current as any)[payload.entity][
+            payload.method
+          ](...payload.args);
         } catch (error) {
           result = makeUnsuccessfulResult<UnexpectedError>({
             name: "UnexpectedError",
