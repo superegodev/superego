@@ -27,7 +27,7 @@
     "test": "vitest --reporter=verbose"
   },
   "dependencies": {
-    "@formatjs/intl": "^4.1.20",
+    "@formatjs/intl": "^4.2.0",
     "@superego/app-sandbox": "workspace:*",
     "@superego/backend": "workspace:*",
     "@superego/browser-app": "workspace:*",
@@ -54,12 +54,12 @@
     "@electron-forge/plugin-fuses": "^7.11.2",
     "@electron-forge/publisher-github": "^7.11.2",
     "@electron/fuses": "^2.1.3",
-    "@formatjs/cli": "^6.16.23",
+    "@formatjs/cli": "^6.16.26",
     "@formatjs/unplugin": "^1.2.8",
     "@reforged/maker-appimage": "^5.3.1",
-    "electron": "44.2.0",
+    "electron": "44.3.0",
     "electron-vite": "6.0.0-beta.1",
-    "vite": "^8.2.2",
+    "vite": "^8.3.0",
     "vitest": "^5.0.0"
   },
   "productName": "superego"
