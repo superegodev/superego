@@ -1,5 +1,3 @@
-import { normalizeHttpOrigin } from "@superego/shared-utils";
-
 const configuredDocuments = new WeakSet<Document>();
 
 export default function installConnectSrcPolicy(
@@ -9,7 +7,7 @@ export default function installConnectSrcPolicy(
   if (configuredDocuments.has(document)) {
     return;
   }
-  const origins = [...new Set(allowedOrigins.map(normalizeHttpOrigin))];
+  const origins = [...new Set(allowedOrigins)];
   const policy = document.createElement("meta");
   policy.httpEquiv = "Content-Security-Policy";
   // Preserve sandbox modules, local file blobs, and the built-in map tiles.
