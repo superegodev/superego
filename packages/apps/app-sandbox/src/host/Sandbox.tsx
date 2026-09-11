@@ -10,7 +10,6 @@ import type { Result } from "@superego/global-types";
 import {
   extractErrorDetails,
   makeUnsuccessfulResult,
-  normalizeHttpOrigin,
 } from "@superego/shared-utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import HostIpc from "../ipc/HostIpc.js";
@@ -36,15 +35,13 @@ interface Props {
       ) => Result<null, never>;
     };
     files: { getContent: Backend["files"]["getContent"] };
-    state?:
-      | {
-          get: () => ReturnType<Backend["apps"]["getState"]>;
-          update: (
-            latestRevision: number,
-            content: any,
-          ) => ReturnType<Backend["apps"]["updateState"]>;
-        }
-      | undefined;
+    state: {
+      get: () => ReturnType<Backend["apps"]["getState"]>;
+      update: (
+        latestRevision: number,
+        content: any,
+      ) => ReturnType<Backend["apps"]["updateState"]>;
+    };
   };
   permissions: AppPermissions;
   navigateTo: (href: string) => void;
@@ -128,8 +125,7 @@ export default function Sandbox({
           appProps,
           settings,
           intlMessages,
-          allowedOrigins:
-            permissions.http.allowedOrigins.map(normalizeHttpOrigin),
+          allowedOrigins: permissions.http.allowedOrigins,
         },
       });
     }
