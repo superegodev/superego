@@ -7,6 +7,7 @@ import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
 import {
+  hasStateDefinitionChanges,
   readStateDefinitionSource,
   stateDefinitionSourceOf,
 } from "../common/stateDefinition.js";
@@ -61,9 +62,9 @@ export default useMarkdownHelp(
           manifest.permissions,
           app.permissions,
         );
-        const stateDefinitionChanged = !isEqual(
+        const stateDefinitionChanged = hasStateDefinitionChanges(
           localStateDefinition,
-          remoteStateDefinition,
+          app.latestVersion.stateDefinition,
         );
         if (permissionsChanged || stateDefinitionChanged) {
           const cleanIndex = status.indexOf("clean");

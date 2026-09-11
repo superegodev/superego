@@ -1,6 +1,10 @@
 import type { App, TypescriptModule } from "@superego/backend";
 import type { CliBackend } from "../common/commandUtils.js";
-import { compileStateDefinition } from "../common/stateDefinition.js";
+import { buildLock, writeLock } from "../common/lock.js";
+import {
+  clearPendingMigration,
+  compileStateDefinition,
+} from "../common/stateDefinition.js";
 import type { AppManifest } from "../common/types.js";
 
 export default async function createAppVersion({
@@ -26,5 +30,7 @@ export default async function createAppVersion({
   if (!result.success) {
     throw new Error(JSON.stringify(result.error));
   }
+  await clearPendingMigration(path);
+  await writeLock(path, buildLock(result.data));
   return result.data;
 }

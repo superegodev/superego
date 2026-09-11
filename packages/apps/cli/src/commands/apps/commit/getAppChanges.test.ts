@@ -69,7 +69,7 @@ describe("getAppChanges", () => {
       stateDefinition: {
         schema: "state.schema.json",
         initialState: "state.initial.json",
-        migration: "state.migration.ts",
+        migration: null,
       },
     });
     await writeStateDefinitionSource(path, stateDefinition);
@@ -79,7 +79,7 @@ describe("getAppChanges", () => {
     rmSync(path, { recursive: true });
   });
 
-  it("reports no changes when only compiled output differs", async () => {
+  it("ignores historical migrations and compiled output on a clean checkout", async () => {
     // Exercise
     const changes = await getAppChanges({
       backend: {} as CliBackend,
@@ -165,6 +165,9 @@ describe("getAppChanges", () => {
 
   it("detects changed migration source independently of compiled output", async () => {
     // Setup SUT
+    const manifest = readManifest(path);
+    manifest.stateDefinition.migration = "state.migration.ts";
+    await writeManifest(path, manifest);
     const changedStateDefinition = structuredClone(stateDefinition);
     changedStateDefinition.migration!.source =
       "export default () => ({ count: 2 });";
@@ -182,6 +185,25 @@ describe("getAppChanges", () => {
     expect(changes.sourceChanged).toBe(false);
     expect(changes.targetCollectionsChanged).toBe(false);
     expect(changes.permissionsChanged).toBe(false);
+    expect(changes.stateDefinitionChanged).toBe(true);
+    expect(changes.mainModule).not.toBeNull();
+  });
+
+  it("detects a pending migration even if its source matches the previous version", async () => {
+    // Setup SUT
+    const manifest = readManifest(path);
+    manifest.stateDefinition.migration = "state.migration.ts";
+    await writeManifest(path, manifest);
+
+    // Exercise
+    const changes = await getAppChanges({
+      backend: {} as CliBackend,
+      path,
+      manifest,
+      app,
+    });
+
+    // Verify
     expect(changes.stateDefinitionChanged).toBe(true);
     expect(changes.mainModule).not.toBeNull();
   });

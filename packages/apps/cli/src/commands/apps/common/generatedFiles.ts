@@ -15,8 +15,8 @@ export async function regenerateGeneratedFiles(
   path: string,
   targetCollections: TargetCollection[],
 ): Promise<void> {
-  removeGeneratedCollectionFiles(path);
   const stateDefinition = readStateDefinitionSource(path);
+  removeGeneratedCollectionFiles(path);
   await writeFile(
     join(path, "app-state.ts"),
     codegen(stateDefinition.schema),

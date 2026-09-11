@@ -12,7 +12,9 @@ import { DataType } from "@superego/schema";
 import { defaultAppPermissions } from "@superego/shared-utils";
 import { ValiError } from "valibot";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { readManifest } from "./manifest.js";
 import {
+  clearPendingMigration,
   compileStateDefinition,
   readStateDefinitionSource,
   stateDefinitionSourceOf,
@@ -234,6 +236,27 @@ describe("writeStateDefinitionSource", () => {
     expect(
       JSON.parse(readFileSync(join(path, "state.initial.json"), "utf8")),
     ).toEqual({ count: 0 });
+  });
+});
+
+describe("clearPendingMigration", () => {
+  it("clears the reference while preserving the manifest and migration source", async () => {
+    // Setup SUT
+    writeSourceFixture();
+    const manifest = readManifest(path);
+
+    // Exercise
+    await clearPendingMigration(path);
+
+    // Verify
+    expect(readManifest(path)).toEqual({
+      ...manifest,
+      stateDefinition: { ...manifest.stateDefinition, migration: null },
+    });
+    expect(readFileSync(join(path, "state.migration.ts"), "utf8")).toBe(
+      migrationSource,
+    );
+    expect((await compileStateDefinition(path)).migration).toBeNull();
   });
 });
 

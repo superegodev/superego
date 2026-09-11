@@ -5,11 +5,10 @@ import {
   resolveLatestTargetCollections,
   runAppCommand,
 } from "../common/commandUtils.js";
-import { compileApp } from "../common/compile.js";
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
-import { compileStateDefinition } from "../common/stateDefinition.js";
+import checkApp from "./checkApp.js";
 
 export default useMarkdownHelp(
   new Command("check")
@@ -25,8 +24,7 @@ export default useMarkdownHelp(
           backend,
           manifest.targetCollectionIds,
         );
-        await compileApp(path, targetCollections);
-        await compileStateDefinition(path);
+        await checkApp(path, targetCollections);
         return {
           path,
           targetCollectionIds: manifest.targetCollectionIds,

@@ -8,8 +8,8 @@ import {
 import { compileApp } from "../common/compile.js";
 import { readMainSource } from "../common/mainSource.js";
 import {
+  hasStateDefinitionChanges,
   readStateDefinitionSource,
-  stateDefinitionSourceOf,
 } from "../common/stateDefinition.js";
 import type { AppManifest } from "../common/types.js";
 import getTargetCollectionIds from "./getTargetCollectionIds.js";
@@ -34,9 +34,9 @@ export default async function getAppChanges({
     targetCollectionIds,
   );
   const permissionsChanged = !isEqual(manifest.permissions, app.permissions);
-  const stateDefinitionChanged = !isEqual(
+  const stateDefinitionChanged = hasStateDefinitionChanges(
     readStateDefinitionSource(path),
-    stateDefinitionSourceOf(app.latestVersion.stateDefinition),
+    app.latestVersion.stateDefinition,
   );
   const mainModule =
     sourceChanged || targetCollectionsChanged || stateDefinitionChanged

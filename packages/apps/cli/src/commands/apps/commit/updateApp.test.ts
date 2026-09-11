@@ -1,19 +1,26 @@
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { AppType, type App } from "@superego/backend";
+import {
+  AppType,
+  type App,
+  type AppStateMigrationRequired,
+} from "@superego/backend";
+import { DataType } from "@superego/schema";
 import {
   defaultAppPermissions,
   emptyAppStateDefinition,
   makeSuccessfulResult,
+  makeUnsuccessfulResult,
 } from "@superego/shared-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { CliBackend } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
-import { buildLock, readLock } from "../common/lock.js";
-import { writeManifest } from "../common/manifest.js";
+import { buildLock, readLock, writeLock } from "../common/lock.js";
+import { readManifest, writeManifest } from "../common/manifest.js";
 import { writeStateDefinitionSource } from "../common/stateDefinition.js";
 import type { AppManifest } from "../common/types.js";
+import createApp from "./createApp.js";
 import updateApp from "./updateApp.js";
 
 vi.mock("../common/compile.js", () => ({
@@ -144,5 +151,177 @@ describe("updateApp", () => {
       manifest.permissions,
     );
     expect(readLock(path)?.latestAppVersionId).toBe(version.latestVersion.id);
+  });
+
+  describe("pending migrations", () => {
+    let backend: CliBackend;
+    let createNewVersion: ReturnType<
+      typeof vi.fn<CliBackend["apps"]["createNewVersion"]>
+    >;
+
+    beforeEach(async () => {
+      app.permissions = manifest.permissions;
+      app.latestVersion.stateDefinition = {
+        schema: {
+          types: {
+            State: {
+              dataType: DataType.Struct,
+              properties: { count: { dataType: DataType.Number } },
+            },
+          },
+          rootType: "State",
+        },
+        initialState: { count: 0 },
+        migration: {
+          source: `import type { State } from "./app-state.js";
+export default (previous: State): State => ({ count: previous.count + 1 });`,
+          compiled: "previous migration",
+        },
+      };
+      await writeStateDefinitionSource(path, app.latestVersion.stateDefinition);
+      await writeLock(path, buildLock(app));
+      vi.mocked(compileApp).mockImplementation(async (projectPath) => ({
+        source: readFileSync(join(projectPath, "main.tsx"), "utf8"),
+        compiled: "compiled",
+      }));
+      createNewVersion = vi.fn(async (...parameters) => {
+        app = {
+          ...app,
+          latestVersion: {
+            ...app.latestVersion,
+            id: `${app.latestVersion.id}_next`,
+            files: parameters[3],
+            stateDefinition: parameters[4],
+          },
+        };
+        return makeSuccessfulResult(app);
+      });
+      backend = {
+        apps: {
+          list: async () => makeSuccessfulResult([app]),
+          createNewVersion,
+        },
+      } as unknown as CliBackend;
+    });
+
+    it("omits the historical migration from a code-only commit", async () => {
+      // Setup SUT
+      writeFileSync(join(path, "main.tsx"), "updated");
+
+      // Exercise
+      await updateApp({ backend, path, manifest, lock: readLock(path)! });
+
+      // Verify
+      expect(createNewVersion).toHaveBeenCalledOnce();
+      expect(createNewVersion.mock.calls[0]![4].migration).toBeNull();
+      expect(readManifest(path).stateDefinition.migration).toBeNull();
+    });
+
+    it("commits an explicitly pending migration once and leaves subsequent commits clean", async () => {
+      // Setup SUT
+      manifest.stateDefinition.migration = "state.migration.ts";
+      await writeManifest(path, manifest);
+
+      // Exercise
+      await updateApp({ backend, path, manifest, lock: readLock(path)! });
+      const unchangedCommit = await updateApp({
+        backend,
+        path,
+        manifest: readManifest(path),
+        lock: readLock(path)!,
+      });
+      writeFileSync(join(path, "main.tsx"), "updated");
+      await updateApp({
+        backend,
+        path,
+        manifest: readManifest(path),
+        lock: readLock(path)!,
+      });
+
+      // Verify
+      expect(unchangedCommit.operations).toEqual(["nothing to commit"]);
+      expect(createNewVersion).toHaveBeenCalledTimes(2);
+      expect(createNewVersion.mock.calls[0]![4].migration?.compiled).toContain(
+        "previous.count + 1",
+      );
+      expect(createNewVersion.mock.calls[1]![4].migration).toBeNull();
+      expect(readManifest(path).stateDefinition.migration).toBeNull();
+      expect(readFileSync(join(path, "state.migration.ts"), "utf8")).toContain(
+        "previous.count + 1",
+      );
+    });
+
+    it("preserves the pending migration and lock when version creation fails", async () => {
+      // Setup mocks
+      createNewVersion.mockResolvedValueOnce(
+        makeUnsuccessfulResult<AppStateMigrationRequired>({
+          name: "AppStateMigrationRequired",
+          details: { appId: app.id, issues: [] },
+        }),
+      );
+      // Setup SUT
+      manifest.stateDefinition.migration = "state.migration.ts";
+      await writeManifest(path, manifest);
+      const lock = readLock(path)!;
+
+      // Exercise
+      const commit = updateApp({ backend, path, manifest, lock });
+
+      // Verify
+      await expect(commit).rejects.toThrow("AppStateMigrationRequired");
+      expect(readManifest(path).stateDefinition.migration).toBe(
+        "state.migration.ts",
+      );
+      expect(readLock(path)).toEqual(lock);
+    });
+
+    it("records a successful migration even if the subsequent permissions update fails", async () => {
+      // Setup mocks
+      backend.apps.updatePermissions = vi.fn(async () => {
+        throw new Error("Permissions update failed");
+      });
+      // Setup SUT
+      manifest.permissions = { ...manifest.permissions, downloads: true };
+      manifest.stateDefinition.migration = "state.migration.ts";
+      await writeManifest(path, manifest);
+
+      // Exercise
+      const commit = updateApp({
+        backend,
+        path,
+        manifest,
+        lock: readLock(path)!,
+      });
+
+      // Verify
+      await expect(commit).rejects.toThrow("Permissions update failed");
+      expect(readManifest(path).stateDefinition.migration).toBeNull();
+      expect(readLock(path)).toEqual(buildLock(app));
+      expect(readLock(path)?.latestAppVersionId).toBe(
+        "AppVersion_original_next",
+      );
+    });
+
+    it("clears the migration after creating an app so the next commit is clean", async () => {
+      // Setup mocks
+      backend.apps.create = vi.fn(async () => makeSuccessfulResult(app));
+      // Setup SUT
+      manifest.stateDefinition.migration = "state.migration.ts";
+      await writeManifest(path, manifest);
+
+      // Exercise
+      await createApp({ backend, path, manifest });
+      const nextCommit = await updateApp({
+        backend,
+        path,
+        manifest: readManifest(path),
+        lock: readLock(path)!,
+      });
+
+      // Verify
+      expect(readManifest(path).stateDefinition.migration).toBeNull();
+      expect(nextCommit.operations).toEqual(["nothing to commit"]);
+      expect(createNewVersion).not.toHaveBeenCalled();
+    });
   });
 });

@@ -1,7 +1,10 @@
 import { resolveLatestTargetCollections } from "../common/commandUtils.js";
 import { compileApp } from "../common/compile.js";
 import { buildLock, writeLock } from "../common/lock.js";
-import { compileStateDefinition } from "../common/stateDefinition.js";
+import {
+  clearPendingMigration,
+  compileStateDefinition,
+} from "../common/stateDefinition.js";
 import type { CommitContext, CommitResult } from "./types.js";
 
 export default async function createApp({
@@ -25,6 +28,7 @@ export default async function createApp({
   if (!result.success) {
     throw new Error(JSON.stringify(result.error));
   }
+  await clearPendingMigration(path);
   await writeLock(path, buildLock(result.data));
   return { operations: ["created app"], appId: result.data.id };
 }

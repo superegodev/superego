@@ -131,9 +131,10 @@ content must match the schema. For an app without stored content, use `{}` and a
 Struct schema with no properties. The `migration` field is required; use `null`
 unless applying a migration.
 
-`apps init` creates the state files. `apps check` validates them and compiles
-any migration. Import the schema's root type from the generated `app-state.ts`;
-the example below assumes the schema's `rootType` is `State`:
+`apps init` creates the state files. `apps check` validates them, refreshes
+`app-state.ts`, and compiles the app and any migration. Import the schema's root
+type from the generated `app-state.ts`; the example below assumes the schema's
+`rootType` is `State`:
 
 ```tsx
 import { useAppState, useUpdateAppState } from "@superego/app-sandbox/hooks";
@@ -199,6 +200,10 @@ export default function migrate(previousContent: PreviousState): State {
 Run `apps check` before committing. `AppStateMigrationRequired` means saved
 content needs a migration. `AppStateMigrationNotValid` or
 `AppStateMigrationFailed` means the migration must be corrected; inspect the
-reported diagnostics or validation issues. For later code-only updates, set
-`migration` back to `null` so the earlier migration is not replayed. To stop
-storing content, migrate to `{}` and an empty Struct schema.
+reported diagnostics or validation issues. After successfully creating an app or
+version, `apps commit` resets `migration` to `null`; it keeps the reference if
+creation fails so you can fix and retry. `apps checkout` also starts with
+`migration: null`. The previous migration source remains available in
+`state.migration.ts`, but only setting the manifest reference schedules it for
+the next version. To stop storing content, migrate to `{}` and an empty Struct
+schema.

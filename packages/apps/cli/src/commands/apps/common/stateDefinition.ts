@@ -5,9 +5,10 @@ import type { AppStateDefinition } from "@superego/backend";
 import { codegen } from "@superego/schema";
 import { valibotSchemas } from "@superego/shared-utils";
 import { TscTypescriptCompiler } from "@superego/tsc-typescript-compiler";
+import { isEqual } from "es-toolkit";
 import * as v from "valibot";
 import { readJson, writeJson } from "./json.js";
-import { readManifest } from "./manifest.js";
+import { readManifest, writeManifest } from "./manifest.js";
 
 export const stateDefinitionFiles = {
   schema: "state.schema.json",
@@ -44,6 +45,26 @@ export function stateDefinitionSourceOf(definition: AppStateDefinition) {
     initialState: definition.initialState,
     migration: definition.migration?.source ?? null,
   };
+}
+
+export function hasStateDefinitionChanges(
+  source: ReturnType<typeof readStateDefinitionSource>,
+  definition: AppStateDefinition,
+): boolean {
+  // A local migration is pending; the previous version's migration is history.
+  return (
+    source.migration !== null ||
+    !isEqual(source.schema, definition.schema) ||
+    !isEqual(source.initialState, definition.initialState)
+  );
+}
+
+export async function clearPendingMigration(path: string): Promise<void> {
+  const manifest = readManifest(path);
+  if (manifest.stateDefinition.migration !== null) {
+    manifest.stateDefinition.migration = null;
+    await writeManifest(path, manifest);
+  }
 }
 
 export async function compileStateDefinition(

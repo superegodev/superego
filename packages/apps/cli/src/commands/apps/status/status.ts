@@ -11,8 +11,8 @@ import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
 import {
+  hasStateDefinitionChanges,
   readStateDefinitionSource,
-  stateDefinitionSourceOf,
 } from "../common/stateDefinition.js";
 
 export default useMarkdownHelp(
@@ -45,9 +45,9 @@ export default useMarkdownHelp(
           status.push("permissions changed");
         }
         if (
-          !isEqual(
+          hasStateDefinitionChanges(
             readStateDefinitionSource(path),
-            stateDefinitionSourceOf(app.latestVersion.stateDefinition),
+            app.latestVersion.stateDefinition,
           )
         ) {
           status.push("state definition changed");
