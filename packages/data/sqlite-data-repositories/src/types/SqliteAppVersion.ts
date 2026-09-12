@@ -12,12 +12,17 @@ type SqliteAppVersion = {
   files: Buffer;
   /** ISO 8601 */
   created_at: string;
+  /** MessagePack */
+  state_definition: Buffer;
   is_latest: 0 | 1;
 };
 export default SqliteAppVersion;
 
 export function toEntity(appVersion: SqliteAppVersion): AppVersionEntity {
   return {
+    stateDefinition: decode(
+      appVersion.state_definition,
+    ) as AppVersionEntity["stateDefinition"],
     id: appVersion.id,
     previousVersionId: appVersion.previous_version_id,
     appId: appVersion.app_id,

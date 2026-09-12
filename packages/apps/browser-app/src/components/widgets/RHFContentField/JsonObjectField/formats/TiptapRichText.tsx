@@ -24,7 +24,10 @@ export default function TiptapRichText({
 }: Props) {
   const { isReadOnly } = useUiOptions();
   const { flexGrow } = useFieldUiOptions(name);
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const fieldOnChange = field.onChange;
   const { __dataType, ...value } =
     field.value ?? forms.defaults.tiptapRichTextJsonObject();
@@ -61,7 +64,7 @@ export default function TiptapRichText({
         isInvalid={fieldState.invalid}
         isReadOnly={isReadOnly}
         autoFocus={autoFocus}
-        ref={field.ref}
+        ref={fieldRef}
         className={flexGrow ? cs.Field.flexGrowContent : undefined}
       />
       <FieldErrorContext

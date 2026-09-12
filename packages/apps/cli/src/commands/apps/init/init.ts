@@ -1,5 +1,6 @@
 import { resolve } from "node:path";
 import { AppType, type CollectionId } from "@superego/backend";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Command } from "commander";
 import * as v from "valibot";
 import createBackend from "../../../utils/createBackend.js";
@@ -11,6 +12,7 @@ import {
   runAppCommand,
 } from "../common/commandUtils.js";
 import { getInitialMainSource } from "../common/mainSource.js";
+import type { AppManifest } from "../common/types.js";
 import writeAppProject from "../common/writeAppProject.js";
 
 const argsSchema = v.strictObject({
@@ -35,8 +37,18 @@ export default useMarkdownHelp(
         backend,
         collection as CollectionId[],
       );
-      const manifest = {
+      const manifest: AppManifest = {
+        stateDefinition: {
+          schema: "state.schema.json",
+          initialState: "state.initial.json",
+          migration: null,
+        },
         name,
+        permissions: {
+          modals: false,
+          downloads: false,
+          http: { allowedOrigins: [] },
+        },
         type: AppType.CollectionView,
         targetCollectionIds: collection as CollectionId[],
       };
@@ -46,6 +58,7 @@ export default useMarkdownHelp(
         getInitialMainSource(targetCollections),
         targetCollections,
         null,
+        emptyAppStateDefinition,
       );
       return {
         path: projectPath,

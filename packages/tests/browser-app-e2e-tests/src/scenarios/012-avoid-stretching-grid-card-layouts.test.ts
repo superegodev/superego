@@ -112,6 +112,19 @@ async function createCollectionApp(
     }
 
     const appResult = await backend.apps.create({
+      permissions: {
+        modals: false,
+        downloads: false,
+        http: { allowedOrigins: [] },
+      },
+      stateDefinition: {
+        schema: {
+          types: { State: { dataType: "Struct", properties: {} } },
+          rootType: "State",
+        },
+        initialState: {},
+        migration: null,
+      },
       type: "CollectionView",
       name: input.appName,
       targetCollectionIds: [collectionResult.data.id],

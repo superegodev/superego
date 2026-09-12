@@ -21,7 +21,10 @@ export default function PlainTime({
   autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
 
   const { time, milliseconds } = field.value
     ? parseTimeWithMilliseconds(field.value)
@@ -71,7 +74,7 @@ export default function PlainTime({
         />
       ) : null}
       <TimeInputWithMilliseconds
-        ref={field.ref}
+        ref={fieldRef}
         milliseconds={milliseconds}
         onMillisecondsChange={handleMillisecondsChange}
         isReadOnly={isReadOnly}

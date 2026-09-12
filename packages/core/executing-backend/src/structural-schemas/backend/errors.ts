@@ -10,6 +10,7 @@ import resultError from "../global/resultError.js";
 import unknownResultError from "../global/unknownResultError.js";
 import {
   appId,
+  appVersionId,
   backgroundJobId,
   collectionCategoryId,
   collectionId,
@@ -38,6 +39,75 @@ export const appNameNotValid = () =>
 
 export const appNotFound = () =>
   resultError("AppNotFound", v.strictObject({ appId: appId() }));
+
+export const appStateContentNotValid = () =>
+  resultError(
+    "AppStateContentNotValid",
+    v.strictObject({
+      appId: v.nullable(appId()),
+      issues: issues(),
+    }),
+  );
+
+export const appStateMigrationFailed = () =>
+  resultError(
+    "AppStateMigrationFailed",
+    v.strictObject({
+      appId: appId(),
+      cause: v.union([
+        executingTypescriptFunctionFailed(),
+        appStateContentNotValid(),
+        unexpectedError(),
+      ]),
+    }),
+  );
+
+export const appStateMigrationNotValid = () =>
+  resultError(
+    "AppStateMigrationNotValid",
+    v.strictObject({
+      appId: appId(),
+      issues: issues(),
+    }),
+  );
+
+export const appStateMigrationRequired = () =>
+  resultError(
+    "AppStateMigrationRequired",
+    v.strictObject({
+      appId: appId(),
+      issues: issues(),
+    }),
+  );
+
+export const appStateRevisionNotMatching = () =>
+  resultError(
+    "AppStateRevisionNotMatching",
+    v.strictObject({
+      appId: appId(),
+      latestRevision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
+      suppliedRevision: v.pipe(v.number(), v.safeInteger(), v.minValue(1)),
+    }),
+  );
+
+export const appStateSchemaNotValid = () =>
+  resultError(
+    "AppStateSchemaNotValid",
+    v.strictObject({
+      appId: v.nullable(appId()),
+      issues: issues(),
+    }),
+  );
+
+export const appVersionIdNotMatching = () =>
+  resultError(
+    "AppVersionIdNotMatching",
+    v.strictObject({
+      appId: appId(),
+      latestVersionId: appVersionId(),
+      suppliedVersionId: appVersionId(),
+    }),
+  );
 
 export const backgroundJobNotFound = () =>
   resultError(

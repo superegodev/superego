@@ -1,10 +1,9 @@
 import {
   type App,
-  AppType,
   type Collection,
   type TypescriptModule,
 } from "@superego/backend";
-import { Id } from "@superego/shared-utils";
+import { useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import forms from "../../../business-logic/forms/forms.js";
 import classnames from "../../../utils/classnames.js";
@@ -19,17 +18,22 @@ const invalidCompiledValues = new Set([
 
 interface Props {
   mainTsx: TypescriptModule;
+  app: App;
   targetCollections: Collection[];
   className: string;
 }
 export default function Preview({
   mainTsx,
+  app,
   targetCollections,
   className,
 }: Props) {
   const appCompilationFailed =
     mainTsx.compiled === forms.constants.COMPILATION_FAILED;
-  const app = getApp(mainTsx, targetCollections);
+  const previewApp = useMemo(
+    () => getPreviewApp(app, mainTsx, targetCollections),
+    [app, mainTsx, targetCollections],
+  );
   return (
     <div
       className={classnames(
@@ -37,10 +41,10 @@ export default function Preview({
         className,
       )}
     >
-      {app ? (
+      {previewApp ? (
         <AppRenderer
-          key={targetCollections.map(({ id }) => id).join(",")}
-          app={app}
+          key={`${targetCollections.map(({ id }) => id).join(",")}:${mainTsx.compiled}`}
+          app={previewApp}
         />
       ) : null}
       {appCompilationFailed ? (
@@ -50,27 +54,22 @@ export default function Preview({
   );
 }
 
-function getApp(
+function getPreviewApp(
+  app: App,
   mainTsx: TypescriptModule,
   targetCollections: Collection[],
 ): App | null {
   return !invalidCompiledValues.has(mainTsx.compiled)
     ? {
-        id: Id.generate.app(),
-        type: AppType.CollectionView,
-        name: "New App Preview",
+        ...app,
         latestVersion: {
-          id: Id.generate.appVersion(),
+          ...app.latestVersion,
           targetCollections: targetCollections.map((collection) => ({
             id: collection.id,
             versionId: collection.latestVersion.id,
           })),
-          files: {
-            "/main.tsx": mainTsx,
-          },
-          createdAt: new Date(),
+          files: { "/main.tsx": mainTsx },
         },
-        createdAt: new Date(),
       }
     : null;
 }

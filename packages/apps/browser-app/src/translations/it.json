@@ -275,12 +275,6 @@
   "ConversationsTable.tsx_wSAvhu": {
     "defaultMessage": "Assistente"
   },
-  "CreateApp.tsx_VzzYJk": {
-    "defaultMessage": "Crea"
-  },
-  "CreateApp.tsx_dtELK2": {
-    "defaultMessage": "Crea app"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Vai alla modalità manuale"
   },
@@ -580,9 +574,6 @@
   },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Crea nuova versione"
-  },
-  "EditApp.tsx_Vva+Yr": {
-    "defaultMessage": "Modifica nome"
   },
   "EditingToolbar.tsx_1hhuuF": {
     "defaultMessage": "Anteprima app"
@@ -1250,21 +1241,6 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Aggiungi un modello con comprensione audio per usare la voce"
   },
-  "SetNameAndSaveModal.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "SetNameAndSaveModal.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "SetNameAndSaveModal.tsx_J1XXSx": {
-    "defaultMessage": "La mia fantastica app"
-  },
-  "SetNameAndSaveModal.tsx_VzzYJk": {
-    "defaultMessage": "Crea"
-  },
-  "SetNameAndSaveModal.tsx_r+ksJu": {
-    "defaultMessage": "Crea app"
-  },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"
   },
@@ -1511,21 +1487,6 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Errore durante il salvataggio delle impostazioni globali"
   },
-  "UpdateNameModalForm.tsx_47FYwb": {
-    "defaultMessage": "Annulla"
-  },
-  "UpdateNameModalForm.tsx_BWpuKl": {
-    "defaultMessage": "Aggiorna"
-  },
-  "UpdateNameModalForm.tsx_HAlOn1": {
-    "defaultMessage": "Nome"
-  },
-  "UpdateNameModalForm.tsx_J1XXSx": {
-    "defaultMessage": "La mia fantastica app"
-  },
-  "UpdateNameModalForm.tsx_btR6aV": {
-    "defaultMessage": "Aggiorna il nome dell'app"
-  },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Riproduci"
   },
@@ -1648,5 +1609,65 @@
   },
   "Explainer.tsx_2ouWR4": {
     "defaultMessage": "<p> Qui nella Boutique puoi trovare collezioni e app già pronte, raggruppate in <b>pack</b> tematici che puoi installare con un click. </p>"
+  },
+  "rhfAppPermissions.ts_+Ynh/m": {
+    "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+  },
+  "DownloadsField.tsx_xj9V0+": {
+    "defaultMessage": "Consenti download di file"
+  },
+  "HttpOriginField.tsx_H8n1Sy": {
+    "defaultMessage": "Origine HTTP numero {itemNumber}"
+  },
+  "HttpOriginsField.tsx_JV06rg": {
+    "defaultMessage": "Consenti richieste HTTP verso queste destinazioni:"
+  },
+  "ModalsField.tsx_5g9TrD": {
+    "defaultMessage": "Consenti finestre di dialogo del browser e stampa"
+  },
+  "ModalsField.tsx_kgdY08": {
+    "defaultMessage": "Abilita stampa, alert, confirm, prompt e le altre finestre di dialogo modali del browser."
+  },
+  "HttpOriginField.tsx_+Ynh/m": {
+    "defaultMessage": "Inserisci un’origine HTTP(S) valida, senza percorso, query o frammento."
+  },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Aggiungi"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Rimuovi"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Elemento {number}"
+  },
+  "EditApp.tsx_RsXx1A": {
+    "defaultMessage": "Impostazioni app"
+  },
+  "UpdateSettingsModalForm.tsx_47FYwb": {
+    "defaultMessage": "Annulla"
+  },
+  "UpdateSettingsModalForm.tsx_HAlOn1": {
+    "defaultMessage": "Nome"
+  },
+  "UpdateSettingsModalForm.tsx_J1XXSx": {
+    "defaultMessage": "La mia fantastica app"
+  },
+  "UpdateSettingsModalForm.tsx_RsXx1A": {
+    "defaultMessage": "Impostazioni app"
+  },
+  "UpdateSettingsModalForm.tsx_jvo0vs": {
+    "defaultMessage": "Salva"
+  },
+  "UpdateSettingsModalForm.tsx_SFuk1v": {
+    "defaultMessage": "Permessi"
+  },
+  "RHFTextListField.tsx_pUcgkI": {
+    "defaultMessage": "Non ci sono elementi nell'elenco"
+  },
+  "useCreateAndEditApp.ts_NhuEyZ": {
+    "defaultMessage": "Errore durante la creazione dell'app"
+  },
+  "useCreateAndEditApp.ts_SbVBaN": {
+    "defaultMessage": "Nuova app"
   }
 }

@@ -3,6 +3,13 @@ import type { Schema } from "@superego/schema";
 import type AssistantName from "./enums/AssistantName.js";
 import type AppNameNotValid from "./errors/AppNameNotValid.js";
 import type AppNotFound from "./errors/AppNotFound.js";
+import type AppStateContentNotValid from "./errors/AppStateContentNotValid.js";
+import type AppStateMigrationFailed from "./errors/AppStateMigrationFailed.js";
+import type AppStateMigrationNotValid from "./errors/AppStateMigrationNotValid.js";
+import type AppStateMigrationRequired from "./errors/AppStateMigrationRequired.js";
+import type AppStateRevisionNotMatching from "./errors/AppStateRevisionNotMatching.js";
+import type AppStateSchemaNotValid from "./errors/AppStateSchemaNotValid.js";
+import type AppVersionIdNotMatching from "./errors/AppVersionIdNotMatching.js";
 import type ArgumentsNotValid from "./errors/ArgumentsNotValid.js";
 import type BackgroundJobNotFound from "./errors/BackgroundJobNotFound.js";
 import type CannotContinueConversation from "./errors/CannotContinueConversation.js";
@@ -49,6 +56,7 @@ import type TypescriptCompilationFailed from "./errors/TypescriptCompilationFail
 import type UnexpectedError from "./errors/UnexpectedError.js";
 import type WriteTypescriptModuleToolNotCalled from "./errors/WriteTypescriptModuleToolNotCalled.js";
 import type AppId from "./ids/AppId.js";
+import type AppVersionId from "./ids/AppVersionId.js";
 import type BackgroundJobId from "./ids/BackgroundJobId.js";
 import type CollectionCategoryId from "./ids/CollectionCategoryId.js";
 import type CollectionId from "./ids/CollectionId.js";
@@ -60,6 +68,9 @@ import type FileId from "./ids/FileId.js";
 import type PackId from "./ids/PackId.js";
 import type App from "./types/App.js";
 import type AppDefinition from "./types/AppDefinition.js";
+import type AppPermissions from "./types/AppPermissions.js";
+import type AppState from "./types/AppState.js";
+import type AppStateDefinition from "./types/AppStateDefinition.js";
 import type AppVersion from "./types/AppVersion.js";
 import type AudioContent from "./types/AudioContent.js";
 import type BackgroundJob from "./types/BackgroundJob.js";
@@ -553,8 +564,18 @@ export default interface Backend {
       definition: AppDefinition,
     ): ResultPromise<
       App,
-      AppNameNotValid | CollectionNotFound | ArgumentsNotValid | UnexpectedError
+      | AppStateSchemaNotValid
+      | AppStateContentNotValid
+      | AppNameNotValid
+      | CollectionNotFound
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
+
+    updatePermissions(
+      id: AppId,
+      permissions: AppPermissions,
+    ): ResultPromise<App, AppNotFound | ArgumentsNotValid | UnexpectedError>;
 
     updateName(
       id: AppId,
@@ -566,11 +587,22 @@ export default interface Backend {
 
     createNewVersion(
       id: AppId,
+      latestVersionId: AppVersionId,
       targetCollectionIds: CollectionId[],
       files: AppVersion["files"],
+      stateDefinition: AppStateDefinition,
     ): ResultPromise<
       App,
-      AppNotFound | CollectionNotFound | ArgumentsNotValid | UnexpectedError
+      | AppStateSchemaNotValid
+      | AppStateContentNotValid
+      | AppStateMigrationRequired
+      | AppStateMigrationNotValid
+      | AppStateMigrationFailed
+      | AppVersionIdNotMatching
+      | AppNotFound
+      | CollectionNotFound
+      | ArgumentsNotValid
+      | UnexpectedError
     >;
 
     delete(
@@ -585,6 +617,32 @@ export default interface Backend {
     >;
 
     list(): ResultPromise<App[], ArgumentsNotValid | UnexpectedError>;
+
+    getState(
+      id: AppId,
+      versionId: AppVersionId,
+    ): ResultPromise<
+      AppState,
+      | AppNotFound
+      | AppVersionIdNotMatching
+      | ArgumentsNotValid
+      | UnexpectedError
+    >;
+
+    updateState(
+      id: AppId,
+      versionId: AppVersionId,
+      latestRevision: number,
+      content: any,
+    ): ResultPromise<
+      AppState,
+      | AppNotFound
+      | AppVersionIdNotMatching
+      | AppStateRevisionNotMatching
+      | AppStateContentNotValid
+      | ArgumentsNotValid
+      | UnexpectedError
+    >;
   };
 
   packs: {
@@ -607,6 +665,8 @@ export default interface Backend {
       | ContentBlockingKeysGetterNotValid
       | ContentSummaryGetterNotValid
       | DefaultDocumentViewUiOptionsNotValid
+      | AppStateSchemaNotValid
+      | AppStateContentNotValid
       | AppNameNotValid
       | CollectionNotFound
       | DocumentContentNotValid

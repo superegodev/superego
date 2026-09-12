@@ -1,10 +1,13 @@
 import { Geoman } from "@geoman-io/maplibre-geoman-free";
 import type { Theme } from "@superego/backend";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { useEffect, useRef, useState } from "react";
 import type GeoJSONValue from "../../../utils/GeoJSONValue.js";
 import getCenterAndZoom from "../../../utils/getCenterAndZoom.js";
 import getMapStyle from "../../../utils/getMapStyle.js";
+
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 // Create the map and Geoman (on map load). The effect re-runs when `theme`
 // changes, tearing down and recreating the map with the new style. Other
@@ -48,7 +51,7 @@ export default function useCreateMap({
       });
       geomanRef.current = geoman;
 
-      map.on("gm:loaded", () => {
+      geoman.mapAdapter.on("gm:loaded", () => {
         if (mapRef.current !== map) {
           return;
         }

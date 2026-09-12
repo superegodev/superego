@@ -104,19 +104,26 @@ export default class DemoDataRepositoriesManager implements DataRepositoriesMana
       createSavepoint,
       rollbackToSavepoint,
     );
-    const { action, returnValue } = await fn(repos);
-    repos.dispose();
-    if (shouldAbort) {
-      throw new Error("Transaction aborted");
+    try {
+      const { action, returnValue } = await fn(repos);
+      repos.dispose();
+      if (shouldAbort) {
+        throw new Error("Transaction aborted");
+      }
+      if (action === "commit" && transactionData.version !== initialVersion) {
+        this.lock = null;
+        await this.writeData(clone(transactionData), initialVersion);
+        DemoDataRepositoriesManager.runTransactionSucceededCallbacks(
+          transactionSucceededCallbacks,
+        );
+      }
+      return returnValue;
+    } finally {
+      repos.dispose();
+      if (this.lock === transactionId) {
+        this.lock = null;
+      }
     }
-    if (action === "commit" && transactionData.version !== initialVersion) {
-      this.lock = null;
-      await this.writeData(clone(transactionData), initialVersion);
-      DemoDataRepositoriesManager.runTransactionSucceededCallbacks(
-        transactionSucceededCallbacks,
-      );
-    }
-    return returnValue;
   }
 
   private async writeData(data: Data, initialVersion: string): Promise<void> {

@@ -1,6 +1,6 @@
 import type { TypescriptFile, TypescriptModule } from "@superego/backend";
 import { inferenceOptionsHas } from "@superego/shared-utils";
-import type { RefObject } from "react";
+import { type RefObject, useState } from "react";
 import { PiMagicWand } from "react-icons/pi";
 import { useIntl } from "react-intl";
 import { useImplementTypescriptModule } from "../../../../business-logic/backend/hooks.js";
@@ -36,6 +36,7 @@ export default function ImplementWithAssistantButton({
 }: Props) {
   const intl = useIntl();
   const defaultInferenceOptions = useDefaultInferenceOptions();
+  const [implementationLineCount, setImplementationLineCount] = useState(10);
   const { isPending, mutate } = useImplementTypescriptModule();
   return inferenceOptionsHas(defaultInferenceOptions, "completion") &&
     assistantImplementation ? (
@@ -50,6 +51,8 @@ export default function ImplementWithAssistantButton({
           if (!valueModelRef.current) {
             return;
           }
+          const source = valueModelRef.current.getValue();
+          setImplementationLineCount(source.split("\n").length);
           const result = await mutate(
             {
               description: assistantImplementation.description,
@@ -60,7 +63,7 @@ export default function ImplementWithAssistantButton({
               libs: typescriptLibs,
               startingPoint: {
                 path: filePath,
-                source: valueModelRef.current.getValue(),
+                source: source,
               },
               userRequest: assistantImplementation.userRequest,
             },
@@ -87,9 +90,7 @@ export default function ImplementWithAssistantButton({
         <div className={cs.ImplementWithAssistantButton.implementingMask}>
           <Skeleton
             variant="list"
-            itemCount={
-              valueModelRef.current?.getValue().split("\n").length ?? 10
-            }
+            itemCount={implementationLineCount}
             itemHeight="19px"
             itemGap="2px"
             randomizeItemWidth={true}

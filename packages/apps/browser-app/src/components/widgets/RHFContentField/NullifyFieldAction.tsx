@@ -6,7 +6,7 @@ import * as cs from "./RHFContentField.css.js";
 
 interface Props {
   isNullable: boolean;
-  field: ControllerRenderProps;
+  field: Pick<ControllerRenderProps, "value" | "onChange">;
   fieldLabel: string;
 }
 export default function NullifyFieldAction({

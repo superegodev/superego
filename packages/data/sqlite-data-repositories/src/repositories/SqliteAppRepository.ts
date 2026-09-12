@@ -1,4 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
+import { encode } from "@msgpack/msgpack";
 import type { AppId } from "@superego/backend";
 import type { AppEntity, AppRepository } from "@superego/executing-backend";
 import type SqliteApp from "../types/SqliteApp.js";
@@ -13,11 +14,18 @@ export default class SqliteAppRepository implements AppRepository {
     this.db
       .prepare(`
         INSERT INTO "${table}"
-          ("id", "type", "name", "created_at")
+          ("id", "type", "name", "created_at", "state", "permissions")
         VALUES
-          (?, ?, ?, ?)
+          (?, ?, ?, ?, ?, ?)
       `)
-      .run(app.id, app.type, app.name, app.createdAt.toISOString());
+      .run(
+        app.id,
+        app.type,
+        app.name,
+        app.createdAt.toISOString(),
+        encode(app.state),
+        encode(app.permissions),
+      );
   }
 
   async replace(app: AppEntity): Promise<void> {
@@ -27,10 +35,19 @@ export default class SqliteAppRepository implements AppRepository {
         SET
           "type" = ?,
           "name" = ?,
+          "state" = ?,
+          "permissions" = ?,
           "created_at" = ?
         WHERE "id" = ?
       `)
-      .run(app.type, app.name, app.createdAt.toISOString(), app.id);
+      .run(
+        app.type,
+        app.name,
+        encode(app.state),
+        encode(app.permissions),
+        app.createdAt.toISOString(),
+        app.id,
+      );
   }
 
   async delete(id: AppId): Promise<AppId> {

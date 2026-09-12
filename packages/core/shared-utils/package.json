@@ -18,14 +18,15 @@
     "@superego/global-types": "workspace:*",
     "@superego/schema": "workspace:*",
     "base-x": "^5.0.1",
-    "es-toolkit": "^1.49.0",
-    "uuid": "^14.0.1",
-    "valibot": "^1.4.2"
+    "es-toolkit": "^1.52.0",
+    "uuid": "^14.0.2",
+    "valibot": "^1.5.0"
   },
   "devDependencies": {
-    "@fast-check/vitest": "^0.4.1",
-    "@vitest/browser-playwright": "^4.1.10",
+    "@fast-check/vitest": "^0.5.0",
+    "@vitest/browser-playwright": "^5.0.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vite": "^8.3.0",
+    "vitest": "^5.0.0"
   }
 }

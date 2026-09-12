@@ -70,6 +70,8 @@ export default function useTailMinHeight(
   );
 
   useEffect(() => {
+    // Recalculate after content commits because the result depends on DOM measurements.
+    // oxlint-disable-next-line react/set-state-in-effect
     recalculate();
     // deps are also treated as useEffect dependencies by the consumer, so they
     // have the same "semantics".

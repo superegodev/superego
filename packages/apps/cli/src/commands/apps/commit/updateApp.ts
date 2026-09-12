@@ -23,14 +23,31 @@ export default async function updateApp({
     operations.push("updated name");
   }
 
-  if (changes.sourceChanged || changes.targetCollectionsChanged) {
+  if (
+    changes.sourceChanged ||
+    changes.targetCollectionsChanged ||
+    changes.stateDefinitionChanged
+  ) {
     app = await createAppVersion({
       backend,
       app,
       manifest,
       mainModule: changes.mainModule!,
+      path,
     });
     operations.push("created new version");
+  }
+
+  if (changes.permissionsChanged) {
+    const result = await backend.apps.updatePermissions(
+      app.id,
+      manifest.permissions,
+    );
+    if (!result.success) {
+      throw new Error(JSON.stringify(result.error));
+    }
+    app = result.data;
+    operations.push("updated permissions");
   }
 
   if (operations.length === 0) {

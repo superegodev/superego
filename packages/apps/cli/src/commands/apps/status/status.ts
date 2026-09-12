@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { isEqual } from "es-toolkit";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import {
@@ -9,6 +10,10 @@ import {
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
+import {
+  hasStateDefinitionChanges,
+  readStateDefinitionSource,
+} from "../common/stateDefinition.js";
 
 export default useMarkdownHelp(
   new Command("status")
@@ -35,6 +40,17 @@ export default useMarkdownHelp(
           )
         ) {
           status.push("metadata changed");
+        }
+        if (!isEqual(manifest.permissions, app.permissions)) {
+          status.push("permissions changed");
+        }
+        if (
+          hasStateDefinitionChanges(
+            readStateDefinitionSource(path),
+            app.latestVersion.stateDefinition,
+          )
+        ) {
+          status.push("state definition changed");
         }
         if (source !== app.latestVersion.files["/main.tsx"].source) {
           status.push("source changed");

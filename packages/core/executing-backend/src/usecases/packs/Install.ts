@@ -3,6 +3,8 @@ import type {
   AppId,
   AppNameNotValid,
   AppNotFound,
+  AppStateContentNotValid,
+  AppStateSchemaNotValid,
   AppVersion,
   Backend,
   Collection,
@@ -79,6 +81,8 @@ export default class PacksInstall extends BackendUsecase<
     }),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appStateSchemaNotValid(),
+      structuralSchemas.backend.errors.appStateContentNotValid(),
       structuralSchemas.backend.errors.appNotFound(),
       structuralSchemas.backend.errors.collectionCategoryIconNotValid(),
       structuralSchemas.backend.errors.collectionCategoryNameNotValid(),
@@ -120,6 +124,8 @@ export default class PacksInstall extends BackendUsecase<
     | ContentBlockingKeysGetterNotValid
     | ContentSummaryGetterNotValid
     | DefaultDocumentViewUiOptionsNotValid
+    | AppStateSchemaNotValid
+    | AppStateContentNotValid
     | AppNameNotValid
     | CollectionNotFound
     | DocumentContentNotValid
@@ -226,6 +232,8 @@ export default class PacksInstall extends BackendUsecase<
           targetCollectionIds: definition.targetCollectionIds.map((id) =>
             Id.is.protoCollection(id) ? collectionIdMapping.get(id)! : id,
           ),
+          permissions: definition.permissions,
+          stateDefinition: definition.stateDefinition,
           files: PacksInstall.replaceProtoCollectionIdsInAppFiles(
             definition.files,
             collectionIdMapping,

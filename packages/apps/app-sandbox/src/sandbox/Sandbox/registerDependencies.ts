@@ -23,9 +23,11 @@ import Text from "../components/Text/Text.js";
 import Tile from "../components/Tile/Tile.js";
 import TiptapRichTextField from "../components/TiptapRichTextField/TiptapRichTextField.js";
 import ToggleButton from "../components/ToggleButton/ToggleButton.js";
+import useAppState from "../hooks/useAppState.js";
 import useCreateDocument from "../hooks/useCreateDocument.js";
 import useCreateNewDocumentVersion from "../hooks/useCreateNewDocumentVersion.js";
 import useDeleteDocument from "../hooks/useDeleteDocument.js";
+import useUpdateAppState from "../hooks/useUpdateAppState.js";
 import theme from "../theme/theme.js";
 import dependenciesGlobalVar from "./dependenciesGlobalVar.js";
 
@@ -60,6 +62,8 @@ export default function registerDependencies() {
         ToggleButton,
       },
       "@superego/app-sandbox/hooks": {
+        useAppState,
+        useUpdateAppState,
         useCreateDocument,
         useCreateNewDocumentVersion,
         useDeleteDocument,

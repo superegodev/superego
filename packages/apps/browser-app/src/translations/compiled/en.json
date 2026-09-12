@@ -649,18 +649,6 @@
       "value": "Assistant"
     }
   ],
-  "CreateApp.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Create"
-    }
-  ],
-  "CreateApp.tsx_dtELK2": [
-    {
-      "type": 0,
-      "value": "Create App"
-    }
-  ],
   "CreateCollectionAssisted.tsx_7uKYfK": [
     {
       "type": 0,
@@ -1320,6 +1308,12 @@
       "value": "Id"
     }
   ],
+  "DownloadsField.tsx_xj9V0+": [
+    {
+      "type": 0,
+      "value": "Allow file downloads"
+    }
+  ],
   "DuplicateDocumentDetectedModal.tsx_47FYwb": [
     {
       "type": 0,
@@ -1412,16 +1406,16 @@
       "value": " » Edit"
     }
   ],
+  "EditApp.tsx_RsXx1A": [
+    {
+      "type": 0,
+      "value": "App settings"
+    }
+  ],
   "EditApp.tsx_Vl13tq": [
     {
       "type": 0,
       "value": "Create new version"
-    }
-  ],
-  "EditApp.tsx_Vva+Yr": [
-    {
-      "type": 0,
-      "value": "Edit name"
     }
   ],
   "EditingToolbar.tsx_1hhuuF": [
@@ -2052,6 +2046,28 @@
       "value": "Versions history"
     }
   ],
+  "HttpOriginField.tsx_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+    }
+  ],
+  "HttpOriginField.tsx_H8n1Sy": [
+    {
+      "type": 0,
+      "value": "HTTP origin number "
+    },
+    {
+      "type": 1,
+      "value": "itemNumber"
+    }
+  ],
+  "HttpOriginsField.tsx_JV06rg": [
+    {
+      "type": 0,
+      "value": "Allow HTTP requests to these destinations:"
+    }
+  ],
   "ImplementWithAssistantButton.tsx_40hUOu": [
     {
       "type": 0,
@@ -2430,6 +2446,18 @@
           "value": " in the input below. "
         }
       ]
+    }
+  ],
+  "ModalsField.tsx_5g9TrD": [
+    {
+      "type": 0,
+      "value": "Allow browser dialogs and printing"
+    }
+  ],
+  "ModalsField.tsx_kgdY08": [
+    {
+      "type": 0,
+      "value": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
     }
   ],
   "Model.tsx_G/yZLu": [
@@ -3216,6 +3244,34 @@
       "value": "Defines the \"shape\" of document contents in this collection."
     }
   ],
+  "RHFTextListField.tsx_2/2yg+": [
+    {
+      "type": 0,
+      "value": "Add"
+    }
+  ],
+  "RHFTextListField.tsx_G/yZLu": [
+    {
+      "type": 0,
+      "value": "Remove"
+    }
+  ],
+  "RHFTextListField.tsx_OT7vQx": [
+    {
+      "type": 0,
+      "value": "Item "
+    },
+    {
+      "type": 1,
+      "value": "number"
+    }
+  ],
+  "RHFTextListField.tsx_pUcgkI": [
+    {
+      "type": 0,
+      "value": "There are no items in the list"
+    }
+  ],
   "ReasoningEffortSelect.tsx_2X1lvg": [
     {
       "type": 0,
@@ -3652,36 +3708,6 @@
       "value": "Add model w/ audio understanding to use voice"
     }
   ],
-  "SetNameAndSaveModal.tsx_47FYwb": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "SetNameAndSaveModal.tsx_HAlOn1": [
-    {
-      "type": 0,
-      "value": "Name"
-    }
-  ],
-  "SetNameAndSaveModal.tsx_J1XXSx": [
-    {
-      "type": 0,
-      "value": "My Awesome App"
-    }
-  ],
-  "SetNameAndSaveModal.tsx_VzzYJk": [
-    {
-      "type": 0,
-      "value": "Create"
-    }
-  ],
-  "SetNameAndSaveModal.tsx_r+ksJu": [
-    {
-      "type": 0,
-      "value": "Create app"
-    }
-  ],
   "StructField.tsx_BPj/Jo": [
     {
       "type": 0,
@@ -4028,34 +4054,40 @@
       "value": "Error saving global settings"
     }
   ],
-  "UpdateNameModalForm.tsx_47FYwb": [
+  "UpdateSettingsModalForm.tsx_47FYwb": [
     {
       "type": 0,
       "value": "Cancel"
     }
   ],
-  "UpdateNameModalForm.tsx_BWpuKl": [
-    {
-      "type": 0,
-      "value": "Update"
-    }
-  ],
-  "UpdateNameModalForm.tsx_HAlOn1": [
+  "UpdateSettingsModalForm.tsx_HAlOn1": [
     {
       "type": 0,
       "value": "Name"
     }
   ],
-  "UpdateNameModalForm.tsx_J1XXSx": [
+  "UpdateSettingsModalForm.tsx_J1XXSx": [
     {
       "type": 0,
       "value": "My Awesome App"
     }
   ],
-  "UpdateNameModalForm.tsx_btR6aV": [
+  "UpdateSettingsModalForm.tsx_RsXx1A": [
     {
       "type": 0,
-      "value": "Update app name"
+      "value": "App settings"
+    }
+  ],
+  "UpdateSettingsModalForm.tsx_SFuk1v": [
+    {
+      "type": 0,
+      "value": "Permissions"
+    }
+  ],
+  "UpdateSettingsModalForm.tsx_jvo0vs": [
+    {
+      "type": 0,
+      "value": "Save"
     }
   ],
   "UserMessage.tsx_J3ca41": [
@@ -4573,6 +4605,12 @@
       "value": "Opening file failed"
     }
   ],
+  "rhfAppPermissions.ts_+Ynh/m": [
+    {
+      "type": 0,
+      "value": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+    }
+  ],
   "typescriptModule.ts_MZNYNj": [
     {
       "type": 0,
@@ -4589,6 +4627,18 @@
     {
       "type": 0,
       "value": "TypeScript compilation failed"
+    }
+  ],
+  "useCreateAndEditApp.ts_NhuEyZ": [
+    {
+      "type": 0,
+      "value": "Error creating app"
+    }
+  ],
+  "useCreateAndEditApp.ts_SbVBaN": [
+    {
+      "type": 0,
+      "value": "New app"
     }
   ]
 }

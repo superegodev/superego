@@ -1,8 +1,12 @@
 import type {
+  ArgumentsNotValid,
   CollectionNotFound,
   DocumentContentNotValid,
   DocumentDefinition,
+  DuplicateDocumentDetected,
   FilesNotFound,
+  MakingContentBlockingKeysFailed,
+  ReferencedDocumentsNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import { useMutation } from "@tanstack/react-query";
@@ -18,6 +22,10 @@ interface UseCreateDocument {
     | CollectionNotFound
     | DocumentContentNotValid
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | MakingContentBlockingKeysFailed
+    | DuplicateDocumentDetected
+    | ArgumentsNotValid
     | UnexpectedError
     | null;
   data: null;
@@ -29,6 +37,10 @@ export default function useCreateDocument(): UseCreateDocument {
     | CollectionNotFound
     | DocumentContentNotValid
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | MakingContentBlockingKeysFailed
+    | DuplicateDocumentDetected
+    | ArgumentsNotValid
     | UnexpectedError,
     DocumentDefinition
   >({

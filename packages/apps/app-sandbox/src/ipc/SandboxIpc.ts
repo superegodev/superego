@@ -36,7 +36,10 @@ export default class SandboxIpc {
       ) => void;
     }>,
   ) {
-    const handleMessage = ({ data: message }: MessageEvent) => {
+    const handleMessage = ({ data: message, source }: MessageEvent) => {
+      if (source !== this.host) {
+        return;
+      }
       if (isRenderAppMessage(message) && handlers[MessageType.RenderApp]) {
         handlers[MessageType.RenderApp](message);
       }

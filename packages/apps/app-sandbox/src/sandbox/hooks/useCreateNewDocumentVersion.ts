@@ -1,12 +1,16 @@
 import type {
+  ArgumentsNotValid,
   CollectionId,
   CollectionNotFound,
   DocumentContentNotValid,
+  DocumentContentPatchNotValid,
   DocumentId,
   DocumentNotFound,
   DocumentVersionId,
   DocumentVersionIdNotMatching,
   FilesNotFound,
+  MakingContentBlockingKeysFailed,
+  ReferencedDocumentsNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import { useMutation } from "@tanstack/react-query";
@@ -27,8 +31,12 @@ interface UseCreateNewDocumentVersion {
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
+    | MakingContentBlockingKeysFailed
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | ArgumentsNotValid
     | UnexpectedError
     | null;
   data: null;
@@ -40,8 +48,12 @@ export default function useCreateNewDocumentVersion(): UseCreateNewDocumentVersi
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
+    | MakingContentBlockingKeysFailed
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | ArgumentsNotValid
     | UnexpectedError,
     [
       collectionId: CollectionId,

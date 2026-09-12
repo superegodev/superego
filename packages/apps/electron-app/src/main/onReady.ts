@@ -1,4 +1,4 @@
-import type { BrowserWindow } from "electron";
+import { type BrowserWindow, session } from "electron";
 import BackendIPCProxyServer from "../ipc-proxies/BackendIPCProxyServer.js";
 import CliIPCProxyServer from "../ipc-proxies/CliIPCProxyServer.js";
 import OpenFileWithNativeAppIPCProxyServer from "../ipc-proxies/OpenFileWithNativeAppIPCProxyServer.js";
@@ -7,10 +7,12 @@ import WindowCloseIPCProxyServer from "../ipc-proxies/WindowCloseIPCProxyServer.
 import createBackend from "./createBackend.js";
 import createWindow from "./createWindow.js";
 import exportDatabase from "./exportDatabase.js";
+import registerAppSandboxCors from "./registerAppSandboxCors.js";
 import setApplicationMenu from "./setApplicationMenu.js";
 import getIntl from "./translations/getIntl.js";
 
 export default function onReady(): BrowserWindow {
+  registerAppSandboxCors(session.defaultSession);
   const intl = getIntl();
   const backend = createBackend();
   new BackendIPCProxyServer(backend).start();

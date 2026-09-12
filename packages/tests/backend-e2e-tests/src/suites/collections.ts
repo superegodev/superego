@@ -4,6 +4,8 @@ import {
   type LiteCollection,
 } from "@superego/backend";
 import { DataType } from "@superego/schema";
+import { defaultAppPermissions } from "@superego/shared-utils";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -117,70 +119,6 @@ export default rd<GetDependencies>("Collections", (deps) => {
           },
         },
       });
-    });
-
-    it("atomicity: no collections created if one fails validation", async () => {
-      // Setup SUT
-      const { backend } = deps();
-
-      // Exercise
-      const result = await backend.collections.createMany([
-        {
-          settings: {
-            name: "valid collection",
-            icon: null,
-            collectionCategoryId: null,
-            defaultCollectionViewAppId: null,
-            description: null,
-            assistantInstructions: null,
-            redirectToCollectionAfterDocumentCreation: false,
-          },
-          schema: {
-            types: { Root: { dataType: DataType.Struct, properties: {} } },
-            rootType: "Root",
-          },
-          versionSettings: {
-            contentBlockingKeysGetter: null,
-            contentSummaryGetter: {
-              source: "",
-              compiled:
-                "export default function getContentSummary() { return {}; }",
-            },
-            defaultDocumentViewUiOptions: null,
-          },
-        },
-        {
-          settings: {
-            name: "",
-            icon: null,
-            collectionCategoryId: null,
-            defaultCollectionViewAppId: null,
-            description: null,
-            assistantInstructions: null,
-            redirectToCollectionAfterDocumentCreation: false,
-          },
-          schema: {
-            types: { Root: { dataType: DataType.Struct, properties: {} } },
-            rootType: "Root",
-          },
-          versionSettings: {
-            contentBlockingKeysGetter: null,
-            contentSummaryGetter: {
-              source: "",
-              compiled:
-                "export default function getContentSummary() { return {}; }",
-            },
-            defaultDocumentViewUiOptions: null,
-          },
-        },
-      ]);
-
-      // Verify
-      expect(result.success).toBe(false);
-      expect(result.error?.name).toBe("CollectionSettingsNotValid");
-      const listResult = await backend.collections.list(false);
-      assert.isTrue(listResult.success);
-      expect(listResult.data).toHaveLength(0);
     });
 
     it("error: CollectionCategoryNotFound", async () => {
@@ -1253,6 +1191,70 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
+    it("error: no collections created if one fails validation (atomicity)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.collections.createMany([
+        {
+          settings: {
+            name: "valid collection",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: null,
+          },
+        },
+        {
+          settings: {
+            name: "",
+            icon: null,
+            collectionCategoryId: null,
+            defaultCollectionViewAppId: null,
+            description: null,
+            assistantInstructions: null,
+            redirectToCollectionAfterDocumentCreation: false,
+          },
+          schema: {
+            types: { Root: { dataType: DataType.Struct, properties: {} } },
+            rootType: "Root",
+          },
+          versionSettings: {
+            contentBlockingKeysGetter: null,
+            contentSummaryGetter: {
+              source: "",
+              compiled:
+                "export default function getContentSummary() { return {}; }",
+            },
+            defaultDocumentViewUiOptions: null,
+          },
+        },
+      ]);
+
+      // Verify
+      expect(result.success).toBe(false);
+      expect(result.error?.name).toBe("CollectionSettingsNotValid");
+      const listResult = await backend.collections.list(false);
+      assert.isTrue(listResult.success);
+      expect(listResult.data).toHaveLength(0);
+    });
+
     it("success: creates single collection", async () => {
       // Setup SUT
       const { backend } = deps();
@@ -1787,6 +1789,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
         });
       assert.isTrue(createCollectionCategoryResult.success);
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "app",
         targetCollectionIds: [],
@@ -3617,6 +3621,8 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "collection view",
         targetCollectionIds: [createCollectionResult.data.id],
@@ -3890,7 +3896,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       });
     });
 
-    it("success", async () => {
+    it("success: gets the collection", async () => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.collections.create({
@@ -4169,7 +4175,7 @@ export default rd<GetDependencies>("Collections", (deps) => {
       expect(result.error.name).toBe("ArgumentsNotValid");
     });
 
-    it("success", async () => {
+    it("success: returns the TypeScript schema", async () => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.collections.create({

@@ -284,12 +284,6 @@
   "ConversationsTable.tsx_wSAvhu": {
     "defaultMessage": "Assistant"
   },
-  "CreateApp.tsx_VzzYJk": {
-    "defaultMessage": "Create"
-  },
-  "CreateApp.tsx_dtELK2": {
-    "defaultMessage": "Create App"
-  },
   "CreateCollectionAssisted.tsx_7uKYfK": {
     "defaultMessage": "Go to manual mode"
   },
@@ -530,6 +524,9 @@
   "DocumentsTable.tsx_kGGU2D": {
     "defaultMessage": "Id"
   },
+  "DownloadsField.tsx_xj9V0+": {
+    "defaultMessage": "Allow file downloads"
+  },
   "DuplicateDocumentDetectedModal.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
@@ -572,11 +569,11 @@
   "EditApp.tsx_LVy7EO": {
     "defaultMessage": "🧩 {app} » Edit"
   },
+  "EditApp.tsx_RsXx1A": {
+    "defaultMessage": "App settings"
+  },
   "EditApp.tsx_Vl13tq": {
     "defaultMessage": "Create new version"
-  },
-  "EditApp.tsx_Vva+Yr": {
-    "defaultMessage": "Edit name"
   },
   "EditingToolbar.tsx_1hhuuF": {
     "defaultMessage": "App preview"
@@ -821,6 +818,15 @@
   "History.tsx_nT6w+N": {
     "defaultMessage": "Versions history"
   },
+  "HttpOriginField.tsx_+Ynh/m": {
+    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+  },
+  "HttpOriginField.tsx_H8n1Sy": {
+    "defaultMessage": "HTTP origin number {itemNumber}"
+  },
+  "HttpOriginsField.tsx_JV06rg": {
+    "defaultMessage": "Allow HTTP requests to these destinations:"
+  },
   "ImplementWithAssistantButton.tsx_40hUOu": {
     "defaultMessage": "Implement with assistant"
   },
@@ -958,6 +964,12 @@
   },
   "ModalContent.tsx_qjTjxw": {
     "defaultMessage": "<p> Deleting the document will permanently delete the document, all its versions, and all its files. </p> <p> If you're sure you want to delete the document, write <i>delete</i> in the input below. </p>"
+  },
+  "ModalsField.tsx_5g9TrD": {
+    "defaultMessage": "Allow browser dialogs and printing"
+  },
+  "ModalsField.tsx_kgdY08": {
+    "defaultMessage": "Enables printing, alert, confirm, prompt, and other browser modal dialogs."
   },
   "Model.tsx_G/yZLu": {
     "defaultMessage": "Remove"
@@ -1130,6 +1142,18 @@
   "RHFSchemaField.tsx_IBR6nN": {
     "defaultMessage": "Defines the \"shape\" of document contents in this collection."
   },
+  "RHFTextListField.tsx_2/2yg+": {
+    "defaultMessage": "Add"
+  },
+  "RHFTextListField.tsx_G/yZLu": {
+    "defaultMessage": "Remove"
+  },
+  "RHFTextListField.tsx_OT7vQx": {
+    "defaultMessage": "Item {number}"
+  },
+  "RHFTextListField.tsx_pUcgkI": {
+    "defaultMessage": "There are no items in the list"
+  },
   "ReasoningEffortSelect.tsx_2X1lvg": {
     "defaultMessage": "Reasoning effort"
   },
@@ -1274,21 +1298,6 @@
   "SendRecordButtons.tsx_kSy9pJ": {
     "defaultMessage": "Add model w/ audio understanding to use voice"
   },
-  "SetNameAndSaveModal.tsx_47FYwb": {
-    "defaultMessage": "Cancel"
-  },
-  "SetNameAndSaveModal.tsx_HAlOn1": {
-    "defaultMessage": "Name"
-  },
-  "SetNameAndSaveModal.tsx_J1XXSx": {
-    "defaultMessage": "My Awesome App"
-  },
-  "SetNameAndSaveModal.tsx_VzzYJk": {
-    "defaultMessage": "Create"
-  },
-  "SetNameAndSaveModal.tsx_r+ksJu": {
-    "defaultMessage": "Create app"
-  },
   "StructField.tsx_BPj/Jo": {
     "defaultMessage": "null"
   },
@@ -1427,20 +1436,23 @@
   "UpdateGlobalSettingsForm.tsx_pbF7L9": {
     "defaultMessage": "Error saving global settings"
   },
-  "UpdateNameModalForm.tsx_47FYwb": {
+  "UpdateSettingsModalForm.tsx_47FYwb": {
     "defaultMessage": "Cancel"
   },
-  "UpdateNameModalForm.tsx_BWpuKl": {
-    "defaultMessage": "Update"
-  },
-  "UpdateNameModalForm.tsx_HAlOn1": {
+  "UpdateSettingsModalForm.tsx_HAlOn1": {
     "defaultMessage": "Name"
   },
-  "UpdateNameModalForm.tsx_J1XXSx": {
+  "UpdateSettingsModalForm.tsx_J1XXSx": {
     "defaultMessage": "My Awesome App"
   },
-  "UpdateNameModalForm.tsx_btR6aV": {
-    "defaultMessage": "Update app name"
+  "UpdateSettingsModalForm.tsx_RsXx1A": {
+    "defaultMessage": "App settings"
+  },
+  "UpdateSettingsModalForm.tsx_SFuk1v": {
+    "defaultMessage": "Permissions"
+  },
+  "UpdateSettingsModalForm.tsx_jvo0vs": {
+    "defaultMessage": "Save"
   },
   "UserMessage.tsx_J3ca41": {
     "defaultMessage": "Play"
@@ -1640,6 +1652,9 @@
   "openFileWithNativeApp.ts_Blh3UZ": {
     "defaultMessage": "Opening file failed"
   },
+  "rhfAppPermissions.ts_+Ynh/m": {
+    "defaultMessage": "Enter a valid HTTP(S) origin without a path, query, or fragment."
+  },
   "typescriptModule.ts_MZNYNj": {
     "defaultMessage": "TypeScript compilation required"
   },
@@ -1648,5 +1663,11 @@
   },
   "typescriptModule.ts_yZ+w+N": {
     "defaultMessage": "TypeScript compilation failed"
+  },
+  "useCreateAndEditApp.ts_NhuEyZ": {
+    "defaultMessage": "Error creating app"
+  },
+  "useCreateAndEditApp.ts_SbVBaN": {
+    "defaultMessage": "New app"
   }
 }

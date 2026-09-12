@@ -14,7 +14,8 @@ export default function useEditor(
   language: "typescript" | "json",
   value: string,
   onChange: (newValue: string) => void,
-  undoRedo: UndoRedo | undefined,
+  setUndoRedoState: UndoRedo["setState"] | undefined,
+  commandsRef: RefObject<UndoRedo.Commands | null> | undefined,
   valueModelRef: RefObject<monaco.editor.ITextModel | null>,
   ariaLabel: string | undefined,
   filePath: `/${string}.ts` | `/${string}.tsx` | `/${string}.json`,
@@ -34,8 +35,8 @@ export default function useEditor(
       monaco.Uri.parse(`${basePath}${filePath}`),
     );
 
-    if (undoRedo) {
-      undoRedo.commandsRef.current = {
+    if (commandsRef) {
+      commandsRef.current = {
         undo: valueModelRef.current.undo.bind(valueModelRef.current),
         redo: valueModelRef.current.redo.bind(valueModelRef.current),
       };
@@ -49,8 +50,8 @@ export default function useEditor(
       const newValue = valueModelRef.current.getValue();
       if (newValue !== undefined) {
         onChange(newValue);
-        if (undoRedo) {
-          undoRedo.setState({
+        if (setUndoRedoState) {
+          setUndoRedoState({
             canUndo: valueModelRef.current.canUndo(),
             canRedo: valueModelRef.current.canRedo(),
           });
@@ -118,17 +119,16 @@ export default function useEditor(
       editorRef.current = null;
       valueModelRef.current?.dispose();
       valueModelRef.current = null;
-      if (undoRedo) {
-        // Intentional, we want to clear the ref.
-        // oxlint-disable-next-line eslint-plugin-react-hooks/exhaustive-deps
-        undoRedo.commandsRef.current = null;
+      if (commandsRef) {
+        commandsRef.current = null;
       }
     };
   }, [
     basePath,
     language,
     onChange,
-    undoRedo,
+    setUndoRedoState,
+    commandsRef,
     // Passed in just to avoid react-hooks/exhaustive-deps complaining. Since
     // it's a ref, it's stable and passing it here has no effect.
     valueModelRef,

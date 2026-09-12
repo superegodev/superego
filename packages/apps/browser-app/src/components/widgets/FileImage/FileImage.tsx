@@ -9,21 +9,16 @@ interface Props {
   className?: string;
 }
 export default function FileImage({ file, backend, className }: Props) {
-  const [image, setImage] = useState<{
+  const [loadedImage, setLoadedImage] = useState<{
+    file: Props["file"];
     content: Uint8Array<ArrayBuffer> | Blob;
     mimeType: `image/${string}`;
-  } | null>(() =>
-    "content" in file
-      ? { mimeType: file.mimeType, content: file.content }
-      : null,
-  );
+  } | null>(null);
+  const image =
+    "content" in file ? file : loadedImage?.file === file ? loadedImage : null;
 
   useEffect(() => {
     if ("content" in file) {
-      setImage({
-        mimeType: file.mimeType,
-        content: file.content,
-      });
       return;
     }
     let cancelled = false;
@@ -32,7 +27,8 @@ export default function FileImage({ file, backend, className }: Props) {
         file.id as FileId,
       );
       if (!cancelled && success) {
-        setImage({
+        setLoadedImage({
+          file,
           mimeType: file.mimeType,
           content: data,
         });

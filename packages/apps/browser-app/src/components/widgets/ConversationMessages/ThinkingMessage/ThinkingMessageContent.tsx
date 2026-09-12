@@ -1,5 +1,5 @@
 import type { Conversation } from "@superego/backend";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import MatrixSpinner from "../../../design-system/MatrixSpinner/MatrixSpinner.js";
 import TypingText from "../../../design-system/TypingText/TypingText.js";
@@ -16,11 +16,28 @@ export default function ThinkingMessageContent({ conversation }: Props) {
   const statusText = getStatusText(intl, conversation);
   const reasoningTrace = getReasoningTrace(conversation);
 
-  const [showSpinner, setShowSpinner] = useState(!reasoningTrace);
-  useEffect(() => {
-    setShowSpinner(!reasoningTrace);
-  }, [reasoningTrace]);
-  const onEffectFinished = useCallback(() => setShowSpinner(true), []);
+  const [animation, setAnimation] = useState({
+    reasoningTrace,
+    revision: 0,
+    finished: false,
+  });
+  if (animation.reasoningTrace !== reasoningTrace) {
+    setAnimation({
+      reasoningTrace,
+      revision: animation.revision + 1,
+      finished: false,
+    });
+  }
+  const { revision } = animation;
+  const onEffectFinished = useCallback(() => {
+    // Completion belongs to this animation, even if the same text appears again.
+    setAnimation((current) =>
+      current.revision === revision && !current.finished
+        ? { ...current, finished: true }
+        : current,
+    );
+  }, [revision]);
+  const showSpinner = !reasoningTrace || animation.finished;
 
   return (
     <div className={cs.ThinkingMessageContent.root}>

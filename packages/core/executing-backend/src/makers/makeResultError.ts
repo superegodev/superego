@@ -1,6 +1,13 @@
 import type {
   AppNameNotValid,
   AppNotFound,
+  AppStateContentNotValid,
+  AppStateMigrationFailed,
+  AppStateMigrationNotValid,
+  AppStateMigrationRequired,
+  AppStateRevisionNotMatching,
+  AppStateSchemaNotValid,
+  AppVersionIdNotMatching,
   ArgumentsNotValid,
   CannotContinueConversation,
   CannotRecoverConversation,
@@ -53,6 +60,13 @@ import type {
 type KnownResultError =
   | AppNameNotValid
   | AppNotFound
+  | AppStateContentNotValid
+  | AppStateMigrationFailed
+  | AppStateMigrationNotValid
+  | AppStateMigrationRequired
+  | AppStateRevisionNotMatching
+  | AppStateSchemaNotValid
+  | AppVersionIdNotMatching
   | ArgumentsNotValid
   | CannotContinueConversation
   | CannotRecoverConversation

@@ -1,16 +1,26 @@
 import type {
+  AppNotFound,
+  AppState,
+  AppStateContentNotValid,
+  AppStateRevisionNotMatching,
+  AppVersionIdNotMatching,
+  ArgumentsNotValid,
   CollectionId,
   CollectionNotFound,
   Document,
   DocumentContentNotValid,
+  DocumentContentPatchNotValid,
   DocumentDefinition,
   DocumentId,
   DocumentNotFound,
   DocumentVersionId,
   DocumentVersionIdNotMatching,
+  DuplicateDocumentDetected,
   FileId,
   FileNotFound,
   FilesNotFound,
+  MakingContentBlockingKeysFailed,
+  ReferencedDocumentsNotFound,
   UnexpectedError,
 } from "@superego/backend";
 import type { Result, ResultPromise } from "@superego/global-types";
@@ -28,6 +38,7 @@ export default class Backend {
           );
           return;
         }
+        this.invocations.delete(payload.invocationId);
         resolve(payload.result);
       },
     });
@@ -41,6 +52,10 @@ export default class Backend {
     | CollectionNotFound
     | DocumentContentNotValid
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | MakingContentBlockingKeysFailed
+    | DuplicateDocumentDetected
+    | ArgumentsNotValid
     | UnexpectedError
   > {
     return this.invokeMethod("documents", "create", [definition]);
@@ -56,8 +71,12 @@ export default class Backend {
     | CollectionNotFound
     | DocumentNotFound
     | DocumentVersionIdNotMatching
+    | DocumentContentPatchNotValid
     | DocumentContentNotValid
+    | MakingContentBlockingKeysFailed
     | FilesNotFound
+    | ReferencedDocumentsNotFound
+    | ArgumentsNotValid
     | UnexpectedError
   > {
     return this.invokeMethod("documents", "createNewVersion", [
@@ -71,14 +90,39 @@ export default class Backend {
   deleteDocument(
     collectionId: CollectionId,
     id: DocumentId,
-  ): ResultPromise<null, UnexpectedError> {
+  ): ResultPromise<null, ArgumentsNotValid | UnexpectedError> {
     return this.invokeMethod("documents", "delete", [collectionId, id]);
   }
 
   getFileContent(
     id: FileId,
-  ): ResultPromise<Uint8Array<ArrayBuffer>, FileNotFound | UnexpectedError> {
+  ): ResultPromise<
+    Uint8Array<ArrayBuffer>,
+    FileNotFound | ArgumentsNotValid | UnexpectedError
+  > {
     return this.invokeMethod("files", "getContent", [id]);
+  }
+
+  getState(): ResultPromise<
+    AppState,
+    AppVersionIdNotMatching | AppNotFound | ArgumentsNotValid | UnexpectedError
+  > {
+    return this.invokeMethod("state", "get", []);
+  }
+
+  updateState(
+    latestRevision: number,
+    content: any,
+  ): ResultPromise<
+    AppState,
+    | AppVersionIdNotMatching
+    | AppNotFound
+    | ArgumentsNotValid
+    | UnexpectedError
+    | AppStateContentNotValid
+    | AppStateRevisionNotMatching
+  > {
+    return this.invokeMethod("state", "update", [latestRevision, content]);
   }
 
   private invokeMethod(entity: string, method: string, args: any[]) {

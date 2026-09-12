@@ -16,9 +16,7 @@ export default function useCalculatedPageSize({
   const [tableContainer, setTableContainer] = useState<HTMLDivElement | null>(
     null,
   );
-  const [calculatedPageSize, setCalculatedPageSize] = useState(() =>
-    pageSize === "max" ? 0 : pageSize,
-  );
+  const [measuredPageSize, setMeasuredPageSize] = useState(0);
 
   const tableContainerRef = useCallback((node: HTMLDivElement | null) => {
     setTableContainer(node);
@@ -26,7 +24,6 @@ export default function useCalculatedPageSize({
 
   useEffect(() => {
     if (pageSize !== "max") {
-      setCalculatedPageSize(pageSize);
       return;
     }
 
@@ -38,7 +35,7 @@ export default function useCalculatedPageSize({
       const availableHeight = tableContainer.getBoundingClientRect().height;
       const rowsHeight = availableHeight - HEADING_HEIGHT;
       const newPageSize = Math.max(1, Math.floor(rowsHeight / ROW_HEIGHT));
-      setCalculatedPageSize(newPageSize);
+      setMeasuredPageSize(newPageSize);
     };
 
     calculatePageSize();
@@ -48,5 +45,8 @@ export default function useCalculatedPageSize({
     return () => resizeObserver.disconnect();
   }, [pageSize, tableContainer]);
 
-  return { calculatedPageSize, tableContainerRef };
+  return {
+    calculatedPageSize: pageSize === "max" ? measuredPageSize : pageSize,
+    tableContainerRef,
+  };
 }

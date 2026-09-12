@@ -22,7 +22,10 @@ export default function PlainDate({
   autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   return (
     <DatePicker
       id={field.name}
@@ -51,7 +54,7 @@ export default function PlainDate({
         />
       ) : null}
       <DatePickerInput
-        ref={field.ref}
+        ref={fieldRef}
         onClear={field.value !== null ? () => field.onChange(null) : undefined}
       />
       <FieldError>{fieldState.error?.message}</FieldError>

@@ -19,6 +19,13 @@
 - **Always use braces** for `if`/`else`/`for`/`while` blocks, even single-line
   bodies.
 
+## Data migrations
+
+- **Demo repositories NEVER need migrations.** The demo database is recreated
+  from scratch for each different commit. Do not add data migrations or
+  backward-compatibility migration logic to
+  `packages/data/demo-data-repositories`.
+
 ## Testing
 
 What to test and how:
@@ -49,7 +56,9 @@ a test.
 - `yarn check-types`: checks that **all packages** compile correctly
 - `yarn check-translations`: checks translations are up-to-date and complete
 
-Always run the checks before committing. They **should** pass, but if some fails
+Always run the checks before committing. **There must be no lint warnings or
+errors**, including pre-existing ones. Fix all lint findings before considering
+the work complete or committing. Other checks **should** pass, but if one fails
 and it's not trivial to fix, you can leave it failing and commit anyway.
 
 ### Workspace-specific

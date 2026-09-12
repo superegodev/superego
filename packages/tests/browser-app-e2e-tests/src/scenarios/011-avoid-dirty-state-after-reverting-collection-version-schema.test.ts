@@ -35,8 +35,6 @@ test("011. Avoid dirty state after reverting collection version schema", async (
     await page.getByLabel(/^Settings$/i).click();
     await page.getByRole("tab", { name: /^Create new version$/i }).click();
     await monacoEditorContent(page).first().waitFor();
-    // Wait for syntax highlighting.
-    await page.waitForTimeout(100);
 
     // Verify
     await VisualEvaluator.expectToSee(

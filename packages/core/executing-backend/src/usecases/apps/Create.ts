@@ -3,6 +3,8 @@ import type {
   AppDefinition,
   AppId,
   AppNameNotValid,
+  AppStateContentNotValid,
+  AppStateSchemaNotValid,
   Backend,
   CollectionNotFound,
   UnexpectedError,
@@ -36,17 +38,30 @@ export default class AppsCreate extends BackendUsecase<
     structuralSchemas.backend.types.app(),
     [
       structuralSchemas.backend.errors.appNameNotValid(),
+      structuralSchemas.backend.errors.appStateSchemaNotValid(),
+      structuralSchemas.backend.errors.appStateContentNotValid(),
       structuralSchemas.backend.errors.collectionNotFound(),
       structuralSchemas.backend.errors.unexpectedError(),
     ],
   );
 
   async exec(
-    { type, name, targetCollectionIds, files }: AppDefinition,
+    {
+      type,
+      name,
+      targetCollectionIds,
+      files,
+      permissions,
+      stateDefinition,
+    }: AppDefinition,
     options: AppsCreateOptions = {},
   ): ResultPromise<
     App,
-    AppNameNotValid | CollectionNotFound | UnexpectedError
+    | AppStateSchemaNotValid
+    | AppStateContentNotValid
+    | AppNameNotValid
+    | CollectionNotFound
+    | UnexpectedError
   > {
     const nameValidationResult = v.safeParse(valibotSchemas.appName(), name);
     if (!nameValidationResult.success) {
@@ -78,12 +93,42 @@ export default class AppsCreate extends BackendUsecase<
       });
     }
 
+    // Validate state schema.
+    const schemaValidationResult = v.safeParse(
+      valibotSchemas.appStateSchema(),
+      stateDefinition.schema,
+    );
+    if (!schemaValidationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateSchemaNotValid", {
+          appId: null,
+          issues: makeValidationIssues(schemaValidationResult.issues),
+        }),
+      );
+    }
+
+    // Validate initial state.
+    const initialStateValidationResult = v.safeParse(
+      valibotSchemas.appStateContent(stateDefinition.schema),
+      stateDefinition.initialState,
+    );
+    if (!initialStateValidationResult.success) {
+      return makeUnsuccessfulResult(
+        makeResultError("AppStateContentNotValid", {
+          appId: null,
+          issues: makeValidationIssues(initialStateValidationResult.issues),
+        }),
+      );
+    }
+
     const now = new Date();
     const app: AppEntity = {
       id: options.appId ?? Id.generate.app(),
       type: type,
       name: nameValidationResult.output,
       createdAt: now,
+      state: { content: stateDefinition.initialState, revision: 1 },
+      permissions,
     };
     const appVersion: AppVersionEntity = {
       id: Id.generate.appVersion(),
@@ -91,6 +136,7 @@ export default class AppsCreate extends BackendUsecase<
       appId: app.id,
       targetCollections: targetCollections,
       files: files,
+      stateDefinition,
       createdAt: now,
     };
 

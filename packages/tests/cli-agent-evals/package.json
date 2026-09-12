@@ -16,10 +16,11 @@
     "@superego/schema": "workspace:*",
     "@superego/sqlite-data-repositories": "workspace:*",
     "@superego/tsc-typescript-compiler": "workspace:*",
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
-    "typescript": "^6.0.3"
+    "@types/node": "^26.5.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.0"
   }
 }

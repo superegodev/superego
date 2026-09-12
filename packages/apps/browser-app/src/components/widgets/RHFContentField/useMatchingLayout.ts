@@ -1,5 +1,5 @@
 import type { DefaultDocumentViewUiOptions } from "@superego/backend";
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 
 type RootLayout = DefaultDocumentViewUiOptions["rootLayout"];
 
@@ -12,35 +12,33 @@ type RootLayout = DefaultDocumentViewUiOptions["rootLayout"];
 export default function useMatchingLayout(
   rootLayout: RootLayout | null,
 ): DefaultDocumentViewUiOptions.Layout | undefined {
-  const [layout, setLayout] = useState<
-    DefaultDocumentViewUiOptions.Layout | undefined
-  >(() => resolveLayout(rootLayout));
-
-  useEffect(() => {
-    if (!rootLayout) {
-      setLayout(undefined);
-      return;
-    }
-
-    const entries = Object.entries(rootLayout);
-    const mediaQueryLists = entries.map(([expr]) => window.matchMedia(expr));
-
-    const update = () => setLayout(resolveLayout(rootLayout));
-
-    for (const mediaQueryList of mediaQueryLists) {
-      mediaQueryList.addEventListener("change", update);
-    }
-
-    update();
-
-    return () => {
-      for (const mediaQueryList of mediaQueryLists) {
-        mediaQueryList.removeEventListener("change", update);
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      if (!rootLayout) {
+        return () => {};
       }
-    };
-  }, [rootLayout]);
 
-  return layout;
+      const entries = Object.entries(rootLayout);
+      const mediaQueryLists = entries.map(([expr]) => window.matchMedia(expr));
+
+      for (const mediaQueryList of mediaQueryLists) {
+        mediaQueryList.addEventListener("change", onChange);
+      }
+
+      return () => {
+        for (const mediaQueryList of mediaQueryLists) {
+          mediaQueryList.removeEventListener("change", onChange);
+        }
+      };
+    },
+    [rootLayout],
+  );
+
+  const getSnapshot = useCallback(
+    () => resolveLayout(rootLayout),
+    [rootLayout],
+  );
+  return useSyncExternalStore(subscribe, getSnapshot);
 }
 
 function resolveLayout(

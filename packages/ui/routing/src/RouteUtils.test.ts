@@ -98,18 +98,6 @@ const testRoutes: Route[] = [
     redirectIfLatest: false,
   },
   {
-    name: RouteName.CreateApp,
-    initialCollectionIds: [],
-  },
-  {
-    name: RouteName.CreateApp,
-    initialCollectionIds: [Id.generate.collection()],
-  },
-  {
-    name: RouteName.CreateApp,
-    initialCollectionIds: [Id.generate.collection(), Id.generate.collection()],
-  },
-  {
     name: RouteName.EditApp,
     appId: Id.generate.app(),
   },

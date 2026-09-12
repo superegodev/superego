@@ -29,7 +29,10 @@ export default function Instant({
 }: Props) {
   const intl = useIntl();
   const { isReadOnly } = useUiOptions();
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const segments = toSegments(field.value ?? "");
   return (
     <div
@@ -84,7 +87,7 @@ export default function Instant({
           }
           className={cs.StringField.Instant.datePicker}
         >
-          <DatePickerInput ref={field.ref} />
+          <DatePickerInput ref={fieldRef} />
           <DatePickerCalendar />
         </DatePicker>
         <TimeField

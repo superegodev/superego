@@ -33,7 +33,10 @@ export default function EnumField({
   autoFocus,
 }: Props) {
   const { zoomLevel, isReadOnly } = useUiOptions();
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const sortedMemberNames =
     typeDefinition.membersOrder ?? Object.keys(typeDefinition.members);
 
@@ -61,7 +64,7 @@ export default function EnumField({
             label={label}
           />
         ) : null}
-        <Input ref={field.ref} placeholder="null" />
+        <Input ref={fieldRef} placeholder="null" />
         <FieldError>{fieldState.error?.message}</FieldError>
       </TextField>
     );

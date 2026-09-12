@@ -14,7 +14,7 @@ import type {
 import { DocumentContentChangeType } from "@superego/backend";
 import { fromHref, RouteName, toHref } from "@superego/routing";
 import { makeSuccessfulResult } from "@superego/shared-utils";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import DataLoader from "../../../business-logic/backend/DataLoader.js";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
@@ -36,6 +36,8 @@ interface Props {
   app: App;
 }
 export default function AppRenderer({ app }: Props) {
+  const appBackend = useBackend();
+  const permissions = app.permissions;
   const intl = useIntl();
   const theme = useTheme();
   const { navigateTo } = useNavigationState();
@@ -49,6 +51,16 @@ export default function AppRenderer({ app }: Props) {
   const createNewDocumentVersionMutation = useCreateNewDocumentVersion();
 
   const backend = {
+    state: {
+      get: () => appBackend.apps.getState(app.id, app.latestVersion.id),
+      update: (latestRevision: number, content: any) =>
+        appBackend.apps.updateState(
+          app.id,
+          app.latestVersion.id,
+          latestRevision,
+          content,
+        ),
+    },
     // Pass these as mutation so the query cache is automatically invalidated.
     documents: {
       create: useCreateDocument().mutate,
@@ -70,15 +82,17 @@ export default function AppRenderer({ app }: Props) {
       },
     },
     files: {
-      getContent: useBackend().files.getContent,
+      getContent: appBackend.files.getContent,
     },
   };
 
   const [incompatibilityWarningDismissed, setIncompatibilityWarningDismissed] =
     useState(false);
-  useEffect(() => {
+  const [previousAppId, setPreviousAppId] = useState(app.id);
+  if (previousAppId !== app.id) {
+    setPreviousAppId(app.id);
     setIncompatibilityWarningDismissed(false);
-  }, [app.id]);
+  }
 
   const settings: Settings = useMemo(() => ({ theme }), [theme]);
   const intlMessages: IntlMessages = useMemo(
@@ -119,7 +133,9 @@ export default function AppRenderer({ app }: Props) {
       >
         {(...documentsLists) => (
           <Sandbox
+            key={`${app.id}:${app.latestVersion.id}:${JSON.stringify(permissions)}`}
             backend={backend}
+            permissions={permissions}
             navigateTo={sandboxNavigateTo}
             iframeSrc={
               import.meta.env["VITE_SANDBOX_URL"] ??

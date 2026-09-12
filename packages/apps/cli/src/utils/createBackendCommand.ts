@@ -2,6 +2,7 @@ import { Command } from "commander";
 import * as v from "valibot";
 import { readArgsFile } from "./argsFile.js";
 import createBackend from "./createBackend.js";
+import getUsecaseArgumentsSchema from "./getUsecaseArgumentsSchema.js";
 import { useMarkdownHelp } from "./markdownHelp.js";
 import { runCommand, unsuccessfulResult } from "./results.js";
 
@@ -81,7 +82,7 @@ export default function createBackendCommand<
       }
 
       const validationResult = v.safeParse(
-        getArgumentsSchema(UsecaseClass),
+        getUsecaseArgumentsSchema(UsecaseClass),
         parsedArguments.data,
       );
       if (!validationResult.success) {
@@ -154,7 +155,10 @@ function readArguments(
 }
 
 function getArgumentSchemas(UsecaseClass: BackendUsecaseClass) {
-  return (getArgumentsSchema(UsecaseClass) as TupleSchemaWithItems).items ?? [];
+  return (
+    (getUsecaseArgumentsSchema(UsecaseClass) as TupleSchemaWithItems).items ??
+    []
+  );
 }
 
 function hasInputArguments(
@@ -175,19 +179,6 @@ function toOptionPropertyName(name: string): string {
   return name.replaceAll(/-([a-z])/g, (_, letter: string) =>
     letter.toUpperCase(),
   );
-}
-
-function getArgumentsSchema(UsecaseClass: BackendUsecaseClass) {
-  const usecase = new UsecaseClass(
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-  );
-  return usecase.argumentsSchema;
 }
 
 function getArgsSchema(

@@ -3,7 +3,7 @@ import type { GlobalSettings, Theme } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
 import { useEffect, useRef } from "react";
 import { Form } from "react-aria-components";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useGlobalData } from "../../../business-logic/backend/GlobalData.js";
 import { useUpdateGlobalSettings } from "../../../business-logic/backend/hooks.js";
@@ -29,12 +29,11 @@ export default function UpdateGlobalSettingsForm({
   const { globalSettings, developerPrompts } = useGlobalData();
   const { mutate } = useUpdateGlobalSettings();
 
-  const { control, handleSubmit, reset, watch, trigger } =
-    useForm<GlobalSettings>({
-      defaultValues: globalSettings,
-      mode: "onBlur",
-      resolver: standardSchemaResolver(valibotSchemas.globalSettings()),
-    });
+  const { control, handleSubmit, reset, trigger } = useForm<GlobalSettings>({
+    defaultValues: globalSettings,
+    mode: "onBlur",
+    resolver: standardSchemaResolver(valibotSchemas.globalSettings()),
+  });
 
   const onSubmit = async (values: GlobalSettings) => {
     const { success, data, error } = await mutate(values);
@@ -54,7 +53,7 @@ export default function UpdateGlobalSettingsForm({
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const theme = watch("appearance.theme");
+  const theme = useWatch({ control, name: "appearance.theme" });
   usePreviewTheme(globalSettings.appearance.theme, theme);
 
   return (

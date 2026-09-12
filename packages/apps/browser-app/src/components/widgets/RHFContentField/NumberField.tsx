@@ -32,7 +32,10 @@ export default function NumberField({
   autoFocus,
 }: Props) {
   const { isReadOnly } = useUiOptions();
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   return (
     <NumberFieldDS
       id={field.name}
@@ -58,7 +61,7 @@ export default function NumberField({
           label={label}
         />
       ) : null}
-      <Input ref={field.ref} placeholder="null" autoComplete="off" />
+      <Input ref={fieldRef} placeholder="null" autoComplete="off" />
       <FieldError>{fieldState.error?.message}</FieldError>
     </NumberFieldDS>
   );

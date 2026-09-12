@@ -1,10 +1,16 @@
 import { Command } from "commander";
+import { isEqual } from "es-toolkit";
 import createBackend from "../../../utils/createBackend.js";
 import { useMarkdownHelp } from "../../../utils/markdownHelp.js";
 import { getLockedApp, runAppCommand } from "../common/commandUtils.js";
 import { readLock } from "../common/lock.js";
 import { readMainSource } from "../common/mainSource.js";
 import { readManifest } from "../common/manifest.js";
+import {
+  hasStateDefinitionChanges,
+  readStateDefinitionSource,
+  stateDefinitionSourceOf,
+} from "../common/stateDefinition.js";
 import getStatus from "./getStatus.js";
 import makeArrayFieldDiff from "./makeArrayFieldDiff.js";
 import makeFieldDiff from "./makeFieldDiff.js";
@@ -48,7 +54,41 @@ export default useMarkdownHelp(
           stale,
         });
 
+        const localStateDefinition = readStateDefinitionSource(path);
+        const remoteStateDefinition = stateDefinitionSourceOf(
+          app.latestVersion.stateDefinition,
+        );
+        const permissionsChanged = !isEqual(
+          manifest.permissions,
+          app.permissions,
+        );
+        const stateDefinitionChanged = hasStateDefinitionChanges(
+          localStateDefinition,
+          app.latestVersion.stateDefinition,
+        );
+        if (permissionsChanged || stateDefinitionChanged) {
+          const cleanIndex = status.indexOf("clean");
+          if (cleanIndex !== -1) {
+            status.splice(cleanIndex, 1);
+          }
+        }
+        if (permissionsChanged) {
+          status.push("permissions changed");
+        }
+        if (stateDefinitionChanged) {
+          status.push("state definition changed");
+        }
         return {
+          permissions: {
+            changed: permissionsChanged,
+            local: manifest.permissions,
+            remote: app.permissions,
+          },
+          stateDefinition: {
+            changed: stateDefinitionChanged,
+            local: localStateDefinition,
+            remote: remoteStateDefinition,
+          },
           status,
           appId: lock.appId,
           lockedLatestAppVersionId: lock.latestAppVersionId,

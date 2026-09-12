@@ -17,13 +17,14 @@
     "@superego/backend": "workspace:*",
     "@superego/executing-backend": "workspace:*",
     "@superego/schema": "workspace:*",
-    "es-toolkit": "^1.49.0",
+    "es-toolkit": "^1.52.0",
     "flexsearch": "^0.8.212",
     "jsondiffpatch": "^0.7.6"
   },
   "devDependencies": {
-    "@types/node": "^26.1.1",
+    "@types/node": "^26.5.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vite": "^8.3.0",
+    "vitest": "^5.0.0"
   }
 }

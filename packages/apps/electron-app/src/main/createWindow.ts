@@ -6,6 +6,10 @@ export default function createWindow(): BrowserWindow {
     show: false,
     webPreferences: {
       preload: join(import.meta.dirname, "../preload/index.cjs"),
+      webSecurity: true,
+      contextIsolation: true,
+      sandbox: true,
+      nodeIntegration: false,
     },
     icon:
       process.platform === "linux"

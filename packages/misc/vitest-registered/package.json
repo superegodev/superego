@@ -12,9 +12,10 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "vitest": "^4.1.10"
+    "vitest": "^5.0.0"
   },
   "devDependencies": {
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vite": "^8.3.0"
   }
 }

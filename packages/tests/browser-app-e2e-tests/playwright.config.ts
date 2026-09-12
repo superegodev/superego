@@ -6,7 +6,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   reporter: [["html", { open: "never" }]],
-  timeout: 30_000,
+  // Cold page loads take 10–15 seconds on CI, and scenarios navigate repeatedly.
+  timeout: process.env.CI ? 120_000 : 30_000,
   use: {
     baseURL: "http://localhost:5173",
     trace: process.env.CI ? "on-first-retry" : "retain-on-first-failure",
@@ -16,7 +17,7 @@ export default defineConfig({
   },
   expect: {
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.01,
+      maxDiffPixelRatio: 0,
     },
   },
   projects: [

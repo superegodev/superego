@@ -23,6 +23,7 @@ export const EagerRHFAppVersionField = {
   preview: styleVariants({
     visible: {
       display: "flex",
+      flexDirection: "column",
     },
     hidden: {
       position: "absolute",

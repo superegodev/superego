@@ -54,7 +54,10 @@ export default function EagerRHFAppVersionField({
     [collections, targetCollectionIds],
   );
 
-  const typescriptLibs = useTypescriptLibs(targetCollections);
+  const typescriptLibs = useTypescriptLibs(
+    targetCollections,
+    app.latestVersion.stateDefinition.schema,
+  );
 
   const { isPending, mutate } = useSttAndImplement(
     targetCollections,
@@ -109,16 +112,15 @@ export default function EagerRHFAppVersionField({
         className={cs.EagerRHFAppVersionField.editingToolbar}
       />
       <div className={cs.EagerRHFAppVersionField.content}>
-        {app ? (
-          <ResolveIncompatibilityModal
-            app={app}
-            targetCollections={targetCollections}
-            onResolveWithAssistant={onSend}
-          />
-        ) : null}
+        <ResolveIncompatibilityModal
+          app={app}
+          targetCollections={targetCollections}
+          onResolveWithAssistant={onSend}
+        />
         {isPending ? <ImplementingSpinner /> : null}
         <Preview
           mainTsx={mainTsx}
+          app={app}
           targetCollections={targetCollections}
           className={
             cs.EagerRHFAppVersionField.preview[

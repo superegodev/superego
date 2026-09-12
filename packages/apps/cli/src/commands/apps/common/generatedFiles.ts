@@ -2,10 +2,12 @@ import { existsSync, readdirSync, rmSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import typescriptLibs from "@superego/app-sandbox/typescript-libs";
+import { codegen } from "@superego/schema";
 import appAgentsContent from "./agent-files/AGENTS.md?raw";
 import appSkillContent from "./agent-files/writing-superego-apps.md?raw";
 import { getCollectionTypescriptSource } from "./compile.js";
 import { writeJson } from "./json.js";
+import { readStateDefinitionSource } from "./stateDefinition.js";
 import tsconfig from "./tsconfig.js";
 import type { TargetCollection } from "./types.js";
 
@@ -13,7 +15,13 @@ export async function regenerateGeneratedFiles(
   path: string,
   targetCollections: TargetCollection[],
 ): Promise<void> {
+  const stateDefinition = readStateDefinitionSource(path);
   removeGeneratedCollectionFiles(path);
+  await writeFile(
+    join(path, "app-state.ts"),
+    codegen(stateDefinition.schema),
+    "utf8",
+  );
   for (const targetCollection of targetCollections) {
     await writeFile(
       join(path, `${targetCollection.id}.ts`),

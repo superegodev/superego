@@ -38,7 +38,10 @@ export default function RHFSchemaField<T extends FieldValues>({
   autoFocus,
   className,
 }: Props<T>) {
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const fieldOnChange = field.onChange;
   const [jsonValue, setJsonValue] = useState(() =>
     typeof field.value === "string"
@@ -75,7 +78,7 @@ export default function RHFSchemaField<T extends FieldValues>({
         isDisabled={isDisabled}
         isReadOnly={isReadOnly}
         maxHeight={vars.spacing._160}
-        ref={field.ref}
+        ref={fieldRef}
       />
       <FieldErrorContext
         value={{

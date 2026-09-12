@@ -69,7 +69,9 @@ type TypeOfTypeDefinition<
                   : TypeDefinition extends StructTypeDefinition
                     ? ApplyIsNullable<
                         {
-                          -readonly [PropertyName in keyof TypeDefinition["properties"]]: TypeOfTypeDefinition<
+                          -readonly [
+                            PropertyName in keyof TypeDefinition["properties"]
+                          ]: TypeOfTypeDefinition<
                             TypeDefinition["properties"][PropertyName],
                             TypeDefinitions,
                             PropertyName extends NullablePropertyNames<TypeDefinition>

@@ -17,6 +17,8 @@ export default function StringField({
 }: Props) {
   const Component = getComponent(typeDefinition);
   return (
+    // getComponent only selects existing module-level imports; it creates no components.
+    // oxlint-disable-next-line react/static-components
     <Component
       typeDefinition={typeDefinition}
       isNullable={isNullable}

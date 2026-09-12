@@ -1,7 +1,7 @@
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type { App, CollectionId } from "@superego/backend";
 import { valibotSchemas } from "@superego/shared-utils";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Form } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { useIntl } from "react-intl";
@@ -35,6 +35,7 @@ export default function CreateNewAppVersionForm({
   setSubmitDisabled,
 }: Props) {
   const intl = useIntl();
+  const [savedAppVersion, setSavedAppVersion] = useState(app.latestVersion);
   const { collections } = useGlobalData();
 
   const { mutate } = useCreateNewAppVersion();
@@ -74,23 +75,23 @@ export default function CreateNewAppVersionForm({
   const onSubmit = async ({ appVersion }: FormValues) => {
     const { success, data, error } = await mutate(
       app.id,
+      savedAppVersion.id,
       appVersion.targetCollectionIds,
       RHFAppVersionFilesUtils.fromRhfAppVersionFiles(appVersion.files),
+      { ...savedAppVersion.stateDefinition, migration: null },
     );
     if (success) {
-      reset(
-        {
-          appVersion: {
-            targetCollectionIds: data.latestVersion.targetCollections.map(
-              ({ id }) => id,
-            ),
-            files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
-              data.latestVersion.files,
-            ),
-          },
+      setSavedAppVersion(data.latestVersion);
+      reset({
+        appVersion: {
+          targetCollectionIds: data.latestVersion.targetCollections.map(
+            ({ id }) => id,
+          ),
+          files: RHFAppVersionFilesUtils.toRhfAppVersionFiles(
+            data.latestVersion.files,
+          ),
         },
-        { keepValues: true },
-      );
+      });
     } else {
       console.error(error);
       toasts.add({
@@ -117,7 +118,7 @@ export default function CreateNewAppVersionForm({
       <RHFAppVersionField
         control={control}
         name="appVersion"
-        app={app}
+        app={{ ...app, latestVersion: savedAppVersion }}
         collections={collections}
       />
     </Form>

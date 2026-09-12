@@ -41,7 +41,10 @@ export default function RHFDefaultDocumentViewUiOptionsField<
   autoFocus,
   className,
 }: Props<T>) {
-  const { field, fieldState } = useController({ control, name });
+  const {
+    field: { ref: fieldRef, ...field },
+    fieldState,
+  } = useController({ control, name });
   const fieldOnChange = field.onChange;
   const isEnabled = field.value !== null;
   const handleSwitchChange = (isSelected: boolean) =>
@@ -122,7 +125,7 @@ export default function RHFDefaultDocumentViewUiOptionsField<
             isDisabled={isDisabled}
             isReadOnly={isReadOnly}
             maxHeight={vars.spacing._160}
-            ref={field.ref}
+            ref={fieldRef}
           />
           <FieldErrorContext
             value={{

@@ -1,5 +1,7 @@
-import { AppType } from "@superego/backend";
-import { DataType } from "@superego/schema";
+import { type AppDefinition, AppType } from "@superego/backend";
+import { type Schema, DataType } from "@superego/schema";
+import { defaultAppPermissions } from "@superego/shared-utils";
+import { emptyAppStateDefinition } from "@superego/shared-utils";
 import { Id } from "@superego/shared-utils";
 import { registeredDescribe as rd } from "@superego/vitest-registered";
 import { assert, describe, expect, it } from "vitest";
@@ -25,6 +27,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const result = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name".repeat(100),
         targetCollectionIds: [],
@@ -57,6 +61,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const collectionId = Id.generate.collection();
       const result = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [collectionId],
@@ -111,6 +117,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const files = { "/main.tsx": { source: "", compiled: "" } };
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [createCollectionResult.data.id],
@@ -124,7 +132,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
           id: expect.any(String),
           type: AppType.CollectionView,
           name: "name",
+          permissions: defaultAppPermissions,
           latestVersion: {
+            stateDefinition: emptyAppStateDefinition,
             id: expect.any(String),
             targetCollections: [
               {
@@ -144,6 +154,812 @@ export default rd<GetDependencies>("Apps", (deps) => {
         success: true,
         data: [createAppResult.data],
         error: null,
+      });
+    });
+
+    it("error: ArgumentsNotValid (case: missing permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        permissions: undefined,
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: ArgumentsNotValid (case: incomplete permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        permissions: { modals: false },
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: ArgumentsNotValid (case: missing downloads permission)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        permissions: { ...defaultAppPermissions, downloads: undefined },
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: ArgumentsNotValid (case: missing HTTP permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        permissions: { ...defaultAppPermissions, http: undefined },
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: ArgumentsNotValid (case: unknown permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        permissions: { sandbox: ["allow-top-navigation"] },
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: ArgumentsNotValid (case: missing state definition)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: undefined,
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: ArgumentsNotValid (case: missing state migration field)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: { schema, initialState: { count: 0 } },
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateSchemaNotValid takes precedence over invalid initial content", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const invalidStateDefinition = {
+        ...definition.stateDefinition,
+        schema: { ...schema, rootType: "Missing" },
+        initialState: { count: "invalid" },
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: invalidStateDefinition,
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateSchemaNotValid",
+        details: {
+          appId: null,
+          issues: expect.arrayContaining([
+            expect.objectContaining({ message: expect.any(String) }),
+          ]),
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: wrong property type)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          initialState: { count: "invalid" },
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          issues: [
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "count" }],
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: undefined)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          initialState: { count: undefined },
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: infinity)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          initialState: { count: Infinity },
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: Date)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          initialState: { count: new Date() },
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: cycle)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const content: Record<string, unknown> = {};
+      content["count"] = content;
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          initialState: content,
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: null,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: null)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: { ...definition.stateDefinition, initialState: null },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: null, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: number)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: { ...definition.stateDefinition, initialState: 42 },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: null, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: string)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          initialState: "invalid",
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: null, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("error: AppStateContentNotValid (case: array)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: { ...definition.stateDefinition, initialState: [] },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: null, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([]);
+    });
+
+    it("success: initializes state without running the version migration", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          migration: {
+            source: "",
+            compiled: "export default () => ({ count: 99 });",
+          },
+        },
+      });
+
+      // Verify
+      assert(result.success);
+      expect(
+        (
+          await backend.apps.getState(
+            result.data.id,
+            result.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateSchemaNotValid (case: nested File type)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          schema: {
+            ...schema,
+            types: {
+              ...schema.types,
+              Hidden: {
+                dataType: DataType.List,
+                items: { dataType: DataType.File },
+              },
+            },
+          },
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateSchemaNotValid",
+        details: {
+          appId: null,
+          issues: expect.arrayContaining([
+            expect.objectContaining({
+              message: "App state cannot contain File or DocumentRef types.",
+            }),
+          ]),
+        },
+      });
+    });
+
+    it("error: AppStateSchemaNotValid (case: nested DocumentRef type)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+
+      // Exercise
+      const result = await backend.apps.create({
+        ...definition,
+        stateDefinition: {
+          ...definition.stateDefinition,
+          schema: {
+            ...schema,
+            types: {
+              ...schema.types,
+              Hidden: {
+                dataType: DataType.List,
+                items: { dataType: DataType.DocumentRef },
+              },
+            },
+          },
+        },
+      });
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateSchemaNotValid",
+        details: {
+          appId: null,
+          issues: expect.arrayContaining([
+            expect.objectContaining({
+              message: "App state cannot contain File or DocumentRef types.",
+            }),
+          ]),
+        },
       });
     });
   });
@@ -187,6 +1003,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -223,6 +1041,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -243,6 +1063,7 @@ export default rd<GetDependencies>("Apps", (deps) => {
           id: createResult.data.id,
           type: AppType.CollectionView,
           name: "updated name",
+          permissions: createResult.data.permissions,
           latestVersion: createResult.data.latestVersion,
           createdAt: createResult.data.createdAt,
         },
@@ -257,6 +1078,218 @@ export default rd<GetDependencies>("Apps", (deps) => {
     });
   });
 
+  describe("updatePermissions", () => {
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const appId = Id.generate.app();
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(
+        appId,
+        defaultAppPermissions,
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: { name: "AppNotFound", details: { appId } },
+      });
+    });
+
+    it("error: ArgumentsNotValid (case: invalid HTTP origin)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const created = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "Devices",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      });
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(created.data.id, {
+        ...defaultAppPermissions,
+        http: { allowedOrigins: ["http://192.168.1.10/private"] },
+      });
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("success: updates permissions", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const createResult = await backend.apps.create({
+        type: AppType.CollectionView,
+        name: "Devices",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: {
+          modals: true,
+          downloads: false,
+          http: { allowedOrigins: ["http://192.168.1.9"] },
+        },
+      });
+      assert.isTrue(createResult.success);
+      const permissions = {
+        modals: false,
+        downloads: true,
+        http: {
+          allowedOrigins: ["http://192.168.1.10:8080", "http://192.168.1.11"],
+        },
+      };
+
+      // Exercise
+      const updatePermissionsResult = await backend.apps.updatePermissions(
+        createResult.data.id,
+        permissions,
+      );
+
+      // Verify
+      expect(updatePermissionsResult).toEqual({
+        success: true,
+        data: { ...createResult.data, permissions },
+        error: null,
+      });
+      const listResult = await backend.apps.list();
+      expect(listResult).toEqual({
+        success: true,
+        data: [updatePermissionsResult.data],
+        error: null,
+      });
+    });
+
+    it("error: ArgumentsNotValid (case: missing permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(
+        created.data.id,
+        undefined as any,
+      );
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("error: ArgumentsNotValid (case: incomplete permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(created.data.id, {
+        modals: false,
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("error: ArgumentsNotValid (case: missing downloads permission)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(created.data.id, {
+        ...defaultAppPermissions,
+        downloads: undefined,
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("error: ArgumentsNotValid (case: missing HTTP permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(created.data.id, {
+        ...defaultAppPermissions,
+        http: undefined,
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+
+    it("error: ArgumentsNotValid (case: unknown permissions)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "App",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: emptyAppStateDefinition,
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updatePermissions(created.data.id, {
+        sandbox: ["allow-top-navigation"],
+      } as any);
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+    });
+  });
+
   describe("createNewVersion", () => {
     it("error: ArgumentsNotValid", async () => {
       // Setup SUT
@@ -265,8 +1298,10 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Exercise
       const result = await backend.apps.createNewVersion(
         Id.generate.app(),
+        Id.generate.appVersion(),
         [],
         {} as any,
+        emptyAppStateDefinition,
       );
 
       // Verify
@@ -280,9 +1315,15 @@ export default rd<GetDependencies>("Apps", (deps) => {
 
       // Exercise
       const appId = Id.generate.app();
-      const result = await backend.apps.createNewVersion(appId, [], {
-        "/main.tsx": { source: "", compiled: "" },
-      });
+      const result = await backend.apps.createNewVersion(
+        appId,
+        Id.generate.appVersion(),
+        [],
+        {
+          "/main.tsx": { source: "", compiled: "" },
+        },
+        emptyAppStateDefinition,
+      );
 
       // Verify
       expect(result).toEqual({
@@ -299,6 +1340,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -310,8 +1353,10 @@ export default rd<GetDependencies>("Apps", (deps) => {
       const collectionId = Id.generate.collection();
       const createNewVersionResult = await backend.apps.createNewVersion(
         createResult.data.id,
+        createResult.data.latestVersion.id,
         [collectionId],
         { "/main.tsx": { source: "", compiled: "" } },
+        { ...createResult.data.latestVersion.stateDefinition, migration: null },
       );
 
       // Verify
@@ -362,6 +1407,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
         "/main.tsx": { source: "initial", compiled: "initial" },
       };
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -375,8 +1422,13 @@ export default rd<GetDependencies>("Apps", (deps) => {
       };
       const createNewAppVersionResult = await backend.apps.createNewVersion(
         createAppResult.data.id,
+        createAppResult.data.latestVersion.id,
         [createCollectionResult.data.id],
         updatedFiles,
+        {
+          ...createAppResult.data.latestVersion.stateDefinition,
+          migration: null,
+        },
       );
 
       // Verify
@@ -386,7 +1438,9 @@ export default rd<GetDependencies>("Apps", (deps) => {
           id: createAppResult.data.id,
           type: AppType.CollectionView,
           name: "name",
+          permissions: defaultAppPermissions,
           latestVersion: {
+            stateDefinition: emptyAppStateDefinition,
             id: expect.any(String),
             targetCollections: [
               {
@@ -411,6 +1465,1446 @@ export default rd<GetDependencies>("Apps", (deps) => {
         data: [createNewAppVersionResult.data],
         error: null,
       });
+    });
+
+    it("error: ArgumentsNotValid (case: missing state definition)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        undefined as any,
+      );
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: ArgumentsNotValid (case: missing state migration field)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { schema, initialState: { count: 0 } } as any,
+      );
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateSchemaNotValid takes precedence over invalid initial content", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const invalidStateDefinition = {
+        ...definition.stateDefinition,
+        schema: { ...schema, rootType: "Missing" },
+        initialState: { count: "invalid" },
+      };
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        invalidStateDefinition,
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateSchemaNotValid",
+        details: {
+          appId: created.data.id,
+          issues: expect.arrayContaining([
+            expect.objectContaining({ message: expect.any(String) }),
+          ]),
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: wrong property type)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...definition.stateDefinition, initialState: { count: "invalid" } },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "count" }],
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: undefined)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...definition.stateDefinition, initialState: { count: undefined } },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: infinity)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...definition.stateDefinition, initialState: { count: Infinity } },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: Date)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...definition.stateDefinition, initialState: { count: new Date() } },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: cycle)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const content: Record<string, unknown> = {};
+      content["count"] = content;
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...definition.stateDefinition, initialState: content },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("success: applies each supplied migration exactly once per version", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const stateDefinition = {
+        ...definition.stateDefinition,
+        migration: {
+          source: "",
+          compiled:
+            "export default (previous) => ({ count: previous.count + 1 });",
+        },
+      };
+
+      const created = await backend.apps.create({
+        ...definition,
+        stateDefinition,
+      });
+      assert(created.success);
+      const initial = await backend.apps.getState(
+        created.data.id,
+        created.data.latestVersion.id,
+      );
+      let app = created.data;
+
+      // Exercise
+      for (let i = 0; i < 2; i++) {
+        const version = await backend.apps.createNewVersion(
+          app.id,
+          app.latestVersion.id,
+          [],
+          definition.files,
+          stateDefinition,
+        );
+        assert(version.success);
+        app = version.data;
+      }
+      const migrated = await backend.apps.getState(
+        app.id,
+        app.latestVersion.id,
+      );
+      const version = await backend.apps.createNewVersion(
+        app.id,
+        app.latestVersion.id,
+        [],
+        definition.files,
+        { ...stateDefinition, migration: null },
+      );
+      assert(version.success);
+      const preserved = await backend.apps.getState(
+        version.data.id,
+        version.data.latestVersion.id,
+      );
+
+      // Verify
+      expect(initial.data).toEqual({ content: { count: 0 }, revision: 1 });
+      expect(migrated.data).toEqual({ content: { count: 2 }, revision: 3 });
+      expect(preserved).toEqual(migrated);
+      expect(version.data.latestVersion.stateDefinition.migration).toBeNull();
+    });
+
+    it("success: preserves saved state across app versions", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const initial = await backend.apps.getState(
+        created.data.id,
+        created.data.latestVersion.id,
+      );
+      assert(initial.success);
+      const saved = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        initial.data.revision,
+        {
+          count: 3,
+        },
+      );
+      assert(saved.success);
+
+      // Exercise
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...created.data.latestVersion.stateDefinition, migration: null },
+      );
+      assert(version.success);
+      const after = await backend.apps.getState(
+        version.data.id,
+        version.data.latestVersion.id,
+      );
+
+      // Verify
+      expect(initial.data.content).toEqual({ count: 0 });
+      expect(saved.success).toBe(true);
+      expect(after).toEqual(saved);
+      expect(created.data).not.toHaveProperty("state");
+      for (const app of [created.data, version.data]) {
+        expect(app.latestVersion.stateDefinition).toEqual(
+          definition.stateDefinition,
+        );
+        expect(app.latestVersion).not.toHaveProperty("state");
+      }
+    });
+
+    it("error: UnexpectedError for a concurrent migration or state write preserves the successful operation", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const [version, write] = await Promise.all([
+        backend.apps.createNewVersion(
+          created.data.id,
+          created.data.latestVersion.id,
+          [],
+          definition.files,
+          {
+            ...definition.stateDefinition,
+            migration: {
+              source: "",
+              compiled:
+                "export default (previous) => ({ count: previous.count + 5 });",
+            },
+          },
+        ),
+        backend.apps.updateState(
+          created.data.id,
+          created.data.latestVersion.id,
+          1,
+          { count: 10 },
+        ),
+      ]);
+      const currentApp = version.success ? version.data : created.data;
+      const state = await backend.apps.getState(
+        currentApp.id,
+        currentApp.latestVersion.id,
+      );
+
+      // Verify
+      expect([version, write].filter((result) => result.success)).toHaveLength(
+        1,
+      );
+      expect(
+        [version, write].find((result) => !result.success)?.error,
+      ).toMatchObject({
+        name: "UnexpectedError",
+        details: {
+          cause: {
+            message: expect.stringMatching(
+              /transaction aborted|database is locked/i,
+            ),
+          },
+        },
+      });
+      expect(state.data).toEqual({
+        content: { count: write.success ? 10 : 5 },
+        revision: 2,
+      });
+    });
+
+    it("success: applies a migration without changing the state schema", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const saved = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: 8 },
+      );
+      assert(saved.success);
+
+      // Exercise
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...definition.stateDefinition,
+          migration: {
+            source: "",
+            compiled:
+              "export default (previous) => ({ count: previous.count * 2 });",
+          },
+        },
+      );
+      assert(version.success);
+      // Verify
+      expect(saved.success).toBe(true);
+      expect(
+        (
+          await backend.apps.getState(
+            version.data.id,
+            version.data.latestVersion.id,
+          )
+        ).data?.content,
+      ).toEqual({
+        count: 16,
+      });
+    });
+
+    it("error: AppVersionIdNotMatching when creating a version from a stale version", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create({
+        ...definition,
+        stateDefinition: emptyAppStateDefinition,
+      });
+      assert(created.success);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...created.data.latestVersion.stateDefinition, migration: null },
+      );
+      assert(version.success);
+
+      // Exercise
+      const conflict = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        { ...created.data.latestVersion.stateDefinition, migration: null },
+      );
+
+      // Verify
+      expect(conflict.error).toEqual({
+        name: "AppVersionIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([version.data]);
+    });
+
+    it("error: AppStateMigrationRequired when saved state does not match the new schema", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const stateDefinition: AppDefinition["stateDefinition"] = {
+        migration: null,
+        schema: {
+          types: {
+            State: {
+              dataType: DataType.Struct,
+              properties: { total: { dataType: DataType.Number } },
+            },
+          },
+          rootType: "State",
+        },
+        initialState: { total: 0 },
+      };
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        stateDefinition,
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateMigrationRequired",
+        details: {
+          appId: created.data.id,
+          issues: expect.arrayContaining([
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "total" }],
+            }),
+          ]),
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateMigrationFailed when migration throws", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const stateDefinition: AppDefinition["stateDefinition"] = {
+        migration: null,
+        schema: {
+          types: {
+            State: {
+              dataType: DataType.Struct,
+              properties: { total: { dataType: DataType.Number } },
+            },
+          },
+          rootType: "State",
+        },
+        initialState: { total: 0 },
+      };
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...stateDefinition,
+          migration: {
+            source: "",
+            compiled: "export default () => { throw new Error('failure'); };",
+          },
+        },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateMigrationFailed",
+        details: {
+          appId: created.data.id,
+          cause: {
+            name: "ExecutingTypescriptFunctionFailed",
+            details: expect.objectContaining({ message: "failure" }),
+          },
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("success: commits the new schema and migrated state together", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const stateDefinition: AppDefinition["stateDefinition"] = {
+        migration: null,
+        schema: {
+          types: {
+            State: {
+              dataType: DataType.Struct,
+              properties: { total: { dataType: DataType.Number } },
+            },
+          },
+          rootType: "State",
+        },
+        initialState: { total: 0 },
+      };
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...stateDefinition,
+          migration: {
+            source: "",
+            compiled:
+              "export default (previous) => ({ total: previous.count + 5 });",
+          },
+        },
+      );
+
+      // Verify
+      assert(result.success);
+      expect(result.data.latestVersion.stateDefinition.schema).toEqual(
+        stateDefinition.schema,
+      );
+      expect(
+        (
+          await backend.apps.getState(
+            result.data.id,
+            result.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { total: 5 }, revision: 2 });
+      expect((await backend.apps.list()).data).toEqual([result.data]);
+    });
+
+    it("error: AppStateMigrationNotValid when the module does not export a function", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...definition.stateDefinition,
+          migration: { source: "", compiled: "export default 42;" },
+        },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateMigrationNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            {
+              message:
+                "The default export of the migration TypescriptModule is not a function",
+            },
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateMigrationFailed when migration output does not match the schema", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...definition.stateDefinition,
+          migration: {
+            source: "",
+            compiled: 'export default () => ({ count: "invalid" });',
+          },
+        },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateMigrationFailed",
+        details: {
+          appId: created.data.id,
+          cause: {
+            name: "AppStateContentNotValid",
+            details: {
+              appId: created.data.id,
+              issues: [
+                expect.objectContaining({
+                  message: expect.any(String),
+                  path: [{ key: "count" }],
+                }),
+              ],
+            },
+          },
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("success: introduces populated state through a migration", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create({
+        ...definition,
+        stateDefinition: emptyAppStateDefinition,
+      });
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...definition.stateDefinition,
+          migration: {
+            source: "",
+            compiled: "export default () => ({ count: 0 });",
+          },
+        },
+      );
+
+      // Verify
+      assert(result.success);
+      expect(
+        (
+          await backend.apps.getState(
+            result.data.id,
+            result.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 2 });
+    });
+
+    it("success: preserves saved content when a compatible schema changes its initial state", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const saved = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: 7 },
+      );
+      assert(saved.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          migration: null,
+          schema: {
+            ...schema,
+            types: {
+              State: {
+                ...schema.types["State"]!,
+                description: "Compatible description update",
+              },
+            },
+          },
+          initialState: { count: 99 },
+        },
+      );
+
+      // Verify
+      assert(result.success);
+      expect(
+        (
+          await backend.apps.getState(
+            result.data.id,
+            result.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 7 }, revision: 3 });
+    });
+
+    it("error: ArgumentsNotValid (case: null state definition)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        null as any,
+      );
+
+      // Verify
+      expect(result.error?.name).toBe("ArgumentsNotValid");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateMigrationRequired when clearing populated state without a migration", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        emptyAppStateDefinition,
+      );
+
+      // Verify
+      expect(result.error?.name).toBe("AppStateMigrationRequired");
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("success: clears populated state with an explicit migration", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...emptyAppStateDefinition,
+          migration: { source: "", compiled: "export default () => ({});" },
+        },
+      );
+
+      // Verify
+      assert(result.success);
+      expect(
+        (
+          await backend.apps.getState(
+            result.data.id,
+            result.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: {}, revision: 2 });
+      expect(result.data.latestVersion.stateDefinition.schema).toEqual(
+        emptyAppStateDefinition.schema,
+      );
     });
   });
 
@@ -474,6 +2968,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "name",
         targetCollectionIds: [],
@@ -535,6 +3031,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createCollectionResult.success);
       const createAppResult = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "default-app",
         targetCollectionIds: [createCollectionResult.data.id],
@@ -575,6 +3073,58 @@ export default rd<GetDependencies>("Apps", (deps) => {
         error: null,
       });
     });
+
+    it("success: removes the app state without affecting another app", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const other = await backend.apps.create(definition);
+      assert(other.success);
+
+      // Exercise
+      const result = await backend.apps.delete(created.data.id, "delete");
+
+      // Verify
+      assert(result.success);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).error,
+      ).toEqual({ name: "AppNotFound", details: { appId: created.data.id } });
+      expect(
+        (
+          await backend.apps.getState(
+            other.data.id,
+            other.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
   });
 
   describe("list", () => {
@@ -593,6 +3143,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       // Setup SUT
       const { backend } = deps();
       const createResultZeta = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "zeta",
         targetCollectionIds: [],
@@ -600,6 +3152,8 @@ export default rd<GetDependencies>("Apps", (deps) => {
       });
       assert.isTrue(createResultZeta.success);
       const createResultAlpha = await backend.apps.create({
+        permissions: defaultAppPermissions,
+        stateDefinition: emptyAppStateDefinition,
         type: AppType.CollectionView,
         name: "alpha",
         targetCollectionIds: [],
@@ -616,6 +3170,997 @@ export default rd<GetDependencies>("Apps", (deps) => {
         data: [createResultAlpha.data, createResultZeta.data],
         error: null,
       });
+    });
+  });
+
+  describe("getState", () => {
+    it.each([
+      ["not-a-valid-id", Id.generate.appVersion()],
+      [Id.generate.app(), "not-a-valid-id"],
+    ])("error: ArgumentsNotValid for ids %s, %s", async (appId, versionId) => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const result = await backend.apps.getState(
+        appId as any,
+        versionId as any,
+      );
+
+      // Verify
+      assert(!result.success);
+      expect(result.error.name).toBe("ArgumentsNotValid");
+    });
+
+    it("error: AppVersionIdNotMatching for a stale version", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        definition.stateDefinition,
+      );
+      assert(version.success);
+
+      // Exercise
+      const result = await backend.apps.getState(
+        created.data.id,
+        created.data.latestVersion.id,
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppVersionIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
+        },
+      });
+      expect(
+        (
+          await backend.apps.getState(
+            version.data.id,
+            version.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+  });
+
+  describe("updateState", () => {
+    it.each([
+      ["not-a-valid-id", Id.generate.appVersion(), 1],
+      [Id.generate.app(), "not-a-valid-id", 1],
+      [Id.generate.app(), Id.generate.appVersion(), "1"],
+      [Id.generate.app(), Id.generate.appVersion(), 0],
+      [Id.generate.app(), Id.generate.appVersion(), -1],
+      [Id.generate.app(), Id.generate.appVersion(), 1.5],
+      [
+        Id.generate.app(),
+        Id.generate.appVersion(),
+        Number.MAX_SAFE_INTEGER + 1,
+      ],
+    ])(
+      "error: ArgumentsNotValid for ids %s, %s and revision %s",
+      async (appId, versionId, revision) => {
+        // Setup SUT
+        const { backend } = deps();
+
+        // Exercise
+        const result = await backend.apps.updateState(
+          appId as any,
+          versionId as any,
+          revision as any,
+          {},
+        );
+
+        // Verify
+        assert(!result.success);
+        expect(result.error.name).toBe("ArgumentsNotValid");
+      },
+    );
+
+    it("error: AppNotFound", async () => {
+      // Setup SUT
+      const { backend } = deps();
+
+      // Exercise
+      const appId = Id.generate.app();
+      const result = await backend.apps.updateState(
+        appId,
+        Id.generate.appVersion(),
+        1,
+        {},
+      );
+
+      // Verify
+      expect(result).toEqual({
+        success: false,
+        data: null,
+        error: { name: "AppNotFound", details: { appId } },
+      });
+    });
+
+    it("error: AppStateContentNotValid (case: wrong property type)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: "invalid" },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: expect.any(String),
+              path: [{ key: "count" }],
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: NaN)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: Number.NaN },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: undefined)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: undefined },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: infinity)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: Infinity },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: Date)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: new Date() },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: cycle)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const content: Record<string, unknown> = {};
+      content["count"] = content;
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        content,
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: {
+          appId: created.data.id,
+          issues: [
+            expect.objectContaining({
+              message: "Invalid JSON value: not JSON-invariant",
+            }),
+          ],
+        },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: null)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        null,
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: created.data.id, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: number)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        42,
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: created.data.id, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: string)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        "invalid",
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: created.data.id, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid (case: array)", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        [],
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateContentNotValid",
+        details: { appId: created.data.id, issues: expect.any(Array) },
+      });
+      expect((await backend.apps.list()).data).toEqual([created.data]);
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: UnexpectedError for one of two concurrent state writes", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+
+      // Exercise
+      const results = await Promise.all([
+        backend.apps.updateState(
+          created.data.id,
+          created.data.latestVersion.id,
+          1,
+          { count: 1 },
+        ),
+        backend.apps.updateState(
+          created.data.id,
+          created.data.latestVersion.id,
+          1,
+          { count: 2 },
+        ),
+      ]);
+
+      // Verify
+      const successful = results.find((result) => result.success);
+      expect(results.filter((result) => result.success)).toHaveLength(1);
+      expect(results.find((result) => !result.success)?.error).toMatchObject({
+        name: "UnexpectedError",
+        details: {
+          cause: {
+            message: expect.stringMatching(
+              /transaction aborted|database is locked/i,
+            ),
+          },
+        },
+      });
+      expect(
+        (
+          await backend.apps.getState(
+            created.data.id,
+            created.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual(successful?.data);
+      expect(successful?.data?.revision).toBe(2);
+    });
+
+    it("error: AppStateRevisionNotMatching for a stale revision", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const saved = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: 3 },
+      );
+      assert(saved.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: 9 },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppStateRevisionNotMatching",
+        details: {
+          appId: created.data.id,
+          latestRevision: 2,
+          suppliedRevision: 1,
+        },
+      });
+      expect(
+        await backend.apps.getState(
+          created.data.id,
+          created.data.latestVersion.id,
+        ),
+      ).toEqual(saved);
+    });
+
+    it("error: AppVersionIdNotMatching for a stale version", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        definition.stateDefinition,
+      );
+      assert(version.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: 1 },
+      );
+
+      // Verify
+      expect(result.error).toEqual({
+        name: "AppVersionIdNotMatching",
+        details: {
+          appId: created.data.id,
+          latestVersionId: version.data.latestVersion.id,
+          suppliedVersionId: created.data.latestVersion.id,
+        },
+      });
+      expect(
+        (
+          await backend.apps.getState(
+            version.data.id,
+            version.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("success: isolates saved state between apps", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const other = await backend.apps.create(definition);
+      assert(other.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        created.data.id,
+        created.data.latestVersion.id,
+        1,
+        { count: 7 },
+      );
+
+      // Verify
+      expect(result.data).toEqual({ content: { count: 7 }, revision: 2 });
+      expect(
+        await backend.apps.getState(
+          created.data.id,
+          created.data.latestVersion.id,
+        ),
+      ).toEqual(result);
+      expect(
+        (
+          await backend.apps.getState(
+            other.data.id,
+            other.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: { count: 0 }, revision: 1 });
+    });
+
+    it("error: AppStateContentNotValid for populated content after clearing the state schema", async () => {
+      // Setup SUT
+      const { backend } = deps();
+      const schema: Schema = {
+        types: {
+          State: {
+            dataType: DataType.Struct,
+            properties: { count: { dataType: DataType.Number } },
+          },
+        },
+        rootType: "State",
+      };
+      const definition: AppDefinition = {
+        type: AppType.CollectionView,
+        name: "Stateful app",
+        targetCollectionIds: [],
+        files: { "/main.tsx": { source: "", compiled: "" } },
+        stateDefinition: {
+          migration: null,
+          schema,
+          initialState: { count: 0 },
+        },
+        permissions: defaultAppPermissions,
+      };
+      const created = await backend.apps.create(definition);
+      assert(created.success);
+      const version = await backend.apps.createNewVersion(
+        created.data.id,
+        created.data.latestVersion.id,
+        [],
+        definition.files,
+        {
+          ...emptyAppStateDefinition,
+          migration: { source: "", compiled: "export default () => ({});" },
+        },
+      );
+      assert(version.success);
+
+      // Exercise
+      const result = await backend.apps.updateState(
+        version.data.id,
+        version.data.latestVersion.id,
+        2,
+        { count: 5 },
+      );
+
+      // Verify
+      expect(result.error?.name).toBe("AppStateContentNotValid");
+      expect(
+        (
+          await backend.apps.getState(
+            version.data.id,
+            version.data.latestVersion.id,
+          )
+        ).data,
+      ).toEqual({ content: {}, revision: 2 });
     });
   });
 });
